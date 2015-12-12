@@ -1,0 +1,185 @@
+body {
+  font-family: "Gill Sans", sans-serif;
+  font-size: 14px;
+  /*
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  text-align: center;
+  /*
+}
+#body {
+  /*
+  margin: 0 auto 0 auto;
+  padding: 10px 0 0 0;
+  width: 750px;
+  */
+  text-align: left;
+}
+
+p#loading {
+  height: 300px;
+  padding-top: 150px;
+  background-image: url('/images/throbber.gif');
+  background-repeat: no-repeat;
+  background-position: 50% 130px;
+  text-align: center;
+}
+
+h1 a {
+  color: black;
+  text-decoration: none;
+}
+
+h4 {
+  margin: 0;
+}
+
+fieldset {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    /*border-bottom: 1px solid gray;*/
+    clear: both;
+
+  &:first-child {
+    /*border-top: 1px solid gray;*/
+  }
+  label,
+  select.label {
+    width: 140px;
+    margin-right: 10px;
+    float: left;
+    display: block;
+  }
+  p,
+  div {
+    margin: 6px 0;
+  }
+
+}
+label.inline {
+    width: auto;
+    margin-right: 0px;
+    float: none;
+    display: inline;
+}
+label.required {
+    font-weight: bold;
+}
+
+hr {
+  display: none;
+}
+#footer {
+  margin-top: 28px;
+  font-size: smaller;
+  text-align: right;
+  clear: both;
+}
+
+/*
+label.required:after {
+    content: "*";
+    font-weight: bold;
+}
+*/
+th {
+  text-align: left;
+  padding-right: 10px;
+  vertical-align: top;
+  font-weight: bold;
+}
+table table th {
+  font-weight: normal;
+  padding-left: 10px;
+}
+td {
+  text-align: left;
+  vertical-align: top;
+}
+table {
+  border-collapse: collapse;
+}
+table table td,
+table table tr {
+  padding: 1px 0;
+}
+
+.action {
+  color: #2244BB;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.page {
+  border-top: 1px solid gray;
+}
+#controls {
+  border-bottom: 1px solid gray;
+  padding-bottom: 14px;
+  clear: both;
+}
+.prose {
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+fieldset .help,
+fieldset .instruction,
+fieldset .legend,
+fieldset .controller,
+#controls {
+    padding-left: 150px;
+}
+fieldset .instruction, fieldset .help {
+  font-size: 12px;
+}
+#controls {
+  margin-top: 1em;
+}
+.disabled.hidden-when-disabled {
+  display: none;
+}
+.disabled {
+  color: silver;
+}
+.not-available {
+  display: none;
+}
+.disabled .not-available {
+  display: block !important;
+}
+.legend {
+  font-size: small;
+}
+.help-icon {
+    background-image: url("../images/help.png");
+    background-repeat: no-repeat;
+    background-position: center right;
+    height: 16px;
+    width: 16px;
+    padding-left: 20px;
+    cursor: pointer;
+}
+.close-icon {
+    background-image: url("../images/close.png");
+    background-repeat: no-repeat;
+    background-position: center right;
+    height: 16px;
+    width: 16px;
+    padding-left: 20px;
+    cursor: pointer;
+    float: right;
+}
+.msg {
+    padding-left: 26px;
+}
+.err {
+    background-image: url("../images/software-update-urgent.png");
+    background-repeat: no-repeat;
+    background-position: 5px center;
+    color: red;
+}
+.ok {
+    padding: 0;
+}
