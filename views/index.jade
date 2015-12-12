@@ -1,5 +1,8 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  header(id="header")
+    h1
+      a(href="/")= title
+  main(id="content")
+    p#loading Loading...
