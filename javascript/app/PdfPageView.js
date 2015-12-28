@@ -1,11 +1,13 @@
 define([
     'handlebars',
     'hb!templates.html',
-    '../app/features/StyleController'
+    '../app/features/StyleController',
+    'styles'
   ],
   function (Handlebars,
             templates,
-            StyleController) {
+            StyleController,
+            styles) {
     return function PdfPageView() {
       const data = {
         generate_url: '/',
@@ -19,7 +21,7 @@ define([
 
       function getStyles() {
 
-        return _(StyleController.styles).map(function (pv, e) {
+        return _(styles).map(function (pv, e) {
           return _.map(pv, function (v, p) {
             return {
               property: p,
