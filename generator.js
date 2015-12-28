@@ -1066,9 +1066,9 @@ class Generator {
   attribute_set(root, style, attribute_set, properties) {
     properties = properties || this.properties
     const attrs = ET.SubElement(root, xsl('attribute-set'), {name: attribute_set})
-    _.forEach(this.style[style], (v, k) => {
-      if (_.includes(properties, k)) {
-        ET.SubElement(attrs, xsl('attribute'), {name: k}).text = v
+    _.forEach(this.style[style], (v, p) => {
+      if (_.includes(properties, p)) {
+        ET.SubElement(attrs, xsl('attribute'), {name: p}).text = value(p, v)
       }
     })
   }
@@ -1258,7 +1258,7 @@ class Generator {
       // codeblock
       const pre_attr = ET.SubElement(root, xsl('attribute-set'), {name: "codeblock"})
       _.forEach(this.style["codeblock"], (v, k) => {
-        ET.SubElement(pre_attr, xsl('attribute'), {name: k}).text = v
+        ET.SubElement(pre_attr, xsl('attribute'), {name: k}).text = value(k, v)
       })
     }
 
@@ -1750,6 +1750,13 @@ class Generator {
       platform: process.platform
     })
   }
+}
+
+function value(property, value) {
+  if (property === 'start-indent') {
+    return `from-parent(start-indent) + ${value}`
+  }
+  return value
 }
 
 function xsl(elem) {
