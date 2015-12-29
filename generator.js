@@ -16,11 +16,10 @@ class Generator {
     this.ot_version = new Version("2.2")
     this.plugin_name = null
     this.plugin_version = null
-    this.page_size = []
     this.style = {
       ol: true
     }
-    this.page_margins = null
+    this.page = {}
     this.force_page_count = null
     this.chapter_layout = null
     this.body_column_count = null
@@ -936,16 +935,15 @@ class Generator {
       ET.SubElement(root, "xsl:param", {name: "pdfFormatter", select: `'${this.formatter}'`})
       ET.SubElement(root, "xsl:param", {name: "tocMaximumLevel", select: this.toc_maximum_level})
       // page size
-      if (this.page_size) {
-        ET.SubElement(root, xsl('variable'), {name: "page-width"}).text = this.page_size[0]
-        ET.SubElement(root, xsl('variable'), {name: "page-height"}).text = this.page_size[1]
-      }
+      ET.SubElement(root, xsl('variable'), {name: "page-width"}).text = this.page.width
+      ET.SubElement(root, xsl('variable'), {name: "page-height"}).text = this.page.height
       // mirror pages
       if (this.mirror_page_margins) {
         ET.SubElement(root, xsl('variable'), {name: "mirror-page-margins", select: "true()"})
       }
       // page margins
-      _.forEach(this.page_margins, (v, k) => {
+      ['top', 'outside', 'bottom', 'inside'].forEach((k) => {
+        const v = this.page[k]
         if (v) {
           ET.SubElement(root, xsl('variable'), {name: `page-margin-${k}`}).text = v
         }

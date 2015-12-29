@@ -44,25 +44,31 @@ function read_arguments(req) {
   }
   __ret["transtype"] = req.body["transtype"]
   let __config = {}
+
+  __config.page = {}
   // TODO page size and orientation in UI
-  if (req.body["page-size"]) {
-    __config["page_size"] = req.body["page-size"].split(" ")
+  if (req.body['page-size']) {
+    const s = req.body['page-size'].split(' ')
+    if (req.body['orientation'] === 'landscape') {
+      s.reverse()
+    }
+    __config.page.width = s[0]
+    __config.page.height = s[1]
   }
-  __config["orientation"] = req.body["orientation"]
-  __config["page_margins"] = {}
   if (_.has(req.body, "page-margin-top") && req.body["page-margin-top"].trim()) {
-    __config["page_margins"]["top"] = req.body["page-margin-top"]
+    __config.page.top = req.body["page-margin-top"]
   }
   if (_.has(req.body, "page-margin-outside") && req.body["page-margin-outside"].trim()) {
-    __config["page_margins"]["outside"] = req.body["page-margin-outside"]
+    __config.page.outside = req.body["page-margin-outside"]
   }
   if (_.has(req.body, "page-margin-bottom") && req.body["page-margin-bottom"].trim()) {
-    __config["page_margins"]["bottom"] = req.body["page-margin-bottom"]
+    __config.page.bottom = req.body["page-margin-bottom"]
   }
   if (_.has(req.body, "page-margin-inside") && req.body["page-margin-inside"].trim()) {
-    __config["page_margins"]["inside"] = req.body["page-margin-inside"]
+    __config.page.inside = req.body["page-margin-inside"]
   }
-  __config["style"] = {}
+
+  __config.style = {}
   const types = _(generator.styles).map((f, k) => {
     return k
   }).uniq().value()
@@ -172,22 +178,14 @@ function process(__args, req) {
   } else {
     __dita_gen.plugin_name = __args["id"]
   }
-  if ("plugin_version" in req.body) {
+  if (_.has(__args, "plugin_version")) {
     __dita_gen.plugin_version = __args["plugin_version"]
   }
-  __dita_gen.transtype = __args["transtype"]
+  __dita_gen.transtype = __args.transtype
 
-  const __config = __args["configuration"]
-  if (_.has(__config, 'page_size')) {
-    if (_.has(__config, 'orientation') && __config['orientation'] === 'landscape') {
-      __dita_gen.page_size = __config['page_size'].reverse()
-    } else {
-      __dita_gen.page_size = __config['page_size']
-    }
-  }
-  __dita_gen.page_margins = __config["page_margins"]
-  __dita_gen.style = __config["style"]
-
+  const __config = __args.configuration
+  __dita_gen.page = __config.page
+  __dita_gen.style = __config.style
   __dita_gen.force_page_count = __config["force_page_count"]
   __dita_gen.chapter_layout = __config["chapter_layout"]
   __dita_gen.bookmark_style = __config["bookmark_style"]
