@@ -329,8 +329,8 @@
             <option value="topic_topic_topic_topic_topic_topic">Heading 6</option>
             -->
             <option value="section">Section title</option>
-            <!--option value="example">Example</option>
-            <option value="example_title">Example title</option-->
+            <option value="example">Example</option>
+            <option value="example_title">Example title</option>
             <option value="note">Note</option>
             <option value="pre">Preformatted</option>
             <option value="codeblock">Code block</option>
@@ -610,8 +610,20 @@
               <label for="border" class="inline">Border</label>:
               <select id="border">
                 <option value="none" selected>no border</option>
-                <option value="solid 1pt black">all</option>
+                <option value="all">all</option>
               </select>
+              <input type="hidden" id="border-before-style"/>
+              <input type="hidden" id="border-before-width"/>
+              <input type="hidden" id="border-before-color"/>
+              <input type="hidden" id="border-end-style"/>
+              <input type="hidden" id="border-end-width"/>
+              <input type="hidden" id="border-end-color"/>
+              <input type="hidden" id="border-after-style"/>
+              <input type="hidden" id="border-after-width"/>
+              <input type="hidden" id="border-after-color"/>
+              <input type="hidden" id="border-start-style"/>
+              <input type="hidden" id="border-start-width"/>
+              <input type="hidden" id="border-start-color"/>
             </td>
           </tr>
           </tbody>
@@ -844,11 +856,10 @@
         </p>
         <p class="example-page-content-section">Section title</p>
         <p class="example-page-content-body">The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.</p>
-        <!-- TODO -->
-        <!--div class="example-page-content-example">
-          <p class="example-page-content-example_title">Example title</p>
-          <p class="example-page-content-bodyx">Example content</p>
-        </div-->
+        <div class="example-page-content-example">
+          <p class="example-page-content-example_title" style="margin-left: 0pt; margin-right: 0pt">Example title</p>
+          <p class="example-page-content-body" style="margin-left: 0pt; margin-right: 0pt">Example content</p>
+        </div>
         <div class="example-page-content-topic_topic_topic"><span data-style="topic_topic_topic" data-field="title-numbering" data-value="true">1.1.1 </span>Heading 3</div>
         <p class="example-page-content-body">
           The quick brown fox jumps over the lazy dog.

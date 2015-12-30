@@ -16,6 +16,7 @@ define([
     _.forEach(allFields, function (field) {
       view.$styleForm.find(":input[id='" + field + "']").change(styleEditorHandler)
     })
+    view.$styleForm.find(":input[id='border']").change(borderEditorHandler)
 
     var pdfStyleSelectorCurrent
     view.$styleSelector.change(styleHandler).val('body').change()
@@ -80,6 +81,35 @@ define([
               break
           }
           break
+        case "border-before-style":
+        case "border-before-width":
+        case "border-before-color":
+        case "border-end-style":
+        case "border-end-width":
+        case "border-end-color":
+        case "border-after-style":
+        case "border-after-width":
+        case "border-after-color":
+        case "border-start-style":
+        case "border-start-width":
+        case "border-start-color":
+          const tokens = field.split('-')
+          switch(tokens[1]) {
+            case "before":
+              property = 'border-top-' + tokens[2]
+              break
+            case "end":
+              property = 'border-right-' + tokens[2]
+              break
+            case "after":
+              property = 'border-bottom-' + tokens[2]
+              break
+            case "start":
+              property = 'border-left-' + tokens[2]
+              break
+          }
+          isLength = false
+          break;
         default:
           var all = $("[data-field='" + field + "'][data-style='" + type + "']")
           if (all.length) {
@@ -138,6 +168,17 @@ define([
       styleModel.writeFieldToModel(field, pdfStyleSelectorCurrent)
     }
 
+    function borderEditorHandler(event) {
+      const ui = $(event.target)
+      const value = ui.val()
+      view.$styleForm.find(":input[id='border-before-style'],:input[id='border-end-style'],:input[id='border-after-style'],:input[id='border-start-style']")
+        .val(value === 'none' ? 'none' : 'solid').change()
+      view.$styleForm.find(":input[id='border-before-width'],:input[id='border-end-width'],:input[id='border-after-width'],:input[id='border-start-width']")
+        .val(value === 'none' ? null : '1pt').change()
+      view.$styleForm.find(":input[id='border-before-color'],:input[id='border-end-color'],:input[id='border-after-color'],:input[id='border-start-color']")
+        .val(value === 'none' ? null : 'black').change()
+    }
+
     function StyleModel() {
       const $element = $('#style-model')
       const $inputs = $element.find(':input')
@@ -161,7 +202,8 @@ define([
         for (var i = 0; i < allFields.length; i++) {
           var model = styleModel.field(allFields[i], type)
           // if no value, inherit from body
-          if (model.data('inherit') !== undefined && (model.val() === undefined || model.val() === "")) {
+          if ((model.data('inherit') !== undefined || model.data('inherit') !== null)
+              && (model.val() === undefined || model.val() === null ||  model.val() === "")) {
             model = styleModel.field(allFields[i], 'body')
           }
           var input = view.$styleForm.find(":input[id='" + allFields[i] + "']")
@@ -173,6 +215,10 @@ define([
             input.val(model.val())
           }
           input.change()
+
+          if (allFields[i] === 'border-before-style') {
+            view.$styleForm.find(":input[id='border']").val(model.val() === 'solid' ? 'all' : 'none').change()
+          }
         }
       }
 
@@ -196,7 +242,7 @@ define([
         }
 
         // if equals body value, treat as inherit value
-        if (model.data('inherit') !== undefined) {
+        if (model.data('inherit') !== undefined && model.data('inherit') !== null) {
           var b = styleModel.field(field, 'body')//filter("[name='" + field + "." + 'body' + "']")
           if (oldValue === b.val()) {
             newValue = undefined

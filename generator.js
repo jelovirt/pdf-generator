@@ -851,7 +851,7 @@ class Generator {
       this.attribute_set(root, "body", "__fo__root", ["font-family", "color", "text-align"])
       // titles
       _.forEach(this.style, (e, k) => {
-        if (k.startsWith("topic") || k.startsWith("section")) {
+        if (k.startsWith("topic") || k === "section") {
           const title_attr = ET.SubElement(root, xsl('attribute-set'), {name: k.replace(/_/g, '.') + ".title"})
           _.forEach(e, (v, p) => {
             if (_.includes(this.properties, p)) {
@@ -860,6 +860,7 @@ class Generator {
           })
         }
       })
+      this.attribute_set(root, "example_title", "example.title")
       // link
       const link_attr_sets = ["common.link"]
       link_attr_sets.forEach((n) => {
@@ -870,6 +871,8 @@ class Generator {
       spacing_attr_sets.forEach((n) => {
         this.attribute_set(root, "body", n, _.difference(this.properties, ["start-indent"]))
       })
+      // example
+      this.attribute_set(root, "example", "example")
       // note
       this.attribute_set(root, "note", "note__table")
       if (!(_.has(this.style["note"], "icon") && this.style["note"]["icon"] === "icon")) {
