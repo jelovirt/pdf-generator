@@ -1501,6 +1501,8 @@ class Generator {
 function value(property, value) {
   if (property === 'start-indent') {
     return `from-parent(start-indent) + ${value}`
+  } else if (property === 'end-indent') {
+    return `from-parent(end-indent) + ${value}`
   }
   return value
 }
