@@ -183,8 +183,10 @@
   <div class="form">
   <fieldset>
     <p>
-      <label for="force-page-count">Section start<!--Chapter page--></label>
+      <label for="force-page-count">Chapter start<!--Chapter page--></label>
       <select name="force-page-count" id="force-page-count" title="Force page count">
+        <!-- TODO -->
+        <!--option value="together">no break</option-->
         <option value="auto">new page</option>
         <option value="even" selected>odd page</option>
         <option value="odd">even page</option>
@@ -322,7 +324,13 @@
             <option value="topic_topic">Heading 2</option>
             <option value="topic_topic_topic">Heading 3</option>
             <option value="topic_topic_topic_topic">Heading 4</option>
+            <!--
+            <option value="topic_topic_topic_topic_topic">Heading 5</option>
+            <option value="topic_topic_topic_topic_topic_topic">Heading 6</option>
+            -->
             <option value="section">Section title</option>
+            <!--option value="example">Example</option>
+            <option value="example_title">Example title</option-->
             <option value="note">Note</option>
             <option value="pre">Preformatted</option>
             <option value="codeblock">Code block</option>
@@ -331,10 +339,6 @@
             <option value="dl">Definition list</option>
             <option value="table">Table</option>
             <option value="fig">Figure</option>
-            <!--
-            <option value="topic_topic_topic_topic_topic">Heading 5</option>
-            <option value="topic_topic_topic_topic_topic_topic">Heading 6</option>
-            -->
           </optgroup>
           <optgroup label="Inline">
             <option value="link">Link</option>
@@ -778,6 +782,13 @@
 
           The quick <span class="example-page-content-link">brown fox</span><span data-style="link" data-field="link-url" data-value="true"> at www.example.com</span> jumps over the lazy dog.
         </p>
+        <p class="example-page-content-section">Section title</p>
+        <p class="example-page-content-body">The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.</p>
+        <!-- TODO -->
+        <!--div class="example-page-content-example">
+          <p class="example-page-content-example_title">Example title</p>
+          <p class="example-page-content-bodyx">Example content</p>
+        </div-->
         <div class="example-page-content-topic_topic_topic"><span data-style="topic_topic_topic" data-field="title-numbering" data-value="true">1.1.1 </span>Heading 3</div>
         <p class="example-page-content-body">
           The quick brown fox jumps over the lazy dog.

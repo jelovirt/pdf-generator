@@ -13,6 +13,8 @@
       "space-after": {default: "6pt", inherit: null},
       "text-align": {default: "start", inherit: null},
       "start-indent": {default: "25pt", inherit: null},
+      // TODO end-indent
+      // TODO padding
       "line-height": {default: "1.2", inherit: null}
     },
     "topic": {
@@ -84,7 +86,7 @@
       "font-size": {default: null, inherit: "body"},
       "color": {default: null, inherit: "body"},
       "background-color": {default: "transparent", inherit: null},
-      "font-weight": {default: null, inherit: "body"},
+      "font-weight": {default: "bold", inherit: null},
       "font-style": {default: null, inherit: "body"},
       "text-decoration": {default: null, inherit: "body"},
       "space-before": {default: "15pt", inherit: null},
@@ -93,6 +95,35 @@
       "start-indent": {default: null, inherit: "body"},
       "line-height": {default: null, inherit: "body"}
     },
+    // TODO
+    //"example": {
+    //  "font-family": {default: null, inherit: "body"},
+    //  "font-size": {default: null, inherit: "body"},
+    //  "color": {default: null, inherit: "body"},
+    //  "background-color": {default: "transparent", inherit: null},
+    //  "font-weight": {default: null, inherit: "body"},
+    //  "font-style": {default: null, inherit: "body"},
+    //  "text-decoration": {default: null, inherit: "body"},
+    //  "space-before": {default: "0.6em", inherit: "body"},
+    //  "space-after": {default: null, inherit: "body"},
+    //  "text-align": {default: null, inherit: "body"},
+    //  "start-indent": {default: "36pt", inherit: "body"},
+    //  "line-height": {default: null, inherit: "body"}
+    //},
+    //"example_title": {
+    //  "font-family": {default: null, inherit: "section"},
+    //  "font-size": {default: null, inherit: "section"},
+    //  "color": {default: null, inherit: "section"},
+    //  "background-color": {default: "transparent", inherit: null},
+    //  "font-weight": {default: "bold", inherit: "section"},
+    //  "font-style": {default: null, inherit: "section"},
+    //  "text-decoration": {default: null, inherit: "section"},
+    //  "space-before": {default: null, inherit: "section"},
+    //  "space-after": {default: null, inherit: "section"},
+    //  "text-align": {default: null, inherit: "section"},
+    //  "start-indent": {default: null, inherit: "example"},
+    //  "line-height": {default: null, inherit: "section"}
+    //},
     "note": {
       "font-family": {default: null, inherit: "body"},
       "font-size": {default: null, inherit: "body"},
