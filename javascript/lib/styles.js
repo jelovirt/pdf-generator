@@ -7,6 +7,7 @@
       "padding-bottom": {default: "0pt", inherit: null},
       "padding-left": {default: "0pt", inherit: null},
       "end-indent": {default: "0pt", inherit: null},
+      "border": {default: "none", inherit: null}
     }
     return {
       // block
