@@ -15,9 +15,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/', upload.array(), function (req, res, next) {
   const args = read_arguments(req)
-  //console.log(args)
-  //return generator.generate(res)
-  const body = process(args, req)
+  const body = process(args)
 
   res.statusCode = 200
   res.setHeader('Content-Type', 'application/zip')
@@ -162,7 +160,7 @@ function read_arguments(req) {
   return __ret
 }
 
-function process(__args, req) {
+function process(__args) {
   const __dita_gen = new generator.Generator()
 
   //validate
