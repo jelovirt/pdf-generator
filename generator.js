@@ -866,6 +866,8 @@ class Generator {
       link_attr_sets.forEach((n) => {
         this.attribute_set(root, "link", n)
       })
+      // tm
+      this.attribute_set(root, 'tm', 'tm')
       // normal block
       const spacing_attr_sets = ["common.block"]
       spacing_attr_sets.forEach((n) => {

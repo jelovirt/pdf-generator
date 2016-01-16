@@ -304,6 +304,16 @@
         // custom
         "link-page-number": {default: true, inherit: null},
         "link-url": {default: false, inherit: null}
+      },
+      "tm": {
+        "font-family": {default: null, inherit: "body"},
+        "font-size": {default: null, inherit: "body"},
+        "color": {default: null, inherit: "body"},
+        "background-color": {default: "transparent", inherit: null},
+        "font-weight": {default: null, inherit: "body"},
+        "font-style": {default: null, inherit: "body"},
+        "text-decoration": {default: null, inherit: "body"},
+        "line-height": {default: null, inherit: null}
       }
     }
   }
