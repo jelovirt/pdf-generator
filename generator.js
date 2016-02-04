@@ -657,6 +657,50 @@ class Generator {
           priority: "1000"
         })
       }
+      // tm
+      if (_.has(this.style['tm'], 'symbol-scope') && this.style['tm']['symbol-scope'] !== 'always') {
+        const tm_chapter_raw = `
+          <xsl:function name="e:tm-value" as="xs:string">
+            <xsl:param name="node" as="element()"/>
+            <xsl:value-of select="normalize-space($node)"/>
+          </xsl:function>
+
+          <xsl:key name="e:first-tm" match="*[contains(@class, ' topic/tm ')]" use="e:tm-value(.)"/>
+
+          <xsl:template match="*[contains(@class, ' topic/tm ')]">
+            <xsl:variable name="tmText" as="xs:string" select="e:tm-value(.)"/>
+            <xsl:variable name="tm-scope" as="element()" select="(ancestor-or-self::*[contains(@class, ' topic/topic ')])[1]"/>
+            <xsl:variable name="tms" as="element()+" select="key('e:first-tm', $tmText, $tm-scope)"/>
+            <xsl:variable name="isFirst" as="xs:boolean" select="$tms[1] is ."/>
+            <xsl:choose>
+              <xsl:when test="$isFirst">
+                <xsl:next-match/>
+              </xsl:when>
+              <xsl:otherwise>
+                <fo:inline xsl:use-attribute-sets="tm">
+                  <xsl:apply-templates/>
+                </fo:inline>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:template>
+          `
+        const tm_never_raw = `
+          <xsl:template match="*[contains(@class, ' topic/tm ')]">
+            <fo:inline xsl:use-attribute-sets="tm">
+              <xsl:apply-templates/>
+            </fo:inline>
+          </xsl:template>
+          `
+        root.append(ET.Comment("tm"))
+        const symbolScope = this.style['tm']['symbol-scope']
+        if (symbolScope === 'chapter') {
+          this.copy_xml(root, tm_chapter_raw)
+        } else if (symbolScope === 'never') {
+          this.copy_xml(root, tm_never_raw)
+        } else if (symbolScope === 'always') {
+          // NOOP
+        }
+      }
     }
 
     const link_raw = `

@@ -313,7 +313,9 @@
         "font-weight": {default: null, inherit: "body"},
         "font-style": {default: null, inherit: "body"},
         "text-decoration": {default: null, inherit: "body"},
-        "line-height": {default: null, inherit: null}
+        "line-height": {default: null, inherit: null},
+        // custom
+        'symbol-scope': { default: 'always', inherit: null }
       }
     }
   }

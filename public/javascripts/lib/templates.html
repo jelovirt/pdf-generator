@@ -517,6 +517,17 @@
               <input id="link-url" type="checkbox" value="true" title="Show external link address.">
             </td>
           </tr>
+          <tr data-style="tm">
+            <td colspan="2">
+              <label for="symbol-scope" class="inline">Symbol scope</label>:
+              <select id="symbol-scope">
+                <option value="always" selected>always</option>
+                <option value="chapter">chapter</option>
+                <option value="never">never</option>
+              </select>
+            </td>
+          </tr>
+
           <tr class="style-selector-block">
             <td>
               <label class="inline">Spacing</label>
@@ -856,7 +867,8 @@
           The quick <span class="example-page-content-link">brown fox</span><span data-style="link" data-field="link-url" data-value="true"> at www.example.com</span> jumps over the lazy dog.
         </p>
         <p class="example-page-content-body">
-          The <span class="example-page-content-tm">quick brown fox™</span> jumps over the <span class="example-page-content-tm">lazy dog®</span>.
+          The <span class="example-page-content-tm">quick brown fox<span data-style="tm" data-field="symbol-scope" data-value="always">™</span><span data-style="tm" data-field="symbol-scope" data-value="chapter">™</span></span> jumps over the <span class="example-page-content-tm">lazy dog<span data-style="tm" data-field="symbol-scope" data-value="always">®</span><span data-style="tm" data-field="symbol-scope" data-value="chapter">®</span></span>.
+          The <span class="example-page-content-tm">quick brown fox<span data-style="tm" data-field="symbol-scope" data-value="always">™</span></span> jumps over the <span class="example-page-content-tm">lazy dog<span data-style="tm" data-field="symbol-scope" data-value="always">®</span></span>.
         </p>
         <p class="example-page-content-section">Section title</p>
         <p class="example-page-content-body">The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.</p>
