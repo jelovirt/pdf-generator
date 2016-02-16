@@ -682,11 +682,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for i in "1234" %}
+                {{#each four}}
                 <tr>
-                  <th>{{i}}</th>
+                  <th>{{this}}</th>
                   <td>
-                    <select id="ol-{{i}}">
+                    <select id="ol-{{this}}">
                       <option value="1">1, 2, 3, …</option>
                       <option value="A">A, B, C, …</option>
                       <option value="a">a, b, c, …</option>
@@ -697,7 +697,7 @@
                   <td><input id="ol-before-{{i}}" size="1"></td>
                   <td><input id="ol-after-{{i}}" size="2" value=". "></td>
                 </tr>
-                {% endfor %}
+                {{/each}}
                 </tbody>
               </table>
               <!--label for="ol-sublevel" class="inline">Show sublevels</label>:
@@ -723,11 +723,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for i in "1234" %}
+                {{#each four}}
                 <tr>
-                  <th>{{i}}</th>
+                  <th>{{this}}</th>
                   <td>
-                    <select id="ul-{{i}}">
+                    <select id="ul-{{this}}">
                       <option value="&#x2022;">&#x2022;</option>
                       <option value="&#x25C6;">&#x25C6;</option>
                       <option value="&#x2014;">&#x2014;</option>
@@ -736,7 +736,7 @@
                     </select>
                   </td>
                 </tr>
-                {% endfor %}
+                {{/each}}
                 </tbody>
               </table>
             </td>
