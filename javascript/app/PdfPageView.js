@@ -11,7 +11,8 @@ define([
     return function PdfPageView() {
       const data = {
         generate_url: '/',
-        styles: getStyles()
+        styles: getStyles(),
+        four: [1, 2, 3, 4]
       }
       const $element = $(Handlebars.compile(templates)(data))
 
