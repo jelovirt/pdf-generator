@@ -11,8 +11,8 @@ define([
         //$(this).attr("id", "p" + i)
       }).hide()
       $(".page:first").addClass("current").show();
-      var prev = $("<button type='button' id='prev'>&lt; Previous</button>").click(prevHandler);
-      var next = $("<button type='button' id='next'>Next &gt;</button>").click(nextHandler);
+      var prev = $("<button type='button' class='btn btn-default' id='prev'>&lt; Previous</button>").click(prevHandler);
+      var next = $("<button type='button' class='btn btn-default' id='next'>Next &gt;</button>").click(nextHandler);
       $("#generate").before(prev).before(" ").before(next).before(" ");
 
       // help

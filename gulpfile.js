@@ -16,7 +16,7 @@ gulp.task('js', () => {
 
 gulp.task('sass', () => {
   return gulp
-    .src('sass/**/*.scss')
+    .src('sass/**/main.scss')
     .pipe(sass({
       outputStyle: 'compressed'
     }))
@@ -26,6 +26,12 @@ gulp.task('sass', () => {
 gulp.task('watch-js', ['js'], () => {
   return watch('javascript/**/*.js', () => {
     gulp.start('js')
+  })
+})
+
+gulp.task('sass-js', ['sass'], () => {
+  return watch('sass/**/*.scss', () => {
+    gulp.start('sass')
   })
 })
 

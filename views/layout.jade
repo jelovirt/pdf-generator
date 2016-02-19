@@ -1,13 +1,14 @@
 doctype html
 html
   head
+    meta(name="viewport", content="width=device-width, initial-scale=1")
     title= title
     link(rel='stylesheet', href='/stylesheets/main.css')
     script(src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js", type="text/javascript")
     script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js", type="text/javascript")
     script(src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.22/require.min.js", type="text/javascript", data-main="/javascripts/app")
   body
-    div(id='body')
+    #body.container
       block content
       footer(id="footer")
         hr
