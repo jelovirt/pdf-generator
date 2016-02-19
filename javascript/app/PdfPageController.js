@@ -45,8 +45,8 @@ define([
     $("#cover_image_chooser").change(coverChangeHandler).change()
     $(":input.length-value").keydown(valueChangeHandler).change(validateLength)
 
-    PdfPreviewController()
     StyleController()
+    PdfPreviewController()
 
     // UI --------------------------------------------------------------------------
 

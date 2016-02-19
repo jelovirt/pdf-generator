@@ -1,10 +1,14 @@
 define([
   '../../app/pdf-utils',
   'rx',
-  'styles'
+  'styles',
+  'handlebars',
+  'hb!style-preview.html'
 ], function (Utils,
              Rx,
-             styles) {
+             styles,
+             Handlebars,
+             previewTemplate) {
   function StyleController() {
     const view = StyleView()
     const styleModel = StyleModel()
@@ -268,10 +272,14 @@ define([
   }
 
   function StyleView() {
+    const data = {}
+    const $preview = $(Handlebars.compile(previewTemplate)(data))
+    $('#p4').append($preview)
+
     return {
       $element: $('#p4'),
       $styleForm: $('#style-form'),
-      $styleSelector: $('#style-selector')
+      $styleSelector: $('#style-selector'),
     }
   }
 
