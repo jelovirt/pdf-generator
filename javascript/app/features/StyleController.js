@@ -18,7 +18,6 @@ define([
     _.forEach(allFields, function (field) {
       view.$styleForm.find(":input[id='" + field + "']").change(styleEditorHandler)
     })
-    view.$styleForm.find(":input[id='border']").change(borderEditorHandler)
 
     var pdfStyleSelectorCurrent
     view.$styleSelector.change(styleHandler).val('body').change()
@@ -170,17 +169,6 @@ define([
       styleModel.writeFieldToModel(field, pdfStyleSelectorCurrent)
     }
 
-    function borderEditorHandler(event) {
-      const ui = $(event.target)
-      const value = ui.val()
-      view.$styleForm.find(":input[id='border-before-style'],:input[id='border-end-style'],:input[id='border-after-style'],:input[id='border-start-style']")
-        .val(value === 'none' ? 'none' : 'solid').change()
-      view.$styleForm.find(":input[id='border-before-width'],:input[id='border-end-width'],:input[id='border-after-width'],:input[id='border-start-width']")
-        .val(value === 'none' ? null : '1pt').change()
-      view.$styleForm.find(":input[id='border-before-color'],:input[id='border-end-color'],:input[id='border-after-color'],:input[id='border-start-color']")
-        .val(value === 'none' ? null : 'black').change()
-    }
-
     function StyleModel() {
       const $element = $('#style-model')
       const $inputs = $element.find(':input')
@@ -189,11 +177,13 @@ define([
       return {
         change: change,
         fields: $inputs,
-        field: function (field, type) {
-          return $inputs.filter("[name='" + field + "." + type + "']")
-        },
+        field: field,
         readFromModel: readFromModel,
         writeFieldToModel: writeFieldToModel
+      }
+
+      function field(field, type) {
+        return $inputs.filter("[name='" + field + "." + type + "']")
       }
 
       /**
