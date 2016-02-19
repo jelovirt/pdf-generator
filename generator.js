@@ -522,29 +522,83 @@ class Generator {
       }
     }
 
+    const table_raw = `
+<xsl:template match="*[contains(@class, ' topic/table ')]/*[contains(@class, ' topic/title ')]">
+  <fo:block xsl:use-attribute-sets="table.title">
+    <xsl:call-template name="commonattributes"/>
+    <xsl:call-template name="getVariable">
+      <xsl:with-param name="id" select="'Table.title'"/>
+      <xsl:with-param name="params">
+        <number>
+          <xsl:apply-templates select="." mode="table.title-number"/>
+        </number>
+        <title>
+          <xsl:apply-templates/>
+        </title>
+      </xsl:with-param>
+    </xsl:call-template>
+  </fo:block>
+</xsl:template>`
+
+    const table_title_number_document = `
+<xsl:template match="*[contains(@class, ' topic/table ')]/*[contains(@class, ' topic/title ')]" mode="table.title-number">
+  <xsl:value-of select="count(key('enumerableByClass', 'topic/table')[. &lt;&lt; current()])"/>
+</xsl:template>`
+
+//    const table_title_number_topic = `
+//<xsl:template match="*[contains(@class, ' topic/table ')]/*[contains(@class, ' topic/title ')]" mode="table.title-number">
+//  <xsl:variable name="topicref" select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)"/>
+//  <xsl:apply-templates select="$topicref" mode="topicTitleNumber"/>
+//  <xsl:text>&#x2013;</xsl:text>
+//  <xsl:value-of select="count(key('enumerableByClass', 'topic/table', ancestor::*[contains(@class, ' topic/topic ')][1])[. &lt;&lt; current()])"/>
+//</xsl:template>`
+
+    const table_title_number_chapter = `
+<xsl:template match="*[contains(@class, ' topic/table ')]/*[contains(@class, ' topic/title ')]" mode="table.title-number">
+  <xsl:call-template name="getChapterPrefix"/>
+  <xsl:value-of select="count(key('enumerableByClass', 'topic/table', ancestor::*[contains(@class, ' topic/topic ')][last()])[. &lt;&lt; current()])"/>
+</xsl:template>`
+
     // caption position after table
     const table_title_raw = `
 <xsl:template match="*[contains(@class, ' topic/table ')]">
-    <xsl:variable name="scale">
-        <xsl:call-template name="getTableScale"/>
-    </xsl:variable>
-    <fo:block xsl:use-attribute-sets="table">
-        <xsl:call-template name="commonattributes"/>
-        <xsl:if test="not(@id)">
-          <xsl:attribute name="id">
-            <xsl:call-template name="get-id"/>
-          </xsl:attribute>
-        </xsl:if>
-        <xsl:if test="not($scale = '')">
-          <xsl:attribute name="font-size" select="concat($scale, '%')"/>
-        </xsl:if>
-        <xsl:apply-templates select="*[contains(@class, ' topic/tgroup ')]"/>
-        <xsl:apply-templates select="*[contains(@class, ' topic/title ') or contains(@class, ' topic/desc ')]"/>
-    </fo:block>
+  <xsl:variable name="scale">
+    <xsl:call-template name="getTableScale"/>
+  </xsl:variable>
+  <fo:block xsl:use-attribute-sets="table">
+    <xsl:call-template name="commonattributes"/>
+    <xsl:if test="not(@id)">
+      <xsl:attribute name="id">
+        <xsl:call-template name="get-id"/>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:if test="not($scale = '')">
+      <xsl:attribute name="font-size" select="concat($scale, '%')"/>
+    </xsl:if>
+    <xsl:apply-templates select="*[contains(@class, ' topic/tgroup ')]"/>
+    <xsl:apply-templates select="*[contains(@class, ' topic/title ') or contains(@class, ' topic/desc ')]"/>
+  </fo:block>
 </xsl:template>`
 
     if (stylesheet === "tables" || !stylesheet) {
       root.append(ET.Comment("table"))
+      // caption numbering
+      if (this.ot_version.compareTo(new Version("2.3")) < 0) {
+        this.copy_xml(root, table_raw)
+      }
+      const tableCaptionNumber = _.get(this.style, "table.caption-number",  "document")
+      switch (tableCaptionNumber) {
+        //case "topic":
+        //  this.copy_xml(root, table_title_number_topic)
+        //  break
+        case "chapter":
+          this.copy_xml(root, table_title_number_chapter)
+          break
+        case "document":
+          this.copy_xml(root, table_title_number_document)
+          break
+      }
+      // caption position
       if (_.has(this.style, "table") && _.has(this.style["table"], "caption-position") && this.style["table"]["caption-position"] === "after") {
         this.copy_xml(root, table_title_raw)
       }
@@ -590,14 +644,14 @@ class Generator {
         <xsl:attribute name="initial-page-number">1</xsl:attribute>
         <fo:folio-prefix>
           <xsl:number format="1" count="*[contains(@class, ' bookmap/chapter ')]"/>
-          <xsl:text>&#x2014;</xsl:text>
+          <xsl:text>&#x2013;</xsl:text>
         </fo:folio-prefix>
       </xsl:when>
       <xsl:when test="$topicType = ('topicAppendix', 'topicAppendices')">
         <xsl:attribute name="initial-page-number">1</xsl:attribute>
         <fo:folio-prefix>
           <xsl:number format="A" count="*[contains(@class, ' bookmap/appendix ')]"/>
-          <xsl:text>&#x2014;</xsl:text>
+          <xsl:text>&#x2013;</xsl:text>
         </fo:folio-prefix>
       </xsl:when>
     </xsl:choose>
@@ -619,7 +673,66 @@ class Generator {
 </xsl:template>
 `
 
+    const fig_title_raw = `
+<xsl:template match="*[contains(@class,' topic/fig ')]/*[contains(@class,' topic/title ')]">
+  <fo:block xsl:use-attribute-sets="fig.title">
+    <xsl:call-template name="commonattributes"/>
+    <xsl:call-template name="getVariable">
+      <xsl:with-param name="id" select="'Figure.title'"/>
+      <xsl:with-param name="params">
+        <number>
+          <xsl:apply-templates select="." mode="fig.title-number"/>
+        </number>
+        <title>
+          <xsl:apply-templates/>
+        </title>
+      </xsl:with-param>
+    </xsl:call-template>
+  </fo:block>
+</xsl:template>`
+
+    const fig_title_number_document = `
+<xsl:template match="*[contains(@class, ' topic/fig ')]/*[contains(@class, ' topic/title ')]" mode="fig.title-number">
+  <xsl:value-of select="count(key('enumerableByClass', 'topic/fig')[. &lt;&lt; current()])"/>
+</xsl:template>`
+
+//    const fig_title_number_topic = `
+//<xsl:template match="*[contains(@class, ' topic/fig ')]/*[contains(@class, ' topic/title ')]" mode="fig.title-number">
+//  <xsl:variable name="topicref" select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)"/>
+//  <xsl:apply-templates select="$topicref" mode="topicTitleNumber"/>
+//  <xsl:text>&#x2013;</xsl:text>
+//  <xsl:value-of select="count(key('enumerableByClass', 'topic/fig', ancestor::*[contains(@class, ' topic/topic ')][1])[. &lt;&lt; current()])"/>
+//</xsl:template>`
+
+    const fig_title_number_chapter = `
+<xsl:template match="*[contains(@class, ' topic/fig ')]/*[contains(@class, ' topic/title ')]" mode="fig.title-number">
+  <xsl:call-template name="getChapterPrefix"/>
+  <xsl:value-of select="count(key('enumerableByClass', 'topic/fig', ancestor::*[contains(@class, ' topic/topic ')][last()])[. &lt;&lt; current()])"/>
+</xsl:template>`
+
+    const commons_raw = `
+<xsl:template name="getChapterPrefix">
+  <xsl:variable name="topicref" select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)" as="element()*"/>
+  <xsl:variable name="chapter" select="$topicref/ancestor-or-self::*[contains(@class, ' map/topicref ')][parent::opentopic:map]" as="element()*"/>
+  <xsl:for-each select="$chapter[1]">
+    <xsl:variable name="topicType" as="xs:string">
+      <xsl:apply-templates select="." mode="determineTopicType"/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$topicType = 'topicChapter'">
+        <xsl:number format="1" count="*[contains(@class, ' bookmap/chapter ')]"/>
+        <xsl:text>&#x2013;</xsl:text>
+      </xsl:when>
+      <xsl:when test="$topicType = ('topicAppendix', 'topicAppendices')">
+        <xsl:number format="A" count="*[contains(@class, ' bookmap/appendix ')]"/>
+        <xsl:text>&#x2013;</xsl:text>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:for-each>
+</xsl:template>`
+
     if (stylesheet === "commons" || !stylesheet) {
+      this.copy_xml(root, commons_raw)
       root.append(ET.Comment("title numbering"))
       const number_levels = _(['topic', 'topic_topic', 'topic_topic_topic', 'topic_topic_topic_topic'])
         .map((s) => {
@@ -645,6 +758,23 @@ class Generator {
           this.copy_xml(root, chapter_page_number_raw)
         }
       }
+      // caption numbering
+      if (this.ot_version.compareTo(new Version("2.3")) < 0) {
+        this.copy_xml(root, fig_title_raw)
+      }
+      const figCaptionNumber = _.get(this.style, "fig.caption-number",  "document")
+      switch (figCaptionNumber) {
+        //case "topic":
+        //  this.copy_xml(root, fig_title_number_topic)
+        //  break
+        case "chapter":
+          this.copy_xml(root, fig_title_number_chapter)
+          break
+        case "document":
+          this.copy_xml(root, fig_title_number_document)
+          break
+      }
+
       //if (_.has(this.style, 'fig') && _.has(this.style["fig"], "caption-position") && this.style["fig"]["caption-position"] === "before") {
       if (_.has(this.style, 'fig.caption-position') && this.style["fig"]["caption-position"] === "before") {
         this.copy_xml(root, fig_raw)
