@@ -1,37 +1,19 @@
 define([
     'handlebars',
-    'hb!templates.html',
-    '../app/features/StyleController',
-    'styles'
-  ],
-  function (Handlebars,
-            templates,
-            StyleController,
-            styles) {
-    return function PdfPageView() {
-      const data = {
-        generate_url: '/',
-        styles: getStyles(),
-        four: [1, 2, 3, 4]
-      }
-      const $element = $(Handlebars.compile(templates)(data))
-
-      return {
-        $element: $element
-      }
-
-      function getStyles() {
-
-        return _(styles).map(function (pv, e) {
-          return _.map(pv, function (v, p) {
-            return {
-              property: p,
-              type: e,
-              value: v.default || '',
-              inherit: v.inherit
-            }
-          })
-        }).flatten().value()
-      }
+  'hb!templates.html'
+],
+function (Handlebars,
+          templates) {
+  return function PdfPageView() {
+    const data = {
+      generate_url: '/',
     }
-  })
+    const $element = $(Handlebars.compile(templates)(data))
+
+    return {
+      $element: $element
+    }
+
+
+  }
+})

@@ -1,15 +1,13 @@
 define([
+  '../../app/features/StyleView',
   '../../app/pdf-utils',
   'rx',
-  'styles',
-  'handlebars',
-  'hb!style-preview.html'
-], function (Utils,
+  'styles'
+], function (StyleView,
+             Utils,
              Rx,
-             styles,
-             Handlebars,
-             previewTemplate) {
-  function StyleController() {
+             styles) {
+  return function StyleController() {
     const view = StyleView()
     const styleModel = StyleModel()
     const allFields = getAllFields()
@@ -98,7 +96,7 @@ define([
         case "border-start-width":
         case "border-start-color":
           const tokens = field.split('-')
-          switch(tokens[1]) {
+          switch (tokens[1]) {
             case "before":
               property = 'border-top-' + tokens[2]
               break
@@ -207,7 +205,7 @@ define([
           var model = styleModel.field(allFields[i], type)
           // if no value, inherit from body
           if ((model.data('inherit') !== undefined || model.data('inherit') !== null)
-              && (model.val() === undefined || model.val() === null ||  model.val() === "")) {
+            && (model.val() === undefined || model.val() === null || model.val() === "")) {
             model = styleModel.field(allFields[i], 'body')
           }
           var input = view.$styleForm.find(":input[id='" + allFields[i] + "']")
@@ -270,18 +268,4 @@ define([
       }
     }
   }
-
-  function StyleView() {
-    const data = {}
-    const $preview = $(Handlebars.compile(previewTemplate)(data))
-    $('#p4').append($preview)
-
-    return {
-      $element: $('#p4'),
-      $styleForm: $('#style-form'),
-      $styleSelector: $('#style-selector'),
-    }
-  }
-
-  return StyleController
 })
