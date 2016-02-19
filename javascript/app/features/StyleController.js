@@ -170,7 +170,18 @@ define([
     }
 
     function StyleModel() {
-      const $element = $('#style-model')
+      const $element = $('<fieldset id="style-model" class="model"></fieldset>')
+      getStyles().forEach((style) => {
+        const $input = $('<input type="hidden">')
+        $input.attr('name', style.property + "." + style.type)
+        $input.val(style.value)
+        if (!!style.inherit) {
+          $input.attr('data-inherit', style.inherit)
+        }
+        $element.append($input)
+      })
+      $('body').append($element)
+
       const $inputs = $element.find(':input')
       const change = Rx.Observable.fromEvent($inputs, 'change')
 
@@ -180,6 +191,19 @@ define([
         field: field,
         readFromModel: readFromModel,
         writeFieldToModel: writeFieldToModel
+      }
+
+      function getStyles() {
+        return _(styles).map(function (pv, e) {
+          return _.map(pv, function (v, p) {
+            return {
+              property: p,
+              type: e,
+              value: v.default || '',
+              inherit: v.inherit
+            }
+          })
+        }).flatten().value()
       }
 
       function field(field, type) {

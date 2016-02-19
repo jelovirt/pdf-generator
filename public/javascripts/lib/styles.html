@@ -1,14 +1,5 @@
 <div class="form">
   <fieldset>
-    <!-- Style model -->
-    <fieldset id="style-model" class="model">
-      {{#each styles}}
-        <input type="hidden"
-               name="{{property}}.{{type}}"
-               value="{{value}}"
-               {{#if inherit}} data-inherit="{{inherit}}" {{/if}}>
-      {{/each}}
-    </fieldset>
     <input type="hidden" id="style-selector-current">
     <!-- Style UI -->
     <div id="style-form">

@@ -1,17 +1,14 @@
 define([
-  'styles',
   'handlebars',
   'hb!styles.html',
   'hb!style-preview.html'
-], function (styles,
-             Handlebars,
+], function (Handlebars,
              formTemplate,
              previewTemplate) {
   return function StyleView() {
     const $root = $('#p4')
 
     const $form = $(Handlebars.compile(formTemplate)({
-      styles: getStyles(),
       four: [1, 2, 3, 4]
     }))
     $root.append($form)
@@ -38,18 +35,5 @@ define([
       $styleForm.find(":input[id='border-before-color'],:input[id='border-end-color'],:input[id='border-after-color'],:input[id='border-start-color']")
         .val(value === 'none' ? null : 'black').change()
     }
-  }
-
-  function getStyles() {
-    return _(styles).map(function (pv, e) {
-      return _.map(pv, function (v, p) {
-        return {
-          property: p,
-          type: e,
-          value: v.default || '',
-          inherit: v.inherit
-        }
-      })
-    }).flatten().value()
   }
 })
