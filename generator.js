@@ -583,10 +583,8 @@ class Generator {
   <xsl:variable name="topicType" as="xs:string">
     <xsl:call-template name="determineTopicType"/>
   </xsl:variable>
-  <xsl:variable name="topic" select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]"/>
-  <xsl:variable name="id" select="$topic/@id"/>
-  <xsl:variable name="mapTopics" select="key('map-id', $id)"/>
-  <xsl:for-each select="$mapTopics[1]">
+  <xsl:variable name="topicref" select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)"/>
+  <xsl:for-each select="$topicref[1]">
     <xsl:choose>
       <xsl:when test="$topicType = 'topicChapter'">
         <xsl:attribute name="initial-page-number">1</xsl:attribute>
@@ -607,17 +605,17 @@ class Generator {
   <xsl:comment>topicType: <xsl:value-of select="$topicType"/></xsl:comment>
 </xsl:template>
 `
-    const figure_raw = `
+    const fig_raw = `
 <xsl:template match="*[contains(@class,' topic/fig ')]">
-    <fo:block xsl:use-attribute-sets="fig">
-        <xsl:call-template name="commonattributes"/>
-        <xsl:if test="not(@id)">
-          <xsl:attribute name="id">
-            <xsl:call-template name="get-id"/>
-          </xsl:attribute>
-        </xsl:if>
-        <xsl:apply-templates/>
-    </fo:block>
+  <fo:block xsl:use-attribute-sets="fig">
+    <xsl:call-template name="commonattributes"/>
+    <xsl:if test="not(@id)">
+      <xsl:attribute name="id">
+        <xsl:call-template name="get-id"/>
+      </xsl:attribute>
+    </xsl:if>
+    <xsl:apply-templates/>
+  </fo:block>
 </xsl:template>
 `
 
@@ -649,7 +647,7 @@ class Generator {
       }
       //if (_.has(this.style, 'fig') && _.has(this.style["fig"], "caption-position") && this.style["fig"]["caption-position"] === "before") {
       if (_.has(this.style, 'fig.caption-position') && this.style["fig"]["caption-position"] === "before") {
-        this.copy_xml(root, figure_raw)
+        this.copy_xml(root, fig_raw)
       }
       if (this.cover_image_topic) {
         ET.SubElement(root, xsl('template'), {
