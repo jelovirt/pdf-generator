@@ -13,7 +13,5 @@ function (Handlebars,
     return {
       $element: $element
     }
-
-
   }
 })
