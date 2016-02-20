@@ -1,466 +1,468 @@
 <form action="{{ generate_url }}" method="post"><!--enctype="multipart/form-data"-->
-<section class="page" id="p1">
-  <p class="help">A PDF customisation plug-in defines a new DITA-OT
-    transformation type based on the built-in PDF conversion.</p>
-  <h3>Target environment</h3>
-  <div class="form">
-  <fieldset>
-    <p>
-      <label for="ot_version" title="Version of DITA-OT for which the plug-in is installed into.">DITA-OT version</label>
-      <select name="ot_version" id="ot_version" title="DITA-OT version" required>
-        <option value="2.2" selected>2.2</option>
-        <option value="2.1">2.1</option>
-        <option value="2.0">2.0</option>
-      </select>
-    </p>
-    <p class="instruction">Version of DITA-OT for which the plug-in is
-      installed into.</p>
-  </fieldset>
-  <fieldset>
-    <p>
-      <label for="formatter">XSL formatter</label>
-      <select name="formatter" id="formatter" title="XSL formatter" required>
-        <option value="fop" selected>FOP</option>
-        <option value="ah">AntennaHouse Formatter</option>
-        <option value="xep">RenderX XEP</option>
-      </select>
-    </p>
-    <p class="instruction">XSL formatter used to generate PDF output. DITA-OT comes with open source FOP formatter.</p>
-    <p class="help">Note that customisation features available are dependent
-      on the target DITA-OT and XSL formatter.</p>
-  </fieldset>
-  <fieldset>
-    <p>
-      <label for="override_shell">Override shell</label>
-      <input type="checkbox" name="override_shell" id="override_shell" title="Override shell"
-             value="true" checked>
-    </p>
-    <p class="instruction">Override XSLT shell stylesheet. Advanced generation option which will make further developing the generated plug-in easier.</p>
-  </fieldset>
-  </div>
-</section>
-<section class="page" id="p2">
-  <div class="form">
-  <h3>Page</h3>
-  <fieldset>
-    <p>
-      <label for="page-size">Page size</label>
-      <select name="page-size" id="page-size" title="Page size" required>
-        <option value="210mm 297mm">A3</option>
-        <option value="210mm 297mm" selected>A4</option>
-        <option value="210mm 297mm">A5</option>
-        <option value="184.1mm 266.7mm">Executive</option>
-        <option value="182mm 257mm">JIS B5</option>
-        <option value="431.8mm 279.4mm">Tabloid</option>
-        <option value="8.5in 14in">US Legal</option>
-        <option value="8.5in 11in">US Letter</option>
-        <option value="210mm 280mm">PA4</option>
-      </select>
-    </p>
-  </fieldset>
-  <fieldset>
-    <p>
-      <label for="orientation">Orientation</label>
-      <select name="orientation" id="orientation" required>
-        <option value="portrait" selected>portrait</option>
-        <option value="landscape">landscape</option>
-      </select>
-    </p>
-  </fieldset>
-  <h3>Margins</h3>
-  <fieldset>
-    <p>
-      <label for="page-margin-top">Top</label>
-      <input name="page-margin-top" id="page-margin-top" value="20mm" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
-    </p>
-    <p>
-      <label for="page-margin-outside">Outside</label>
-      <input name="page-margin-outside" id="page-margin-outside" value="20mm" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
-    </p>
-    <p>
-      <label for="page-margin-bottom">Bottom</label>
-      <input name="page-margin-bottom" id="page-margin-bottom" value="20mm" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
-    </p>
-    <p>
-      <label for="page-margin-inside">Inside</label>
-      <input name="page-margin-inside" id="page-margin-inside" value="20mm" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
-    </p>
-    <p class="instruction">Page margins.</p>
-  </fieldset>
-  <fieldset>
-    <p>
-      <label for="mirror-page-margins">Mirror margins</label>
-      <input type="checkbox" name="mirror-page-margins" id="mirror-page-margins" value="true">
-    </p>
-  </fieldset>
-  <h3>Columns</h3>
-  <fieldset>
-    <p>
-      <label for="body-column-count">Body column count</label>
-      <select name="body-column-count" id="body-column-count" required>
-        <option value="1" selected>1</option>
-        <option value="2">2</option>
-      </select>
-    </p>
-    <p>
-      <label for="index-column-count">Index column count</label>
-      <select name="index-column-count" id="index-column-count" required>
-        <option value="1">1</option>
-        <option value="2" selected>2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-      </select>
-    </p>
-    <p>
-      <label for="column-gap">Column gap</label>
-      <input name="column-gap" id="column-gap" value="12pt" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value">
-    </p>
-  </fieldset>
-  </div>
-  <div class="example-block" id="margin.example">
-    <div class="example-page even" title="Even page">
-      <table class="example-page-body">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
+  <section class="page container" id="p1">
+    <p class="help">A PDF customisation plug-in defines a new DITA-OT
+      transformation type based on the built-in PDF conversion.</p>
+    <h3>Target environment</h3>
+    <div class="form">
+      <fieldset>
+        <p>
+          <label for="ot_version" title="Version of DITA-OT for which the plug-in is installed into.">DITA-OT version</label>
+          <select name="ot_version" id="ot_version" title="DITA-OT version" required>
+            <option value="2.2" selected>2.2</option>
+            <option value="2.1">2.1</option>
+            <option value="2.0">2.0</option>
+          </select>
+        </p>
+        <p class="instruction">Version of DITA-OT for which the plug-in is
+          installed into.</p>
+      </fieldset>
+      <fieldset>
+        <p>
+          <label for="formatter">XSL formatter</label>
+          <select name="formatter" id="formatter" title="XSL formatter" required>
+            <option value="fop" selected>FOP</option>
+            <option value="ah">AntennaHouse Formatter</option>
+            <option value="xep">RenderX XEP</option>
+          </select>
+        </p>
+        <p class="instruction">XSL formatter used to generate PDF output. DITA-OT comes with open source FOP formatter.</p>
+        <p class="help">Note that customisation features available are dependent
+          on the target DITA-OT and XSL formatter.</p>
+      </fieldset>
+      <fieldset>
+        <p>
+          <label for="override_shell">Override shell</label>
+          <input type="checkbox" name="override_shell" id="override_shell" title="Override shell"
+                 value="true" checked>
+        </p>
+        <p class="instruction">Override XSLT shell stylesheet. Advanced generation option which will make further developing the generated plug-in easier.</p>
+      </fieldset>
     </div>
-    <div class="example-page odd" title="Odd page">
-      <table class="example-page-body">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
+  </section>
+  <section class="page container" id="p2">
+    <div class="form col-sm-5">
+      <h3>Page</h3>
+      <fieldset>
+        <p>
+          <label for="page-size">Page size</label>
+          <select name="page-size" id="page-size" title="Page size" required>
+            <option value="210mm 297mm">A3</option>
+            <option value="210mm 297mm" selected>A4</option>
+            <option value="210mm 297mm">A5</option>
+            <option value="184.1mm 266.7mm">Executive</option>
+            <option value="182mm 257mm">JIS B5</option>
+            <option value="431.8mm 279.4mm">Tabloid</option>
+            <option value="8.5in 14in">US Legal</option>
+            <option value="8.5in 11in">US Letter</option>
+            <option value="210mm 280mm">PA4</option>
+          </select>
+        </p>
+      </fieldset>
+      <fieldset>
+        <p>
+          <label for="orientation">Orientation</label>
+          <select name="orientation" id="orientation" required>
+            <option value="portrait" selected>portrait</option>
+            <option value="landscape">landscape</option>
+          </select>
+        </p>
+      </fieldset>
+      <h3>Margins</h3>
+      <fieldset>
+        <p>
+          <label for="page-margin-top">Top</label>
+          <input name="page-margin-top" id="page-margin-top" value="20mm" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
+        </p>
+        <p>
+          <label for="page-margin-outside">Outside</label>
+          <input name="page-margin-outside" id="page-margin-outside" value="20mm" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
+        </p>
+        <p>
+          <label for="page-margin-bottom">Bottom</label>
+          <input name="page-margin-bottom" id="page-margin-bottom" value="20mm" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
+        </p>
+        <p>
+          <label for="page-margin-inside">Inside</label>
+          <input name="page-margin-inside" id="page-margin-inside" value="20mm" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
+        </p>
+        <p class="instruction">Page margins.</p>
+      </fieldset>
+      <fieldset>
+        <p>
+          <label for="mirror-page-margins">Mirror margins</label>
+          <input type="checkbox" name="mirror-page-margins" id="mirror-page-margins" value="true">
+        </p>
+      </fieldset>
+      <h3>Columns</h3>
+      <fieldset>
+        <p>
+          <label for="body-column-count">Body column count</label>
+          <select name="body-column-count" id="body-column-count" required>
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+          </select>
+        </p>
+        <p>
+          <label for="index-column-count">Index column count</label>
+          <select name="index-column-count" id="index-column-count" required>
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </p>
+        <p>
+          <label for="column-gap">Column gap</label>
+          <input name="column-gap" id="column-gap" value="12pt" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value">
+        </p>
+      </fieldset>
     </div>
-  </div>
-</section>
-<section class="page" id="p3">
-  <h3>Header and footer</h3>
-  <fieldset>
-    <p>
-      <label>Header</label>
-      <table>
-        <thead class="even">
+    <div class="example-block col-sm-7" id="margin.example">
+      <div class="example-page even" title="Even page">
+        <table class="example-page-body">
           <tr>
-            <th><label for="header.even">even</label></th>
-            <th><label for="header.odd">odd</label></th>
+            <td><div></div></td>
           </tr>
-        </thead>
-        <tbody>
+        </table>
+      </div>
+      <div class="example-page odd" title="Odd page">
+        <table class="example-page-body">
           <tr>
-            <td class="even">
-              <select name="header.even" id="header.even">
-                <option value="">empty</option>
-                <!--option value="part">Part title</option-->
-                <!--option value="number">Chapter number</option-->
-                <option value="chapter" selected>Chapter title</option>
-                <!--option value="subhead">Subhead</option-->
-                <!-->option value="author">Author</option-->
-              </select>
-            </td>
-            <td>
-              <select name="header.odd" id="header.odd">
-                <option value="">empty</option>
-                <option value="chapter" selected>Chapter title</option>
-                <!--option value="subhead">Subhead</option-->
-                <!--option value="subchapter">Chapter subtitle</option-->
-              </select>
-            </td>
+            <td><div></div></td>
           </tr>
-        </tbody>
-      </table>
-    </p>
-    <p class="instruction">Page header contents.</p>
-  </fieldset>
-  <fieldset>
-    <p>
-      <label for="drop-folio">Drop folio</label>
-      <input type="checkbox" name="drop-folio" id="drop-folio" value="pagenum">
-    </p>
-    <p class="instruction">Place page number in footer.</p>
-  </fieldset>
-  <h3>Layout</h3>
-  <div class="form">
-  <fieldset>
-    <p>
-      <label for="force-page-count">Chapter start<!--Chapter page--></label>
-      <select name="force-page-count" id="force-page-count" title="Force page count">
-        <!-- TODO -->
-        <!--option value="together">no break</option-->
-        <option value="auto">new page</option>
-        <option value="even" selected>odd page</option>
-        <option value="odd">even page</option>
-      </select>
-    </p>
-    <p class="instruction">Chapters can be made to always start on an odd
-      page or directly follow the previous page.</p>
-    <p class="help">Default page count behavior for Bookmaps is to start every
-    chapter on an odd page.</p>
-  </fieldset>
-  <fieldset>
-    <p>
-      <label for="chapter-layout" >Chapter layout</label>
-      <select name="chapter-layout" id="chapter-layout" title="Chapter page layout">
-        <option value="MINITOC" selected>chapter TOC</option>
-        <option value="BASIC">no chapter TOC</option>
-      </select>
-    </p>
-    <p class="instruction">Chapters can start with a table of chapter contents on a separate chapter cover page.</p>
-  </fieldset>
-  </div>
-  <div class="example-block">
-  <div class="force-page-count_example_auto">
-    <div class="example-page even" title="Even page">
-      <table class="example-page-body">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
+        </table>
+      </div>
     </div>
-    <div class="example-page odd" title="Even odd, last page of chapter">
-      <table class="example-page-body cut-off">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
+  </section>
+  <section class="page container" id="p3">
+    <h3>Header and footer</h3>
+    <div class="col-sm-12">
+      <fieldset>
+        <p>
+          <label>Header</label>
+          <table>
+            <thead class="even">
+              <tr>
+                <th><label for="header.even">even</label></th>
+                <th><label for="header.odd">odd</label></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="even">
+                  <select name="header.even" id="header.even">
+                    <option value="">empty</option>
+                    <!--option value="part">Part title</option-->
+                    <!--option value="number">Chapter number</option-->
+                    <option value="chapter" selected>Chapter title</option>
+                    <!--option value="subhead">Subhead</option-->
+                    <!-->option value="author">Author</option-->
+                  </select>
+                </td>
+                <td>
+                  <select name="header.odd" id="header.odd">
+                    <option value="">empty</option>
+                    <option value="chapter" selected>Chapter title</option>
+                    <!--option value="subhead">Subhead</option-->
+                    <!--option value="subchapter">Chapter subtitle</option-->
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </p>
+        <p class="instruction">Page header contents.</p>
+      </fieldset>
+      <fieldset>
+      <p>
+        <label for="drop-folio">Drop folio</label>
+        <input type="checkbox" name="drop-folio" id="drop-folio" value="pagenum">
+      </p>
+      <p class="instruction">Place page number in footer.</p>
+    </fieldset>
     </div>
-    <div class="example-page even" title="Even page, first page of chapter">
-      <table class="example-page-body">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
+    <h3>Layout</h3>
+    <div class="form col-sm-5">
+      <fieldset>
+        <p>
+          <label for="force-page-count">Chapter start<!--Chapter page--></label>
+          <select name="force-page-count" id="force-page-count" title="Force page count">
+            <!-- TODO -->
+            <!--option value="together">no break</option-->
+            <option value="auto">new page</option>
+            <option value="even" selected>odd page</option>
+            <option value="odd">even page</option>
+          </select>
+        </p>
+        <p class="instruction">Chapters can be made to always start on an odd
+          page or directly follow the previous page.</p>
+        <p class="help">Default page count behavior for Bookmaps is to start every
+        chapter on an odd page.</p>
+      </fieldset>
+      <fieldset>
+        <p>
+          <label for="chapter-layout" >Chapter layout</label>
+          <select name="chapter-layout" id="chapter-layout" title="Chapter page layout">
+            <option value="MINITOC" selected>chapter TOC</option>
+            <option value="BASIC">no chapter TOC</option>
+          </select>
+        </p>
+        <p class="instruction">Chapters can start with a table of chapter contents on a separate chapter cover page.</p>
+      </fieldset>
     </div>
-    <div class="example-page odd" title="Odd page">
-      <table class="example-page-body">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
+    <div class="example-block col-sm-7">
+      <div class="force-page-count_example_auto">
+        <div class="example-page even" title="Even page">
+          <table class="example-page-body">
+            <tr>
+              <td><div></div></td>
+            </tr>
+          </table>
+        </div>
+        <div class="example-page odd" title="Even odd, last page of chapter">
+          <table class="example-page-body cut-off">
+            <tr>
+              <td><div></div></td>
+            </tr>
+          </table>
+        </div>
+        <div class="example-page even" title="Even page, first page of chapter">
+          <table class="example-page-body">
+            <tr>
+              <td><div></div></td>
+            </tr>
+          </table>
+        </div>
+        <div class="example-page odd" title="Odd page">
+          <table class="example-page-body">
+            <tr>
+              <td><div></div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="force-page-count_example_even">
+        <div class="example-page even" title="Even page">
+          <table class="example-page-body">
+            <tr>
+              <td><div></div></td>
+            </tr>
+          </table>
+        </div>
+        <div class="example-page odd" title="Odd page, last page of chapter">
+          <table class="example-page-body cut-off">
+            <tr>
+              <td><div></div></td>
+            </tr>
+          </table>
+        </div>
+        <div class="example-page even" title="Even page, blank page">
+          <table class="example-page-body-empty">
+            <tr>
+              <td><div></div></td>
+            </tr>
+          </table>
+        </div>
+        <div class="example-page odd" title="Odd page, first page of chapter">
+          <table class="example-page-body">
+            <tr>
+              <td><div></div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="force-page-count_example_odd">
+        <div class="example-page even" title="Even page, last page of chapter">
+          <table class="example-page-body cut-off">
+            <tr>
+              <td><div></div></td>
+            </tr>
+          </table>
+        </div>
+        <div class="example-page odd" title="Odd page, blank page">
+          <table class="example-page-body-empty">
+            <tr>
+              <td><div></div></td>
+            </tr>
+          </table>
+        </div>
+        <div class="example-page even" title="Even page, first page of chapter">
+          <table class="example-page-body">
+            <tr>
+              <td><div></div></td>
+            </tr>
+          </table>
+        </div>
+        <div class="example-page odd" title="Odd page">
+          <table class="example-page-body">
+            <tr>
+              <td><div></div></td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="force-page-count_example_even">
-    <div class="example-page even" title="Even page">
-      <table class="example-page-body">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
+  </section>
+  <section class="page container" id="p4">
+    <h3>Style</h3>
+  </section>
+  <section class="page container" id="p5">
+    <h3>Cover</h3>
+    <fieldset class="col-sm-12">
+      <p>
+        <label>Cover image</label>
+        <select id="cover_image_chooser">
+          <option>No image</option>
+          <!--option value="file">Upload image</option-->
+          <option value="metadata">Map metadata</option>
+          <!--option value="topic">Cover topic</option-->
+        </select>
+      </p>
+      <p class="controller" id="cover_image_file">
+        <input name="cover_image" id="cover_image_file_value" type="file">
+      </p>
+      <p class="controller" id="cover_image_metadata">
+        <label for="cover_image_metadata_value" class="inline">Data element name</label>:
+        <input name="cover_image_metadata" id="cover_image_metadata_value" type="text" value="cover-image">
+      </p>
+      <!--p class="controller" id="cover_image_topic">
+        <label for="cover_image_topic_value" class="inline">Outputclass attribute value</label>:
+        <input name="cover_image_topic" id="cover_image_topic_value" type="text" value="front-cover">
+      </p-->
+      <p class="instruction">Image on the cover page.</p>
+      <div class="help">
+        <p>Either upload a cover graphic and bundle it with the plug-in, or read the cover graphic file name from map metadata field:</p>
+        <pre>&lt;data name="cover-image"&gt;
+  &lt;image href="cover.svg"/&gt;
+  &lt;/data&gt;</pre>
+        <p>Or use topic as cover topic:</p>
+        <pre>&lt;topicref href="cover.dita" outputclass="front-cover" toc="no"/&gt;</pre>
+      </div>
+    </fieldset>
+    <h3>Table of Contents</h3>
+    <fieldset class="col-sm-12">
+      <p>
+        <label for="toc-maximum-level">Show level</label>
+        <select name="toc-maximum-level" id="toc-maximum-level">
+          <option value="2">1</option>
+          <option value="3">2</option>
+          <option value="4" selected>3</option>
+          <option value="5">4</option>
+        </select>
+      </p>
+      <p class="instruction">Number of levels displayed on table of contents page.</p>
+    </fieldset>
+    <h3>Page numbering</h3>
+    <fieldset class="col-sm-12 fah">
+      <p class="not-available">Not available for FOP and RenderX XEP</p>
+      <p>
+        <label for="page-number">Page number</label>
+        <select name="page-number" id="page-number">
+          <option value="page" selected>1</option>
+          <option value="chapter-page">1-1</option>
+        </select>
+      </p>
+      <p class="instruction">Page number format.</p>
+      <p class="help">Either use a simple page number, or reset page numbering for each chapter and prefix page number with chapter number.</p>
+    </fieldset>
+    <h3>PDF Bookmarks</h3>
+    <fieldset class="col-sm-12">
+      <p>
+        <label for="bookmark-style">Bookmarks state</label>
+        <select name="bookmark-style" id="bookmark-style" title="Bookmark initial state">
+          <option value="COLLAPSED" selected>collapsed</option>
+          <option value="EXPANDED">expanded</option>
+        </select>
+      </p>
+      <p class="instruction">PDF bookmark node initial state.</p>
+    </fieldset>
+    <!--
+  </section>
+  <section class="page container">
+    -->
+    <h3>Labels</h3>
+    <div class="form col-sm-5">
+      <fieldset>
+        <p>
+          <label for="task-label">Task labels</label>
+          <input type="checkbox" name="task-label" id="task-label" value="true" title="Task labels">
+        </p>
+        <p class="instruction">Generate titles for task steps and sections.</p>
+      </fieldset>
+      <fieldset class="fah">
+        <p class="not-available">Not available for FOP and RenderX XEP</p>
+        <p>
+          <label for="table-continued">Table continued</label>
+          <input type="checkbox" name="table-continued" id="table-continued" value="true" title="Mark continued table">
+        </p>
+        <p class="instruction">Generate "Table continued…" to table footer when table is broken to multiple pages.</p>
+      </fieldset>
     </div>
-    <div class="example-page odd" title="Odd page, last page of chapter">
-      <table class="example-page-body cut-off">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
+    <div class="example-block col-sm-7">
+      <div class="example-text">
+        <p class="example-page-content-para example-task-label"><strong>About this task</strong></p>
+        <p class="example-page-content-para">Learn how to add nails to walls.</p>
+        <p class="example-page-content-para example-task-label"><strong>Before you start</strong></p>
+        <p class="example-page-content-para">Buy a hammer and a nail.</p>
+        <p class="example-page-content-para example-task-label"><strong>Procedure</strong></p>
+        <p class="example-page-content-para">1. Hammer in the nail.</p>
+      </div>
     </div>
-    <div class="example-page even" title="Even page, blank page">
-      <table class="example-page-body-empty">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
+    <h3>Linking</h3>
+    <fieldset class="col-sm-12">
+      <p>
+        <label for="include-related-links">Related links</label>
+        <select name="include-related-links" id="include-related-links" title="Related links">
+          <option value="none" selected>none</option>
+          <option value="nofamily">no family</option>
+          <option value="all">all</option>
+        </select>
+      </p>
+      <p class="instruction">Related links generated for topics.</p>
+    </fieldset>
+  </section>
+  <!-- metadata -->
+  <section class="page container" id="p6">
+    <h3>Metadata</h3>
+    <div class="col-sm-12">
+      <fieldset>
+        <p>
+          <label for="id" class="required">Plug-in ID</label>
+          <input type="text" name="id" id="id" class="required" required
+                 title="ID of the new topic type or shell">
+        </p>
+        <p class="instruction">Plug-in ID is used to identify the DITA-OT plug-in.</p>
+        <p class="help">ID must conform to plug-in ID syntax rules.</p>
+      </fieldset>
+      <fieldset>
+        <p>
+          <label for="transtype" class="required">Transtype</label>
+          <input name="transtype" id="transtype" class="required" required
+                 title="Transtype">
+        </p>
+        <p class="instruction">Name of the new transformation type.</p>
+        <p class="help">Transtype name must conform to same syntax
+            rules as plug-in ID.</p>
+      </fieldset>
+      <!--fieldset>
+        <p>
+          <label for="title" class="required">Title</label>
+          <input type="text" name="title" id="title" class="required" required title="Title of the type">
+          <span class="instruction">Human readable name.</span>
+        </p>
+        <p class="help">
+          Type title is the human readable name for the {{ output_title }}.
+        </p>
+      </fieldset-->
+      <fieldset>
+        <p title="Generated plugin version number">
+          <label for="plugin-version">Plug-in version</label>
+          <input type="text" name="plugin-version" id="plugin-version"
+                 placeholder ="0.0.0" pattern="(\d+(\.\d+(\.\d+)?)?">
+        </p>
+      </fieldset>
     </div>
-    <div class="example-page odd" title="Odd page, first page of chapter">
-      <table class="example-page-body">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  <div class="force-page-count_example_odd">
-    <div class="example-page even" title="Even page, last page of chapter">
-      <table class="example-page-body cut-off">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
-    </div>
-    <div class="example-page odd" title="Odd page, blank page">
-      <table class="example-page-body-empty">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
-    </div>
-    <div class="example-page even" title="Even page, first page of chapter">
-      <table class="example-page-body">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
-    </div>
-    <div class="example-page odd" title="Odd page">
-      <table class="example-page-body">
-        <tr>
-          <td><div></div></td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  </div>
-</section>
-<section class="page" id="p4">
-  <h3>Style</h3>
-</section>
-<section class="page" id="p5">
-  <h3>Cover</h3>
-  <fieldset>
-    <p>
-      <label>Cover image</label>
-      <select id="cover_image_chooser">
-        <option>No image</option>
-        <!--option value="file">Upload image</option-->
-        <option value="metadata">Map metadata</option>
-        <!--option value="topic">Cover topic</option-->
-      </select>
-    </p>
-    <p class="controller" id="cover_image_file">
-      <input name="cover_image" id="cover_image_file_value" type="file">
-    </p>
-    <p class="controller" id="cover_image_metadata">
-      <label for="cover_image_metadata_value" class="inline">Data element name</label>:
-      <input name="cover_image_metadata" id="cover_image_metadata_value" type="text" value="cover-image">
-    </p>
-    <!--p class="controller" id="cover_image_topic">
-      <label for="cover_image_topic_value" class="inline">Outputclass attribute value</label>:
-      <input name="cover_image_topic" id="cover_image_topic_value" type="text" value="front-cover">
-    </p-->
-    <p class="instruction">Image on the cover page.</p>
-    <div class="help">
-      <p>Either upload a cover graphic and bundle it with the plug-in, or read the cover graphic file name from map metadata field:</p>
-      <pre>&lt;data name="cover-image"&gt;
-&lt;image href="cover.svg"/&gt;
-&lt;/data&gt;</pre>
-      <p>Or use topic as cover topic:</p>
-      <pre>&lt;topicref href="cover.dita" outputclass="front-cover" toc="no"/&gt;</pre>
-    </div>
-  </fieldset>
-  <h3>Table of Contents</h3>
-  <fieldset>
-    <p>
-      <label for="toc-maximum-level">Show level</label>
-      <select name="toc-maximum-level" id="toc-maximum-level">
-        <option value="2">1</option>
-        <option value="3">2</option>
-        <option value="4" selected>3</option>
-        <option value="5">4</option>
-      </select>
-    </p>
-    <p class="instruction">Number of levels displayed on table of contents page.</p>
-  </fieldset>
-  <h3>Page numbering</h3>
-  <fieldset class="fah">
-    <p class="not-available">Not available for FOP and RenderX XEP</p>
-    <p>
-      <label for="page-number">Page number</label>
-      <select name="page-number" id="page-number">
-        <option value="page" selected>1</option>
-        <option value="chapter-page">1-1</option>
-      </select>
-    </p>
-    <p class="instruction">Page number format.</p>
-    <p class="help">Either use a simple page number, or reset page numbering for each chapter and prefix page number with chapter number.</p>
-  </fieldset>
-  <h3>PDF Bookmarks</h3>
-  <fieldset>
-    <p>
-      <label for="bookmark-style">Bookmarks state</label>
-      <select name="bookmark-style" id="bookmark-style" title="Bookmark initial state">
-        <option value="COLLAPSED" selected>collapsed</option>
-        <option value="EXPANDED">expanded</option>
-      </select>
-    </p>
-    <p class="instruction">PDF bookmark node initial state.</p>
-  </fieldset>
-  <!--
-</section>
-<section class="page">
-  -->
-  <h3>Labels</h3>
-  <div class="form">
-  <fieldset>
-    <p>
-      <label for="task-label">Task labels</label>
-      <input type="checkbox" name="task-label" id="task-label" value="true" title="Task labels">
-    </p>
-    <p class="instruction">Generate titles for task steps and sections.</p>
-  </fieldset>
-  </div>
-  <div class="example-block">
-    <div class="example-text">
-      <p class="example-page-content-para example-task-label"><strong>About this task</strong></p>
-      <p class="example-page-content-para">Learn how to add nails to walls.</p>
-      <p class="example-page-content-para example-task-label"><strong>Before you start</strong></p>
-      <p class="example-page-content-para">Buy a hammer and a nail.</p>
-      <p class="example-page-content-para example-task-label"><strong>Procedure</strong></p>
-      <p class="example-page-content-para">1. Hammer in the nail.</p>
-    </div>
-  </div>
-  <fieldset class="fah">
-    <p class="not-available">Not available for FOP and RenderX XEP</p>
-    <p>
-      <label for="table-continued">Table continued</label>
-      <input type="checkbox" name="table-continued" id="table-continued" value="true" title="Mark continued table">
-    </p>
-    <p class="instruction">Generate "Table continued…" to table footer when table is broken to multiple pages.</p>
-  </fieldset>
-  <h3>Linking</h3>
-  <fieldset>
-    <p>
-      <label for="include-related-links">Related links</label>
-      <select name="include-related-links" id="include-related-links" title="Related links">
-        <option value="none" selected>none</option>
-        <option value="nofamily">no family</option>
-        <option value="all">all</option>
-      </select>
-    </p>
-    <p class="instruction">Related links generated for topics.</p>
-  </fieldset>
-</section>
-<!-- metadata -->
-<section class="page" id="p6">
-  <h3>Metadata</h3>
-  <fieldset>
-    <p>
-      <label for="id" class="required">Plug-in ID</label>
-      <input type="text" name="id" id="id" class="required" required
-             title="ID of the new topic type or shell">
-    </p>
-    <p class="instruction">Plug-in ID is used to identify the DITA-OT plug-in.</p>
-    <p class="help">ID must conform to plug-in ID syntax rules.</p>
-  </fieldset>
-  <fieldset>
-    <p>
-      <label for="transtype" class="required">Transtype</label>
-      <input name="transtype" id="transtype" class="required" required
-             title="Transtype">
-
-    </p>
-    <p class="instruction">Name of the new transformation type.</p>
-    <p class="help">Transtype name must conform to same syntax
-        rules as plug-in ID.</p>
-  </fieldset>
-  <!--fieldset>
-    <p>
-      <label for="title" class="required">Title</label>
-      <input type="text" name="title" id="title" class="required" required title="Title of the type">
-      <span class="instruction">Human readable name.</span>
-    </p>
-    <p class="help">
-      Type title is the human readable name for the {{ output_title }}.
-    </p>
-  </fieldset-->
-  <fieldset>
-    <p title="Generated plugin version number">
-      <label for="plugin-version">Plug-in version</label>
-      <input type="text" name="plugin-version" id="plugin-version"
-             placeholder ="0.0.0" pattern="(\d+(\.\d+(\.\d+)?)?">
-    </p>
-  </fieldset>
-</section>
-
+  </section>
   <div id="controls">
     <button id="generate" class='btn btn-default' type="submit">Generate</button>
   </div>

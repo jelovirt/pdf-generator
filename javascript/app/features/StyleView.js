@@ -12,7 +12,7 @@ define([
       four: [1, 2, 3, 4]
     }))
     $root.append($form)
-    const $styleForm = $form.find('#style-form')
+    const $styleForm = $('#style-form')
     // border shorthand
     $styleForm.find(":input[id='border']").change(borderEditorHandler)
 

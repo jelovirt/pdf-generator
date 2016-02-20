@@ -7,14 +7,14 @@ fieldset.model {
 }
 
 .form {
-  @include float-block;
-  width: 500px;
+  //@include float-block;
+  //width: 500px;
 }
 .example-block {
-  @include float-block;
-  width: 600px;
+  //@include float-block;
+  //width: 600px;
   margin-top: 1em;
-  margin-left: 1em;
+  //margin-left: 1em;
 
   .example-text {
     border: solid 1px black;
@@ -108,7 +108,12 @@ h3 {
   font-size: 6px;
   line-height: 6px;
   float: left;
-  margin: 2px;
+  margin: 4px;
+
+  &.even {
+    margin-right: -5px;
+    box-shadow: 0px 3px 3px #ccc;
+  }
 
   .example-page-body {
     overflow: hidden;
