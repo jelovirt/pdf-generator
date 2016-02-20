@@ -180,7 +180,7 @@ define([
         }
         $element.append($input)
       })
-      $('body').append($element)
+      $('form').first().append($element)
 
       const $inputs = $element.find(':input')
       const change = Rx.Observable.fromEvent($inputs, 'change')
@@ -188,7 +188,7 @@ define([
       return {
         change: change,
         fields: $inputs,
-        field: field,
+        field: getField,
         readFromModel: readFromModel,
         writeFieldToModel: writeFieldToModel
       }
@@ -206,7 +206,7 @@ define([
         }).flatten().value()
       }
 
-      function field(field, type) {
+      function getField(field, type) {
         return $inputs.filter("[name='" + field + "." + type + "']")
       }
 
@@ -216,11 +216,11 @@ define([
        */
       function readFromModel(type) {
         for (var i = 0; i < allFields.length; i++) {
-          var model = styleModel.field(allFields[i], type)
+          var model = getField(allFields[i], type)
           // if no value, inherit from body
           if ((model.data('inherit') !== undefined || model.data('inherit') !== null)
             && (model.val() === undefined || model.val() === null || model.val() === "")) {
-            model = styleModel.field(allFields[i], 'body')
+            model = getField(allFields[i], 'body')
           }
           var input = view.$styleForm.find(":input[id='" + allFields[i] + "']")
           if (input.is(":checkbox")) {
@@ -240,7 +240,7 @@ define([
 
       function writeFieldToModel(field, type) {
         var input = view.$styleForm.find(":input[id='" + field + "']")
-        var model = styleModel.field(field, type)
+        var model = getField(field, type)
         var oldValue = model.val()
         var newValue
         if (input.is(":checkbox")) {
@@ -259,13 +259,13 @@ define([
 
         // if equals body value, treat as inherit value
         if (model.data('inherit') !== undefined && model.data('inherit') !== null) {
-          var b = styleModel.field(field, 'body')//filter("[name='" + field + "." + 'body' + "']")
+          var b = getField(field, 'body')//filter("[name='" + field + "." + 'body' + "']")
           if (oldValue === b.val()) {
             newValue = undefined
           }
           // update inheriting model fields
         } else if (type === 'body') {
-          styleModel.fields.filter("[data-inherit=body]").each(function () {
+          $inputs.filter("[data-inherit=body]").each(function () {
             var m = $(this)
             if (m.is("[name^='" + field + "']")) {
               if (m.val() === undefined || m.val() === "" || m.val() === oldValue) {

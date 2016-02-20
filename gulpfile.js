@@ -3,7 +3,7 @@ const babel = require('gulp-babel')
 const sass = require('gulp-sass')
 const watch = require('gulp-watch')
 
-gulp.task('default', ['js', 'sass'])
+gulp.task('default', ['js', 'sass', 'fonts'])
 
 gulp.task('js', () => {
   return gulp
@@ -23,6 +23,12 @@ gulp.task('sass', () => {
     .pipe(gulp.dest('public/stylesheets'))
 })
 
+gulp.task('fonts', () => {
+  return gulp
+    .src('node_modules/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.*')
+    .pipe(gulp.dest('public/fonts/bootstrap'))
+})
+
 gulp.task('watch-js', ['js'], () => {
   return watch('javascript/**/*.js', () => {
     gulp.start('js')
@@ -34,4 +40,3 @@ gulp.task('sass-js', ['sass'], () => {
     gulp.start('sass')
   })
 })
-
