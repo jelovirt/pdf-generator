@@ -437,7 +437,7 @@ class Generator {
           <fo:block xsl:use-attribute-sets="chapterfrontmatternamecontainer">
             <xsl:call-template name="getVariable">
               <xsl:with-param name="id" select="'Chapter with number'"/>
-              <xsl:with-param name="params">
+              <xsl:with-param name="params" as="element()*">
                 <number>
                   <!--fo:block xsl:use-attribute-sets="chapterfrontmatternumbercontainer">
                       <xsl:apply-templates select="key('map-id', @id)[1]" mode="topicTitleNumber"/>
@@ -451,7 +451,7 @@ class Generator {
             <fo:block xsl:use-attribute-sets="chapterfrontmatternamecontainer">
                 <xsl:call-template name="getVariable">
                     <xsl:with-param name="id" select="'Appendix with number'"/>
-                    <xsl:with-param name="params">
+                     <xsl:with-param name="params" as="element()*">
                         <number>
                             <!--fo:block xsl:use-attribute-sets="chapterfrontmatternumbercontainer">
                                 <xsl:apply-templates select="key('map-id', @id)[1]" mode="topicTitleNumber"/>
@@ -465,7 +465,7 @@ class Generator {
           <fo:block xsl:use-attribute-sets="chapterfrontmatternamecontainer">
             <xsl:call-template name="getVariable">
               <xsl:with-param name="id" select="'Appendix with number'"/>
-              <xsl:with-param name="params">
+               <xsl:with-param name="params" as="element()*">
                 <number>
                   <fo:block xsl:use-attribute-sets="chapterfrontmatternumbercontainer">
                     <xsl:text>&#xA0;</xsl:text>
@@ -479,7 +479,7 @@ class Generator {
           <fo:block xsl:use-attribute-sets="chapterfrontmatternamecontainer">
             <xsl:call-template name="getVariable">
               <xsl:with-param name="id" select="'Part with number'"/>
-              <xsl:with-param name="params">
+               <xsl:with-param name="params" as="element()*">
                 <number>
                   <fo:block xsl:use-attribute-sets="chapterfrontmatternumbercontainer">
                     <xsl:apply-templates select="key('map-id', @id)[1]" mode="topicTitleNumber"/>
@@ -528,7 +528,7 @@ class Generator {
     <xsl:call-template name="commonattributes"/>
     <xsl:call-template name="getVariable">
       <xsl:with-param name="id" select="'Table.title'"/>
-      <xsl:with-param name="params">
+       <xsl:with-param name="params" as="element()*">
         <number>
           <xsl:apply-templates select="." mode="table.title-number"/>
         </number>
@@ -679,7 +679,7 @@ class Generator {
     <xsl:call-template name="commonattributes"/>
     <xsl:call-template name="getVariable">
       <xsl:with-param name="id" select="'Figure.title'"/>
-      <xsl:with-param name="params">
+       <xsl:with-param name="params" as="element()*">
         <number>
           <xsl:apply-templates select="." mode="fig.title-number"/>
         </number>
@@ -941,7 +941,7 @@ class Generator {
                 </fo:inline>
                 <xsl:call-template name="getVariable">
                     <xsl:with-param name="id" select="concat('Ordered List Number ', $depth)"/>
-                    <xsl:with-param name="params">
+                     <xsl:with-param name="params" as="element()*">
                         <number>
                             <xsl:number format="{$format}"/>
                         </number>
@@ -1159,7 +1159,7 @@ class Generator {
         <xsl:variable name="s">
           <xsl:call-template name="getVariable">
             <xsl:with-param name="id" select="concat('Ordered List Number ', $depth)" />
-            <xsl:with-param name="params">
+             <xsl:with-param name="params" as="element()*">
               <number>
                 <xsl:number format="{$format}" />
               </number>
