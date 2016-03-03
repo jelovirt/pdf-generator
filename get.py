@@ -518,10 +518,11 @@ def main():
                     url = "/"
                 else:
                     url = "/generate"
-                break
             elif version is None:
                 version = sys.argv[i]
                 params["ot_version"] = version
+            else:
+                break
             i = i + 1
     except Exception, e:
         print e

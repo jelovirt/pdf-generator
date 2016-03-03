@@ -1304,7 +1304,7 @@ class Generator {
     fs.push("plugin:org.dita.pdf2:xsl/fo/learning-elements.xsl")
 
     fs.push("plugin:org.dita.pdf2:xsl/fo/flagging.xsl")
-    if (this.ot_version.compareTo(new Version("2.2")) >= 0) {
+    if (this.ot_version.compareTo(new Version("2.1")) < 0) {
       fs.push("plugin:org.dita.pdf2:xsl/fo/flagging-from-preprocess.xsl")
     }
 
@@ -1711,13 +1711,13 @@ class Version {
       return 0
     } else {
       var n = Math.min(this.tokens.length, other.tokens.length)
-      _.range(n).forEach((i) => {
+      for (let i of _.range(n)) {
         if (this.tokens[i] > other.tokens[i]) {
           return 1
         } else if (this.tokens[i] < other.tokens[i]) {
           return -1
         }
-      })
+      }
       if (this.tokens.length > n) {
         return 1
       } else {
