@@ -1,4 +1,4 @@
-<form action="{{ generate_url }}" method="post"><!--enctype="multipart/form-data"-->
+<form action="{{ generate_url }}" method="post" id="generate-plugin"><!--enctype="multipart/form-data"-->
   <section class="page container" id="p1">
     <p class="help">A PDF customisation plug-in defines a new DITA-OT
       transformation type based on the built-in PDF conversion.</p>
@@ -8,9 +8,9 @@
         <p>
           <label for="ot_version" title="Version of DITA-OT for which the plug-in is installed into.">DITA-OT version</label>
           <select name="ot_version" id="ot_version" title="DITA-OT version" required>
+            <option value="2.3">development</option>
             <option value="2.2" selected>2.2</option>
             <option value="2.1">2.1</option>
-            <option value="2.0">2.0</option>
           </select>
         </p>
         <p class="instruction">Version of DITA-OT for which the plug-in is
@@ -461,6 +461,23 @@
                  placeholder ="0.0.0" pattern="(\d+(\.\d+(\.\d+)?)?">
         </p>
       </fieldset>
+    </div>
+  </section>
+  <!-- download -->
+  <section class="page container" id="p7">
+    <h3>Download</h3>
+    <div class="col-sm-12">
+      <p>Download of generated DITA-OT PDF plugin will start immediately...</p>
+      <p>See
+        <a class="v2_3 hidden-when-disabled" target="_blank" href="http://www.dita-ot.org/dev/dev_ref/plugins-installing.html">plugin installation documentation</a>
+        <a class="v2_2 hidden-when-disabled" target="_blank" href="http://www.dita-ot.org/2.2/user-guide/plugins-installing.html">plugin installation documentation</a>
+        <a class="v2_1 hidden-when-disabled" target="_blank" href="http://www.dita-ot.org/2.1/user-guide/plugins-installing.html">plugin installation documentation</a>
+        for next steps.</p>
+      <h4>Donations</h4>
+      <p>The DITA-OT PDF plugin generator is developed as a spare time project by
+        <a href="http://fi.linkedin.com/in/jelovirt">Jarno Elovirta</a> and is available for use free of charge.
+        Donations are welcome per "value for value" model:
+        <em>you give value only when you feel you have received value</em>.</p>
     </div>
   </section>
   <div id="controls">

@@ -15,6 +15,8 @@ define([
       var next = $("<button type='button' class='btn btn-default' id='next'>Next &gt;</button>").click(nextHandler);
       $("#generate").before(prev).before(" ").before(next).before(" ");
 
+      $('#generate').attr('type', 'button').click(generateHandler)
+
       // help
       $("fieldset label:not(.inline)").each(function () {
         const l = $(this);
@@ -100,13 +102,17 @@ define([
         } else {
           $("#prev").removeAttr("disabled");
         }
-        if ($(".current").nextAll(".page:first").length === 0) { // last page
+
+        if ($(".current#p6").length !== 0) { // last page
           $("#next").attr("disabled", true);
-          if (valid) {
+          if(valid) {
             $("#generate").removeAttr("disabled");
           } else {
             $("#generate").attr("disabled", true);
           }
+        } else if ($(".current").nextAll(".page:first").length === 0) { // download page
+          $("#next").attr("disabled", true);
+          $("#generate").attr("disabled", true);
         } else {
           if (valid) {
             $("#next").removeAttr("disabled");
@@ -121,6 +127,15 @@ define([
 
       function getLabel(elem) {
         return $("label[for=" + elem.name + "]:first").text();
+      }
+
+      function generateHandler(event) {
+        var n = $(".current").nextAll(".page:not(.disabled):first");
+        $(".current").removeClass("current").hide();
+        n.addClass("current").show();
+        validatePage();
+        setFragment();
+        $('form#generate-plugin').submit();
       }
 
       /**
