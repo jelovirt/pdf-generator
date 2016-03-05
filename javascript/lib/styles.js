@@ -1,5 +1,6 @@
 (function() {
   function styles(_) {
+    const startIndent = 25
     const base = {
       "background-color": {default: "transparent", inherit: null},
       "padding-top": {default: "0pt", inherit: null},
@@ -32,7 +33,7 @@
         "space-before": {default: "6pt", inherit: null},
         "space-after": {default: "6pt", inherit: null},
         "text-align": {default: "start", inherit: null},
-        "start-indent": {default: "25pt", inherit: null},
+        "start-indent": {default: startIndent + "pt", inherit: null},
         "line-height": {default: "1.2", inherit: null}
       }, base),
       "topic": _.defaultsDeep({
@@ -290,6 +291,58 @@
         // custom
         "caption-number": {default: "document", inherit: null},
         "caption-position": {default: "after", inherit: null}
+      }, base),
+      "toc_1": _.defaultsDeep({
+        "font-family": { default: null, inherit: "body" },
+        "font-size": { default: '12pt', inherit: "body" },
+        "color": { default: null, inherit: "body" },
+        "font-weight": { default: 'bold', inherit: "body" },
+        "font-style": { default: null, inherit: "body" },
+        "text-decoration": { default: null, inherit: "body" },
+        "space-before": { default: null, inherit: "body" },
+        "space-after": { default: null, inherit: "body" },
+        "text-align": { default: null, inherit: "body" },
+        "start-indent": { default: (startIndent + 0 * 30) + 'pt', inherit: "body" },
+        "line-height": { default: null, inherit: "body" }
+      }, base),
+      "toc_2": _.defaultsDeep({
+        "font-family": { default: null, inherit: "body" },
+        "font-size": { default: null, inherit: "body" },
+        "color": { default: null, inherit: "body" },
+        "font-weight": { default: null, inherit: "body" },
+        "font-style": { default: null, inherit: "body" },
+        "text-decoration": { default: null, inherit: "body" },
+        "space-before": { default: null, inherit: "body" },
+        "space-after": { default: null, inherit: "body" },
+        "text-align": { default: null, inherit: "body" },
+        "start-indent": { default: (startIndent + 1 * 30) + 'pt'+ 'pt', inherit: "body" },
+        "line-height": { default: null, inherit: "body" }
+      }, base),
+      "toc_3": _.defaultsDeep({
+        "font-family": { default: null, inherit: "body" },
+        "font-size": { default: null, inherit: "body" },
+        "color": { default: null, inherit: "body" },
+        "font-weight": { default: null, inherit: "body" },
+        "font-style": { default: null, inherit: "body" },
+        "text-decoration": { default: null, inherit: "body" },
+        "space-before": { default: null, inherit: "body" },
+        "space-after": { default: null, inherit: "body" },
+        "text-align": { default: null, inherit: "body" },
+        "start-indent": { default: (startIndent + 2 * 30) + 'pt', inherit: "body" },
+        "line-height": { default: null, inherit: "body" }
+      }, base),
+      "toc_4": _.defaultsDeep({
+        "font-family": { default: null, inherit: "body" },
+        "font-size": { default: null, inherit: "body" },
+        "color": { default: null, inherit: "body" },
+        "font-weight": { default: null, inherit: "body" },
+        "font-style": { default: null, inherit: "body" },
+        "text-decoration": { default: null, inherit: "body" },
+        "space-before": { default: null, inherit: "body" },
+        "space-after": { default: null, inherit: "body" },
+        "text-align": { default: null, inherit: "body" },
+        "start-indent": { default: (startIndent + 3 * 30) + 'pt', inherit: "body" },
+        "line-height": { default: null, inherit: "body" }
       }, base),
       // inline
       "link": {

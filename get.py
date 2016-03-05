@@ -357,6 +357,14 @@ def main():
             #line-height.fig
             "caption-number.fig": "document",
             "caption-position.fig": "after",
+            'color.toc_1': 'red',
+            'start-indent.toc_1': '25pt',
+            'color.toc_2': 'pink',
+            'font-size.toc_2': '32pt',
+            'font-family.toc_2': 'Comic Sans MS',
+            'start-indent.toc_2': '35pt',
+            'start-indent.toc_3': '45pt',
+            'start-indent.toc_4': '55pt',
             #font-family.link
             #font-size.link
             "color.link": "blue",

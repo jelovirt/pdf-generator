@@ -618,6 +618,83 @@ class Generator {
       }
     }
 
+    const tocRaw = `
+<xsl:template match="*[contains(@class, ' bookmap/appendix ')]" mode="tocText">
+  <xsl:param name="tocItemContent"/>
+  <xsl:param name="currentNode"/>
+  <xsl:for-each select="$currentNode">
+    <fo:block xsl:use-attribute-sets="__toc__appendix__content">
+      <xsl:copy-of select="$tocItemContent"/>
+    </fo:block>
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template match="*[contains(@class, ' bookmap/part ')]" mode="tocText">
+  <xsl:param name="tocItemContent"/>
+  <xsl:param name="currentNode"/>
+  <xsl:for-each select="$currentNode">
+    <fo:block xsl:use-attribute-sets="__toc__part__content">
+      <xsl:copy-of select="$tocItemContent"/>
+    </fo:block>
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template match="*[contains(@class, ' bookmap/preface ')]" mode="tocText">
+  <xsl:param name="tocItemContent"/>
+  <xsl:param name="currentNode"/>
+  <xsl:for-each select="$currentNode">
+    <fo:block xsl:use-attribute-sets="__toc__preface__content">
+      <xsl:copy-of select="$tocItemContent"/>
+    </fo:block>
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template match="*[contains(@class, ' bookmap/notices ')]" mode="tocText">
+  <xsl:param name="tocItemContent"/>
+  <xsl:param name="currentNode"/>
+  <xsl:for-each select="$currentNode">
+    <fo:block xsl:use-attribute-sets="__toc__notices__content">
+      <xsl:copy-of select="$tocItemContent"/>
+    </fo:block>
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template match="node()" mode="tocText" priority="-10">
+  <xsl:param name="tocItemContent"/>
+  <xsl:param name="currentNode"/>
+  <xsl:for-each select="$currentNode">
+    <xsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>
+    <xsl:choose>
+      <xsl:when test="$level eq 1">
+        <fo:block xsl:use-attribute-sets="__toc__topic__content">
+          <xsl:copy-of select="$tocItemContent"/>
+        </fo:block>
+      </xsl:when>
+      <xsl:when test="$level eq 2">
+        <fo:block xsl:use-attribute-sets="__toc__topic__content_2">
+          <xsl:copy-of select="$tocItemContent"/>
+        </fo:block>
+      </xsl:when>
+      <xsl:when test="$level eq 3">
+        <fo:block xsl:use-attribute-sets="__toc__topic__content_3">
+          <xsl:copy-of select="$tocItemContent"/>
+        </fo:block>
+      </xsl:when>
+      <xsl:when test="$level eq 4">
+        <fo:block xsl:use-attribute-sets="__toc__topic__content_4">
+          <xsl:copy-of select="$tocItemContent"/>
+        </fo:block>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:for-each>
+</xsl:template>
+`
+
+    if (stylesheet === "toc" || !stylesheet) {
+      root.append(ET.Comment("toc"))
+      this.copy_xml(root, tocRaw)
+    }
+
     const note_raw = `
   <xsl:template match="*[contains(@class,' topic/note ')]">
     <fo:table xsl:use-attribute-sets="notetable">
@@ -656,7 +733,7 @@ class Generator {
       </xsl:when>
     </xsl:choose>
   </xsl:for-each>
-  <xsl:comment>topicType: <xsl:value-of select="$topicType"/></xsl:comment>
+  <!--xsl:comment>topicType: <xsl:value-of select="$topicType"/></xsl:comment-->
 </xsl:template>
 `
     const fig_raw = `
@@ -982,12 +1059,16 @@ class Generator {
   /**
    * Generate attribute set.
    */
-  attribute_set(root, style, attribute_set, properties) {
+  attribute_set(root, style, attribute_set, properties, uses) {
     properties = properties || this.properties
-    const attrs = ET.SubElement(root, xsl('attribute-set'), {name: attribute_set})
+    const attrs = {name: attribute_set}
+    if (uses !== undefined) {
+      attrs['use-attribute-sets'] = uses
+    }
+    const attrSet = ET.SubElement(root, xsl('attribute-set'), attrs)
     _.forEach(this.style[style], (v, p) => {
       if (_.includes(properties, p)) {
-        ET.SubElement(attrs, xsl('attribute'), {name: p}).text = value(p, v)
+        ET.SubElement(attrSet, xsl('attribute'), {name: p}).text = value(p, v)
       }
     })
   }
@@ -1106,6 +1187,53 @@ class Generator {
           })
         }
       }
+    }
+
+    if (stylesheet === 'toc-attr' || !stylesheet) {
+      //<xsl:variable name="toc.toc-indent" select="'30pt'"/>
+      const tocIndentRaw = `
+      <xsl:attribute-set name="__toc__indent">
+        <xsl:attribute name="start-indent">
+          <xsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>
+          <xsl:choose>
+            <xsl:when test="$level eq 1">
+              <xsl:value-of select="concat('${this.style['toc_1']['start-indent']} + ', $toc.text-indent)"/>
+            </xsl:when>
+            <xsl:when test="$level eq 2">
+              <xsl:value-of select="concat('${this.style['toc_2']['start-indent']} + ', $toc.text-indent)"/>
+            </xsl:when>
+            <xsl:when test="$level eq 3">
+              <xsl:value-of select="concat('${this.style['toc_3']['start-indent']} + ', $toc.text-indent)"/>
+            </xsl:when>
+            <xsl:when test="$level eq 4">
+              <xsl:value-of select="concat('${this.style['toc_4']['start-indent']} + ', $toc.text-indent)"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:attribute>
+      </xsl:attribute-set>
+
+      <xsl:attribute-set name="__toc__indent__booklist">
+        <xsl:attribute name="start-indent">
+          <xsl:value-of select="concat('${this.style['toc_1']['start-indent']} + ', $toc.text-indent)"/>
+        </xsl:attribute>
+      </xsl:attribute-set>`
+
+      this.copy_xml(root, tocIndentRaw)
+
+      //const indent = ET.SubElement(root, xsl('attribute-set'), {name: '__toc__indent'})
+      //const indentAttr = ET.SubElement(indent, xsl('attribute'), {name: 'start-indent'})
+      //
+      //_.forEach(this.style[style], (v, p) => {
+      //  if (_.includes(properties, p)) {
+      //    ET.SubElement(attrs, xsl('attribute'), {name: p}).text = value(p, v)
+      //  }
+      //})
+
+      this.attribute_set(root, 'toc_1', '__toc__topic__content', _.difference(this.properties, ["start-indent"]))
+      //this.attribute_set(root, 'toc_1', '__toc__topic__content_1', _.difference(this.properties, ["start-indent"]), '__toc__topic__content')
+      this.attribute_set(root, 'toc_2', '__toc__topic__content_2', _.difference(this.properties, ["start-indent"]), '__toc__topic__content')
+      this.attribute_set(root, 'toc_3', '__toc__topic__content_3', _.difference(this.properties, ["start-indent"]), '__toc__topic__content')
+      this.attribute_set(root, 'toc_4', '__toc__topic__content_4', _.difference(this.properties, ["start-indent"]), '__toc__topic__content')
     }
 
     if (stylesheet === "basic-settings" || !stylesheet) {
@@ -1233,8 +1361,8 @@ class Generator {
     fs.push("plugin:org.dita.pdf2:xsl/fo/lists.xsl")
     if (this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:xsl/fo/lists.xsl`)
-      fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/tables-attr.xsl")
     }
+    fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/tables-attr.xsl")
     if (this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/tables-attr.xsl`)
     }
@@ -1252,7 +1380,13 @@ class Generator {
       fs.push(`plugin:${this.plugin_name}:xsl/fo/commons.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/toc-attr.xsl")
+    if (this.override_shell) {
+      fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/toc-attr.xsl`)
+    }
     fs.push("plugin:org.dita.pdf2:xsl/fo/toc.xsl")
+    if (this.override_shell) {
+      fs.push(`plugin:${this.plugin_name}:xsl/fo/toc.xsl`)
+    }
     fs.push("plugin:org.dita.pdf2:xsl/fo/bookmarks.xsl")
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/index-attr.xsl")
     fs.push("plugin:org.dita.pdf2:xsl/fo/index.xsl")
@@ -1632,7 +1766,7 @@ class Generator {
 
     // custom XSLT
     if (this.override_shell) {
-      ["front-matter", "commons", "tables", "links", "lists"].forEach((s) => {
+      ["front-matter", "commons", "tables", "toc", "links", "lists"].forEach((s) => {
         this.run_generation(zip, () => {
           return this.generate_custom(s)
         }, `${this.plugin_name}/xsl/fo/${s}.xsl`)
@@ -1646,6 +1780,7 @@ class Generator {
         "commons-attr",
         "layout-masters-attr",
         "tables-attr",
+        'toc-attr',
         "basic-settings",
         "lists-attr",
         "pr-domain-attr"].forEach((s) => {

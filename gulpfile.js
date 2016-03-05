@@ -35,7 +35,7 @@ gulp.task('watch-js', ['js'], () => {
   })
 })
 
-gulp.task('sass-js', ['sass'], () => {
+gulp.task('watch-sass', ['sass'], () => {
   return watch('sass/**/*.scss', () => {
     gulp.start('sass')
   })
