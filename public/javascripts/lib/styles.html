@@ -454,7 +454,7 @@
         <label for="caption-number" class="inline">Numbering</label>:
         <select id="caption-number" title="Caption numbering">
           <option value="document" selected>Document wide</option>
-          <option value="chapter" selected>Chapter wide</option>
+          <option value="chapter">Chapter wide</option>
           <option value="none">No numbering</option>
         </select>
       <!--/td>
@@ -464,6 +464,18 @@
           <option value="before">Above</option>
           <option value="after">Below</option>
         </select>
+      </td>
+    </tr>
+    </tbody>
+
+    <tbody data-style="toc_1">
+    <tr>
+      <th colspan="2"><h4>Chapter prefix</h4></th>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <label for="prefix" class="inline">Top-level prefix</label>:
+        <input id="prefix" title="Chapter prefix" type="checkbox" value="true">
       </td>
     </tr>
     </tbody>

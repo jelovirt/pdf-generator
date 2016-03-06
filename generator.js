@@ -690,9 +690,13 @@ class Generator {
 </xsl:template>
 `
 
-    if (stylesheet === "toc" || !stylesheet) {
-      root.append(ET.Comment("toc"))
+    if (stylesheet === 'toc' || !stylesheet) {
+      root.append(ET.Comment('toc'))
       this.copy_xml(root, tocRaw)
+
+      if (_.has(this.style, 'toc_1.prefix') && !this.style.toc_1.prefix) {
+        ET.SubElement(root, xsl('template'), { match: 'node()', mode: 'tocPrefix' })
+      }
     }
 
     const note_raw = `
@@ -1234,6 +1238,13 @@ class Generator {
       this.attribute_set(root, 'toc_2', '__toc__topic__content_2', _.difference(this.properties, ["start-indent"]), '__toc__topic__content')
       this.attribute_set(root, 'toc_3', '__toc__topic__content_3', _.difference(this.properties, ["start-indent"]), '__toc__topic__content')
       this.attribute_set(root, 'toc_4', '__toc__topic__content_4', _.difference(this.properties, ["start-indent"]), '__toc__topic__content')
+
+      this.attribute_set(root, 'toc_1', '__toc__chapter__content', _.difference(this.properties, ["start-indent"]))
+      this.attribute_set(root, 'toc_1', '__toc__appendix__content', _.difference(this.properties, ["start-indent"]))
+      this.attribute_set(root, 'toc_1', '__toc__part__content', _.difference(this.properties, ["start-indent"]))
+      this.attribute_set(root, 'toc_1', '__toc__preface__content', _.difference(this.properties, ["start-indent"]))
+      this.attribute_set(root, 'toc_1', '__toc__notices__content', _.difference(this.properties, ["start-indent"]))
+      this.attribute_set(root, 'toc_1', '__toc__topic__content__booklist', _.difference(this.properties, ["start-indent"]))
     }
 
     if (stylesheet === "basic-settings" || !stylesheet) {
