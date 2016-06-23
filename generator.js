@@ -1501,7 +1501,7 @@ class Generator {
       if (this.ot_version.compareTo(new Version('2.3')) >= 0) {
         imports.push(
             'xsl/fo/tables_fop.xsl',
-            'flagging_fop.xsl')
+            'xsl/fo/flagging_fop.xsl')
       }
     } else if (this.formatter === "xep") {
       if (this.ot_version.compareTo(new Version("2.2")) >= 0) {
