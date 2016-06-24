@@ -1449,7 +1449,7 @@ class Generator {
     fs.push("plugin:org.dita.pdf2:xsl/fo/learning-elements.xsl")
 
     fs.push("plugin:org.dita.pdf2:xsl/fo/flagging.xsl")
-    if (this.ot_version.compareTo(new Version("2.1")) < 0) {
+    if (this.ot_version.compareTo(new Version("2.2")) >= 0) {
       fs.push("plugin:org.dita.pdf2:xsl/fo/flagging-from-preprocess.xsl")
     }
 
