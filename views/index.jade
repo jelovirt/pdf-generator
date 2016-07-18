@@ -1,5 +1,8 @@
 extends layout
 
+block app
+  script(src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.22/require.min.js", type="text/javascript", data-main="/javascripts/app")
+
 block content
   header(id="header")
     h1
