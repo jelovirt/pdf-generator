@@ -25,6 +25,8 @@
     "multer": "^1.1.0",
     "node-sass-middleware": "0.8.0",
     "serve-favicon": "~2.3.0",
-    "bootstrap-sass": "~> 3.3.6"
+    "bootstrap-sass": "~> 3.3.6",
+    "nodemailer": "^2.5.0",
+    "pg": "6.0.2"
   }
 }

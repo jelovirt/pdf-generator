@@ -28,6 +28,14 @@ app.use(require('node-sass-middleware')({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+
+const paypal = require('./routes/paypal')
+app.use('/webhook', paypal);
+
+const authenticate = require('./authenticate')
+app.use(authenticate);
+
+
 app.use('/users', users);
 
 // catch 404 and forward to error handler

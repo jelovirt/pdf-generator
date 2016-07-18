@@ -17,7 +17,7 @@ define([
              PdfPreviewController,
              PdfUtils,
              Utils) {
-  return function PdfPageController() {
+  return function PdfPageController(exts) {
     const view = PdfPageView()
     $('main').html(view.$element)
 
@@ -28,6 +28,8 @@ define([
 
     StyleController()
     PdfPreviewController()
+
+    _.forEach(exts || [], ext => ext())
 
     // form initialization
     $("#cover_image_chooser").change(coverChangeHandler).change()

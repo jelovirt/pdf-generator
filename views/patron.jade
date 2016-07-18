@@ -1,0 +1,14 @@
+extends layout
+
+block style
+  link(rel='stylesheet', href='/stylesheets/patron.css')
+
+block app
+  script(src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.22/require.min.js", type="text/javascript", data-main="/javascripts/patron")
+
+block content
+  header(id="header")
+    h1
+      a(href="/")= title
+  main(id="content")
+    p#loading Loading...
