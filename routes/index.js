@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const express = require('express');
+const bodyParser = require('body-parser')
 const router = express.Router();
 
 const multer = require('multer')  // v1.0.5
@@ -13,7 +14,9 @@ router.get('/', function (req, res, next) {
   res.render('index', {title: 'PDF Plugin Generator'});
 });
 
-router.post('/', upload.array(), function (req, res, next) {
+router.post('/', bodyParser.urlencoded({extended: false}), function (req, res, next) { // upload.array()
+  // app.use(bodyParser.json());
+  // app.use(bodyParser.urlencoded({extended: false}));
   const args = read_arguments(req)
   const body = process(args)
 
