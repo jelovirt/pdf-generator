@@ -9,6 +9,7 @@ const multer = require('multer')  // v1.0.5
 const upload = multer() // for parsing multipart/form-data
 
 const generator = require('../generator')
+const Version = require('../lib/version')
 
 router.get('/', function (req, res, next) {
   res.render('index', {title: 'PDF Plugin Generator'});
@@ -170,7 +171,7 @@ function process(__args) {
   if (!_.has(__args, 'ot_version')) {
     throw new Error("version missing")
   }
-  __dita_gen.ot_version = new generator.Version(__args["ot_version"])
+  __dita_gen.ot_version = new Version(__args["ot_version"])
   if (!_.has(__args, 'id')) {
     throw new Error("id missing")
   }
