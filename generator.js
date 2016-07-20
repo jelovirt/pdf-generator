@@ -3,6 +3,7 @@
 const _ = require('lodash')
 const JSZip = require('jszip')
 const ET = require('./lib/elementtree')
+const utils = require('./lib/utils')
 const styles = require('./javascript/lib/styles').styles
 const Version = require('./lib/version')
 
@@ -511,14 +512,14 @@ class Generator {
     if (stylesheet === "front-matter" || !stylesheet) {
       if (this.cover_image_name || this.cover_image_metadata || this.cover_image_topic) {
         root.append(ET.Comment("cover"))
-        this.copy_xml(root, cover_raw_2)
+        utils.copy_xml(root, cover_raw_2)
         //copy_xml(root, cover_contents_raw)
         if (this.cover_image_name) {
-          this.copy_xml(root, cover_file_raw)
+          utils.copy_xml(root, cover_file_raw)
         } else if (this.cover_image_metadata) {
-          this.copy_xml(root, cover_metadata_raw)
+          utils.copy_xml(root, cover_metadata_raw)
         } else if (this.cover_image_topic) {
-          this.copy_xml(root, cover_topic_raw)
+          utils.copy_xml(root, cover_topic_raw)
         }
       }
     }
@@ -585,36 +586,36 @@ class Generator {
       root.append(ET.Comment("table"))
       // caption numbering
       if (this.ot_version.compareTo(new Version("2.3")) < 0) {
-        this.copy_xml(root, table_raw)
+        utils.copy_xml(root, table_raw)
       }
       const tableCaptionNumber = _.get(this.style, "table.caption-number",  "document")
       switch (tableCaptionNumber) {
         //case "topic":
-        //  this.copy_xml(root, table_title_number_topic)
+        //  utils.copy_xml(root, table_title_number_topic)
         //  break
         case "chapter":
-          this.copy_xml(root, table_title_number_chapter)
+          utils.copy_xml(root, table_title_number_chapter)
           break
         case "document":
-          this.copy_xml(root, table_title_number_document)
+          utils.copy_xml(root, table_title_number_document)
           break
       }
       // caption position
       if (_.has(this.style, "table") && _.has(this.style["table"], "caption-position") && this.style["table"]["caption-position"] === "after") {
-        this.copy_xml(root, table_title_raw)
+        utils.copy_xml(root, table_title_raw)
       }
       if (this.table_continued) {
-        this.copy_xml(root, table_continued_raw)
+        utils.copy_xml(root, table_continued_raw)
       } else {
-        this.copy_xml(root, table_footer_raw)
+        utils.copy_xml(root, table_footer_raw)
       }
       if (_.has(this.style["dl"], "dl-type")) {
         if (this.style["dl"]["dl-type"] === "list") {
           root.append(ET.Comment("dl"))
-          this.copy_xml(root, dl_list_raw)
+          utils.copy_xml(root, dl_list_raw)
         } else if (this.style["dl"]["dl-type"] === "html") {
           root.append(ET.Comment("dl"))
-          this.copy_xml(root, dl_html_raw)
+          utils.copy_xml(root, dl_html_raw)
         }
       }
     }
@@ -693,7 +694,7 @@ class Generator {
 
     if (stylesheet === 'toc' || !stylesheet) {
       root.append(ET.Comment('toc'))
-      this.copy_xml(root, tocRaw)
+      utils.copy_xml(root, tocRaw)
 
       if (_.has(this.style, 'toc_1.prefix') && !this.style.toc_1.prefix) {
         ET.SubElement(root, xsl('template'), { match: 'node()', mode: 'tocPrefix' })
@@ -814,7 +815,7 @@ class Generator {
 </xsl:template>`
 
     if (stylesheet === "commons" || !stylesheet) {
-      this.copy_xml(root, commons_raw)
+      utils.copy_xml(root, commons_raw)
       root.append(ET.Comment("title numbering"))
       const number_levels = _(['topic', 'topic_topic', 'topic_topic_topic', 'topic_topic_topic_topic'])
         .map((s) => {
@@ -827,39 +828,39 @@ class Generator {
           return l.toString().toLowerCase() + "()"
         }).join(", ") + ")")
       })
-      this.copy_xml(root, get_title_raw)
+      utils.copy_xml(root, get_title_raw)
       if (_.has(this.style["topic"], "title-numbering") && this.style["topic"]["title-numbering"] !== true) {
-        this.copy_xml(root, numberless_chapter_raw)
+        utils.copy_xml(root, numberless_chapter_raw)
       }
       if (!(_.has(this.style["note"], "icon") && this.style["note"]["icon"] === "icon")) {
         root.append(ET.Comment("note"))
-        this.copy_xml(root, note_raw)
+        utils.copy_xml(root, note_raw)
       }
       if (this.page_number) {
         if (this.page_number === "chapter-page") {
-          this.copy_xml(root, chapter_page_number_raw)
+          utils.copy_xml(root, chapter_page_number_raw)
         }
       }
       // caption numbering
       if (this.ot_version.compareTo(new Version("2.3")) < 0) {
-        this.copy_xml(root, fig_title_raw)
+        utils.copy_xml(root, fig_title_raw)
       }
       const figCaptionNumber = _.get(this.style, "fig.caption-number",  "document")
       switch (figCaptionNumber) {
         //case "topic":
-        //  this.copy_xml(root, fig_title_number_topic)
+        //  utils.copy_xml(root, fig_title_number_topic)
         //  break
         case "chapter":
-          this.copy_xml(root, fig_title_number_chapter)
+          utils.copy_xml(root, fig_title_number_chapter)
           break
         case "document":
-          this.copy_xml(root, fig_title_number_document)
+          utils.copy_xml(root, fig_title_number_document)
           break
       }
 
       //if (_.has(this.style, 'fig') && _.has(this.style["fig"], "caption-position") && this.style["fig"]["caption-position"] === "before") {
       if (_.has(this.style, 'fig.caption-position') && this.style["fig"]["caption-position"] === "before") {
-        this.copy_xml(root, fig_raw)
+        utils.copy_xml(root, fig_raw)
       }
       if (this.cover_image_topic) {
         ET.SubElement(root, xsl('template'), {
@@ -904,9 +905,9 @@ class Generator {
         root.append(ET.Comment("tm"))
         const symbolScope = this.style['tm']['symbol-scope']
         if (symbolScope === 'chapter') {
-          this.copy_xml(root, tm_chapter_raw)
+          utils.copy_xml(root, tm_chapter_raw)
         } else if (symbolScope === 'never') {
-          this.copy_xml(root, tm_never_raw)
+          utils.copy_xml(root, tm_never_raw)
         } else if (symbolScope === 'always') {
           // NOOP
         }
@@ -982,7 +983,7 @@ class Generator {
     if (stylesheet === "links" || !stylesheet) {
       if (_.has(this.style["link"], "link-url") && this.style["link"]["link-url"] === true) {
         root.append(ET.Comment("link"))
-        this.copy_xml(root, link_raw)
+        utils.copy_xml(root, link_raw)
       }
     }
 
@@ -1043,7 +1044,7 @@ class Generator {
     if (stylesheet === "lists" || !stylesheet) {
       if (_.has(this.style, 'ol') || _.has(this.style, 'ul')) {
         root.append(ET.Comment("list"))
-        this.copy_xml(root, list_raw)
+        utils.copy_xml(root, list_raw)
       }
     }
 
@@ -1223,7 +1224,7 @@ class Generator {
         </xsl:attribute>
       </xsl:attribute-set>`
 
-      this.copy_xml(root, tocIndentRaw)
+      utils.copy_xml(root, tocIndentRaw)
 
       //const indent = ET.SubElement(root, xsl('attribute-set'), {name: '__toc__indent'})
       //const indentAttr = ET.SubElement(indent, xsl('attribute'), {name: 'start-indent'})
@@ -1315,7 +1316,7 @@ class Generator {
 
     if (stylesheet === "lists-attr" || !stylesheet) {
       root.append(ET.Comment("list"))
-      this.copy_xml(root, list_raw)
+      utils.copy_xml(root, list_raw)
     }
     if (stylesheet === "pr-domain-attr" || !stylesheet) {
       // codeblock
