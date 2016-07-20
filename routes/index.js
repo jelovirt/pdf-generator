@@ -159,6 +159,9 @@ function read_arguments(req) {
   if (_.has(req.body, "page-number")) {
     __config["page_number"] = req.body["page-number"]
   }
+
+  __config["blank_pages"] = req.body["blank_pages"] === 'true'
+
   __ret["configuration"] = __config
 
   return __ret
@@ -226,6 +229,9 @@ function process(__args) {
   __dita_gen.footer = __config["footer"]
   if (_.has(__config, 'page_number')) {
     __dita_gen.page_number = __config["page_number"]
+  }
+  __dita_gen.options = {
+    blank_pages: __config.blank_pages
   }
 
   return __dita_gen.generate_plugin()

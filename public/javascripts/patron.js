@@ -18,4 +18,4 @@ requirejs.config({
 //    main: './handlebars'
 //  }
 //]
-requirejs(['app/mainPatron']);
+requirejs(['app/patron/main']);

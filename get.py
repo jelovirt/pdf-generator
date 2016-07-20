@@ -384,6 +384,7 @@ def main():
             "id": "x",
             "transtype": "x",
             #plugin-version
+            "blank_pages": "true"
         },
         "pdf": {
             "output": "pdf-plugin",

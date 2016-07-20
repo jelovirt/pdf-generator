@@ -16,4 +16,4 @@ requirejs.config({
   //]
 });
 
-requirejs(['app/mainPatron'])
+requirejs(['app/patron/main'])
