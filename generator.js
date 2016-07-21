@@ -1050,6 +1050,14 @@ class Generator {
       }
     }
 
+    if (stylesheet === 'static-content' || !stylesheet) {
+      require('./lib/staticContent').xsl(root, this.options)
+    }
+
+    if (stylesheet === 'layout-masters' || !stylesheet) {
+      require('./lib/layoutMasters').xsl(root, this.options)
+    }
+
     if (!stylesheet) {
       if (!this.override_shell && this.toc_maximum_level) {
         root.append(ET.Comment("TOC"))
@@ -1328,6 +1336,10 @@ class Generator {
       })
     }
 
+    if (stylesheet === 'static-content-attr' || !stylesheet) {
+      require('./lib/staticContent').attr(root, this.options)
+    }
+
 //        ditagen.generator.indent(root)
 //        ditagen.generator.set_prefixes(root, get_ns())
     const d = new ET.ElementTree(root)
@@ -1364,6 +1376,9 @@ class Generator {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/layout-masters-attr.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:cfg/fo/layout-masters.xsl")
+    if (this.override_shell) {
+      fs.push(`plugin:${this.plugin_name}:cfg/fo/layout-masters.xsl`)
+    }
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/links-attr.xsl")
     fs.push("plugin:org.dita.pdf2:xsl/fo/links.xsl")
     if (this.override_shell) {
@@ -1443,7 +1458,13 @@ class Generator {
     fs.push("plugin:org.dita.pdf2:xsl/fo/xml-domain.xsl")
 
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/static-content-attr.xsl")
+    if (this.override_shell) {
+      fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/static-content-attr.xsl`)
+    }
     fs.push("plugin:org.dita.pdf2:xsl/fo/static-content.xsl")
+    if (this.override_shell) {
+      fs.push(`plugin:${this.plugin_name}:xsl/fo/static-content.xsl`)
+    }
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/glossary-attr.xsl")
     fs.push("plugin:org.dita.pdf2:xsl/fo/glossary.xsl")
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/lot-lof-attr.xsl")
@@ -1547,10 +1568,15 @@ class Generator {
 
     // custom XSLT
     if (this.override_shell) {
-      ["front-matter", "commons", "tables", "toc", "links", "lists"].forEach((s) => {
+      ["front-matter", "commons", "tables", "toc", "links", "lists", "static-content"].forEach((s) => {
         this.run_generation(zip, () => {
           return this.generate_custom(s)
         }, `${this.plugin_name}/xsl/fo/${s}.xsl`)
+      });
+      ["layout-masters"].forEach((s) => {
+        this.run_generation(zip, () => {
+          return this.generate_custom(s)
+        }, `${this.plugin_name}/cfg/fo/${s}.xsl`)
       })
     } else {
       this.run_generation(zip, this.generate_custom, `${this.plugin_name}/cfg/fo/xsl/custom.xsl`)
@@ -1560,6 +1586,7 @@ class Generator {
       ["front-matter-attr",
         "commons-attr",
         "layout-masters-attr",
+        'static-content-attr',
         "tables-attr",
         'toc-attr',
         "basic-settings",
