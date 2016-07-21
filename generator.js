@@ -6,6 +6,7 @@ const ET = require('./lib/elementtree')
 const utils = require('./lib/utils')
 const styles = require('./javascript/lib/styles').styles
 const Version = require('./lib/version')
+const vars = require('./lib/vars')
 
 class Generator {
 
@@ -42,6 +43,7 @@ class Generator {
     this.header = {}
     this.footer = {}
     this.page_number = null
+    this.options = {}
 
     ET.register_namespace("xsl", "http://www.w3.org/1999/XSL/Transform")
     ET.register_namespace("fo", "http://www.w3.org/1999/XSL/Format")
@@ -1522,245 +1524,6 @@ class Generator {
       .value()
   }
 
-  /**
-   * Generate variable file.
-   */
-  generate_vars(lang) {
-    const langs = {
-      "de": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>Abbildung: <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>Tabelle: <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>Anhang:&#xA0;</variable>"
-      },
-      "en": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>Figure: <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>Table: <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>Appendix:&#xA0;</variable>"
-      },
-      "es": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>Figura: <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>Tabla: <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>Ap&#xe9;ndice:&#xA0;</variable>"
-      },
-      "fi": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>Kuva. <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>Taulu. <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>Liite </variable>"
-      },
-      "fr": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>Illustration: <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>Table: <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>Annexe&#xA0;:&#xA0;</variable>"
-      },
-      "he": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>&#x5d0;&#x5d9;&#x5d5;&#x5e8;. <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>&#x5d8;&#x5d1;&#x5dc;&#x5d4;. <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>&#x5e0;&#x5e1;&#x5e4;&#x5d7; </variable>"
-      },
-      "it": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'> Figura: <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>Tabella: <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>Appendice:&#xA0;</variable>"
-      },
-      "ja": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>&#x56f3; : <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>&#x8868; : <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>&#x4ed8;&#x9332; : </variable>"
-      },
-      "nl": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>Figuur: <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>Tabel: <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>Bijlage:&#xA0;</variable>"
-      },
-      "ro": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>Fig. <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>Tabel. <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>Anexa </variable>"
-      },
-      "ru": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>&#x420;&#x438;&#x441;&#x443;&#x43d;&#x43e;&#x43a;. <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>&#x422;&#x430;&#x431;&#x43b;&#x438;&#x446;&#x430;. <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>&#x41f;&#x440;&#x438;&#x43b;&#x43e;&#x436;&#x435;&#x43d;&#x438;&#x435; </variable>"
-      },
-      "sl": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>Slika: <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>Tabela: <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>Kazalo dodatka:&#xA0;</variable>"
-      },
-      "sv": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>Figur. <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>Tabell. <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>Appendix </variable>"
-      },
-      "zh_CN": {
-        "#table-continued": "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-        "Figure": "<variable id='Figure'>&#x56fe;: <param ref-name='title'/></variable>",
-        "Table": "<variable id='Table'>&#x8868;: <param ref-name='title'/></variable>",
-        //"Chapter with number": "<variable id='Chapter with number'></variable>",
-        "Table of Contents Chapter": "<variable id='Table of Contents Chapter'></variable>",
-        "Table of Contents Appendix": "<variable id='Table of Contents Appendix'>&#x9644;&#x5f55;:&#xA0;</variable>"
-      }
-    }
-
-    const root = ET.Element("vars", {
-      xmlns: "http://www.idiominc.com/opentopic/vars"
-    })
-
-    // page number reference
-    if (!(_.has(this.style["link"], "link-page-number") && this.style["link"]["link-page-number"] === true)) {
-      ET.SubElement(root, "variable", {id: "On the page"})
-    }
-    // table continued
-
-    if (this.table_continued) {
-      root.append(ET.parse(langs[lang]["#table-continued"]).getroot())
-    }
-    // table caption numbering
-    if (_.has(this.style["table"], "caption-number") && this.style["table"]["caption-number"] === "none") {
-      root.append(ET.parse(langs[lang]["Table"]).getroot())
-    }
-    // figure caption numbering
-    if (_.has(this.style["fig"], "caption-number") && this.style["fig"]["caption-number"] === "none") {
-      root.append(ET.parse(langs[lang]["Figure"]).getroot())
-    }
-    // chapter numbering
-    if (_.has(this.style["topic"], "title-numbering") && this.style["topic"]["title-numbering"] !== true) {
-      //    root.append(ET.parse(langs[lang]["Chapter with number"]).getroot())
-      root.append(ET.parse(langs[lang]["Table of Contents Chapter"]).getroot())
-      root.append(ET.parse(langs[lang]["Table of Contents Appendix"]).getroot())
-    }
-    // cover image
-    if (this.cover_image_name) {
-      ET.SubElement(root, "variable", {id: "cover-image-path"}).text = `Customization/OpenTopic/common/artwork/${this.cover_image_name}"`
-    }
-    // static content
-    const headers = ["Body first header",
-      "Body odd header",
-      "Body even header",
-      "Preface odd header",
-      "Preface even header",
-      "Preface first header",
-      "Toc odd header",
-      "Toc even header",
-      "Index odd header",
-      "Index even header",
-      "Glossary odd header",
-      "Glossary even header"]
-
-    const footers = ["Body odd footer",
-      "Body even footer",
-      "Body first footer",
-      "Preface odd footer",
-      "Preface even footer",
-      "Preface first footer",
-      "Toc odd footer",
-      "Toc even footer",
-      "Index odd footer",
-      "Index even footer",
-      "Glossary odd footer",
-      "Glossary even footer"]
-
-    variables(this.header, headers)
-    variables(this.footer, footers)
-    function variables(args, var_names) {
-      var_names.forEach((id) => {
-        var vars = []
-        if (id.indexOf("even") > -1) {
-          vars = args["even"]
-        } else {
-          vars = args["odd"]
-        }
-        const f = ET.SubElement(root, "variable", {id: id})
-        let i = 1
-        vars.forEach((v) => {
-          let e = ET.Element("param", {"ref-name": v})
-          if (i < vars.length) {
-            e.tail = " | "
-          }
-          f.append(e)
-          i = i + 1
-        })
-      })
-    }
-
-    _.range(1, 5).forEach((level) => {
-      let v = `ol-${level}`
-      let varE = ET.SubElement(root, "variable", {id: `Ordered List Number ${level}`})
-      if (_.has(this.style, "ol") && _.has(this.style["ol"], `ol-before-${level}`)) {
-        varE.text = this.style["ol"][`ol-before-${level}`]
-      } else {
-        varE.text = this.default_style("ol", `ol-before-${level}`)
-      }
-      const p = ET.SubElement(varE, "param", {"ref-name": "number"})
-      if (_.has(this.style, "ol") && _.has(this.style["ol"], `ol-after-${level}`)) {
-        p.tail = this.style["ol"][`ol-after-${level}`]
-      } else {
-        p.tail = this.default_style("ol", `ol-after-${level}`)
-      }
-    })
-    _.range(1, 5).forEach((level) => {
-      let v = `ol-${level}`
-      let varE = ET.SubElement(root, "variable", {id: `Ordered List Format ${level}`})
-      if (_.has(this.style, "ol") && _.has(this.style["ol"], `ol-${level}`)) {
-        varE.text = this.style["ol"][`ol-${level}`]
-      } else {
-        varE.text = this.default_style("ol", `ol-${level}`)
-      }
-    })
-    _.range(1, 5).forEach((level) => {
-      let v = `ul-${level}`
-      let varE = ET.SubElement(root, "variable", {id: `Unordered List bullet ${level}`})
-      if (_.has(this.style, "ul") && _.has(this.style["ul"], `ul-${level}`)) {
-        varE.text = this.style["ul"][`ul-${level}`]
-      } else {
-        varE.text = this.default_style("ul", `ul-${level}`)
-      }
-    })
-//    ditagen.generator.indent(root, max=1)
-//    ditagen.generator.set_prefixes(root, {"": "http://www.idiominc.com/opentopic/vars"})
-    const d = new ET.ElementTree(root)
-    ET.register_namespace('', 'http://www.idiominc.com/opentopic/vars')
-    return d.write()
-  }
 
   /**
    * Run a file generation.
@@ -1815,7 +1578,7 @@ class Generator {
     }
     this.variable_languages.forEach((lang) => {
       this.run_generation(zip, () => {
-        return this.generate_vars(lang)
+        return vars(lang, this)
       }, `${this.plugin_name}/cfg/common/vars/${lang}.xml`)
     })
     //if (this.cover_image) {
