@@ -125,8 +125,8 @@ def main():
                 },
                 "force_page_count": "auto",
                 "header": {
-                    "even": ["chapter"],
-                    "odd": ["chapter"]
+                    "even": ["heading"],
+                    "odd": ["heading"]
                 },
                 "chapter_layout": "BASIC",
                 "footer": {
@@ -154,8 +154,8 @@ def main():
             "body-column-count": "1",
             "index-column-count": "2",
             "column-gap": "12pt",
-            "header.even": "chapter",
-            "header.odd": "chapter",
+            "header.even": "heading",
+            "header.odd": "heading",
             "force-page-count": "even",
             "chapter-layout": "BASIC",
             "font-family.body": "Times New Roman",
@@ -479,8 +479,8 @@ def main():
             "table-continued": "true",
             "formatter": "ah",
             "override_shell": "true",
-            "header.even": "chapter",
-            "header.odd": "chapter",
+            "header.even": "heading",
+            "header.odd": "heading",
             "page-number": "chapter-page",
             "drop-folio": "pagenum",
             "id": "com.example.print-pdf",
