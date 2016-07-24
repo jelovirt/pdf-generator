@@ -119,8 +119,8 @@ function notifyUser(id, data) {
 
     var mail = {
       from: 'Jarno Elovirta <jarno@elovirta.com>',
-      to: email,
-      subject: 'Thank you for your donation',
+      to: `${name} <${email}>`,
+      subject: 'Thank you for your donation to PDF Plugin Generator',
       text: `Hi ${data.first_name}!
       
 Who's awesome? You're awesome! Thank you for your donation for open source work.
