@@ -9,6 +9,7 @@ const userCache = {}
 
 router.get('/:id/', function(req, res, next) {
     const id = req.params.id
+    req.id = id
     if (_.has(userCache, id)) {
         console.log('found', id, 'in cache')
         next()
@@ -43,7 +44,8 @@ router.get('/:id/', function(req, res, next) {
 
 router.get('/*', function(req, res, next) {
     res.render('patron', {
-        title: 'PDF Plugin Generator for patrons'
+        title: 'PDF Plugin Generator for patrons',
+        rootUrl: `/${req.id}/`
     })
 })
 
