@@ -44,12 +44,16 @@ const address = {
 
 function sendAck(data) {
   const params = qs.parse(data)
+  if(params.test_ipn === '1') {
+    handleNotification('VERIFIED', params)
+    return
+  }
   params.cmd = '_notify-validate'
   // const ret = 'cmd=_notify-validate&' + data
   // console.log("ACK DATA", params)
   const ret = qs.stringify(params)
 
-  const options = _.extend(_.clone(address.production),{
+  const options = _.extend(_.clone(address.production), {
     method: 'POST',
     headers: {
       // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -80,7 +84,7 @@ function sendAck(data) {
 const salt = '6f6fa46e2ee30c6a4c7f67202a310863b69bb208'
 function handleNotification(ack, data) {
   // console.log('ACK ' + ack)
-  if (ack === 'VERIFIED') {
+  if(ack === 'VERIFIED') {
     pg.connect(process.env.DATABASE_URL, addUser(data));
   } else {
     console.error("Failed to verify notification")
@@ -90,12 +94,19 @@ function handleNotification(ack, data) {
 function addUser(data) {
   const id = getId(data.payer_email)
   return function(err, client) {
-    if(err) throw err
+    if(err) {
+      console.error("Failed to process verification: " + err)
+    }
     client
       .on('drain', client.end.bind(client))
-      .query('INSERT INTO users (id, email, created, contribution, name) VALUES ($1, $2, $3, $4, $5)',
+      .query(`INSERT INTO users (id, email, created, contribution, name)
+              VALUES ($1, $2, $3, $4, $5)
+              ON CONFLICT (id) DO NOTHING;`,
         [id, data.payer_email, data.payment_date, data.mc_gross, data.first_name + ' ' + data.last_name])
       // .on('row', updateCache)
+      .on('error', (e) => {
+        console.error('Failed to update user information: ' + e)
+      })
       .on('end', notifyUser(id, data))
   }
 }
@@ -103,10 +114,6 @@ function addUser(data) {
 function notifyUser(id, data) {
   return function() {
     const mailer = require("nodemailer");
-
-    const email = data.payer_email
-    const name = data.first_name + ' ' + data.last_name
-    const url = 'http://dita-generator.elovirta.com/' + id + '/'
 
     const smtpTransport = mailer.createTransport({
       host: 'mail1.sigmatic.fi',
@@ -117,31 +124,48 @@ function notifyUser(id, data) {
       }
     })
 
-    var mail = {
-      from: 'Jarno Elovirta <jarno@elovirta.com>',
-      to: `${name} <${email}>`,
-      subject: 'Thank you for your donation to PDF Plugin Generator',
-      text: `Hi ${data.first_name}!
-      
-Who's awesome? You're awesome! Thank you for your donation for open source work.
-
-As a token of my appreciation, you can find additional PDF plugin generator features at
-${url}, available only for patrons like you.
- 
-Cheers,
-
-Jarno`
-      // html: "<b>Node.js New world for me</b>"
-    }
+    const mail = getEmail(id, data)
 
     smtpTransport.sendMail(mail, function(error, res) {
-      if (error) {
+      if(error) {
         console.error("Failed to send confirmation email: " + error)
       } else {
         console.log("Message sent: " + res.message)
       }
       smtpTransport.close()
     })
+  }
+
+  function getEmail(id, data) {
+    const email = data.payer_email
+    const name = data.first_name + ' ' + data.last_name
+    const url = 'http://dita-generator.elovirta.com/' + id + '/'
+
+    return {
+      from: 'Jarno Elovirta <jarno@elovirta.com>',
+      to: `${name} <${email}>`,
+      subject: 'Thank you for your donation to PDF Plugin Generator',
+      text: `Hi ${data.first_name}!
+
+Who's awesome? You're awesome! Thank you for your donation for open source work.
+
+As a token of my appreciation, you can find additional PDF plugin generator features at
+${url}, available only for patrons like you.
+
+Cheers,
+
+Jarno`,
+      html: `<p>Hi ${data.first_name}!<br>
+<br>
+Who's awesome? You're awesome! Thank you for your donation for open source work.<br>
+<br>
+As a token of my appreciation, you can find additional PDF plugin generator features at
+<a href="${url}">${url}</a>, available only for patrons like you.<br>
+<br>
+Cheers,<br>
+<br>
+Jarno</p>`
+    }
   }
 }
 
