@@ -6,7 +6,8 @@
     <div class="form">
       <fieldset>
         <p>
-          <label for="ot_version" title="Version of DITA-OT for which the plug-in is installed into.">DITA-OT version</label>
+          <label for="ot_version" title="Version of DITA-OT for which the plug-in is installed into.">DITA-OT
+            version</label>
           <select name="ot_version" id="ot_version" title="DITA-OT version" required>
             <option value="3.0">development</option>
             <option value="2.3" selected>2.3</option>
@@ -25,7 +26,8 @@
             <option value="xep">RenderX XEP</option>
           </select>
         </p>
-        <p class="instruction">XSL formatter used to generate PDF output. DITA-OT comes with open source FOP formatter.</p>
+        <p class="instruction">XSL formatter used to generate PDF output. DITA-OT comes with open source FOP
+          formatter.</p>
         <p class="help">Note that customisation features available are dependent
           on the target DITA-OT and XSL formatter.</p>
       </fieldset>
@@ -35,7 +37,8 @@
           <input type="checkbox" name="override_shell" id="override_shell" title="Override shell"
                  value="true" checked>
         </p>
-        <p class="instruction">Override XSLT shell stylesheet. Advanced generation option which will make further developing the generated plug-in easier.</p>
+        <p class="instruction">Override XSLT shell stylesheet. Advanced generation option which will make further
+          developing the generated plug-in easier.</p>
       </fieldset>
     </div>
   </section>
@@ -71,19 +74,23 @@
       <fieldset>
         <p>
           <label for="page-margin-top">Top</label>
-          <input name="page-margin-top" id="page-margin-top" value="20mm" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
+          <input name="page-margin-top" id="page-margin-top" value="20mm"
+                 pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
         </p>
         <p>
           <label for="page-margin-outside">Outside</label>
-          <input name="page-margin-outside" id="page-margin-outside" value="20mm" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
+          <input name="page-margin-outside" id="page-margin-outside" value="20mm"
+                 pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
         </p>
         <p>
           <label for="page-margin-bottom">Bottom</label>
-          <input name="page-margin-bottom" id="page-margin-bottom" value="20mm" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
+          <input name="page-margin-bottom" id="page-margin-bottom" value="20mm"
+                 pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
         </p>
         <p>
           <label for="page-margin-inside">Inside</label>
-          <input name="page-margin-inside" id="page-margin-inside" value="20mm" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
+          <input name="page-margin-inside" id="page-margin-inside" value="20mm"
+                 pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value" required>
         </p>
         <p class="instruction">Page margins.</p>
       </fieldset>
@@ -113,7 +120,8 @@
         </p>
         <p>
           <label for="column-gap">Column gap</label>
-          <input name="column-gap" id="column-gap" value="12pt" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" class="length-value">
+          <input name="column-gap" id="column-gap" value="12pt" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                 class="length-value">
         </p>
       </fieldset>
     </div>
@@ -121,14 +129,18 @@
       <div class="example-page even" title="Even page">
         <table class="example-page-body">
           <tr>
-            <td><div></div></td>
+            <td>
+              <div></div>
+            </td>
           </tr>
         </table>
       </div>
       <div class="example-page odd" title="Odd page">
         <table class="example-page-body">
           <tr>
-            <td><div></div></td>
+            <td>
+              <div></div>
+            </td>
           </tr>
         </table>
       </div>
@@ -140,46 +152,46 @@
       <fieldset>
         <p>
           <label>Header</label>
-          <table>
-            <thead class="even">
-              <tr>
-                <th><label for="header.even">even</label></th>
-                <th><label for="header.odd">odd</label></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="even">
-                  <select name="header.even" id="header.even">
-                    <option value="">empty</option>
-                    <!--option value="part">Part title</option-->
-                    <!--option value="number">Chapter number</option-->
-                    <option value="heading" selected>Chapter title</option>
-                    <!--option value="subhead">Subhead</option-->
-                    <!--option value="author">Author</option-->
-                  </select>
-                </td>
-                <td>
-                  <select name="header.odd" id="header.odd">
-                    <option value="">empty</option>
-                    <option value="heading" selected>Chapter title</option>
-                    <!--option value="subhead">Subhead</option-->
-                    <!--option value="subchapter">Chapter subtitle</option-->
-                  </select>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <table>
+          <thead class="even">
+          <tr>
+            <th><label for="header.even">even</label></th>
+            <th><label for="header.odd">odd</label></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="even">
+              <select name="header.even" id="header.even">
+                <option value="">empty</option>
+                <!--option value="part">Part title</option-->
+                <!--option value="number">Chapter number</option-->
+                <option value="heading" selected>Chapter title</option>
+                <!--option value="subhead">Subhead</option-->
+                <!--option value="author">Author</option-->
+              </select>
+            </td>
+            <td>
+              <select name="header.odd" id="header.odd">
+                <option value="">empty</option>
+                <option value="heading" selected>Chapter title</option>
+                <!--option value="subhead">Subhead</option-->
+                <!--option value="subchapter">Chapter subtitle</option-->
+              </select>
+            </td>
+          </tr>
+          </tbody>
+        </table>
         </p>
         <p class="instruction">Page header contents.</p>
       </fieldset>
       <fieldset>
-      <p>
-        <label for="drop-folio">Drop folio</label>
-        <input type="checkbox" name="drop-folio" id="drop-folio" value="pagenum">
-      </p>
-      <p class="instruction">Place page number in footer.</p>
-    </fieldset>
+        <p>
+          <label for="drop-folio">Drop folio</label>
+          <input type="checkbox" name="drop-folio" id="drop-folio" value="pagenum">
+        </p>
+        <p class="instruction">Place page number in footer.</p>
+      </fieldset>
     </div>
     <h3>Layout</h3>
     <div class="form col-sm-5">
@@ -197,11 +209,11 @@
         <p class="instruction">Chapters can be made to always start on an odd
           page or directly follow the previous page.</p>
         <p class="help">Default page count behavior for Bookmaps is to start every
-        chapter on an odd page.</p>
+          chapter on an odd page.</p>
       </fieldset>
       <fieldset>
         <p>
-          <label for="chapter-layout" >Chapter layout</label>
+          <label for="chapter-layout">Chapter layout</label>
           <select name="chapter-layout" id="chapter-layout" title="Chapter page layout">
             <option value="MINITOC" selected>chapter TOC</option>
             <option value="BASIC">no chapter TOC</option>
@@ -215,28 +227,36 @@
         <div class="example-page even" title="Even page">
           <table class="example-page-body">
             <tr>
-              <td><div></div></td>
+              <td>
+                <div></div>
+              </td>
             </tr>
           </table>
         </div>
         <div class="example-page odd" title="Even odd, last page of chapter">
           <table class="example-page-body cut-off">
             <tr>
-              <td><div></div></td>
+              <td>
+                <div></div>
+              </td>
             </tr>
           </table>
         </div>
         <div class="example-page even" title="Even page, first page of chapter">
           <table class="example-page-body">
             <tr>
-              <td><div></div></td>
+              <td>
+                <div></div>
+              </td>
             </tr>
           </table>
         </div>
         <div class="example-page odd" title="Odd page">
           <table class="example-page-body">
             <tr>
-              <td><div></div></td>
+              <td>
+                <div></div>
+              </td>
             </tr>
           </table>
         </div>
@@ -245,28 +265,36 @@
         <div class="example-page even" title="Even page">
           <table class="example-page-body">
             <tr>
-              <td><div></div></td>
+              <td>
+                <div></div>
+              </td>
             </tr>
           </table>
         </div>
         <div class="example-page odd" title="Odd page, last page of chapter">
           <table class="example-page-body cut-off">
             <tr>
-              <td><div></div></td>
+              <td>
+                <div></div>
+              </td>
             </tr>
           </table>
         </div>
         <div class="example-page even" title="Even page, blank page">
           <table class="example-page-body-empty">
             <tr>
-              <td><div></div></td>
+              <td>
+                <div></div>
+              </td>
             </tr>
           </table>
         </div>
         <div class="example-page odd" title="Odd page, first page of chapter">
           <table class="example-page-body">
             <tr>
-              <td><div></div></td>
+              <td>
+                <div></div>
+              </td>
             </tr>
           </table>
         </div>
@@ -275,28 +303,36 @@
         <div class="example-page even" title="Even page, last page of chapter">
           <table class="example-page-body cut-off">
             <tr>
-              <td><div></div></td>
+              <td>
+                <div></div>
+              </td>
             </tr>
           </table>
         </div>
         <div class="example-page odd" title="Odd page, blank page">
           <table class="example-page-body-empty">
             <tr>
-              <td><div></div></td>
+              <td>
+                <div></div>
+              </td>
             </tr>
           </table>
         </div>
         <div class="example-page even" title="Even page, first page of chapter">
           <table class="example-page-body">
             <tr>
-              <td><div></div></td>
+              <td>
+                <div></div>
+              </td>
             </tr>
           </table>
         </div>
         <div class="example-page odd" title="Odd page">
           <table class="example-page-body">
             <tr>
-              <td><div></div></td>
+              <td>
+                <div></div>
+              </td>
             </tr>
           </table>
         </div>
@@ -331,7 +367,8 @@
       </p-->
       <p class="instruction">Image on the cover page.</p>
       <div class="help">
-        <p>Either upload a cover graphic and bundle it with the plug-in, or read the cover graphic file name from map metadata field:</p>
+        <p>Either upload a cover graphic and bundle it with the plug-in, or read the cover graphic file name from map
+          metadata field:</p>
         <pre>&lt;data name="cover-image"&gt;
   &lt;image href="cover.svg"/&gt;
   &lt;/data&gt;</pre>
@@ -363,7 +400,8 @@
         </select>
       </p>
       <p class="instruction">Page number format.</p>
-      <p class="help">Either use a simple page number, or reset page numbering for each chapter and prefix page number with chapter number.</p>
+      <p class="help">Either use a simple page number, or reset page numbering for each chapter and prefix page number
+        with chapter number.</p>
     </fieldset>
     <h3>PDF Bookmarks</h3>
     <fieldset class="col-sm-12">
@@ -442,7 +480,7 @@
         </p>
         <p class="instruction">Name of the new transformation type.</p>
         <p class="help">Transtype name must conform to same syntax
-            rules as plug-in ID.</p>
+          rules as plug-in ID.</p>
       </fieldset>
       <!--fieldset>
         <p>
@@ -458,7 +496,7 @@
         <p title="Generated plugin version number">
           <label for="plugin-version">Plug-in version</label>
           <input type="text" name="plugin-version" id="plugin-version"
-                 placeholder ="0.0.0" pattern="(\d+(\.\d+(\.\d+)?)?">
+                 placeholder="0.0.0" pattern="(\d+(\.\d+(\.\d+)?)?">
         </p>
       </fieldset>
     </div>
@@ -469,9 +507,12 @@
     <div class="col-sm-12">
       <p>Download of generated DITA-OT PDF plugin will start immediately...</p>
       <p>See
-        <a class="v3_0 hidden-when-disabled" target="_blank" href="http://www.dita-ot.org/dev/dev_ref/plugins-installing.html">plugin installation documentation</a>
-        <a class="v2_3 hidden-when-disabled" target="_blank" href="http://www.dita-ot.org/2.3/dev_ref/plugins-installing.html">plugin installation documentation</a>
-        <a class="v2_2 hidden-when-disabled" target="_blank" href="http://www.dita-ot.org/2.2/user-guide/plugins-installing.html">plugin installation documentation</a>
+        <a class="v3_0 hidden-when-disabled" target="_blank"
+           href="http://www.dita-ot.org/dev/dev_ref/plugins-installing.html">plugin installation documentation</a>
+        <a class="v2_3 hidden-when-disabled" target="_blank"
+           href="http://www.dita-ot.org/2.3/dev_ref/plugins-installing.html">plugin installation documentation</a>
+        <a class="v2_2 hidden-when-disabled" target="_blank"
+           href="http://www.dita-ot.org/2.2/user-guide/plugins-installing.html">plugin installation documentation</a>
         for next steps.</p>
       <h4 class="donation">Donations</h4>
       <p class="donation">The DITA-OT PDF plugin generator is developed as a spare time project by

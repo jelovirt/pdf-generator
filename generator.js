@@ -1044,6 +1044,9 @@ class Generator {
       require('./lib/layoutMasters').xsl(root, this.options)
     }
 
+    if (stylesheet === 'pr-domain' || !stylesheet) {
+    }
+
     if (!stylesheet) {
       if (!this.override_shell && this.toc_maximum_level) {
         root.append(ET.Comment("TOC"))
@@ -1432,6 +1435,9 @@ class Generator {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/pr-domain-attr.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:xsl/fo/pr-domain.xsl")
+    if (this.override_shell) {
+      fs.push(`plugin:${this.plugin_name}:xsl/fo/pr-domain.xsl`)
+    }
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/hi-domain-attr.xsl")
     fs.push("plugin:org.dita.pdf2:xsl/fo/hi-domain.xsl")
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/ui-domain-attr.xsl")
@@ -1560,6 +1566,7 @@ class Generator {
         "toc",
         "links",
         "lists",
+        'pr-domain',
         "static-content"].forEach((s) => {
         this.run_generation(zip, () => {
           return this.generate_custom(s)
