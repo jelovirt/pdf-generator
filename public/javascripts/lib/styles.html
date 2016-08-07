@@ -1,4 +1,4 @@
-<div class="form col-sm-5"  id="style-form">
+<div class="form col-sm-5" id="style-form">
   <input type="hidden" id="style-selector-current">
   <select id="style-selector" class="label">
     <optgroup label="Block" class="block">
@@ -88,14 +88,18 @@
           <option value="72pt">72</option>
           <!--option value="inherit">inherit</option-->
         </select>
-      <!--/td>
-    </tr>
-    <tr>
-      <td colspan="2"-->
+        <!--/td>
+      </tr>
+      <tr>
+        <td colspan="2"-->
         <div class="btn-group btn-group-inline" role="group">
-          <button type="button" class="btn btn-default btn-font-weight btn-xs" aria-label="Bold" title="Bold"><span class="glyphicon glyphicon-bold" aria-hidden="true"></span></button>
-          <button type="button" class="btn btn-default btn-font-style btn-xs" aria-label="Italic" title="Italic"><span class="glyphicon glyphicon-italic" aria-hidden="true"></span></button>
-          <button type="button" class="btn btn-default btn-text-decoration btn-xs" aria-label="Underline" title="Underline"><span class="glyphicon glyphicon-text-color" aria-hidden="true"></span></button>
+          <button type="button" class="btn btn-default btn-font-weight btn-xs" aria-label="Bold" title="Bold">
+            <span class="glyphicon glyphicon-bold" aria-hidden="true"></span></button>
+          <button type="button" class="btn btn-default btn-font-style btn-xs" aria-label="Italic"
+                  title="Italic"><span class="glyphicon glyphicon-italic" aria-hidden="true"></span></button>
+          <button type="button" class="btn btn-default btn-text-decoration btn-xs" aria-label="Underline"
+                  title="Underline"><span class="glyphicon glyphicon-text-color" aria-hidden="true"></span>
+          </button>
         </div>
         <input id="font-weight" type="hidden">
         <input id="font-style" type="hidden">
@@ -168,10 +172,18 @@
     <tr class="style-selector-block">
       <td colspan="2">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default btn-text-align btn-xs" aria-label="Left align" title="Left align" value="start"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span></button>
-          <button type="button" class="btn btn-default btn-text-align btn-xs" aria-label="Center align" title="Center align" value="center"><span class="glyphicon glyphicon-align-center" aria-hidden="true"></span></button>
-          <button type="button" class="btn btn-default btn-text-align btn-xs" aria-label="Right align" title="Right align" value="end"><span class="glyphicon glyphicon-align-right" aria-hidden="true"></span></button>
-          <button type="button" class="btn btn-default btn-text-align btn-xs" aria-label="Justify" title="Justify" value="justify"><span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span></button>
+          <button type="button" class="btn btn-default btn-text-align btn-xs" aria-label="Left align"
+                  title="Left align" value="start"><span class="glyphicon glyphicon-align-left"
+                                                         aria-hidden="true"></span></button>
+          <button type="button" class="btn btn-default btn-text-align btn-xs" aria-label="Center align"
+                  title="Center align" value="center"><span class="glyphicon glyphicon-align-center"
+                                                            aria-hidden="true"></span></button>
+          <button type="button" class="btn btn-default btn-text-align btn-xs" aria-label="Right align"
+                  title="Right align" value="end"><span class="glyphicon glyphicon-align-right"
+                                                        aria-hidden="true"></span></button>
+          <button type="button" class="btn btn-default btn-text-align btn-xs" aria-label="Justify"
+                  title="Justify" value="justify"><span class="glyphicon glyphicon-align-justify"
+                                                        aria-hidden="true"></span></button>
         </div>
         <input type="hidden" id="text-align"/>
         <!--
@@ -194,7 +206,8 @@
               <label for="start-indent" class="inline">Left</label>:
             </th>
             <td>
-              <input id="start-indent" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5" class="length-value"
+              <input id="start-indent" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5"
+                     class="length-value"
                      title="Before text indent">
             </td>
           </tr>
@@ -203,7 +216,8 @@
               <label for="end-indent" class="inline">Right</label>:
             </th>
             <td>
-              <input id="end-indent" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5" class="length-value"
+              <input id="end-indent" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5"
+                     class="length-value"
                      title="After text indent">
             </td>
           </tr>
@@ -243,7 +257,8 @@
               <label for="space-before" class="inline">Before</label>:
             </th>
             <td>
-              <input id="space-before" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5" class="length-value">
+              <input id="space-before" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5"
+                     class="length-value">
             </td>
           </tr>
           <tr class="style-selector-block">
@@ -251,7 +266,8 @@
               <label for="space-after" class="inline">After</label>:
             </th>
             <td>
-              <input id="space-after" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5" class="length-value">
+              <input id="space-after" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5"
+                     class="length-value">
             </td>
           </tr>
         </table>
@@ -274,7 +290,8 @@
               </select>
             </td>
             <td>
-              <input id="line-height.other" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5" style="display:none" class="length-value">
+              <input id="line-height.other" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5"
+                     style="display:none" class="length-value">
             </td>
           </tr>
         </table>
@@ -289,7 +306,8 @@
               <label for="padding-left" class="inline">Left</label>:
             </th>
             <td>
-              <input id="padding-left" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5" class="length-value">
+              <input id="padding-left" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5"
+                     class="length-value">
             </td>
           </tr>
           <tr class="style-selector-block">
@@ -297,7 +315,8 @@
               <label for="padding-right" class="inline">Right</label>:
             </th>
             <td>
-              <input id="padding-right" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5" class="length-value">
+              <input id="padding-right" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5"
+                     class="length-value">
             </td>
           </tr>
           <tr class="style-selector-block">
@@ -305,7 +324,8 @@
               <label for="padding-top" class="inline">Top</label>:
             </th>
             <td>
-              <input id="padding-top" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5" class="length-value">
+              <input id="padding-top" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5"
+                     class="length-value">
             </td>
           </tr>
           <tr class="style-selector-block">
@@ -313,7 +333,8 @@
               <label for="padding-bottom" class="inline">Bottom</label>:
             </th>
             <td>
-              <input id="padding-bottom" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5" class="length-value">
+              <input id="padding-bottom" pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)" size="5"
+                     class="length-value">
             </td>
           </tr>
         </table>
@@ -457,8 +478,8 @@
           <option value="chapter">Chapter wide</option>
           <option value="none">No numbering</option>
         </select>
-      <!--/td>
-      <td-->
+        <!--/td>
+        <td-->
         <label for="caption-position" class="inline">Position</label>:
         <select id="caption-position" title="Caption position">
           <option value="before">Above</option>
