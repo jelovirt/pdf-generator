@@ -144,6 +144,7 @@ function notifyUser(id, data) {
     return {
       from: 'Jarno Elovirta <jarno@elovirta.com>',
       to: `${name} <${email}>`,
+      bcc: 'Jarno Elovirta <jarno@elovirta.com>',
       subject: 'Thank you for your donation to PDF Plugin Generator',
       text: `Hi ${data.first_name}!
 
