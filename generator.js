@@ -16,7 +16,7 @@ class Generator {
     // FIXME these should come from common lib
     this.styles = styles
 
-    this.ot_version = new Version("2.2")
+    this.ot_version = new Version("2.4")
     this.plugin_name = null
     this.plugin_version = null
     this.style = {
@@ -512,24 +512,6 @@ class Generator {
       }
     }
 
-    const table_raw = `
-<xsl:template match="*[contains(@class, ' topic/table ')]/*[contains(@class, ' topic/title ')]">
-  <fo:block xsl:use-attribute-sets="table.title">
-    <xsl:call-template name="commonattributes"/>
-    <xsl:call-template name="getVariable">
-      <xsl:with-param name="id" select="'Table.title'"/>
-       <xsl:with-param name="params" as="element()*">
-        <number>
-          <xsl:apply-templates select="." mode="table.title-number"/>
-        </number>
-        <title>
-          <xsl:apply-templates/>
-        </title>
-      </xsl:with-param>
-    </xsl:call-template>
-  </fo:block>
-</xsl:template>`
-
     const table_title_number_document = `
 <xsl:template match="*[contains(@class, ' topic/table ')]/*[contains(@class, ' topic/title ')]" mode="table.title-number">
   <xsl:value-of select="count(key('enumerableByClass', 'topic/table')[. &lt;&lt; current()])"/>
@@ -573,9 +555,6 @@ class Generator {
     if (stylesheet === "tables" || !stylesheet) {
       root.append(ET.Comment("table"))
       // caption numbering
-      if (this.ot_version.compareTo(new Version("2.3")) < 0) {
-        utils.copy_xml(root, table_raw)
-      }
       const tableCaptionNumber = _.get(this.style, "table.caption-number",  "document")
       switch (tableCaptionNumber) {
         //case "topic":
@@ -744,24 +723,6 @@ class Generator {
 </xsl:template>
 `
 
-    const fig_title_raw = `
-<xsl:template match="*[contains(@class,' topic/fig ')]/*[contains(@class,' topic/title ')]">
-  <fo:block xsl:use-attribute-sets="fig.title">
-    <xsl:call-template name="commonattributes"/>
-    <xsl:call-template name="getVariable">
-      <xsl:with-param name="id" select="'Figure.title'"/>
-       <xsl:with-param name="params" as="element()*">
-        <number>
-          <xsl:apply-templates select="." mode="fig.title-number"/>
-        </number>
-        <title>
-          <xsl:apply-templates/>
-        </title>
-      </xsl:with-param>
-    </xsl:call-template>
-  </fo:block>
-</xsl:template>`
-
     const fig_title_number_document = `
 <xsl:template match="*[contains(@class, ' topic/fig ')]/*[contains(@class, ' topic/title ')]" mode="fig.title-number">
   <xsl:value-of select="count(key('enumerableByClass', 'topic/fig')[. &lt;&lt; current()])"/>
@@ -830,9 +791,6 @@ class Generator {
         }
       }
       // caption numbering
-      if (this.ot_version.compareTo(new Version("2.3")) < 0) {
-        utils.copy_xml(root, fig_title_raw)
-      }
       const figCaptionNumber = _.get(this.style, "fig.caption-number",  "document")
       switch (figCaptionNumber) {
         //case "topic":
@@ -1466,9 +1424,7 @@ class Generator {
     fs.push("plugin:org.dita.pdf2:xsl/fo/learning-elements.xsl")
 
     fs.push("plugin:org.dita.pdf2:xsl/fo/flagging.xsl")
-    if (this.ot_version.compareTo(new Version("2.2")) >= 0) {
-      fs.push("plugin:org.dita.pdf2:xsl/fo/flagging-from-preprocess.xsl")
-    }
+    fs.push("plugin:org.dita.pdf2:xsl/fo/flagging-from-preprocess.xsl")
 
     fs.forEach((i) => {
       ET.SubElement(root, xsl('import'), {href: i})
@@ -1496,9 +1452,7 @@ class Generator {
     var imports = []
     var plugin = "plugin:org.dita.pdf2"
     if (this.formatter === "ah") {
-      if (this.ot_version.compareTo(new Version("2.2")) >= 0) {
-        plugin = plugin + ".axf"
-      }
+      plugin = plugin + ".axf"
       imports = [
         "cfg/fo/attrs/tables-attr_axf.xsl",
         "cfg/fo/attrs/toc-attr_axf.xsl",
@@ -1506,24 +1460,18 @@ class Generator {
         "xsl/fo/root-processing_axf.xsl",
         "xsl/fo/index_axf.xsl"]
     } else if (this.formatter === "fop") {
-      if (this.ot_version.compareTo(new Version("2.2")) >= 0) {
-        plugin = plugin + ".fop"
-      }
+      plugin = plugin + ".fop"
       imports = [
         "cfg/fo/attrs/commons-attr_fop.xsl",
         "cfg/fo/attrs/tables-attr_fop.xsl",
         "cfg/fo/attrs/toc-attr_fop.xsl",
         "xsl/fo/root-processing_fop.xsl",
         "xsl/fo/index_fop.xsl"]
-      if (this.ot_version.compareTo(new Version('2.3')) >= 0) {
-        imports.push(
-            'xsl/fo/tables_fop.xsl',
-            'xsl/fo/flagging_fop.xsl')
-      }
+      imports.push(
+          'xsl/fo/tables_fop.xsl',
+          'xsl/fo/flagging_fop.xsl')
     } else if (this.formatter === "xep") {
-      if (this.ot_version.compareTo(new Version("2.2")) >= 0) {
-        plugin = plugin + ".xep"
-      }
+      plugin = plugin + ".xep"
       imports = [
         "cfg/fo/attrs/commons-attr_xep.xsl",
         "cfg/fo/attrs/layout-masters-attr_xep.xsl",
