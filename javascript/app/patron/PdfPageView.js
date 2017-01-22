@@ -1,15 +1,11 @@
-define([
-  'handlebars',
-  'hb!patron/templates.html'
-],
-function(Handlebars,
-         templates) {
-  return function PdfPageView() {
-    const $scripts = $(Handlebars.compile(templates)())
-    const $element = $scripts.filter("script")
+import $ from 'jquery'
+import templates from './templates.html'
 
-    return {
-      $element: $element
-    }
+export default function PdfPageView() {
+  const $scripts = $(templates())
+  const $element = $scripts.filter("script")
+
+  return {
+    $element: $element
   }
-})
+}

@@ -9,7 +9,7 @@ import PdfPreviewController from './PdfPreviewController'
 import PdfUtils from './pdf-utils'
 import Utils from './Utils'
 
-export default function PdfPageController() {
+export default function PdfPageController(exts) {
   const view = PdfPageView()
   $('main').html(view.$element)
 
@@ -21,7 +21,9 @@ export default function PdfPageController() {
   StyleController()
   PdfPreviewController()
 
-  _.forEach(exts || [], ext => ext())
+  _.forEach(exts || [], (ext) => {
+    ext()
+  })
 
   // form initialization
   $("#cover_image_chooser").change(coverChangeHandler).change()
