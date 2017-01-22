@@ -34,8 +34,7 @@ npm-debug.log
 .idea
 *.iml
 public/stylesheets
-public/javascripts/app/
 public/javascripts/app.js
-public/javascripts/lib/styles.js
+public/javascripts/app.js.map
 public/fonts
 test

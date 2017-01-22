@@ -1,17 +1,24 @@
 const gulp = require('gulp')
+const util = require('gulp-util')
 const babel = require('gulp-babel')
 const sass = require('gulp-sass')
 const watch = require('gulp-watch')
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config')
 
-gulp.task('default', ['js', 'sass', 'fonts'])
+gulp.task('default', ['webpack', 'sass', 'fonts'])
 
-gulp.task('js', () => {
-  return gulp
-    .src('javascript/**/*.js')
-    .pipe(babel({
-      presets: ['es2015']
+gulp.task('webpack', (callback) => {
+  webpack(webpackConfig, (error, stats) => {
+    if (error)  {
+      throw new gutil.PluginError('webpack', err)
+    }
+    util.log('[webpack]', stats.toString({
+      colors: true,
+      progress: true
     }))
-    .pipe(gulp.dest('public/javascripts'))
+    callback()
+  })
 })
 
 gulp.task('sass', () => {
@@ -29,9 +36,9 @@ gulp.task('fonts', () => {
     .pipe(gulp.dest('public/fonts/bootstrap'))
 })
 
-gulp.task('watch-js', ['js'], () => {
+gulp.task('watch-webpack', ['webpack'], () => {
   return watch('javascript/**/*.js', () => {
-    gulp.start('js')
+    gulp.start('webpack')
   })
 })
 

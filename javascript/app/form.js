@@ -1,7 +1,0 @@
-
-
-// Initialization
-
-//$(document).ready(function() {
-
-//});

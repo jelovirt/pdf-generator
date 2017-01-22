@@ -1,17 +1,14 @@
-define([
-    'handlebars',
-  'hb!templates.html'
-],
-function (Handlebars,
-          templates) {
-  return function PdfPageView() {
-    const data = {
-      generate_url: '/',
-    }
-    const $element = $(Handlebars.compile(templates)(data))
+import $ from 'jquery'
+import templates from '../lib/templates.html'
+// const templates = require('../lib/templates.html')
 
-    return {
-      $element: $element
-    }
+export default function PdfPageView() {
+  const data = {
+    generate_url: '/',
   }
-})
+  const $element = $(templates(data))
+
+  return {
+    $element: $element
+  }
+}
