@@ -3,11 +3,11 @@ const path = require("path");
 module.exports = {
   devtool: "source-map",
   entry: {
-    offline: path.join(__dirname, "javascript", "app.js")
+    app: path.join(__dirname, "javascript", "app.js")
   },
   output: {
     path: path.join(__dirname, "public", "javascripts"),
-    filename: "app.js" //"[name].js"
+    filename: "[name].js"
   },
   module: {
     loaders: [
