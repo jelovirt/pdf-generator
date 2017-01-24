@@ -390,7 +390,7 @@ def main():
         },
         "pdf": {
             "output": "pdf-plugin",
-            "ot_version": "2.0",
+            "ot_version": "2.4",
             "page-size": "210mm 297mm",
             # "orientation": "landscape",
             "page-margin-top": "20mm",

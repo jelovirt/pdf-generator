@@ -5,5 +5,4 @@ window.addEventListener('load', () => {
   PdfPageController()
   // FIXME
   $('.patron').remove()
-
 }, false)
