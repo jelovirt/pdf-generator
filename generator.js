@@ -1003,6 +1003,13 @@ class Generator {
     }
 
     if (stylesheet === 'pr-domain' || !stylesheet) {
+      if (_.has(this.style['codeblock'], 'line-numbering') && this.style['codeblock']['line-numbering']) {
+        utils.copy_xml(root, `
+          <xsl:template match="node()" mode="codeblock.generate-line-number" as="xs:boolean">
+            <xsl:sequence select="true()"/>
+          </xsl:template>
+        `)
+      }
     }
 
     if (!stylesheet) {

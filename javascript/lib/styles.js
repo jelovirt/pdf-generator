@@ -197,7 +197,9 @@ function styles(_) {
       "space-after": {default: null, inherit: "body"},
       "text-align": {default: null, inherit: "body"},
       "start-indent": {default: "31pt", inherit: "body"},//+6pt
-      "line-height": {default: null, inherit: "body"}
+      "line-height": {default: null, inherit: "body"},
+      // custom
+      "line-numbering": {default: false, inherit: null}
     }, base),
     "dl": _.defaultsDeep({
       "font-family": {default: null, inherit: "body"},

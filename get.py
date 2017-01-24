@@ -28,7 +28,7 @@ def main():
     json_targets = {
         "pdf": {
             "id": "com.example.print-pdf",
-            "ot_version": "2.0",
+            "ot_version": "2.4",
             "plugin_version": "1.0.0",
             "transtype": "print-pdf",
             "configuration": {
@@ -101,7 +101,8 @@ def main():
                         "caption-position": "after"
                     },
                     "codeblock": {
-                        "background-color": "silver"
+                        "background-color": "silver",
+                        "line-numbering": "true"
                     }
                 },
                 "bookmark_style": "EXPANDED",
@@ -261,6 +262,7 @@ def main():
             "line-height.pre": "1.2",
             "font-family.codeblock": "Monaco",
             "font-size.codeblock": "9pt",
+            "line-numbering.codeblock": "true",
             "color.codeblock": "white",
             "background-color.codeblock": "teal",
             #font-weight.codeblock
