@@ -8,13 +8,14 @@ const styles = require('./javascript/lib/styles').styles
 const Version = require('./lib/version')
 const vars = require('./lib/vars')
 
+const xsl = utils.xsl
+const catalog = utils.catalog
+
 class Generator {
 
   constructor() {
     this.properties = ["absolute-position", "active-state", "alignment-adjust", "alignment-baseline", "allowed-height-scale", "allowed-width-scale", "auto-restore", "azimuth", "background-attachment", "background-color", "background-image", "background-position-horizontal", "background-position-vertical", "background-repeat", "baseline-shift", "blank-or-not-blank", "block-progression-dimension", "border-after-color", "border-after-precedence", "border-after-style", "border-after-width", "border-before-color", "border-before-precedence", "border-before-style", "border-before-width", "border-bottom-color", "border-bottom-style", "border-bottom-width", "border-collapse", "border-end-color", "border-end-precedence", "border-end-style", "border-end-width", "border-left-color", "border-left-style", "border-left-width", "border-right-color", "border-right-style", "border-right-width", "border-separation", "border-start-color", "border-start-precedence", "border-start-style", "border-start-width", "border-top-color", "border-top-style", "border-top-width", "bottom", "bottom", "break-after", "break-before", "caption-side", "case-name", "case-title", "change-bar-class", "change-bar-color", "change-bar-offset", "change-bar-placement", "change-bar-style", "change-bar-width", "character", "clear", "clip", "color", "color-profile-name", "column-count", "column-gap", "column-number", "column-width", "content-height", "content-type", "content-width", "country", "cue-after", "cue-before", "destination-placement-offset", "direction", "display-align", "dominant-baseline", "elevation", "empty-cells", "end-indent", "ends-row", "extent", "external-destination", "float", "flow-map-name", "flow-map-reference", "flow-name", "flow-name-reference", "font-family", "font-selection-strategy", "font-size", "font-size-adjust", "font-stretch", "font-style", "font-variant", "font-weight", "force-page-count", "format", "glyph-orientation-horizontal", "glyph-orientation-vertical", "grouping-separator", "grouping-size", "height", "hyphenate", "hyphenation-character", "hyphenation-keep", "hyphenation-ladder-count", "hyphenation-push-character-count", "hyphenation-remain-character-count", "id", "index-class", "index-key", "indicate-destination", "initial-page-number", "inline-progression-dimension", "internal-destination", "intrinsic-scale-value", "intrusion-displace", "keep-together", "keep-with-next", "keep-with-previous", "language", "last-line-end-indent", "leader-alignment", "leader-length", "leader-pattern", "leader-pattern-width", "left", "left", "letter-spacing", "letter-value", "linefeed-treatment", "line-height", "line-height-shift-adjustment", "line-stacking-strategy", "margin-bottom", "margin-bottom", "margin-left", "margin-left", "margin-right", "margin-right", "margin-top", "margin-top", "marker-class-name", "master-name", "master-reference", "maximum-repeats", "media-usage", "merge-pages-across-index-key-references", "merge-ranges-across-index-key-references", "merge-sequential-page-numbers", "number-columns-repeated", "number-columns-spanned", "number-rows-spanned", "odd-or-even", "orphans", "overflow", "padding-after", "padding-before", "padding-bottom", "padding-end", "padding-left", "padding-right", "padding-start", "padding-top", "page-citation-strategy", "page-height", "page-number-treatment", "page-position", "page-width", "pause-after", "pause-before", "pitch", "pitch-range", "play-during", "precedence", "provisional-distance-between-starts", "provisional-label-separation", "reference-orientation", "ref-id", "ref-index-key", "region-name", "region-name-reference", "relative-align", "relative-position", "rendering-intent", "retrieve-boundary", "retrieve-boundary-within-table", "retrieve-class-name", "retrieve-position", "retrieve-position-within-table", "richness", "right", "right", "role", "rule-style", "rule-thickness", "scale-option", "scaling", "scaling-method", "score-spaces", "script", "show-destination", "source-document", "space-after", "space-before", "space-end", "space-start", "span", "speak", "speak-header", "speak-numeral", "speak-punctuation", "speech-rate", "src", "start-indent", "starting-state", "starts-row", "stress", "suppress-at-line-break", "switch-to", "table-layout", "table-omit-footer-at-break", "table-omit-header-at-break", "target-presentation-context", "target-processing-context", "target-stylesheet", "text-align", "text-align-last", "text-altitude", "text-decoration", "text-depth", "text-indent", "text-shadow", "text-transform", "top", "top", "treat-as-word-space", "unicode-bidi", "visibility", "voice-family", "volume", "white-space-collapse", "white-space-treatment", "widows", "width", "word-spacing", "wrap-option", "writing-mode", "z-index"]
     this.variable_languages = ["de", "en", "es", "fi", "fr", "he", "it", "ja", "nl", "ro", "ru", "sv", "zh_CN"]
-    // FIXME these should come from common lib
-    this.styles = styles
 
     this.ot_version = new Version("2.4")
     this.plugin_name = null
@@ -55,8 +56,8 @@ class Generator {
   }
 
   default_style(type, property) {
-    if (_.has(this.styles, [type, property])) {
-      return this.styles[type][property].default || null
+    if (_.has(styles, [type, property])) {
+      return styles[type][property].default || null
     }
     return null
   }
@@ -1574,11 +1575,6 @@ function value(property, value) {
   return value
 }
 
-const xsl = utils.xsl
-const catalog = utils.catalog
-
 module.exports = {
   Generator: Generator,
-  // FIXME single source with UI JS
-  styles: styles
 }
