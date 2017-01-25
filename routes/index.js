@@ -9,6 +9,7 @@ const multer = require('multer')  // v1.0.5
 const upload = multer() // for parsing multipart/form-data
 
 const generator = require('../generator')
+const styles = require('../javascript/lib/styles').styles
 const Version = require('../lib/version')
 
 router.get('/', function (req, res, next) {
@@ -71,10 +72,10 @@ function read_arguments(req) {
   }
 
   __config.style = {}
-  const types = _(generator.styles).map((f, k) => {
+  const types = _(styles).map((f, k) => {
     return k
   }).uniq().value()
-  const properties = _(generator.styles).map((f, k) => {
+  const properties = _(styles).map((f, k) => {
     return _.map(f, (v, p) => {
       return p
     })
@@ -84,7 +85,7 @@ function read_arguments(req) {
     properties.forEach((__property) => {
       let v = req.body[`${__property}.${__type}`]
       if (v) {
-        switch (typeof generator.styles[__type][__property].default) {
+        switch (typeof styles[__type][__property].default) {
           case 'boolean':
             group[__property] = (v === 'true')
             break
