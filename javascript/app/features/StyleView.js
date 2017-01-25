@@ -1,11 +1,10 @@
 import $ from 'jquery'
-import formTemplate from '../../lib/styles.html'
-import previewTemplate from '../../lib/style-preview.html'
+import template from '../../lib/styles.html'
 
 export default function StyleView() {
   const $root = $('#p4')
 
-  const $form = $(formTemplate({
+  const $form = $(template({
     four: [1, 2, 3, 4]
   }))
   $root.append($form)
@@ -16,10 +15,6 @@ export default function StyleView() {
   initButton('font-weight', 'bold', 'normal')
   initButton('font-style', 'italic', 'normal')
   initButton('text-decoration', 'underline', 'none')
-
-
-  const $preview = $(previewTemplate({}))
-  $root.append($preview)
 
   return {
     $element: $root,
