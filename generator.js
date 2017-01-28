@@ -56,7 +56,7 @@ class Generator {
   }
 
   default_style(type, property) {
-    if (_.has(styles, [type, property])) {
+    if(_.has(styles, [type, property])) {
       return styles[type][property].default || null
     }
     return null
@@ -91,31 +91,31 @@ class Generator {
       "name": "pdf2.i18n.skip",
       "value": true
     })
-    if (this.override_shell) {
+    if(this.override_shell) {
       ET.SubElement(init, "property", {
         "name": "args.xsl.pdf",
         "location": `\${dita.plugin.${this.plugin_name}.dir}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`
       })
     }
-    if (this.chapter_layout) {
+    if(this.chapter_layout) {
       ET.SubElement(init, "property", {
         "name": "args.chapter.layout",
         "value": this.chapter_layout
       })
     }
-    if (this.bookmark_style) {
+    if(this.bookmark_style) {
       ET.SubElement(init, "property", {
         "name": "args.bookmark.style",
         "value": this.bookmark_style
       })
     }
-    if (this.task_label) {
+    if(this.task_label) {
       ET.SubElement(init, "property", {
         "name": "args.gen.task.lbl",
         "value": 'YES'
       })
     }
-    if (this.include_related_links) {
+    if(this.include_related_links) {
       ET.SubElement(init, "property", {
         "name": "args.fo.include.rellinks",
         "value": this.include_related_links
@@ -135,7 +135,7 @@ class Generator {
    */
   generate_plugin_file() {
     const root = ET.Element("plugin", {id: this.plugin_name})
-    if (this.plugin_version) {
+    if(this.plugin_version) {
       ET.SubElement(root, "feature", {extension: "package.version", value: this.plugin_version})
     }
     ET.SubElement(root, "require", {plugin: "org.dita.pdf2"})
@@ -154,7 +154,7 @@ class Generator {
     const root = ET.Element(catalog('catalog'), {
       prefer: 'system'
     })
-    if (!this.override_shell) {
+    if(!this.override_shell) {
       ET.SubElement(root, catalog('uri'), {
         name: 'cfg:fo/attrs/custom.xsl',
         uri: 'fo/attrs/custom.xsl'
@@ -498,16 +498,16 @@ class Generator {
     </fo:block>
   </xsl:template>
 `
-    if (stylesheet === "front-matter" || !stylesheet) {
-      if (this.cover_image_name || this.cover_image_metadata || this.cover_image_topic) {
+    if(stylesheet === "front-matter" || !stylesheet) {
+      if(this.cover_image_name || this.cover_image_metadata || this.cover_image_topic) {
         root.append(ET.Comment("cover"))
         utils.copy_xml(root, cover_raw_2)
         //copy_xml(root, cover_contents_raw)
-        if (this.cover_image_name) {
+        if(this.cover_image_name) {
           utils.copy_xml(root, cover_file_raw)
-        } else if (this.cover_image_metadata) {
+        } else if(this.cover_image_metadata) {
           utils.copy_xml(root, cover_metadata_raw)
-        } else if (this.cover_image_topic) {
+        } else if(this.cover_image_topic) {
           utils.copy_xml(root, cover_topic_raw)
         }
       }
@@ -553,10 +553,10 @@ class Generator {
   </fo:block>
 </xsl:template>`
 
-    if (stylesheet === "tables" || !stylesheet) {
+    if(stylesheet === "tables" || !stylesheet) {
       root.append(ET.Comment("table"))
       // caption numbering
-      const tableCaptionNumber = _.get(this.style, "table.caption-number",  "document")
+      const tableCaptionNumber = _.get(this.style, "table.caption-number", "document")
       switch (tableCaptionNumber) {
         //case "topic":
         //  utils.copy_xml(root, table_title_number_topic)
@@ -569,19 +569,19 @@ class Generator {
           break
       }
       // caption position
-      if (_.has(this.style, "table") && _.has(this.style["table"], "caption-position") && this.style["table"]["caption-position"] === "after") {
+      if(_.has(this.style, "table") && _.has(this.style["table"], "caption-position") && this.style["table"]["caption-position"] === "after") {
         utils.copy_xml(root, table_title_raw)
       }
-      if (this.table_continued) {
+      if(this.table_continued) {
         utils.copy_xml(root, table_continued_raw)
       } else {
         utils.copy_xml(root, table_footer_raw)
       }
-      if (_.has(this.style["dl"], "dl-type")) {
-        if (this.style["dl"]["dl-type"] === "list") {
+      if(_.has(this.style["dl"], "dl-type")) {
+        if(this.style["dl"]["dl-type"] === "list") {
           root.append(ET.Comment("dl"))
           utils.copy_xml(root, dl_list_raw)
-        } else if (this.style["dl"]["dl-type"] === "html") {
+        } else if(this.style["dl"]["dl-type"] === "html") {
           root.append(ET.Comment("dl"))
           utils.copy_xml(root, dl_html_raw)
         }
@@ -660,12 +660,12 @@ class Generator {
 </xsl:template>
 `
 
-    if (stylesheet === 'toc' || !stylesheet) {
+    if(stylesheet === 'toc' || !stylesheet) {
       root.append(ET.Comment('toc'))
       utils.copy_xml(root, tocRaw)
 
-      if (_.has(this.style, 'toc_1.prefix') && !this.style.toc_1.prefix) {
-        ET.SubElement(root, xsl('template'), { match: 'node()', mode: 'tocPrefix' })
+      if(_.has(this.style, 'toc_1.prefix') && !this.style.toc_1.prefix) {
+        ET.SubElement(root, xsl('template'), {match: 'node()', mode: 'tocPrefix'})
       }
     }
 
@@ -764,7 +764,7 @@ class Generator {
   </xsl:for-each>
 </xsl:template>`
 
-    if (stylesheet === "commons" || !stylesheet) {
+    if(stylesheet === "commons" || !stylesheet) {
       utils.copy_xml(root, commons_raw)
       root.append(ET.Comment("title numbering"))
       const number_levels = _(['topic', 'topic_topic', 'topic_topic_topic', 'topic_topic_topic_topic'])
@@ -779,20 +779,20 @@ class Generator {
         }).join(", ") + ")")
       })
       utils.copy_xml(root, get_title_raw)
-      if (_.has(this.style["topic"], "title-numbering") && this.style["topic"]["title-numbering"] !== true) {
+      if(_.has(this.style["topic"], "title-numbering") && this.style["topic"]["title-numbering"] !== true) {
         utils.copy_xml(root, numberless_chapter_raw)
       }
-      if (!(_.has(this.style["note"], "icon") && this.style["note"]["icon"] === "icon")) {
+      if(!(_.has(this.style["note"], "icon") && this.style["note"]["icon"] === "icon")) {
         root.append(ET.Comment("note"))
         utils.copy_xml(root, note_raw)
       }
-      if (this.page_number) {
-        if (this.page_number === "chapter-page") {
+      if(this.page_number) {
+        if(this.page_number === "chapter-page") {
           utils.copy_xml(root, chapter_page_number_raw)
         }
       }
       // caption numbering
-      const figCaptionNumber = _.get(this.style, "fig.caption-number",  "document")
+      const figCaptionNumber = _.get(this.style, "fig.caption-number", "document")
       switch (figCaptionNumber) {
         //case "topic":
         //  utils.copy_xml(root, fig_title_number_topic)
@@ -806,17 +806,17 @@ class Generator {
       }
 
       //if (_.has(this.style, 'fig') && _.has(this.style["fig"], "caption-position") && this.style["fig"]["caption-position"] === "before") {
-      if (_.has(this.style, 'fig.caption-position') && this.style["fig"]["caption-position"] === "before") {
+      if(_.has(this.style, 'fig.caption-position') && this.style["fig"]["caption-position"] === "before") {
         utils.copy_xml(root, fig_raw)
       }
-      if (this.cover_image_topic) {
+      if(this.cover_image_topic) {
         ET.SubElement(root, xsl('template'), {
           match: `*[contains(@class, ' topic/topic ')][@outputclass = '${this.cover_image_topic}']`,
           priority: "1000"
         })
       }
       // tm
-      if (_.has(this.style['tm'], 'symbol-scope') && this.style['tm']['symbol-scope'] !== 'always') {
+      if(_.has(this.style['tm'], 'symbol-scope') && this.style['tm']['symbol-scope'] !== 'always') {
         const tm_chapter_raw = `
           <xsl:function name="e:tm-value" as="xs:string">
             <xsl:param name="node" as="element()"/>
@@ -851,11 +851,11 @@ class Generator {
           `
         root.append(ET.Comment("tm"))
         const symbolScope = this.style['tm']['symbol-scope']
-        if (symbolScope === 'chapter') {
+        if(symbolScope === 'chapter') {
           utils.copy_xml(root, tm_chapter_raw)
-        } else if (symbolScope === 'never') {
+        } else if(symbolScope === 'never') {
           utils.copy_xml(root, tm_never_raw)
-        } else if (symbolScope === 'always') {
+        } else if(symbolScope === 'always') {
           // NOOP
         }
       }
@@ -927,8 +927,8 @@ class Generator {
   </xsl:function>
 `
 
-    if (stylesheet === "links" || !stylesheet) {
-      if (_.has(this.style["link"], "link-url") && this.style["link"]["link-url"] === true) {
+    if(stylesheet === "links" || !stylesheet) {
+      if(_.has(this.style["link"], "link-url") && this.style["link"]["link-url"] === true) {
         root.append(ET.Comment("link"))
         utils.copy_xml(root, link_raw)
       }
@@ -988,26 +988,26 @@ class Generator {
 </xsl:template>
 `
 
-    if (stylesheet === "lists" || !stylesheet) {
-      if (_.has(this.style, 'ol') || _.has(this.style, 'ul')) {
+    if(stylesheet === "lists" || !stylesheet) {
+      if(_.has(this.style, 'ol') || _.has(this.style, 'ul')) {
         root.append(ET.Comment("list"))
         utils.copy_xml(root, list_raw)
       }
     }
 
-    if (stylesheet === 'static-content' || !stylesheet) {
+    if(stylesheet === 'static-content' || !stylesheet) {
       require('./lib/staticContent').xsl(root, this.options)
     }
 
-    if (stylesheet === 'layout-masters' || !stylesheet) {
+    if(stylesheet === 'layout-masters' || !stylesheet) {
       require('./lib/layoutMasters').xsl(root, this.options)
     }
 
-    if (stylesheet === 'pr-domain' || !stylesheet) {
+    if(stylesheet === 'pr-domain' || !stylesheet) {
     }
 
-    if (!stylesheet) {
-      if (!this.override_shell && this.toc_maximum_level) {
+    if(!stylesheet) {
+      if(!this.override_shell && this.toc_maximum_level) {
         root.append(ET.Comment("TOC"))
         ET.SubElement(root, xsl('variable'), {name: "tocMaximumLevel"}).text = this.toc_maximum_level.toString()
       }
@@ -1026,12 +1026,12 @@ class Generator {
   attribute_set(root, style, attribute_set, properties, uses) {
     properties = properties || this.properties
     const attrs = {name: attribute_set}
-    if (uses !== undefined) {
+    if(uses !== undefined) {
       attrs['use-attribute-sets'] = uses
     }
     const attrSet = ET.SubElement(root, xsl('attribute-set'), attrs)
     _.forEach(this.style[style], (v, p) => {
-      if (_.includes(properties, p)) {
+      if(_.includes(properties, p)) {
         ET.SubElement(attrSet, xsl('attribute'), {name: p}).text = value(p, v)
       }
     })
@@ -1058,9 +1058,9 @@ class Generator {
 //            #    cover_image_path = ET.SubElement(root, xsl('variable'), name="e:cover-image")
 //            #    ET.SubElement(cover_image_path, xsl('apply-templates'), select="($map//*[contains(@class, ' topic/data ')][@name = '%s']/*[contains(@class, ' topic/image ')])[1]" % cover_image_metadata, mode="e:cover-image")
 //
-    if (stylesheet === "commons-attr" || !stylesheet) {
+    if(stylesheet === "commons-attr" || !stylesheet) {
       // force page count
-      if (this.force_page_count) {
+      if(this.force_page_count) {
         const page_count_attr = ET.SubElement(root, xsl('attribute-set'), {name: "__force__page__count"})
         ET.SubElement(page_count_attr, xsl('attribute'), {name: "force-page-count"}).text = this.force_page_count
       }
@@ -1068,10 +1068,10 @@ class Generator {
       this.attribute_set(root, "body", "__fo__root", ["font-family", "color", "text-align"])
       // titles
       _.forEach(this.style, (e, k) => {
-        if (k.startsWith("topic") || k === "section") {
+        if(k.startsWith("topic") || k === "section") {
           const title_attr = ET.SubElement(root, xsl('attribute-set'), {name: k.replace(/_/g, '.') + ".title"})
           _.forEach(e, (v, p) => {
-            if (_.includes(this.properties, p)) {
+            if(_.includes(this.properties, p)) {
               ET.SubElement(title_attr, xsl('attribute'), {name: p}).text = v
             }
           })
@@ -1094,7 +1094,7 @@ class Generator {
       this.attribute_set(root, "example", "example")
       // note
       this.attribute_set(root, "note", "note__table")
-      if (!(_.has(this.style["note"], "icon") && this.style["note"]["icon"] === "icon")) {
+      if(!(_.has(this.style["note"], "icon") && this.style["note"]["icon"] === "icon")) {
         const note_text = ET.SubElement(root, xsl('attribute-set'), {name: "notetextcolumn"})
         ET.SubElement(note_text, xsl('attribute'), {name: "column-number"}).text = "1"
       }
@@ -1104,20 +1104,20 @@ class Generator {
       // fig
       this.attribute_set(root, "fig", "fig")
     }
-    if (stylesheet === "tables-attr" || !stylesheet) {
+    if(stylesheet === "tables-attr" || !stylesheet) {
       // dl
-      if (_.has(this.style["dl"], "dl-type")) {
+      if(_.has(this.style["dl"], "dl-type")) {
         this.attribute_set(root, "dl", "e:dl")
         const dt_attr = ET.SubElement(root, xsl('attribute-set'), {name: 'e:dlentry.dt__content'})
         ET.SubElement(dt_attr, xsl('attribute'), {name: 'font-weight'}).text = "bold"
         ET.SubElement(dt_attr, xsl('attribute'), {name: 'keep-with-next'}).text = "always"
         const dd_attr = ET.SubElement(root, xsl('attribute-set'), {name: 'e:dlentry.dd__content'})
-        if (this.style["dl"]["dl-type"] === "html") {
+        if(this.style["dl"]["dl-type"] === "html") {
           ET.SubElement(dd_attr, xsl('attribute'), {name: 'start-indent'}).text = "from-parent(start-indent) + 5mm"
         }
       }
       // table continued
-      if (this.table_continued) {
+      if(this.table_continued) {
         const table_continued_attr = ET.SubElement(root, xsl('attribute-set'), {"name": "e:tfoot.row.entry.continued"})
         ET.SubElement(table_continued_attr, xsl('attribute'), {name: 'border-right-style'}).text = "hidden"
         ET.SubElement(table_continued_attr, xsl('attribute'), {name: 'border-left-style'}).text = "hidden"
@@ -1129,13 +1129,13 @@ class Generator {
       const thead_row_entry_attr = ET.SubElement(root, xsl('attribute-set'), {name: "thead.row.entry"})
       ET.SubElement(thead_row_entry_attr, xsl('attribute'), {name: "background-color"}).text = "inherit"
     }
-    if (stylesheet === "layout-masters-attr" || !stylesheet) {
+    if(stylesheet === "layout-masters-attr" || !stylesheet) {
       // page column count
-      if (this.body_column_count) {
+      if(this.body_column_count) {
         ["region-body.odd", "region-body.even"].forEach((a) => {
           const region_body_attr = ET.SubElement(root, xsl('attribute-set'), {name: a})
           ET.SubElement(region_body_attr, xsl('attribute'), {name: "column-count"}).text = this.body_column_count
-          if (this.column_gap) {
+          if(this.column_gap) {
             ET.SubElement(region_body_attr, xsl('attribute'), {name: "column-gap"}).text = this.column_gap
           }
         })
@@ -1144,7 +1144,7 @@ class Generator {
           const region_body_attr = ET.SubElement(root, xsl('attribute-set'), {name: a})
           ET.SubElement(region_body_attr, xsl('attribute'), {name: "column-count"}).text = "1"
         })
-        if (this.index_column_count) {
+        if(this.index_column_count) {
           ["region-bodyindex.odd", "region-bodyindex.even"].forEach((a) => {
             const region_body_attr = ET.SubElement(root, xsl('attribute-set'), {name: a})
             ET.SubElement(region_body_attr, xsl('attribute'), {name: "column-count"}).text = this.index_column_count
@@ -1153,7 +1153,7 @@ class Generator {
       }
     }
 
-    if (stylesheet === 'toc-attr' || !stylesheet) {
+    if(stylesheet === 'toc-attr' || !stylesheet) {
       //<xsl:variable name="toc.toc-indent" select="'30pt'"/>
       const tocIndentRaw = `
       <xsl:attribute-set name="__toc__indent">
@@ -1207,33 +1207,33 @@ class Generator {
       this.attribute_set(root, 'toc_1', '__toc__topic__content__booklist', _.difference(this.properties, ["start-indent"]))
     }
 
-    if (stylesheet === "basic-settings" || !stylesheet) {
+    if(stylesheet === "basic-settings" || !stylesheet) {
       ET.SubElement(root, "xsl:param", {name: "pdfFormatter", select: `'${this.formatter}'`})
       ET.SubElement(root, "xsl:param", {name: "tocMaximumLevel", select: this.toc_maximum_level})
       // page size
       ET.SubElement(root, xsl('variable'), {name: "page-width"}).text = this.page.width
       ET.SubElement(root, xsl('variable'), {name: "page-height"}).text = this.page.height
       // mirror pages
-      if (this.mirror_page_margins) {
+      if(this.mirror_page_margins) {
         ET.SubElement(root, xsl('variable'), {name: "mirror-page-margins", select: "true()"})
       }
       // page margins
       ['top', 'outside', 'bottom', 'inside'].forEach((k) => {
         const v = this.page[k]
-        if (v) {
+        if(v) {
           ET.SubElement(root, xsl('variable'), {name: `page-margin-${k}`}).text = v
         }
       })
       // font size
-      if (_.has(this.style["body"], "font-size")) {
+      if(_.has(this.style["body"], "font-size")) {
         ET.SubElement(root, xsl('variable'), {name: "default-font-size"}).text = this.style["body"]["font-size"]
       }
       // line height
-      if (_.has(this.style["body"], "line-height")) {
+      if(_.has(this.style["body"], "line-height")) {
         ET.SubElement(root, xsl('variable'), {name: "default-line-height"}).text = this.style["body"]["line-height"]
       }
       // body indent
-      if (_.has(this.style["body"], "start-indent")) {
+      if(_.has(this.style["body"], "start-indent")) {
         ET.SubElement(root, xsl('variable'), {name: "side-col-width"}).text = this.style["body"]["start-indent"]
       }
     }
@@ -1272,11 +1272,11 @@ class Generator {
   </xsl:template>
 `
 
-    if (stylesheet === "lists-attr" || !stylesheet) {
+    if(stylesheet === "lists-attr" || !stylesheet) {
       root.append(ET.Comment("list"))
       utils.copy_xml(root, list_raw)
     }
-    if (stylesheet === "pr-domain-attr" || !stylesheet) {
+    if(stylesheet === "pr-domain-attr" || !stylesheet) {
       // codeblock
       const pre_attr = ET.SubElement(root, xsl('attribute-set'), {name: "codeblock"})
       _.forEach(this.style["codeblock"], (v, k) => {
@@ -1284,7 +1284,7 @@ class Generator {
       })
     }
 
-    if (stylesheet === 'static-content-attr' || !stylesheet) {
+    if(stylesheet === 'static-content-attr' || !stylesheet) {
       require('./lib/staticContent').attr(root, this.options)
     }
 
@@ -1316,64 +1316,64 @@ class Generator {
     fs.push("plugin:org.dita.pdf2:xsl/common/vars.xsl")
 
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/basic-settings.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/basic-settings.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/layout-masters-attr.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/layout-masters-attr.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:cfg/fo/layout-masters.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/layout-masters.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/links-attr.xsl")
     fs.push("plugin:org.dita.pdf2:xsl/fo/links.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:xsl/fo/links.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/lists-attr.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/lists-attr.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:xsl/fo/lists.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:xsl/fo/lists.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/tables-attr.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/tables-attr.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:xsl/fo/tables.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:xsl/fo/tables.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:xsl/fo/root-processing.xsl")
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/commons-attr.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/commons-attr.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:xsl/fo/commons.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:xsl/fo/commons.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/toc-attr.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/toc-attr.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:xsl/fo/toc.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:xsl/fo/toc.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:xsl/fo/bookmarks.xsl")
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/index-attr.xsl")
     fs.push("plugin:org.dita.pdf2:xsl/fo/index.xsl")
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/front-matter-attr.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/front-matter-attr.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:xsl/fo/front-matter.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:xsl/fo/front-matter.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:xsl/fo/preface.xsl")
@@ -1390,11 +1390,11 @@ class Generator {
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/sw-domain-attr.xsl")
     fs.push("plugin:org.dita.pdf2:xsl/fo/sw-domain.xsl")
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/pr-domain-attr.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/pr-domain-attr.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:xsl/fo/pr-domain.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:xsl/fo/pr-domain.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/hi-domain-attr.xsl")
@@ -1409,11 +1409,11 @@ class Generator {
     fs.push("plugin:org.dita.pdf2:xsl/fo/xml-domain.xsl")
 
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/static-content-attr.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:cfg/fo/attrs/static-content-attr.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:xsl/fo/static-content.xsl")
-    if (this.override_shell) {
+    if(this.override_shell) {
       fs.push(`plugin:${this.plugin_name}:xsl/fo/static-content.xsl`)
     }
     fs.push("plugin:org.dita.pdf2:cfg/fo/attrs/glossary-attr.xsl")
@@ -1436,7 +1436,7 @@ class Generator {
       ET.SubElement(root, xsl('import'), {href: i})
     })
 
-    if (!this.override_shell) {
+    if(!this.override_shell) {
       root.append(ET.Comment("configuration overrides"))
       ET.SubElement(root, xsl('import'), {href: 'cfg:fo/attrs/custom.xsl'})
       ET.SubElement(root, xsl('import'), {href: 'cfg:fo/xsl/custom.xsl'})
@@ -1452,7 +1452,7 @@ class Generator {
   get_formatter_imports() {
     var imports = []
     var plugin = "plugin:org.dita.pdf2"
-    if (this.formatter === "ah") {
+    if(this.formatter === "ah") {
       plugin = plugin + ".axf"
       imports = [
         "cfg/fo/attrs/tables-attr_axf.xsl",
@@ -1460,7 +1460,7 @@ class Generator {
         "cfg/fo/attrs/index-attr_axf.xsl",
         "xsl/fo/root-processing_axf.xsl",
         "xsl/fo/index_axf.xsl"]
-    } else if (this.formatter === "fop") {
+    } else if(this.formatter === "fop") {
       plugin = plugin + ".fop"
       imports = [
         "cfg/fo/attrs/commons-attr_fop.xsl",
@@ -1469,9 +1469,9 @@ class Generator {
         "xsl/fo/root-processing_fop.xsl",
         "xsl/fo/index_fop.xsl"]
       imports.push(
-          'xsl/fo/tables_fop.xsl',
-          'xsl/fo/flagging_fop.xsl')
-    } else if (this.formatter === "xep") {
+        'xsl/fo/tables_fop.xsl',
+        'xsl/fo/flagging_fop.xsl')
+    } else if(this.formatter === "xep") {
       plugin = plugin + ".xep"
       imports = [
         "cfg/fo/attrs/commons-attr_xep.xsl",
@@ -1508,7 +1508,7 @@ class Generator {
     this.run_generation(zip, this.generate_catalog, `${this.plugin_name}/cfg/catalog.xml`)
 
     // custom XSLT
-    if (this.override_shell) {
+    if(this.override_shell) {
       ["front-matter",
         "commons",
         "tables",
@@ -1530,7 +1530,7 @@ class Generator {
       this.run_generation(zip, this.generate_custom, `${this.plugin_name}/cfg/fo/xsl/custom.xsl`)
     }
     // custom XSLT attribute sets
-    if (this.override_shell) {
+    if(this.override_shell) {
       ["front-matter-attr",
         "commons-attr",
         "layout-masters-attr",
@@ -1548,7 +1548,7 @@ class Generator {
       this.run_generation(zip, this.generate_custom_attr, `${this.plugin_name}/cfg/fo/attrs/custom.xsl`)
     }
     // shell XSLT
-    if (this.override_shell) {
+    if(this.override_shell) {
       this.run_generation(zip, this.generate_shell, `${this.plugin_name}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`)
     }
     this.variable_languages.forEach((lang) => {
@@ -1567,9 +1567,9 @@ class Generator {
 }
 
 function value(property, value) {
-  if (property === 'start-indent') {
+  if(property === 'start-indent') {
     return `from-parent(start-indent) + ${value}`
-  } else if (property === 'end-indent') {
+  } else if(property === 'end-indent') {
     return `from-parent(end-indent) + ${value}`
   }
   return value
