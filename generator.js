@@ -127,7 +127,7 @@ class Generator {
     })
     //ditagen.generator.indent(root)
     const d = new ET.ElementTree(root)
-    return d.write()
+    return d.write({indent: 2})
   }
 
   /**
@@ -144,7 +144,7 @@ class Generator {
     ET.SubElement(root, "feature", {extension: "dita.conductor.target.relative", file: "integrator.xml"})
     //ditagen.generator.indent(root)
     const d = new ET.ElementTree(root)
-    return d.write()
+    return d.write({indent: 2})
   }
 
   /**
@@ -168,7 +168,7 @@ class Generator {
     //ditagen.generator.set_prefixes(root, {"": "urn:oasis:names:tc:entity:xmlns:xml:catalog"})
     const d = new ET.ElementTree(root)
     ET.register_namespace('', 'urn:oasis:names:tc:entity:xmlns:xml:catalog')
-    return d.write()
+    return d.write({indent: 2})
   }
 
   /**
@@ -1024,7 +1024,7 @@ class Generator {
     //ditagen.generator.set_prefixes(root, get_ns())
 
     const d = new ET.ElementTree(root)
-    return d.write()
+    return d.write({indent: 2})
   }
 
   /**
@@ -1298,7 +1298,7 @@ class Generator {
 //        ditagen.generator.indent(root)
 //        ditagen.generator.set_prefixes(root, get_ns())
     const d = new ET.ElementTree(root)
-    return d.write()
+    return d.write({indent: 2})
   }
 
   generate_shell() {
@@ -1453,7 +1453,7 @@ class Generator {
 
     //ditagen.generator.indent(root)
     const d = new ET.ElementTree(root)
-    return d.write()
+    return d.write({indent: 2})
   }
 
   get_formatter_imports() {
