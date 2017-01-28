@@ -12,13 +12,13 @@ const generator = require('../generator')
 const styles = require('../javascript/lib/styles').styles
 const Version = require('../lib/version')
 
-router.get('/', function (req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('index', {title: 'PDF Plugin Generator'});
 });
 
-router.post('/', bodyParser.urlencoded({extended: false}), function (req, res, next) { // upload.array()
-  // app.use(bodyParser.json());
-  // app.use(bodyParser.urlencoded({extended: false}));
+router.post('/', bodyParser.urlencoded({extended: false}), function(req, res, next) { // upload.array()
+                                                                                      // app.use(bodyParser.json());
+                                                                                      // app.use(bodyParser.urlencoded({extended: false}));
   const args = read_arguments(req)
   const body = process(args)
 
@@ -33,16 +33,16 @@ router.post('/', bodyParser.urlencoded({extended: false}), function (req, res, n
 
 function read_arguments(req) {
   let __ret = {}
-  if (_.has(req.body, "ot_version")) {
+  if(_.has(req.body, "ot_version")) {
     __ret["ot_version"] = req.body["ot_version"]
   }
-  if (_.has(req.body, "id")) {
+  if(_.has(req.body, "id")) {
     __ret["id"] = req.body["id"]
   }
-  if (_.has(req.body, "plugin-name")) {
+  if(_.has(req.body, "plugin-name")) {
     __ret["plugin_name"] = req.body["plugin-name"]
   }
-  if (_.has(req.body, "plugin-version") && req.body["plugin-version"].trim()) {
+  if(_.has(req.body, "plugin-version") && req.body["plugin-version"].trim()) {
     __ret["plugin_version"] = req.body["plugin-version"]
   }
   __ret["transtype"] = req.body["transtype"]
@@ -50,24 +50,24 @@ function read_arguments(req) {
 
   __config.page = {}
   // TODO page size and orientation in UI
-  if (req.body['page-size']) {
+  if(req.body['page-size']) {
     const s = req.body['page-size'].split(' ')
-    if (req.body['orientation'] === 'landscape') {
+    if(req.body['orientation'] === 'landscape') {
       s.reverse()
     }
     __config.page.width = s[0]
     __config.page.height = s[1]
   }
-  if (_.has(req.body, "page-margin-top") && req.body["page-margin-top"].trim()) {
+  if(_.has(req.body, "page-margin-top") && req.body["page-margin-top"].trim()) {
     __config.page.top = req.body["page-margin-top"]
   }
-  if (_.has(req.body, "page-margin-outside") && req.body["page-margin-outside"].trim()) {
+  if(_.has(req.body, "page-margin-outside") && req.body["page-margin-outside"].trim()) {
     __config.page.outside = req.body["page-margin-outside"]
   }
-  if (_.has(req.body, "page-margin-bottom") && req.body["page-margin-bottom"].trim()) {
+  if(_.has(req.body, "page-margin-bottom") && req.body["page-margin-bottom"].trim()) {
     __config.page.bottom = req.body["page-margin-bottom"]
   }
-  if (_.has(req.body, "page-margin-inside") && req.body["page-margin-inside"].trim()) {
+  if(_.has(req.body, "page-margin-inside") && req.body["page-margin-inside"].trim()) {
     __config.page.inside = req.body["page-margin-inside"]
   }
 
@@ -84,7 +84,7 @@ function read_arguments(req) {
     let group = {}
     properties.forEach((__property) => {
       let v = req.body[`${__property}.${__type}`]
-      if (v) {
+      if(v) {
         switch (typeof styles[__type][__property].default) {
           case 'boolean':
             group[__property] = (v === 'true')
@@ -103,18 +103,18 @@ function read_arguments(req) {
   __config["force_page_count"] = req.body["force-page-count"]
   __config["chapter_layout"] = req.body["chapter-layout"]
   __config["bookmark_style"] = req.body["bookmark-style"]
-  if (_.has(req.body, "toc-maximum-level")) {
+  if(_.has(req.body, "toc-maximum-level")) {
     __config["toc_maximum_level"] = Number(req.body["toc-maximum-level"])
   }
   __config["task_label"] = _.has(req.body, "task-label")
   __config["include_related_links"] = req.body["include-related-links"]
-  if (_.has(req.body, "body-column-count")) {
+  if(_.has(req.body, "body-column-count")) {
     __config["body_column_count"] = Number(req.body["body-column-count"])
   }
-  if (_.has(req.body, "index-column-count")) {
+  if(_.has(req.body, "index-column-count")) {
     __config["index_column_count"] = Number(req.body["index-column-count"])
   }
-  if (_.has(req.body, "column-gap") && req.body["column-gap"].trim()) {
+  if(_.has(req.body, "column-gap") && req.body["column-gap"].trim()) {
     __config["column_gap"] = req.body["column-gap"]
   }
   __config["mirror_page_margins"] = _.has(req.body, "mirror-page-margins")
@@ -130,14 +130,14 @@ function read_arguments(req) {
   //  ret["cover_image"] = req.body["cover_image"]
   //  __config["cover_image_name"] = self.request.POST["cover_image"].filename
   //}
-  if (_.has(req.body, "cover_image_metadata")) {
+  if(_.has(req.body, "cover_image_metadata")) {
     __config["cover_image_metadata"] = req.body["cover_image_metadata"]
   }
-  if (_.has(req.body, "cover_image_topic")) {
+  if(_.has(req.body, "cover_image_topic")) {
     __config["cover_image_topic"] = req.body["cover_image_topic"]
   }
   // TODO handle drop folio in UI
-  if (req.body["drop-folio"]) {
+  if(req.body["drop-folio"]) {
     __config["header"] = {
       "odd": (req.body["header.even"] || '').trim().split(/\s+/),
       "even": (req.body["header.odd"] || '').trim().split(/\s+/)
@@ -157,7 +157,7 @@ function read_arguments(req) {
       "even": []
     }
   }
-  if (_.has(req.body, "page-number")) {
+  if(_.has(req.body, "page-number")) {
     __config["page_number"] = req.body["page-number"]
   }
 
@@ -172,19 +172,19 @@ function process(__args) {
   const __dita_gen = new generator.Generator()
 
   //validate
-  if (!_.has(__args, 'ot_version')) {
+  if(!_.has(__args, 'ot_version')) {
     throw new Error("version missing")
   }
   __dita_gen.ot_version = new Version(__args["ot_version"])
-  if (!_.has(__args, 'id')) {
+  if(!_.has(__args, 'id')) {
     throw new Error("id missing")
   }
-  if (_.has(__args, 'plugin_name')) {
+  if(_.has(__args, 'plugin_name')) {
     __dita_gen.plugin_name = __args["plugin_name"]
   } else {
     __dita_gen.plugin_name = __args["id"]
   }
-  if (_.has(__args, "plugin_version")) {
+  if(_.has(__args, "plugin_version")) {
     __dita_gen.plugin_version = __args["plugin_version"]
   }
   __dita_gen.transtype = __args.transtype
@@ -198,13 +198,13 @@ function process(__args) {
   __dita_gen.toc_maximum_level = __config["toc_maximum_level"]
   __dita_gen.task_label = __config["task_label"]
   __dita_gen.include_related_links = __config["include_related_links"]
-  if (_.has(__config, 'body_column_count')) {
+  if(_.has(__config, 'body_column_count')) {
     __dita_gen.body_column_count = __config["body_column_count"]
   }
-  if (_.has(__config, 'index_column_count')) {
+  if(_.has(__config, 'index_column_count')) {
     __dita_gen.index_column_count = __config["index_column_count"]
   }
-  if (_.has(__config, 'column_gap')) {
+  if(_.has(__config, 'column_gap')) {
     __dita_gen.column_gap = __config["column_gap"]
   }
   __dita_gen.mirror_page_margins = __config["mirror_page_margins"]
@@ -220,15 +220,15 @@ function process(__args) {
   //  __dita_gen.cover_image = self.request.get("cover_image")
   //  __dita_gen.cover_image_name = self.request.POST["cover_image"].filename
   //}
-  if (_.has(__config, 'cover_image_metadata')) {
+  if(_.has(__config, 'cover_image_metadata')) {
     __dita_gen.cover_image_metadata = __config["cover_image_metadata"]
   }
-  if (_.has(__config, 'cover_image_topic')) {
+  if(_.has(__config, 'cover_image_topic')) {
     __dita_gen.cover_image_topic = __config["cover_image_topic"]
   }
   __dita_gen.header = __config["header"]
   __dita_gen.footer = __config["footer"]
-  if (_.has(__config, 'page_number')) {
+  if(_.has(__config, 'page_number')) {
     __dita_gen.page_number = __config["page_number"]
   }
   __dita_gen.options = {

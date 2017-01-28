@@ -10,7 +10,7 @@ gulp.task('default', ['webpack', 'sass', 'fonts'])
 
 gulp.task('webpack', (callback) => {
   webpack(webpackConfig, (error, stats) => {
-    if (error)  {
+    if(error) {
       throw new gutil.PluginError('webpack', err)
     }
     util.log('[webpack]', stats.toString({
