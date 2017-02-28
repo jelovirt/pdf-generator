@@ -187,4 +187,72 @@ h3 {
   }
 }
 
+// Header editor
 
+.static-content {
+  td {
+    width: 50%;
+    //border: solid 1px black;
+  }
+  th {
+    font-weight: normal;
+  }
+  thead td {
+    border-style: none;
+  }
+}
+
+#header-source *[data-field] {
+  cursor: move;
+}
+#even-header, #odd-header, #even-footer, #odd-footer {
+  padding: 5px;
+  margin: 3px;
+  height: 4.5ex;
+  border: solid 1px rgb(218, 218, 218);
+
+  *[data-field] {
+    margin: 0 3px;
+    padding: 2px;
+    cursor: pointer;
+
+    &.label-editable { //[contenteditable]
+      cursor: default;
+      color: black;
+      font-weight: normal;
+      border: dotted 1px gray;
+      background-color: transparent;
+    }
+    .gu-mirror {
+      cursor: move;
+    }
+  }
+}
+
+.shadow {
+  box-shadow: 3px 3px 3px #ccc;;
+}
+
+//@import '../node_modules/dragula/dist/dragula.css';
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+}
+.gu-hide {
+  display: none !important;
+}
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}

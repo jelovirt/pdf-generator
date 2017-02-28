@@ -8,6 +8,7 @@ import StyleController from './features/StyleController'
 import PdfPreviewController from './PdfPreviewController'
 import PdfUtils from './pdf-utils'
 import Utils from './Utils'
+import dragula from '../../node_modules/dragula/dragula'
 
 export default function PdfPageController(exts) {
   const view = PdfPageView()
@@ -27,6 +28,7 @@ export default function PdfPageController(exts) {
 
   // form initialization
   $("#cover_image_chooser").change(coverChangeHandler).change()
+  initHeaderController()
 
   init()
 
@@ -127,5 +129,23 @@ export default function PdfPageController(exts) {
     const $all = $('#cover_image_file, #cover_image_metadata, #cover_image_topic')
     $('#cover_image_' + target.val()).prop('disable', false).show()
     $all.not('#cover_image_' + target.val()).prop('disable', true).hide()
+  }
+
+  function initHeaderController() {
+    const drake = dragula([document.querySelector('#header-source'),
+      document.querySelector('#even-header'), document.querySelector('#odd-header'),
+      document.querySelector('#even-footer'), document.querySelector('#odd-footer')
+    ], {
+      // copy: true,
+      removeOnSpill: true,
+      copy: (el, source) => source === document.getElementById('header-source'),
+      accepts: (el, target) => target !== document.getElementById('header-source')
+    })
+    drake.on('drop', (label, target, source) => {
+      if(label.classList.contains('label-editable')) {
+        label.contentEditable = true
+        label.innerText = "\u200B \u200B"
+      }
+    })
   }
 }
