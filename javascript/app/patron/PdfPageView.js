@@ -3,7 +3,7 @@ import templates from './templates.html'
 
 export default function PdfPageView() {
   const $scripts = $(templates())
-  const $element = $scripts.filter("script")
+  const $element = $scripts.filter("#blank_pages")
 
   return {
     $element: $element
