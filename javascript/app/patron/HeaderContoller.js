@@ -4,8 +4,8 @@ import dragula from 'dragula'
 
 export default function HeaderController() {
   const $scripts = $(templates())
-  const $element = $scripts.filter("#header-footer")
-  $(".header-footer")
+  const $element = $scripts.filter('#header-footer')
+  $('.header-footer')
     .first().before($element.html())
     .end().remove()
 
@@ -21,7 +21,8 @@ export default function HeaderController() {
   drake.on('drop', (label, target, source) => {
     if(label.classList.contains('label-editable')) {
       label.contentEditable = true
-      label.innerText = "\u200B \u200B"
+      label.innerText = '\u200B' // \u200B
+      label.focus()
     }
   })
 }

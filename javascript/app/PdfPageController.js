@@ -128,5 +128,5 @@ export default function PdfPageController(exts) {
     $('#cover_image_' + target.val()).prop('disable', false).show()
     $all.not('#cover_image_' + target.val()).prop('disable', true).hide()
   }
-  
+
 }
