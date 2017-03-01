@@ -19,11 +19,11 @@ export default function PdfPageController(exts) {
   MetadataController()
 
   StyleController()
-  PdfPreviewController()
-
   _.forEach(exts || [], (ext) => {
     ext()
   })
+
+  PdfPreviewController()
 
   // form initialization
   $("#cover_image_chooser").change(coverChangeHandler).change()
