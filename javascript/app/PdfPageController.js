@@ -5,6 +5,7 @@ import EnvironmentController from './features/EnvironmentController'
 import PdfPageView from './PdfPageView'
 import PageController from './features/PageController'
 import StyleController from './features/StyleController'
+import CoverController from './features/CoverController'
 import PdfPreviewController from './PdfPreviewController'
 import PdfUtils from './pdf-utils'
 import Utils from './Utils'
@@ -16,17 +17,15 @@ export default function PdfPageController(exts) {
   WizardController()
   EnvironmentController()
   PageController()
+  CoverController()
+  StyleController()
   MetadataController()
 
-  StyleController()
   _.forEach(exts || [], (ext) => {
     ext()
   })
 
   PdfPreviewController()
-
-  // form initialization
-  $("#cover_image_chooser").change(coverChangeHandler).change()
 
   init()
 
@@ -121,12 +120,5 @@ export default function PdfPageController(exts) {
       }
     }
   }
-
-  function coverChangeHandler(event) {
-    const target = $(event.target)
-    const $all = $('#cover_image_file, #cover_image_metadata, #cover_image_topic')
-    $('#cover_image_' + target.val()).prop('disable', false).show()
-    $all.not('#cover_image_' + target.val()).prop('disable', true).hide()
-  }
-
+  
 }
