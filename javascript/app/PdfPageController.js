@@ -13,7 +13,7 @@ import PdfPreviewController from './PdfPreviewController'
 import PdfUtils from './pdf-utils'
 import Utils from './Utils'
 
-export default function PdfPageController() {
+export default function PdfPageController(exts) {
   const model = {
     configuration: {
       page: {},
@@ -27,12 +27,9 @@ export default function PdfPageController() {
 
   WizardController(model)
   EnvironmentController(model)
-  PageController(model)
-  HeaderController(model)
-  LayoutController(model)
-  CoverController(model)
-  StyleController(model)
-  OtherController(model)
+  _.forEach(exts || [], (ext) => {
+    ext(model)
+  })
   MetadataController(model)
 
   PdfPreviewController(model)
