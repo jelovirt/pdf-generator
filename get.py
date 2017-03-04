@@ -27,117 +27,486 @@ def main():
     }
     json_targets = {
         "pdf": {
-            "id": "com.example.print-pdf",
-            "ot_version": "2.4",
-            "plugin_version": "1.0.0",
-            "transtype": "print-pdf",
-            "configuration": {
-                "style": {
-                    "body": {
-                        "font-size": "12pt",
-                        "start-indent": "25pt",
-                        "color": "black",
-                        "font-family": "Sans",
-                        "line-height": "1.8em",
-                        "text-align": "justify"
-                    },
-                    "pre": {
-                        "line-height": "1em"
-                    },
-                    "dl": {
-                        "dl-type": "list",
-                        "background-color": "pink"
-                    },
-                    "ol": {
-                        "ol-1": "A",
-                        "ol-2": "I",
-                        "ol-3": "i",
-                        "ol-4": "1",
-                        "ol-before-1": "(",
-                        "ol-after-1": ") "
-                    },
-                    "ul": {
-                        "ul-2": u"\u2022",
-                        "ul-1": "*"
-                    },
-                    "topic.topic.topic": {
-                        "font-style": "italic",
-                        "start-indent": "5pt"
-                    },
-                    "section": {
-                        "font-style": "italic",
-                        "start-indent": "5pt"
-                    },
-                    "note": {
-                        "color": "gray",
-                        "font-size": "10pt",
-                        "start-indent": "50pt",
-                        "icon": "icon"
-                    },
-                    "topic.topic": {
-                        "title-numbering": "true"
-                    },
-                    "topic": {
-                        "color": "blue",
-                        "title-numbering": "true",
-                        "font-size": "18pt",
-                        "font-weight": "bold",
-                        "font-family": "Serif"
-                    },
-                    "link": {
-                        "color": "black",
-                        "link-url": "true",
-                        "font-style": "italic",
-                        "link-page-number": "true"
-                    },
-                    "fig": {
-                        "background-color": "yellow",
-                        "caption-number": "none",
-                        "caption-position": "before"
-                    },
-                    "table": {
-                        "background-color": "cyan",
-                        "caption-number": "document",
-                        "caption-position": "after"
-                    },
-                    "codeblock": {
-                        "background-color": "silver"
-                    }
-                },
-                "bookmark_style": "EXPANDED",
-                "page_size": [
-                    "210mm",
-                    "297mm"
-                ],
-                "include_related_links": "nofamily",
-                "page_number": "chapter-page",
-                "formatter": "ah",
-                "override_shell": True,
-                "column_gap": "10mm",
-                "table_continued": True,
-                "title_numbering": "all",
-                "cover_image_metadata": "cover-image",
-                "page_margins": {
-                    "top": "20mm",
-                    "inside": "30mm",
-                    "outside": "20mm",
-                    "bottom": "20mm"
-                },
-                "force_page_count": "auto",
-                "header": {
-                    "even": ["heading"],
-                    "odd": ["heading"]
-                },
-                "chapter_layout": "BASIC",
-                "footer": {
-                    "even": ["pagenum"],
-                    "odd": ["pagenum"]
-                },
-                "mirror_page_margins": True,
-                "task_label": True,
-                "toc_maximum_level": 3
-            }
-        }
+                 "id": "com.example.print-pdf",
+                 "ot_version": "2.4",
+                 "transtype": "print-pdf",
+                 "configuration": {
+                   "page": {
+                     "width": "210mm",
+                     "height": "297mm",
+                     "top": "20mm",
+                     "outside": "20mm",
+                     "bottom": "20mm",
+                     "inside": "20mm"
+                   },
+                   "style": {
+                     "body": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "6pt",
+                       "space-after": "6pt",
+                       "text-align": "start",
+                       "start-indent": "25pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt",
+                       "border-before-style": "none",
+                       "border-end-style": "none",
+                       "border-after-style": "none",
+                       "border-start-style": "none"
+                     },
+                     "topic": {
+                       "font-family": "Helvetica",
+                       "font-size": "18pt",
+                       "color": "black",
+                       "font-weight": "bold",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "0pt",
+                       "space-after": "16.8pt",
+                       "text-align": "start",
+                       "start-indent": "0pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt",
+                       "title-numbering": True
+                     },
+                     "topic_topic": {
+                       "font-family": "Helvetica",
+                       "font-size": "14pt",
+                       "color": "black",
+                       "font-weight": "bold",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "12pt",
+                       "space-after": "5pt",
+                       "text-align": "start",
+                       "start-indent": "0pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt"
+                     },
+                     "topic_topic_topic": {
+                       "font-family": "Helvetica",
+                       "font-size": "12pt",
+                       "color": "black",
+                       "font-weight": "bold",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "12pt",
+                       "space-after": "2pt",
+                       "text-align": "start",
+                       "start-indent": "0pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt"
+                     },
+                     "topic_topic_topic_topic": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "bold",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "12pt",
+                       "space-after": "0pt",
+                       "text-align": "start",
+                       "start-indent": "25pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt"
+                     },
+                     "section": {
+                       "font-family": "Helvetica",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "bold",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "15pt",
+                       "space-after": "6pt",
+                       "text-align": "start",
+                       "start-indent": "25pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt"
+                     },
+                     "example": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "0.6em",
+                       "space-after": "6pt",
+                       "text-align": "start",
+                       "start-indent": "36pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "5pt",
+                       "padding-right": "5pt",
+                       "padding-bottom": "5pt",
+                       "padding-left": "5pt",
+                       "end-indent": "0pt",
+                       "border-before-style": "solid",
+                       "border-before-width": "1pt",
+                       "border-before-color": "black",
+                       "border-end-style": "solid",
+                       "border-end-width": "1pt",
+                       "border-end-color": "black",
+                       "border-after-style": "solid",
+                       "border-after-width": "1pt",
+                       "border-after-color": "black",
+                       "border-start-style": "solid",
+                       "border-start-width": "1pt",
+                       "border-start-color": "black"
+                     },
+                     "example_title": {
+                       "font-family": "Helvetica",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "bold",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "15pt",
+                       "space-after": "6pt",
+                       "text-align": "start",
+                       "start-indent": "25pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt"
+                     },
+                     "note": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "6pt",
+                       "space-after": "6pt",
+                       "text-align": "start",
+                       "start-indent": "25pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt",
+                       "icon": "icon"
+                     },
+                     "pre": {
+                       "font-family": "Monaco",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "15pt",
+                       "space-after": "6pt",
+                       "text-align": "start",
+                       "start-indent": "25pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt"
+                     },
+                     "codeblock": {
+                       "font-family": "Monaco",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "15pt",
+                       "space-after": "6pt",
+                       "text-align": "start",
+                       "start-indent": "31pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt"
+                     },
+                     "dl": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "6pt",
+                       "space-after": "6pt",
+                       "text-align": "start",
+                       "start-indent": "25pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt",
+                       "dl-type": "table"
+                     },
+                     "ol": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "6pt",
+                       "space-after": "6pt",
+                       "text-align": "start",
+                       "start-indent": "25pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt",
+                       "ol-1": "1",
+                       "ol-2": "1",
+                       "ol-3": "1",
+                       "ol-4": "1",
+                       "ol-after-1": ".+",
+                       "ol-after-2": ".+",
+                       "ol-after-3": ".+",
+                       "ol-after-4": ".+"
+                     },
+                     "ul": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "6pt",
+                       "space-after": "6pt",
+                       "text-align": "start",
+                       "start-indent": "25pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt",
+                       "ul-1": "\u2022",
+                       "ul-2": "\u2022",
+                       "ul-3": "\u2022",
+                       "ul-4": "\u2022"
+                     },
+                     "table": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "6pt",
+                       "space-after": "6pt",
+                       "text-align": "start",
+                       "start-indent": "25pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt",
+                       "caption-number": "document",
+                       "caption-position": "before"
+                     },
+                     "fig": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "6pt",
+                       "space-after": "6pt",
+                       "text-align": "start",
+                       "start-indent": "25pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt",
+                       "caption-number": "document",
+                       "caption-position": "after"
+                     },
+                     "toc_1": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "14pt",
+                       "color": "black",
+                       "font-weight": "bold",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "0pt",
+                       "space-after": "0pt",
+                       "text-align": "start",
+                       "start-indent": "25pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "20pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt",
+                       "prefix": True
+                     },
+                     "toc_2": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "0pt",
+                       "space-after": "0pt",
+                       "text-align": "start",
+                       "start-indent": "55pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt"
+                     },
+                     "toc_3": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "0pt",
+                       "space-after": "0pt",
+                       "text-align": "start",
+                       "start-indent": "85pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt"
+                     },
+                     "toc_4": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "space-before": "0pt",
+                       "space-after": "0pt",
+                       "text-align": "start",
+                       "start-indent": "115pt",
+                       "line-height": "1.2",
+                       "background-color": "transparent",
+                       "padding-top": "0pt",
+                       "padding-right": "0pt",
+                       "padding-bottom": "0pt",
+                       "padding-left": "0pt",
+                       "end-indent": "0pt"
+                     },
+                     "link": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "blue",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "background-color": "transparent",
+                       "link-page-number": True
+                     },
+                     "tm": {
+                       "font-family": "Times+New+Roman",
+                       "font-size": "10pt",
+                       "color": "black",
+                       "font-weight": "normal",
+                       "font-style": "normal",
+                       "text-decoration": "none",
+                       "background-color": "transparent",
+                       "symbol-scope": "always"
+                     }
+                   },
+                   "force_page_count": "even",
+                   "chapter_layout": "MINITOC",
+                   "bookmark_style": "COLLAPSED",
+                   "task_label": False,
+                   "include_related_links": "none",
+                   "body_column_count": 1,
+                   "index_column_count": 2,
+                   "column_gap": "12pt",
+                   "mirror_page_margins": False,
+                   "table_continued": False,
+                   "formatter": "fop",
+                   "override_shell": True,
+                   "cover_image_metadata": "cover-image",
+                   "header": {
+                     "odd": [
+                       "heading",
+                       "pagenum"
+                     ],
+                     "even": [
+                       "pagenum",
+                       "heading"
+                     ]
+                   },
+                   "footer": {
+                     "odd": [],
+                     "even": []
+                   },
+                   "toc_maximum_level": 3
+                 }
+               }
     }
     form_targets = {
         "pdf2": {
@@ -532,6 +901,9 @@ def main():
             else:
                 break
             i = i + 1
+        params = {
+            "json": json.dumps(json_targets["pdf"])
+        }
     except Exception, e:
         print e
         help()
@@ -554,9 +926,9 @@ Environments:
 Targets:
   pdf
 Version:
-  2.1
-  2.2
   2.3
+  2.4
+  2.5
 """)
 
 

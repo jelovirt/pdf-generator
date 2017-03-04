@@ -4,30 +4,49 @@ import MetadataController from './features/MetadataController'
 import EnvironmentController from './features/EnvironmentController'
 import PdfPageView from './PdfPageView'
 import PageController from './features/PageController'
+import HeaderController from './features/HeaderController'
+import LayoutController from './features/LayoutController'
 import StyleController from './features/StyleController'
+import OtherController from './features/OtherController'
 import CoverController from './features/CoverController'
 import PdfPreviewController from './PdfPreviewController'
 import PdfUtils from './pdf-utils'
 import Utils from './Utils'
 
 export default function PdfPageController() {
+  const model = {
+    configuration: {
+      page: {},
+      header: {},
+      footer: {}
+    }
+  }
+
   const view = PdfPageView()
   $('main').html(view.$element)
 
-  WizardController()
-  EnvironmentController()
-  PageController()
-  CoverController()
-  StyleController()
-  MetadataController()
+  WizardController(model)
+  EnvironmentController(model)
+  PageController(model)
+  HeaderController(model)
+  LayoutController(model)
+  CoverController(model)
+  StyleController(model)
+  OtherController(model)
+  MetadataController(model)
 
-  PdfPreviewController()
+  PdfPreviewController(model)
 
   init()
 
   // UI --------------------------------------------------------------------------
 
   function init() {
+    initHelp();
+
+    // Hack to get formatter disable state initialized
+    $(':input[name=formatter]').change()
+
     $(":input.length-value").keydown(valueChangeHandler).change(validateLength)
     // widget initialization
     $(':input.editable-list').each(function() {
@@ -114,6 +133,20 @@ export default function PdfPageController() {
         var unit = val.substring(val.length - 2)
         target.val((num + add).toString() + unit)
       }
+    }
+
+    function initHelp() {
+      // help
+      $("fieldset label:not(.inline)").each(function() {
+        const l = $(this);
+        if(l.parents("fieldset:first").find(".help").length !== 0) {
+          l.append($("<span class='help-icon' title='Show help'></span>").click(Utils.helpHandler));
+        }
+      });
+      $("fieldset .help").hide().each(function() {
+        const l = $(this);
+        l.prepend($("<span class='close-icon' title='Close help'></span>").click(Utils.closeHandler));
+      });
     }
   }
 

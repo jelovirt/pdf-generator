@@ -1,7 +1,8 @@
 import $ from 'jquery'
 import Utils from './pdf-utils'
+import styles from '../lib/styles'
 
-export default function PageController() {
+export default function WizardController(model) {
   $(":input").change(validatePage);
   $("form").submit(validateForm);
 
@@ -16,30 +17,9 @@ export default function PageController() {
 
   $('#generate').attr('type', 'button').click(generateHandler)
 
-  // help
-  $("fieldset label:not(.inline)").each(function() {
-    const l = $(this);
-    if(l.parents("fieldset:first").find(".help").length != 0) {
-      l.append($("<span class='help-icon' title='Show help'></span>").click(Utils.helpHandler));
-    }
-  });
-  $("fieldset .help").hide().each(function() {
-    const l = $(this);
-    l.prepend($("<span class='close-icon' title='Close help'></span>").click(Utils.closeHandler));
-  });
-
   // init
   validatePage();
   setInterval(checkFragment, 100);
-
-  // XML 1.0 fifth edition rules
-  //const nameStartChar = ":|[A-Z]|_|[a-z]|[\u00C0-\u00D6]|[\u00D8-\u00F6]|[\u00F8-\u02FF]|[\u0370-\u037D]|[\u037F-\u1FFF]|[\u200C-\u200D]|[\u2070-\u218F]|[\u2C00-\u2FEF]|[\u3001-\uD7FF]|[\uF900-\uFDCF]|[\uFDF0-\uFFFD]"; //|[\u10000-\uEFFFF]
-  //const nameChar = nameStartChar + "|-|\\.|[0-9]|\u00B7|[\u0300-\u036F]|[\u203F-\u2040]";
-  //const name = "^(" + nameStartChar + ")(" + nameChar + ")*$";
-  //const nmtoken = "(" + nameChar + ")+";
-  //const nmtokens = "^(" + nameChar + ")+(\\s+(" + nameChar + ")+)*$";
-  //
-  //const namePattern = new RegExp(name);
 
   /** Current location fragment. */
   var hash = location.hash;
@@ -132,7 +112,43 @@ export default function PageController() {
     n.addClass("current").show();
     validatePage();
     setFragment();
+    // FIXME
+    readArguments();
+    $(':input[name=json]').val(JSON.stringify(model))
     $('form#generate-plugin').submit();
+  }
+
+  function readArguments() {
+    model.configuration.style = {}
+    const types = _(styles.styles).map((f, k) => {
+      return k
+    }).uniq().value()
+    const properties = _(styles.styles).map((f, k) => {
+      return _.map(f, (v, p) => {
+        return p
+      })
+    }).flatten().uniq().value()
+    types.forEach((__type) => {
+      let group = {}
+      properties.forEach((__property) => {
+        let v = $(`:input[name="${__property}.${__type}"]`).val()
+        if(!!v) {
+          switch (typeof styles.styles[__type][__property].default) {
+            case 'boolean':
+              group[__property] = (v === 'true')
+              break
+            case 'number':
+              group[__property] = Number(v)
+              break
+            default:
+              group[__property] = v
+          }
+        }
+      })
+      model.configuration.style[__type] = group
+    })
+
+    return model
   }
 
   /**
@@ -175,16 +191,5 @@ export default function PageController() {
       validatePage();
     }
   }
-
-  //function idChangeHandler(event) {
-  //  var id = $(event.target);
-  //  var val = id.attr("value");
-  //  if (!pluginPatter.test(val)) { //!namePattern.test(val)
-  //    setError(id, $("<span>Not a valid XML name</span>"),
-  //      "Type ID must be a valid XML name.");
-  //  } else {
-  //    setOk(id);
-  //  }
-  //}
 
 }

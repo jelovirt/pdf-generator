@@ -19,7 +19,8 @@ router.get('/', function(req, res, next) {
 router.post('/', bodyParser.urlencoded({extended: false}), function(req, res, next) { // upload.array()
                                                                                       // app.use(bodyParser.json());
                                                                                       // app.use(bodyParser.urlencoded({extended: false}));
-  const args = read_arguments(req)
+  // const args = read_arguments(req)
+  const args = JSON.parse(req.body.json)
   const body = process(args)
 
   res.statusCode = 200

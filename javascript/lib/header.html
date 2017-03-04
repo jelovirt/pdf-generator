@@ -1,0 +1,46 @@
+<h3>Header and footer</h3>
+<div class="col-sm-12">
+  <fieldset>
+    <p>
+      <label>Header</label>
+    <table>
+      <thead class="even">
+      <tr>
+        <th><label for="header.even">even</label></th>
+        <th><label for="header.odd">odd</label></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="even">
+          <select name="header.even" id="header.even">
+            <option value="">empty</option>
+            <!--option value="part">Part title</option-->
+            <!--option value="number">Chapter number</option-->
+            <option value="heading" selected>Chapter title</option>
+            <!--option value="subhead">Subhead</option-->
+            <!--option value="author">Author</option-->
+          </select>
+        </td>
+        <td>
+          <select name="header.odd" id="header.odd">
+            <option value="">empty</option>
+            <option value="heading" selected>Chapter title</option>
+            <!--option value="subhead">Subhead</option-->
+            <!--option value="subchapter">Chapter subtitle</option-->
+          </select>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    </p>
+    <p class="instruction">Page header contents.</p>
+  </fieldset>
+  <fieldset>
+    <p>
+      <label for="drop-folio">Drop folio</label>
+      <input type="checkbox" name="drop-folio" id="drop-folio" value="pagenum">
+    </p>
+    <p class="instruction">Place page number in footer.</p>
+  </fieldset>
+</div>
