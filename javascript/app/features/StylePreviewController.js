@@ -2,6 +2,8 @@ import $ from 'jquery'
 import StylePreviewView from './StylePreviewView'
 import Utils from '../../app/pdf-utils'
 
+const f = 0.9
+
 export default function StylePreviewController() {
   const view = StylePreviewView()
 
@@ -107,11 +109,14 @@ export default function StylePreviewController() {
         if(v === undefined) { // support undefined values
           return true
         }
-        v = Utils.toPt(v)
-        var f = 0.9
-        v = String(v * f) + 'px'
+        v = String(Utils.toPt(v) * f) + 'px'
       }
       view.$element.find("*[class~='example-page-content-" + type + "']").css(property, v)
+    }
+
+    // wrapper styling
+    if (field === 'start-indent' && type === 'body') {
+      view.$element.find('.wrapper > *').css('left', `-${v}`)
     }
   }
 }
