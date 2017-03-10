@@ -50,6 +50,7 @@ class Generator {
     ET.register_namespace("fo", "http://www.w3.org/1999/XSL/Format")
     ET.register_namespace("xs", "http://www.w3.org/2001/XMLSchema")
     ET.register_namespace("e", this.plugin_name)
+    ET.register_namespace("dita-ot", "http://dita-ot.sourceforge.net/ns/201007/dita-ot")
     ET.register_namespace("ditaarch", "http://dita.oasis-open.org/architecture/2005/")
     ET.register_namespace("opentopic", "http://www.idiominc.com/opentopic")
     ET.register_namespace("opentopic-func", "http://www.idiominc.com/opentopic/exsl/function")
@@ -180,11 +181,12 @@ class Generator {
       "xmlns:fo": "http://www.w3.org/1999/XSL/Format",
       "xmlns:xs": "http://www.w3.org/2001/XMLSchema",
       "xmlns:e": this.plugin_name,
+      "xmlns:dita-ot": "http://dita-ot.sourceforge.net/ns/201007/dita-ot",
       "xmlns:ditaarch": "http://dita.oasis-open.org/architecture/2005/",
       "xmlns:opentopic": "http://www.idiominc.com/opentopic",
       "xmlns:opentopic-func": "http://www.idiominc.com/opentopic/exsl/function",
       "version": "2.0",
-      "exclude-result-prefixes": "ditaarch opentopic e"
+      "exclude-result-prefixes": "ditaarch opentopic e dita-ot opentopic-func"
     })
 
     const cover_metadata_raw = `
@@ -996,7 +998,7 @@ class Generator {
     }
 
     if(stylesheet === 'static-content' || !stylesheet) {
-      require('./lib/staticContent').xsl(root, this.options)
+      require('./lib/staticContent').xsl(root, this)
     }
 
     if(stylesheet === 'layout-masters' || !stylesheet) {
@@ -1004,6 +1006,13 @@ class Generator {
     }
 
     if(stylesheet === 'pr-domain' || !stylesheet) {
+      if(_.has(this.style['codeblock'], 'line-numbering') && this.style['codeblock']['line-numbering']) {
+        utils.copy_xml(root, `
+          <xsl:template match="node()" mode="codeblock.generate-line-number" as="xs:boolean">
+            <xsl:sequence select="true()"/>
+          </xsl:template>
+        `)
+      }
     }
 
     if(!stylesheet) {
@@ -1035,6 +1044,7 @@ class Generator {
         ET.SubElement(attrSet, xsl('attribute'), {name: p}).text = value(p, v)
       }
     })
+    return attrSet
   }
 
   /**
@@ -1044,10 +1054,11 @@ class Generator {
     const root = ET.Element(xsl('stylesheet'), {
       "xmlns:xs": "http://www.w3.org/2001/XMLSchema",
       "xmlns:e": this.plugin_name,
+      "xmlns:dita-ot": "http://dita-ot.sourceforge.net/ns/201007/dita-ot",
       "xmlns:ditaarch": "http://dita.oasis-open.org/architecture/2005/",
       "xmlns:opentopic": "http://www.idiominc.com/opentopic",
       "xmlns:opentopic-func": "http://www.idiominc.com/opentopic/exsl/function",
-      "version": "2.0", "exclude-result-prefixes": "xs ditaarch opentopic e"
+      "version": "2.0", "exclude-result-prefixes": "xs ditaarch opentopic e dita-ot opentopic-func"
     })
 //        #if (stylesheet === "front-matter-attr" or not stylesheet) {
 //            #if (this.cover_image_name) {
@@ -1059,13 +1070,15 @@ class Generator {
 //            #    ET.SubElement(cover_image_path, xsl('apply-templates'), select="($map//*[contains(@class, ' topic/data ')][@name = '%s']/*[contains(@class, ' topic/image ')])[1]" % cover_image_metadata, mode="e:cover-image")
 //
     if(stylesheet === "commons-attr" || !stylesheet) {
+      ET.SubElement(root, xsl('variable'), {name: 'e:root-id', select:`'root'`, as:'xs:string'})
       // force page count
       if(this.force_page_count) {
         const page_count_attr = ET.SubElement(root, xsl('attribute-set'), {name: "__force__page__count"})
         ET.SubElement(page_count_attr, xsl('attribute'), {name: "force-page-count"}).text = this.force_page_count
       }
       // font family
-      this.attribute_set(root, "body", "__fo__root", ["font-family", "color", "text-align"])
+      const foRootAttrSet = this.attribute_set(root, "body", "__fo__root", ["font-family", "color", "text-align"])
+      ET.SubElement(foRootAttrSet, xsl('attribute'), {name: 'id', select:'$e:root-id'})
       // titles
       _.forEach(this.style, (e, k) => {
         if(k.startsWith("topic") || k === "section") {
@@ -1285,7 +1298,7 @@ class Generator {
     }
 
     if(stylesheet === 'static-content-attr' || !stylesheet) {
-      require('./lib/staticContent').attr(root, this.options)
+      require('./lib/staticContent').attr(root, this)
     }
 
 //        ditagen.generator.indent(root)

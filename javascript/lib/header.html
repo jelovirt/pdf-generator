@@ -1,46 +1,41 @@
 <h3>Header and footer</h3>
 <div class="col-sm-12">
   <fieldset>
-    <p>
-      <label>Header</label>
-    <table>
-      <thead class="even">
-      <tr>
-        <th><label for="header.even">even</label></th>
-        <th><label for="header.odd">odd</label></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td class="even">
-          <select name="header.even" id="header.even">
-            <option value="">empty</option>
-            <!--option value="part">Part title</option-->
-            <!--option value="number">Chapter number</option-->
-            <option value="heading" selected>Chapter title</option>
-            <!--option value="subhead">Subhead</option-->
-            <!--option value="author">Author</option-->
-          </select>
-        </td>
-        <td>
-          <select name="header.odd" id="header.odd">
-            <option value="">empty</option>
-            <option value="heading" selected>Chapter title</option>
-            <!--option value="subhead">Subhead</option-->
-            <!--option value="subchapter">Chapter subtitle</option-->
-          </select>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    </p>
-    <p class="instruction">Page header contents.</p>
-  </fieldset>
-  <fieldset>
-    <p>
-      <label for="drop-folio">Drop folio</label>
-      <input type="checkbox" name="drop-folio" id="drop-folio" value="pagenum">
-    </p>
-    <p class="instruction">Place page number in footer.</p>
+    <div>
+      <label>Fields</label>
+      <table class="static-content">
+        <thead>
+        <tr>
+          <td id="header-source">
+            <!--span data-field="text" class="label label-default label-editable" title="editable text">text</span-->
+            <span data-field="copyright" class="label label-default" title="Copyright statement">copyright</span>
+            <span data-field="title" class="label label-default" title="Map title">title</span>
+            <span data-field="chapter" class="label label-default" title="Current chapter title">chapter</span>
+            <span data-field="folio" class="label label-default" title="Folio">#</span>
+            <span data-field="folio-with-total" class="label label-default" title="Folio with total page count"># (##)</span>
+          </td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th class="even">Even header:</th>
+          <th>Odd header:</th>
+        </tr>
+        <tr>
+          <td class="even"><div id="even-header"> </div></td>
+          <td><div id="odd-header"> </div></td>
+        </tr>
+        <tr>
+          <th class="even">Even footer:</th>
+          <th>Odd footer:</th>
+        </tr>
+        <tr>
+          <td class="even"><div id="even-footer"> </div></td>
+          <td><div id="odd-footer"> </div></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="instruction">Drag fields for header and footer contents.<!-- Text field can be used to add literal text.--></p>
   </fieldset>
 </div>

@@ -1,19 +1,19 @@
 import $ from 'jquery'
 import WizardController from './WizardController'
 import MetadataController from './features/MetadataController'
-import EnvironmentController from './features/EnvironmentController'
-import PdfPageView from './PdfPageView'
-import PageController from './features/PageController'
 import HeaderController from './features/HeaderController'
+import PageController from './features/PageController'
 import LayoutController from './features/LayoutController'
 import StyleController from './features/StyleController'
 import OtherController from './features/OtherController'
 import CoverController from './features/CoverController'
+import EnvironmentController from './features/EnvironmentController'
+import PdfPageView from './PdfPageView'
 import PdfPreviewController from './PdfPreviewController'
 import PdfUtils from './pdf-utils'
 import Utils from './Utils'
 
-export default function PdfPageController(exts) {
+export default function PdfPageController() {
   const model = {
     configuration: {
       page: {},
@@ -25,12 +25,14 @@ export default function PdfPageController(exts) {
   const view = PdfPageView()
   $('main').html(view.$element)
 
-  WizardController(model)
-  EnvironmentController(model)
-  _.forEach(exts || [], (ext) => {
-    ext(model)
-  })
-  MetadataController(model)
+  WizardController(model, [
+    [EnvironmentController(model)],
+    [PageController(model)],
+    [HeaderController(model), LayoutController(model)],
+    [StyleController(model)],
+    [CoverController(model), OtherController(model)],
+    [MetadataController(model)]
+  ])
 
   PdfPreviewController(model)
 
@@ -104,16 +106,17 @@ export default function PdfPageController(exts) {
     // Value increment/decrement methods
 
     function valueChangeHandler(event) {
+      let t
       switch (event.keyCode) {
         case 38:
-          var t = $(event.target)
+          t = $(event.target)
           addToValue(t, 1)
           event.preventDefault()
           event.stopPropagation()
           t.change()
           return false
         case 40:
-          var t = $(event.target)
+          t = $(event.target)
           addToValue(t, -1)
           event.preventDefault()
           event.stopPropagation()

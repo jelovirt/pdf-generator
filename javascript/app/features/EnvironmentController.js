@@ -2,12 +2,15 @@ import $ from 'jquery'
 import template from '../../lib/environment.html'
 
 export default function EnvironmentController(model) {
-  const $root = $('#p1')
-  $root.append(template)
+  const $element = $(template)
 
-  $(":input[name='ot_version']").change(toolkitVersionChangeHandler).change()
-  $(":input[name='formatter']").change(formatterHandler).change()
-  $(":input[name='override_shell']").change(overrideShellHandler).change()
+  $element.find(":input[name='ot_version']").change(toolkitVersionChangeHandler).change()
+  $element.find(":input[name='formatter']").change(formatterHandler).change()
+  $element.find(":input[name='override_shell']").change(overrideShellHandler).change()
+
+  return {
+    $element: $element
+  }
 
   function toolkitVersionChangeHandler(event) {
     model.ot_version = $(':input[name=ot_version]').val()

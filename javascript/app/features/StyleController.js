@@ -12,7 +12,7 @@ export default function StyleController() {
 
   const stylePreview = StylePreviewController()
 
-  styleModel.change.subscribe(stylePreview)
+  styleModel.change.subscribe(stylePreview.previewSpaceHandler)
   styleModel.fields.change()
 
   _.forEach(allFields, function(field) {
@@ -21,6 +21,10 @@ export default function StyleController() {
 
   var pdfStyleSelectorCurrent
   view.$styleSelector.change(styleHandler).val('body').change()
+
+  return {
+    $element: view.$element.add(stylePreview.$element)
+  }
 
   function getAllFields() {
     return _(styles.styles).map(function(pv, e) {
@@ -42,10 +46,11 @@ export default function StyleController() {
       f.toggle($(this).attr('data-style').split(" ").indexOf(style) !== -1)
     })
     var type = target.find(":selected").parent("optgroup.block")
+    const $blocks = view.$styleForm.find(".style-selector-block")
     if(type.length === 0) {
-      $(".style-selector-block").hide().find(":input").attr('disabled', true)
+      view.$styleForm.find(".style-selector-block").hide().find(":input").attr('disabled', true)
     } else {
-      $(".style-selector-block").show().find(":input").removeAttr('disabled')
+      view.$styleForm.find(".style-selector-block").show().find(":input").removeAttr('disabled')
     }
     pdfStyleSelectorCurrent = target.val()
     styleModel.readFromModel(target.val())

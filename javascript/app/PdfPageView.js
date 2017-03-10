@@ -2,10 +2,7 @@ import $ from 'jquery'
 import templates from '../lib/templates.html'
 
 export default function PdfPageView() {
-  const data = {
-    generate_url: '/',
-  }
-  const $element = $(templates(data))
+  const $element = $(templates)
 
   return {
     $element: $element

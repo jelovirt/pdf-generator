@@ -1,8 +1,15 @@
 import $ from 'jquery'
-import Utils from './pdf-utils'
+import _ from 'lodash'
 import styles from '../lib/styles'
 
-export default function WizardController(model) {
+export default function WizardController(model, pages) {
+  pages.forEach((sections, i) => {
+    let $root = $(`#p${i + 1}`)
+    sections.forEach((section) => {
+      $root.append(section.$element)
+    })
+  })
+
   $(":input").change(validatePage);
   $("form").submit(validateForm);
 
@@ -44,7 +51,7 @@ export default function WizardController(model) {
         }
         if(value === "") {
           var label = getLabel(elem)
-          alert("Required field " + label.toLowerCase() + " has no value")
+          window.alert("Required field " + label.toLowerCase() + " has no value")
           event.stopPropagation()
           event.preventDefault()
           return false
@@ -57,11 +64,11 @@ export default function WizardController(model) {
   function validatePage() {
     var elements = $(".current .required:enabled");
     var valid = true;
-    if(elements.filter(":radio, :checkbox").length > 0 && elements.filter(":checked").length == 0) {
+    if(elements.filter(":radio, :checkbox").length > 0 && elements.filter(":checked").length === 0) {
       valid = false;
     }
-    if(elements.find("option").length > 0 && elements.find("option:selected").length == 0) {
-      value = true;
+    if(elements.find("option").length > 0 && elements.find("option:selected").length === 0) {
+      valid = false;
     }
     elements.filter(":text").each(function(i) {
       var elem = $(this);

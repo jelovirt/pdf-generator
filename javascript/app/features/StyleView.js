@@ -2,13 +2,9 @@ import $ from 'jquery'
 import template from '../../lib/styles.html'
 
 export default function StyleView() {
-  const $root = $('#p4')
+  const $form = $(template)
 
-  const $form = $(template({
-    four: [1, 2, 3, 4]
-  }))
-  $root.append($form)
-  const $styleForm = $('#style-form')
+  const $styleForm = $form.filter('#style-form')
   // border shorthand
   $styleForm.find(":input[id='border']").change(borderEditorHandler)
   initAlign()
@@ -17,9 +13,9 @@ export default function StyleView() {
   initButton('text-decoration', 'underline', 'none')
 
   return {
-    $element: $root,
+    $element: $form,
     $styleForm: $styleForm,
-    $styleSelector: $('#style-selector'),
+    $styleSelector: $form.find('#style-selector'),
   }
 
   function borderEditorHandler(event) {

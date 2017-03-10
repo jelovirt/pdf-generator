@@ -406,11 +406,10 @@
           </tr>
           </thead>
           <tbody>
-          {{#each four}}
           <tr>
-            <th>{{this}}</th>
+            <th>1</th>
             <td>
-              <select id="ol-{{this}}">
+              <select id="ol-1">
                 <option value="1">1, 2, 3, …</option>
                 <option value="A">A, B, C, …</option>
                 <option value="a">a, b, c, …</option>
@@ -418,10 +417,51 @@
                 <option value="i">i, ii, iii, …</option>
               </select>
             </td>
-            <td><input id="ol-before-{{i}}" size="1"></td>
-            <td><input id="ol-after-{{i}}" size="2" value=". "></td>
+            <td><input id="ol-before-1" size="1"></td>
+            <td><input id="ol-after-1" size="2" value=". "></td>
           </tr>
-          {{/each}}
+          <tr>
+            <th>2</th>
+            <td>
+              <select id="ol-2">
+                <option value="1">1, 2, 3, …</option>
+                <option value="A">A, B, C, …</option>
+                <option value="a">a, b, c, …</option>
+                <option value="I">I, II, III, …</option>
+                <option value="i">i, ii, iii, …</option>
+              </select>
+            </td>
+            <td><input id="ol-before-2" size="1"></td>
+            <td><input id="ol-after-2" size="2" value=". "></td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>
+              <select id="ol-3">
+                <option value="1">1, 2, 3, …</option>
+                <option value="A">A, B, C, …</option>
+                <option value="a">a, b, c, …</option>
+                <option value="I">I, II, III, …</option>
+                <option value="i">i, ii, iii, …</option>
+              </select>
+            </td>
+            <td><input id="ol-before-3" size="1"></td>
+            <td><input id="ol-after-3" size="2" value=". "></td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td>
+              <select id="ol-4">
+                <option value="1">1, 2, 3, …</option>
+                <option value="A">A, B, C, …</option>
+                <option value="a">a, b, c, …</option>
+                <option value="I">I, II, III, …</option>
+                <option value="i">i, ii, iii, …</option>
+              </select>
+            </td>
+            <td><input id="ol-before-4" size="1"></td>
+            <td><input id="ol-after-4" size="2" value=". "></td>
+          </tr>
           </tbody>
         </table>
         <!--label for="ol-sublevel" class="inline">Show sublevels</label>:
@@ -447,11 +487,10 @@
           </tr>
           </thead>
           <tbody>
-          {{#each four}}
           <tr>
-            <th>{{this}}</th>
+            <th>1</th>
             <td>
-              <select id="ul-{{this}}">
+              <select id="ul-1">
                 <option value="&#x2022;">&#x2022;</option>
                 <option value="&#x25C6;">&#x25C6;</option>
                 <option value="&#x2014;">&#x2014;</option>
@@ -460,7 +499,42 @@
               </select>
             </td>
           </tr>
-          {{/each}}
+          <tr>
+            <th>2</th>
+            <td>
+              <select id="ul-2">
+                <option value="&#x2022;">&#x2022;</option>
+                <option value="&#x25C6;">&#x25C6;</option>
+                <option value="&#x2014;">&#x2014;</option>
+                <option value="&#x2013;">&#x2013;</option>
+                <option value="&#x2012;">&#x2012;</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>
+              <select id="ul-3">
+                <option value="&#x2022;">&#x2022;</option>
+                <option value="&#x25C6;">&#x25C6;</option>
+                <option value="&#x2014;">&#x2014;</option>
+                <option value="&#x2013;">&#x2013;</option>
+                <option value="&#x2012;">&#x2012;</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td>
+              <select id="ul-4">
+                <option value="&#x2022;">&#x2022;</option>
+                <option value="&#x25C6;">&#x25C6;</option>
+                <option value="&#x2014;">&#x2014;</option>
+                <option value="&#x2013;">&#x2013;</option>
+                <option value="&#x2012;">&#x2012;</option>
+              </select>
+            </td>
+          </tr>
           </tbody>
         </table>
       </td>
@@ -503,6 +577,15 @@
     </tbody>
 
     <tbody data-style="codeblock">
+      <tr>
+        <th colspan="2"><h4>Numbering</h4></th>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <label for="line-numbering" class="inline">Line numbering</label>:
+          <input id="line-numbering" title="Line numbering" type="checkbox" value="true">
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

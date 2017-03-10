@@ -5,12 +5,15 @@ import template from '../../lib/metadata.html'
 const pluginPatter = new RegExp("[a-zA-Z\\-_]+(\\.[a-zA-Z\\-_]+)*")
 
 export default function MetadataController(model) {
-  const $root = $('#p6')
-  $root.append(template)
+  const $element = $(template)
 
-  $(":input[name='id']").change(idChangeHandler)
-  $(":input[name='transtype']").change(transtypeChangeHandler)
-  $(":input[name='plugin-version']").change(pluginVersionChangeHandler)
+  $element.find(":input[name='id']").change(idChangeHandler)
+  $element.find(":input[name='transtype']").change(transtypeChangeHandler)
+  $element.find(":input[name='plugin-version']").change(pluginVersionChangeHandler)
+
+  return {
+    $element: $element
+  }
 
   function idChangeHandler(event) {
     model.id = $(event.target).val()

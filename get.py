@@ -30,7 +30,9 @@ def main():
                  "id": "com.example.print-pdf",
                  "ot_version": "2.4",
                  "transtype": "print-pdf",
+                 "blank_pages": True,
                  "configuration": {
+                   "mirror-page-margins": True,
                    "page": {
                      "width": "210mm",
                      "height": "297mm",
@@ -249,6 +251,7 @@ def main():
                        "end-indent": "0pt"
                      },
                      "codeblock": {
+                       "line-numbering": True,
                        "font-family": "Monaco",
                        "font-size": "10pt",
                        "color": "black",
@@ -332,10 +335,10 @@ def main():
                        "padding-bottom": "0pt",
                        "padding-left": "0pt",
                        "end-indent": "0pt",
-                       "ul-1": "\u2022",
-                       "ul-2": "\u2022",
-                       "ul-3": "\u2022",
-                       "ul-4": "\u2022"
+                       "ul-1": u"\u2022",
+                       "ul-2": u"\u2022",
+                       "ul-3": u"\u2022",
+                       "ul-4": u"\u2022"
                      },
                      "table": {
                        "font-family": "Times+New+Roman",
@@ -485,24 +488,25 @@ def main():
                    "body_column_count": 1,
                    "index_column_count": 2,
                    "column_gap": "12pt",
-                   "mirror_page_margins": False,
+                   "mirror_page_margins": True,
                    "table_continued": False,
                    "formatter": "fop",
                    "override_shell": True,
                    "cover_image_metadata": "cover-image",
+                   "blank_pages": True,
                    "header": {
                      "odd": [
-                       "heading",
-                       "pagenum"
+                       "copyright",
+                       "title"
                      ],
                      "even": [
-                       "pagenum",
+                       "chapter",
                        "heading"
                      ]
                    },
                    "footer": {
-                     "odd": [],
-                     "even": []
+                     "odd": ["folio"],
+                     "even": ["folio-with-total"]
                    },
                    "toc_maximum_level": 3
                  }
@@ -630,6 +634,7 @@ def main():
             "line-height.pre": "1.2",
             "font-family.codeblock": "Monaco",
             "font-size.codeblock": "9pt",
+            "line-numbering.codeblock": "true",
             "color.codeblock": "white",
             "background-color.codeblock": "teal",
             #font-weight.codeblock
@@ -753,6 +758,7 @@ def main():
             "id": "x",
             "transtype": "x",
             #plugin-version
+            "blank_pages": "true"
         },
         "pdf": {
             "output": "pdf-plugin",

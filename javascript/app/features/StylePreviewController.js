@@ -1,14 +1,17 @@
 import $ from 'jquery'
-import StylePreviewView from './StylePreviewView'
 import Utils from '../../app/pdf-utils'
+import template from '../../lib/style-preview.html'
 
 const f = 0.9
 
 export default function StylePreviewController() {
-  const view = StylePreviewView()
+  const $element = $(template)
 
   // styleModel.change.subscribe(previewSpaceHandler)
-  return previewSpaceHandler
+  return {
+    $element: $element,
+    previewSpaceHandler: previewSpaceHandler
+  }
 
   function previewSpaceHandler(event) {
     var input = $(event.target)
@@ -91,7 +94,7 @@ export default function StylePreviewController() {
         isLength = false
         break;
       default:
-        var all = view.$element.find("[data-field='" + field + "'][data-style='" + type + "']")
+        var all = $element.find("[data-field='" + field + "'][data-style='" + type + "']")
         if(all.length) {
           if(all.filter("[data-value]").length) {
             all.hide()
@@ -111,12 +114,12 @@ export default function StylePreviewController() {
         }
         v = String(Utils.toPt(v) * f) + 'px'
       }
-      view.$element.find("*[class~='example-page-content-" + type + "']").css(property, v)
+      $element.find("*[class~='example-page-content-" + type + "']").css(property, v)
     }
 
     // wrapper styling
     if (field === 'start-indent' && type === 'body') {
-      view.$element.find('.wrapper > *').css('left', `-${v}`)
+      $element.find('.wrapper > *').css('left', `-${v}`)
     }
   }
 }

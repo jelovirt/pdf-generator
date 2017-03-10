@@ -1,42 +1,49 @@
 import $ from 'jquery'
 import template from '../../lib/header.html'
+import dragula from 'dragula'
 
 export default function HeaderController(model) {
-  const $root = $('#p3')
-  $root.append(template)
+  const $element = $(template)
+  const root = $element.get(0)
 
-  $(':input[name="header.even"]').change(headerChange).change()
-  $(':input[name="header.odd"]').change(headerChange).change()
-  $(':input[name=drop-folio]').change(headerChange).change()
+  const headerSource = $element.find('#header-source').get(0)
 
-  function headerChange(event) {
-    // FIXME this should get the current value from model, but this also should be triggered by change in model
-    const mirrorPages = true // model.configuration.mirror_page_margins
-    const __header_folio = ["pagenum"]
-    if($(':input[name=drop-folio]').is(':checked')) {
-      model.configuration.header.odd = getTokens($(':input[name="header.even"]'))
-      model.configuration.footer.odd = __header_folio
-      if (mirrorPages) {
-        model.configuration.header.even = getTokens($(':input[name="header.odd"]'))
-        model.configuration.footer.even = __header_folio
-      }
-    } else {
-      model.configuration.header.odd = getTokens($(':input[name="header.even"]')).concat(__header_folio)
-      model.configuration.footer.odd = []
-      if (mirrorPages) {
-        model.configuration.header.even = __header_folio.concat(getTokens($(':input[name="header.odd"]')))
-        model.configuration.footer.even = []
-      }
+  const drake = dragula([headerSource,
+    $element.find('#even-header').get(0), $element.find('#odd-header').get(0),
+    $element.find('#even-footer').get(0), $element.find('#odd-footer').get(0)
+  ], {
+    // copy: true,
+    removeOnSpill: true,
+    copy: (el, source) => source === headerSource,
+    accepts: (el, target) => target !== headerSource
+  })
+  drake.on('drop', (label, target, source) => {
+    if(label.classList.contains('label-editable')) {
+      label.contentEditable = true
+      label.innerText = '\u200B' // \u200B
+      label.focus()
     }
-    if (!mirrorPages) {
-      delete model.configuration.header.even
-      delete model.configuration.footer.even
+    model.configuration.header = {
+      odd: readTags($element.find('#odd-header')),
+      even: readTags($element.find('#even-header'))
     }
-  }
+    model.configuration.footer = {
+      odd: readTags($element.find('#odd-footer')),
+      even: readTags($element.find('#even-footer'))
+    }
+  })
 
-  function getTokens(elem) {
-    return (elem.val() || '').trim().split(/\s+/)
+  return {
+    $element: $element
   }
+}
 
+function readTags($element) {
+  return $element
+    .find('span.label')
+    .map(function() {
+      return $(this).data('field')
+    })
+    .toArray()
 }
 
