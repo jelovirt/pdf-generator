@@ -14,14 +14,13 @@ module.exports = {
       {
         test: /\.js?$/,
         include: [
-          //path.join(__dirname, '..', 'com.cisco.html', "_js"),
           path.join(__dirname, "javascript")
         ],
         loaders: ["babel"]
       },
       {
         test: /\.html$/,
-        loader: "handlebars-loader"
+        loader: "html-loader"
       }
       // {
       //     test: /\.svg$/,
