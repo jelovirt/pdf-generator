@@ -13,12 +13,12 @@ export default function EnvironmentController(model) {
   }
 
   function toolkitVersionChangeHandler(event) {
-    model.ot_version = $(':input[name=ot_version]').val()
+    model.ot_version = $(event.target).val()
     toggleByClass($(event.target), 'v')
   }
 
   function formatterHandler(event) {
-    model.configuration.formatter = $(':input[name=formatter]').val()
+    model.configuration.formatter = $(event.target).val()
     toggleByClass($(event.target), 'f')
   }
 
