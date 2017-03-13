@@ -17,8 +17,14 @@ export default function PdfPageController() {
   const model = {
     configuration: {
       page: {},
-      header: {},
-      footer: {}
+      header: {
+        odd: [],
+        even: []
+      },
+      footer: {
+        odd: [],
+        even: []
+      }
     }
   }
 
