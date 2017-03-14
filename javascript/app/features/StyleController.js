@@ -12,7 +12,7 @@ export default function StyleController() {
 
   const stylePreview = StylePreviewController()
 
-  styleModel.change.subscribe(stylePreview.previewSpaceHandler)
+  styleModel.change(stylePreview.previewSpaceHandler)
   styleModel.fields.change()
 
   _.forEach(allFields, function(field) {

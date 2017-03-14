@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import Rx from 'rx'
 import _ from 'lodash'
 import styles from '../../lib/styles'
 
@@ -17,10 +16,11 @@ export default function StyleModel(view, allFields) {
   $('form').first().append($element)
 
   const $inputs = $element.find(':input')
-  const change = Rx.Observable.fromEvent($inputs, 'change')
 
   return {
-    change: change,
+    change: (handler) => {
+      $inputs.change(handler)
+    },
     fields: $inputs,
     field: getField,
     readFromModel: readFromModel,
