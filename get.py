@@ -102,7 +102,8 @@ def main():
                        "padding-right": "0pt",
                        "padding-bottom": "0pt",
                        "padding-left": "0pt",
-                       "end-indent": "0pt"
+                       "end-indent": "0pt",
+                       "title-numbering": True
                      },
                      "topic_topic_topic": {
                        "font-family": "Helvetica",
@@ -379,7 +380,7 @@ def main():
                        "padding-bottom": "0pt",
                        "padding-left": "0pt",
                        "end-indent": "0pt",
-                       "caption-number": "document",
+                       "caption-number": "chapter",
                        "caption-position": "after"
                      },
                      "toc_1": {
