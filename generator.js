@@ -558,7 +558,7 @@ class Generator {
     if(stylesheet === "tables" || !stylesheet) {
       root.append(ET.Comment("table"))
       // caption numbering
-      const tableCaptionNumber = _.get(this.style, "table.caption-number", "document")
+      const tableCaptionNumber = _.get(this.style.table, "caption-number")
       switch (tableCaptionNumber) {
         //case "topic":
         //  utils.copy_xml(root, table_title_number_topic)
@@ -742,28 +742,25 @@ class Generator {
     const fig_title_number_chapter = `
 <xsl:template match="*[contains(@class, ' topic/fig ')]/*[contains(@class, ' topic/title ')]" mode="fig.title-number">
   <xsl:call-template name="getChapterPrefix"/>
-  <xsl:value-of select="count(key('enumerableByClass', 'topic/fig', ancestor::*[contains(@class, ' topic/topic ')][last()])[. &lt;&lt; current()])"/>
+  <xsl:value-of select="count(key('enumerableByClass', 'topic/fig', ancestor::*[contains(@class, ' topic/topic ')][last()])
+                              [*[contains(@class, ' topic/title ')]]
+                              [. &lt;&lt; current()])"/>
 </xsl:template>`
 
     const commons_raw = `
 <xsl:template name="getChapterPrefix">
-  <xsl:variable name="topicref" select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)" as="element()*"/>
-  <xsl:variable name="chapter" select="$topicref/ancestor-or-self::*[contains(@class, ' map/topicref ')][parent::opentopic:map]" as="element()*"/>
-  <xsl:for-each select="$chapter[1]">
-    <xsl:variable name="topicType" as="xs:string">
-      <xsl:apply-templates select="." mode="determineTopicType"/>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$topicType = 'topicChapter'">
-        <xsl:number format="1" count="*[contains(@class, ' bookmap/chapter ')]"/>
-        <xsl:text>&#x2013;</xsl:text>
-      </xsl:when>
-      <xsl:when test="$topicType = ('topicAppendix', 'topicAppendices')">
-        <xsl:number format="A" count="*[contains(@class, ' bookmap/appendix ')]"/>
-        <xsl:text>&#x2013;</xsl:text>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:for-each>
+  <xsl:variable as="element()*" name="topicref" select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)" />
+  <xsl:variable as="element()*" name="chapter" select="$topicref/ancestor-or-self::*[contains(@class, ' map/topicref ')]
+                                                                                    [parent::opentopic:map or
+                                                                                     parent::*[contains(@class, ' bookmap/part ')] or
+                                                                                     parent::*[contains(@class, ' bookmap/appendices ')]][1]" />
+  <xsl:variable name="number" as="node()*">
+    <xsl:apply-templates select="$chapter[1]" mode="topicTitleNumber"/>
+  </xsl:variable>
+  <xsl:if test="exists($number)">
+    <xsl:copy-of select="$number"/>
+    <xsl:text>–</xsl:text>
+  </xsl:if>
 </xsl:template>`
 
     if(stylesheet === "commons" || !stylesheet) {
@@ -794,7 +791,8 @@ class Generator {
         }
       }
       // caption numbering
-      const figCaptionNumber = _.get(this.style, "fig.caption-number", "document")
+      const figCaptionNumber = _.get(this.style.fig, "caption-number")
+      console.log(this.style.fig['caption-number'])
       switch (figCaptionNumber) {
         //case "topic":
         //  utils.copy_xml(root, fig_title_number_topic)
@@ -808,7 +806,7 @@ class Generator {
       }
 
       //if (_.has(this.style, 'fig') && _.has(this.style["fig"], "caption-position") && this.style["fig"]["caption-position"] === "before") {
-      if(_.has(this.style, 'fig.caption-position') && this.style["fig"]["caption-position"] === "before") {
+      if(_.has(this.style.fig, 'caption-position') && this.style.fig["caption-position"] === "before") {
         utils.copy_xml(root, fig_raw)
       }
       if(this.cover_image_topic) {
