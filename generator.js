@@ -571,7 +571,7 @@ class Generator {
           break
       }
       // caption position
-      if(_.has(this.style, "table") && _.has(this.style["table"], "caption-position") && this.style["table"]["caption-position"] === "after") {
+      if(_.has(this.style, "table") && _.has(this.style.table, "caption-position") && this.style.table["caption-position"] === "after") {
         utils.copy_xml(root, table_title_raw)
       }
       if(this.table_continued) {
@@ -579,11 +579,11 @@ class Generator {
       } else {
         utils.copy_xml(root, table_footer_raw)
       }
-      if(_.has(this.style["dl"], "dl-type")) {
-        if(this.style["dl"]["dl-type"] === "list") {
+      if(_.has(this.style.dl, "dl-type")) {
+        if(this.style.dl["dl-type"] === "list") {
           root.append(ET.Comment("dl"))
           utils.copy_xml(root, dl_list_raw)
-        } else if(this.style["dl"]["dl-type"] === "html") {
+        } else if(this.style.dl["dl-type"] === "html") {
           root.append(ET.Comment("dl"))
           utils.copy_xml(root, dl_html_raw)
         }
@@ -778,10 +778,10 @@ class Generator {
         }).join(", ") + ")")
       })
       utils.copy_xml(root, get_title_raw)
-      if(_.has(this.style["topic"], "title-numbering") && this.style["topic"]["title-numbering"] !== true) {
+      if(_.has(this.style.topic, "title-numbering") && this.style.topic["title-numbering"] !== true) {
         utils.copy_xml(root, numberless_chapter_raw)
       }
-      if(!(_.has(this.style["note"], "icon") && this.style["note"]["icon"] === "icon")) {
+      if(!(_.has(this.style.note, "icon") && this.style.note.icon === "icon")) {
         root.append(ET.Comment("note"))
         utils.copy_xml(root, note_raw)
       }
@@ -805,7 +805,7 @@ class Generator {
           break
       }
 
-      //if (_.has(this.style, 'fig') && _.has(this.style["fig"], "caption-position") && this.style["fig"]["caption-position"] === "before") {
+      //if (_.has(this.style, 'fig') && _.has(this.style.fig, "caption-position") && this.style.fig["caption-position"] === "before") {
       if(_.has(this.style.fig, 'caption-position') && this.style.fig["caption-position"] === "before") {
         utils.copy_xml(root, fig_raw)
       }
@@ -928,7 +928,7 @@ class Generator {
 `
 
     if(stylesheet === "links" || !stylesheet) {
-      if(_.has(this.style["link"], "link-url") && this.style["link"]["link-url"] === true) {
+      if(_.has(this.style.link, "link-url") && this.style.link["link-url"] === true) {
         root.append(ET.Comment("link"))
         utils.copy_xml(root, link_raw)
       }
@@ -1105,7 +1105,7 @@ class Generator {
       this.attribute_set(root, "example", "example")
       // note
       this.attribute_set(root, "note", "note__table")
-      if(!(_.has(this.style["note"], "icon") && this.style["note"]["icon"] === "icon")) {
+      if(!(_.has(this.style.note, "icon") && this.style.note["icon"] === "icon")) {
         const note_text = ET.SubElement(root, xsl('attribute-set'), {name: "notetextcolumn"})
         ET.SubElement(note_text, xsl('attribute'), {name: "column-number"}).text = "1"
       }
@@ -1117,13 +1117,13 @@ class Generator {
     }
     if(stylesheet === "tables-attr" || !stylesheet) {
       // dl
-      if(_.has(this.style["dl"], "dl-type")) {
+      if(_.has(this.style.dl, "dl-type")) {
         this.attribute_set(root, "dl", "e:dl")
         const dt_attr = ET.SubElement(root, xsl('attribute-set'), {name: 'e:dlentry.dt__content'})
         ET.SubElement(dt_attr, xsl('attribute'), {name: 'font-weight'}).text = "bold"
         ET.SubElement(dt_attr, xsl('attribute'), {name: 'keep-with-next'}).text = "always"
         const dd_attr = ET.SubElement(root, xsl('attribute-set'), {name: 'e:dlentry.dd__content'})
-        if(this.style["dl"]["dl-type"] === "html") {
+        if(this.style.dl["dl-type"] === "html") {
           ET.SubElement(dd_attr, xsl('attribute'), {name: 'start-indent'}).text = "from-parent(start-indent) + 5mm"
         }
       }
@@ -1236,16 +1236,16 @@ class Generator {
         }
       })
       // font size
-      if(_.has(this.style["body"], "font-size")) {
-        ET.SubElement(root, xsl('variable'), {name: "default-font-size"}).text = this.style["body"]["font-size"]
+      if(_.has(this.style.body, "font-size")) {
+        ET.SubElement(root, xsl('variable'), {name: "default-font-size"}).text = this.style.body["font-size"]
       }
       // line height
-      if(_.has(this.style["body"], "line-height")) {
-        ET.SubElement(root, xsl('variable'), {name: "default-line-height"}).text = this.style["body"]["line-height"]
+      if(_.has(this.style.body, "line-height")) {
+        ET.SubElement(root, xsl('variable'), {name: "default-line-height"}).text = this.style.body["line-height"]
       }
       // body indent
-      if(_.has(this.style["body"], "start-indent")) {
-        ET.SubElement(root, xsl('variable'), {name: "side-col-width"}).text = this.style["body"]["start-indent"]
+      if(_.has(this.style.body, "start-indent")) {
+        ET.SubElement(root, xsl('variable'), {name: "side-col-width"}).text = this.style.body["start-indent"]
       }
     }
 
@@ -1290,7 +1290,7 @@ class Generator {
     if(stylesheet === "pr-domain-attr" || !stylesheet) {
       // codeblock
       const pre_attr = ET.SubElement(root, xsl('attribute-set'), {name: "codeblock"})
-      _.forEach(this.style["codeblock"], (v, k) => {
+      _.forEach(this.style.codeblock, (v, k) => {
         ET.SubElement(pre_attr, xsl('attribute'), {name: k}).text = value(k, v)
       })
     }
@@ -1461,7 +1461,7 @@ class Generator {
   }
 
   get_formatter_imports() {
-    var imports = []
+    let imports = [];
     var plugin = "plugin:org.dita.pdf2"
     if(this.formatter === "ah") {
       plugin = plugin + ".axf"
