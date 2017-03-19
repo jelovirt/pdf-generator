@@ -33,7 +33,6 @@ export default function StyleController(store) {
         }
       }
     }))
-
   }
 
   function marginChangeHandler(margin) {
@@ -71,7 +70,7 @@ export default function StyleController(store) {
       }
     }))
   }
-  
+
   function columnGapChangeHandler(event) {
     store.dispatch(setAction({
       configuration: {

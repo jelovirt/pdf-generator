@@ -13,7 +13,7 @@ import PdfPageView from './PdfPageView'
 import PdfPreviewController from './PdfPreviewController'
 import PdfUtils from './pdf-utils'
 import Utils from './Utils'
-import { createStore } from 'redux'
+import {createStore} from 'redux'
 
 export default function PdfPageController() {
   const model = createStore((store, action) => {

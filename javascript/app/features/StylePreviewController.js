@@ -118,7 +118,7 @@ export default function StylePreviewController() {
     }
 
     // wrapper styling
-    if (field === 'start-indent' && type === 'body') {
+    if(field === 'start-indent' && type === 'body') {
       $element.find('.wrapper > *').css('left', `-${v}`)
     }
   }

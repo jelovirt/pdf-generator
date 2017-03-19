@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import _ from 'lodash'
 import styles from '../lib/styles'
-import { setAction } from './Utils'
+import {setAction} from './Utils'
 
 export default function WizardController(store, pages) {
   pages.forEach((sections, i) => {
