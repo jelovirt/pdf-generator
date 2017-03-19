@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import _ from 'lodash'
 import WizardController from './WizardController'
 import MetadataController from './features/MetadataController'
 import HeaderController from './features/HeaderController'
@@ -16,7 +17,7 @@ import { createStore } from 'redux'
 
 export default function PdfPageController() {
   const model = createStore((store, action) => {
-    return _.assign(store, action.value)
+    return _.merge(store, action.value)
   }, {
     configuration: {
       page: {},
