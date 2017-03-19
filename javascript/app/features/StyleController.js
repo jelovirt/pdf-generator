@@ -4,6 +4,7 @@ import StyleView from './StyleView'
 import StyleModel from './StyleModel'
 import StylePreviewController from './StylePreviewController'
 import styles from '../../lib/styles'
+import {setAction} from '../Utils'
 
 export default function StyleController(store) {
   const view = StyleView()
@@ -56,13 +57,63 @@ export default function StyleController(store) {
     styleModel.readFromModel(target.val())
   }
 
+  function getValue(element, property, value) {
+    if (!(styles.styles[element] && styles.styles[element][property])) {
+      return value
+    }
+    switch (typeof styles.styles[element][property].default) {
+      case 'boolean':
+        return (value === 'true')
+      case 'number':
+        return Number(value)
+      default:
+        return value
+    }
+  }
+
   /**
    * Update store when UI changes
    * @param event UI change event
    */
   function styleEditorHandler(event) {
-    var ui = $(event.target)
-    var field = ui.attr('id')
+    const input = $(event.target)
+    const field = input.attr('id')
+    const def = styles.styles[pdfStyleSelectorCurrent][field]
+
+    const currentStyle = store.getState().configuration.style
+    const oldValue = currentStyle[pdfStyleSelectorCurrent][field]
+    var newValue
+    if(input.is(":checkbox")) {
+      if(input.is(":checked")) {
+        newValue = input.val()
+      } else if(field === 'text-decoration') {
+        newValue = 'none'
+      } else {
+        newValue = 'normal'
+      }
+    } else if(input.is(".editable-list")) {
+      newValue = input.val()
+    } else {
+      newValue = input.val()
+    }
+    newValue = getValue(pdfStyleSelectorCurrent, field, newValue)
+
+    const action = {
+      configuration: {
+        style: {}
+      }
+    }
+    action.configuration.style[pdfStyleSelectorCurrent] = {}
+    action.configuration.style[pdfStyleSelectorCurrent][field] = newValue
+    _.forEach(styles.styles, (elementValue, element) => {
+      const def = elementValue[field]
+      if(!!def && def.inherit === pdfStyleSelectorCurrent && currentStyle[element][field] === oldValue) {
+        action.configuration.style[element] = {}
+        action.configuration.style[element][field] = newValue
+      }
+    })
+    store.dispatch(setAction(action))
+
     styleModel.writeFieldToModel(field, pdfStyleSelectorCurrent)
   }
 
