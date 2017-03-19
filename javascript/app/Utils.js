@@ -8,6 +8,13 @@ export default {
   closeHandler: closeHandler
 }
 
+export function setAction(value) {
+  return {
+    type: 'SET',
+    value
+  }
+}
+
 function setError(input, text, tip) {
   setMessage(input, "err", text, tip);
   input.addClass("invalid");

@@ -1,14 +1,23 @@
 import $ from 'jquery'
 import template from '../../lib/cover.html'
+import {setAction} from '../Utils'
 
-export default function CoverHandler(model) {
+export default function CoverHandler(store) {
   const $element = $(template)
 
   $element.find(':input[name=cover_image_metadata]').change((event) => {
-    model.configuration.cover_image_metadata = $(event.target).val() || null
+    store.dispatch(setAction({
+      configuration: {
+        cover_image_metadata: $(event.target).val() || null
+      }
+    }))
   }).change()
   $element.find(':input[name=cover_image_topic]').change((event) => {
-    model.configuration.cover_image_topic = $(event.target).val() || null
+    store.dispatch(setAction({
+      configuration: {
+        cover_image_topic: $(event.target).val() || null
+      }
+    }))
   }).change()
   $element.find("#cover_image_chooser").change(coverChangeHandler).change()
 
@@ -27,7 +36,11 @@ export default function CoverHandler(model) {
       .prop('disabled', true)
       .hide()
       .each((i, elem) => {
-        delete model.configuration[$(elem).attr('id')]
+        const action = {
+          configuration: {}
+        }
+        action.configuration[$(elem).attr('id')] = undefined
+        store.dispatch(setAction(action))
       })
   }
 }

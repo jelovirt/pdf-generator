@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import Utils from './pdf-utils'
 
-export default function PdfPreviewController() {
+export default function PdfPreviewController(store) {
   var factor = 0.12
 
   $(":input[name='title-numbering']").change(titleNumberingHandler).change()

@@ -12,9 +12,12 @@ import PdfPageView from './PdfPageView'
 import PdfPreviewController from './PdfPreviewController'
 import PdfUtils from './pdf-utils'
 import Utils from './Utils'
+import { createStore } from 'redux'
 
 export default function PdfPageController() {
-  const model = {
+  const model = createStore((store, action) => {
+    return _.assign(store, action.value)
+  }, {
     configuration: {
       page: {},
       header: {
@@ -26,7 +29,7 @@ export default function PdfPageController() {
         even: []
       }
     }
-  }
+  })
 
   const view = PdfPageView()
   $('main').html(view.$element)

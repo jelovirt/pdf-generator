@@ -1,7 +1,8 @@
 import $ from 'jquery'
 import template from '../../lib/environment.html'
+import {setAction} from '../Utils'
 
-export default function EnvironmentController(model) {
+export default function EnvironmentController(store) {
   const $element = $(template)
 
   $element.find(":input[name='ot_version']").change(toolkitVersionChangeHandler).change()
@@ -13,17 +14,27 @@ export default function EnvironmentController(model) {
   }
 
   function toolkitVersionChangeHandler(event) {
-    model.ot_version = $(event.target).val()
+    store.dispatch(setAction({
+      ot_version: $(event.target).val()
+    }))
     toggleByClass($(event.target), 'v')
   }
 
   function formatterHandler(event) {
-    model.configuration.formatter = $(event.target).val()
+    store.dispatch(setAction({
+      configuration: {
+        formatter: $(event.target).val()
+      }
+    }))
     toggleByClass($(event.target), 'f')
   }
 
   function overrideShellHandler(event) {
-    model.configuration.override_shell = $(event.target).is(':checked')
+    store.dispatch(setAction({
+      configuration: {
+        override_shell: $(event.target).is(':checked')
+      }
+    }))
   }
 
   function toggleByClass(p, prefix) {

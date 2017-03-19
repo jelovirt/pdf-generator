@@ -5,7 +5,7 @@ import StyleModel from './StyleModel'
 import StylePreviewController from './StylePreviewController'
 import styles from '../../lib/styles'
 
-export default function StyleController() {
+export default function StyleController(store) {
   const view = StyleView()
   const allFields = getAllFields()
   const styleModel = StyleModel(view, allFields)

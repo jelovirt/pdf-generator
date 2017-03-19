@@ -1,8 +1,9 @@
 import $ from 'jquery'
 import _ from 'lodash'
 import styles from '../lib/styles'
+import { setAction } from './Utils'
 
-export default function WizardController(model, pages) {
+export default function WizardController(store, pages) {
   pages.forEach((sections, i) => {
     let $root = $(`#p${i + 1}`)
     sections.forEach((section) => {
@@ -121,12 +122,12 @@ export default function WizardController(model, pages) {
     setFragment();
     // FIXME
     readArguments();
-    $(':input[name=json]').val(JSON.stringify(model))
+    $(':input[name=json]').val(JSON.stringify(store.getState()))
     $('form#generate-plugin').submit();
   }
 
   function readArguments() {
-    model.configuration.style = {}
+    store.getState().configuration.style = {}
     const types = _(styles.styles).map((f, k) => {
       return k
     }).uniq().value()
@@ -152,10 +153,17 @@ export default function WizardController(model, pages) {
           }
         }
       })
-      model.configuration.style[__type] = group
+
+      const action = {
+        configuration: {
+          style: {}
+        }
+      }
+      action.configuration.style[__type] = group
+      store.dispatch(setAction(action))
     })
 
-    return model
+    return store.getState()
   }
 
   /**

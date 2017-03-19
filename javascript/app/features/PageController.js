@@ -1,7 +1,8 @@
 import $ from 'jquery'
 import template from '../../lib/page.html'
+import {setAction} from '../Utils'
 
-export default function StyleController(model) {
+export default function StyleController(store) {
   const $element = $(template)
 
   $element.find(":input[name=page-size]").change(pageSizeChangeHandler).change()
@@ -24,21 +25,38 @@ export default function StyleController(model) {
     if($element.find(':input[name=orientation]').val() === 'landscape') {
       s.reverse()
     }
-    model.configuration.page.width = s[0]
-    model.configuration.page.height = s[1]
+    store.dispatch(setAction({
+      configuration: {
+        page: {
+          width: s[0],
+          height: s[1]
+        }
+      }
+    }))
+
   }
 
   function marginChangeHandler(margin) {
     return (event) => {
-      model.configuration.page[margin] = $(event.target).val() || '20mm'
+      const action = {
+        configuration: {
+          page: {}
+        }
+      }
+      action.configuration.page[margin] = $(event.target).val() || '20mm'
+      store.dispatch(setAction(action))
     }
   }
 
   function columnChangeHandler(page) {
     return (event) => {
       const target = $(event.target)
-      model.configuration[page] = Number(target.val())
-      if(model.configuration.body_column_count === 1 && model.configuration.index_column_count === 1) {
+      const action = {
+        configuration: {}
+      }
+      action.configuration[page] = Number(target.val())
+      store.dispatch(setAction(action))
+      if(store.getState().configuration.body_column_count === 1 && store.getState().configuration.index_column_count === 1) {
         $element.find(":input[name=column-gap]").prop('disabled', true).parent().hide()
       } else {
         $element.find(":input[name=column-gap]").prop('disabled', false).parent().show()
@@ -47,11 +65,19 @@ export default function StyleController(model) {
   }
 
   function mirrorPageChangeHandler(event) {
-    model.configuration.mirror_page_margins = $(event.target).is(':checked')
+    store.dispatch(setAction({
+      configuration: {
+        mirror_page_margins: $(event.target).is(':checked')
+      }
+    }))
   }
   
   function columnGapChangeHandler(event) {
-    model.configuration.column_gap = $(event.target).val()
+    store.dispatch(setAction({
+      configuration: {
+        column_gap: $(event.target).val()
+      }
+    }))
   }
 }
 
