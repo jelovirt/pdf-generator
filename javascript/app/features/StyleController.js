@@ -11,9 +11,10 @@ export default function StyleController(store) {
   const allFields = getAllFields()
   const styleModel = StyleModel(view, allFields)
 
-  const stylePreview = StylePreviewController()
+  const stylePreview = StylePreviewController(store)
 
-  styleModel.change(stylePreview.previewSpaceHandler)
+  store.subscribe(stylePreview.previewSpaceHandler)
+  // styleModel.change(stylePreview.previewSpaceHandler)
   styleModel.fields.change()
 
   _.forEach(allFields, function(field) {
