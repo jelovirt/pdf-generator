@@ -77,7 +77,7 @@ export default function StyleController(store) {
         $input.prop('checked', checked).toggleClass('active', checked)
         //.change()
       } else if($input.is(".editable-list")) {
-        $input.val(value)
+        $input.val(value).trigger('reset')
         //.change()
       } else if($input.is("[type=hidden]") || property === 'text-align') {
         // XXX use custom reset event instead of change because change is slow

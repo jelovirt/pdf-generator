@@ -89,12 +89,14 @@ export default function PdfPageController() {
       const l = $(":input[id='" + id + ".list']")
       const o = $(":input[id='" + id + ".other']")
       s.change(editableHandler)
+      s.on('reset', editableHandler)
       o.change(function() {
         editableOtherHandler(s, l, o)
       })
       l.change(function() {
         editableListHandler(s, l, o)
       })
+      s.trigger('reset')
     })
 
     function validateLength(event) {
