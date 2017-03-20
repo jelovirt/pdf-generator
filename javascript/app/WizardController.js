@@ -121,8 +121,7 @@ export default function WizardController(store, pages) {
     validatePage();
     setFragment();
     $(':input[name=json]').val(JSON.stringify(store.getState()))
-    console.log(JSON.parse($(':input[name=json]').val()))
-    // $('form#generate-plugin').submit();
+    $('form#generate-plugin').submit();
   }
 
   /**
