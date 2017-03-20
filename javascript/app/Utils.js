@@ -31,18 +31,18 @@ function setOk(input) {
 }
 
 function setMessage(input, level, text, tip) {
-  var msg = input.nextAll(".msg");
-  if(msg.length == 0) {
+  let msg = input.nextAll(".msg");
+  if(msg.length === 0) {
     msg = $("<span class='msg'></span>");
     input.after(msg);
   }
   msg.removeClass().addClass("msg " + level);
-  if(text != undefined) {
+  if(text !== undefined) {
     msg.html(text);
   } else {
     msg.empty();
   }
-  if(tip != undefined) {
+  if(tip !== undefined) {
     msg.attr("title", tip);
   } else {
     msg.removeAttr("title");

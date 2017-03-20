@@ -2,7 +2,7 @@ import $ from 'jquery'
 import Utils from './pdf-utils'
 
 export default function PdfPreviewController(store) {
-  var factor = 0.12
+  const factor = 0.12;
 
   $(":input[name='title-numbering']").change(titleNumberingHandler).change()
   $(":input[name='table-numbering']," +
@@ -32,13 +32,13 @@ export default function PdfPreviewController(store) {
      * For pages with fixed factor
      */
     function updatePageExample(page) {
-      var isOdd = page.is('.odd')
-      var dim = readPageDimensions()
+      const isOdd = page.is('.odd');
+      const dim = readPageDimensions();
 
       page.height(dim.pageHeight * factor)
       page.width(dim.pageWidth * factor)
 
-      var content = page.find('.example-page-body')
+      const content = page.find('.example-page-body');
       content.css('margin-top', (dim.marginTop * factor) + 'px')
       content.css(isOdd ? 'margin-right' : 'margin-left', (dim.marginOutside * factor) + 'px')
       content.css('margin-bottom', (dim.marginBottom * factor) + 'px')
@@ -46,11 +46,11 @@ export default function PdfPreviewController(store) {
       content.height((dim.pageHeight - dim.marginTop - dim.marginBottom) * factor)
       content.width((dim.pageWidth - dim.marginInside - dim.marginOutside) * factor)
 
-      var columns = Number($(":input[name='body-column-count']").val())
-      var columnWidth = Utils.toPt(Utils.getVal($(":input[name='column-gap']")))
-      var tr = page.find(".example-page-body tr")
-      var buf = $("<tr></tr>")
-      for (var i = 0; i < columns; i++) {
+      const columns = Number($(":input[name='body-column-count']").val());
+      const columnWidth = Utils.toPt(Utils.getVal($(":input[name='column-gap']")));
+      const tr = page.find(".example-page-body tr");
+      const buf = $("<tr></tr>");
+      for (let i = 0; i < columns; i++) {
         if(i !== 0) {
           buf.append($("<td class='gap'><span/></td>").width(columnWidth * factor))
         }
@@ -63,12 +63,12 @@ export default function PdfPreviewController(store) {
      * For pages with fixed width
      */
     function updateFixedPageExample(page) {
-      var dim = readPageDimensions()
+      const dim = readPageDimensions();
 
-      var blockWidth = 700
-      var factor = blockWidth / dim.pageWidth
+      const blockWidth = 700;
+      const factor = blockWidth / dim.pageWidth;
 
-      var content = page.find('.example-page-content')
+      const content = page.find('.example-page-content');
       content.css('margin-right', (dim.marginOutside * factor) + 'px')
       content.css('margin-left', (dim.marginInside * factor) + 'px')
     }
@@ -78,9 +78,9 @@ export default function PdfPreviewController(store) {
    * Return page dimensions in points.
    */
   function readPageDimensions() {
-    var res = new Dimensions()
+    const res = new Dimensions();
 
-    var pageSize = $(":input[name='page-size']").val().split(' ')
+    const pageSize = $(":input[name='page-size']").val().split(' ');
     if($(':input[name=orientation]').val() === 'landscape') {
       res.pageWidth = Utils.toPt(pageSize[1])
       res.pageHeight = Utils.toPt(pageSize[0])
@@ -97,9 +97,9 @@ export default function PdfPreviewController(store) {
   }
 
   function forcePageCountChangeHandler(event) {
-    var target = $(event.target)
+    const target = $(event.target);
     $(".force-page-count_example_auto, .force-page-count_example_odd, .force-page-count_example_even").each(function() {
-      var t = $(this)
+      const t = $(this);
       if(t.is('.force-page-count_example_' + target.val())) {
         t.show()
       } else {
@@ -109,8 +109,8 @@ export default function PdfPreviewController(store) {
   }
 
   function taskLabelHandler(event) {
-    var target = $(event.target)
-    var e = $('.example-task-label')
+    const target = $(event.target);
+    const e = $('.example-task-label');
     if(target.is(":checked")) {
       e.show()
     } else {
@@ -119,8 +119,8 @@ export default function PdfPreviewController(store) {
   }
 
   function mirrorPageHandler(event) {
-    var target = $(event.target)
-    var evenPage = $('.even')
+    const target = $(event.target);
+    const evenPage = $('.even');
     if(target.prop('checked')) {
       evenPage.show()
     } else {
@@ -130,21 +130,21 @@ export default function PdfPreviewController(store) {
   }
 
   function definitionListHandler(event) {
-    var target = $(event.target)
+    const target = $(event.target);
     $("*[id='dl.example.html'], *[id='dl.example.list'], *[id='dl.example.table']").hide()
     $("*[id='dl.example." + target.val() + "']").show()
   }
 
   function titleNumberingHandler(event) {
-    var target = $(event.target)
-    var preview = $("*[id='title-numbering.example']")
+    const target = $(event.target);
+    const preview = $("*[id='title-numbering.example']");
     preview.children().hide()
     $("*[id='title-numbering.example." + target.val() + "']").show()
   }
 
   function tableAndFigureNumberingHandler(event) {
-    var target = $(event.target)
-    var preview = $("*[id='" + target.attr('name') + ".example']")
+    const target = $(event.target);
+    const preview = $("*[id='" + target.attr('name') + ".example']");
     if(target.val() === 'none') {
       preview.hide()
     } else {
@@ -157,10 +157,10 @@ export default function PdfPreviewController(store) {
  * Page dimensions in points.
  */
 function Dimensions() {
-  var pageWidth
-  var pageHeight
-  var marginTop
-  var marginOutside
-  var marginBottom
-  var marginInside
+  let pageWidth;
+  let pageHeight;
+  let marginTop;
+  let marginOutside;
+  let marginBottom;
+  let marginInside;
 }

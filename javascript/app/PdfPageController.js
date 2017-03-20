@@ -110,10 +110,10 @@ export default function PdfPageController() {
     // Editable list methods
 
     function editableHandler(event) {
-      var target = $(event.target)
-      var id = target.attr('name') !== undefined ? target.attr('name') : target.attr('id')
-      var list = $(":input[id='" + id + ".list" + "']")
-      var other = $(":input[id='" + id + ".other" + "']")
+      const target = $(event.target);
+      const id = target.attr('name') !== undefined ? target.attr('name') : target.attr('id');
+      const list = $(":input[id='" + id + ".list" + "']");
+      const other = $(":input[id='" + id + ".other" + "']");
       other.val(target.val())
       if(list.find("option[value='" + other.val() + "']").length !== 0) { // same value in list
         other.hide().prop('disabled', true)
@@ -160,12 +160,12 @@ export default function PdfPageController() {
       }
 
       function addToValue(target, add) {
-        var val = target.val()
+        let val = target.val();
         if(val === "") {
           val = target.attr('placeholder')
         }
-        var num = Number(val.substring(0, val.length - 2))
-        var unit = val.substring(val.length - 2)
+        const num = Number(val.substring(0, val.length - 2));
+        const unit = val.substring(val.length - 2);
         target.val((num + add).toString() + unit)
       }
     }

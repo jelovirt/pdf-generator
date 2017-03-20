@@ -19,8 +19,8 @@ export default function WizardController(store, pages) {
     //$(this).attr("id", "p" + i)
   }).hide()
   $(".page:first").addClass("current").show();
-  var prev = $("<button type='button' class='btn btn-default' id='prev'>&lt; Previous</button>").click(prevHandler);
-  var next = $("<button type='button' class='btn btn-default' id='next'>Next &gt;</button>").click(nextHandler);
+  const prev = $("<button type='button' class='btn btn-default' id='prev'>&lt; Previous</button>").click(prevHandler);
+  const next = $("<button type='button' class='btn btn-default' id='next'>Next &gt;</button>").click(nextHandler);
   $("#generate").before(prev).before(" ").before(next).before(" ");
 
   $('#generate').attr('type', 'button').click(generateHandler)
@@ -33,14 +33,14 @@ export default function WizardController(store, pages) {
   var hash = location.hash;
 
   function validateForm(event) {
-    var target = event.target;
-    for (var i = 0; i < target.elements.length; i++) {
-      var elem = target.elements[i]
+    const target = event.target;
+    for (let i = 0; i < target.elements.length; i++) {
+      const elem = target.elements[i];
       if(elem.className === "required" && !elem.disabled) {
-        var value;
+        let value;
         switch (elem.nodeName.toLowerCase()) {
           case "select":
-            for (var k = 0; k < elem.options.length; k++) {
+            for (let k = 0; k < elem.options.length; k++) {
               if(elem.options[k].selected) {
                 value = elem.options[k].value;
                 break;
@@ -51,7 +51,7 @@ export default function WizardController(store, pages) {
             value = elem.value;
         }
         if(value === "") {
-          var label = getLabel(elem)
+          const label = getLabel(elem);
           window.alert("Required field " + label.toLowerCase() + " has no value")
           event.stopPropagation()
           event.preventDefault()
@@ -63,8 +63,8 @@ export default function WizardController(store, pages) {
   }
 
   function validatePage() {
-    var elements = $(".current .required:enabled");
-    var valid = true;
+    const elements = $(".current .required:enabled");
+    let valid = true;
     if(elements.filter(":radio, :checkbox").length > 0 && elements.filter(":checked").length === 0) {
       valid = false;
     }
@@ -72,8 +72,8 @@ export default function WizardController(store, pages) {
       valid = false;
     }
     elements.filter(":text").each(function(i) {
-      var elem = $(this);
-      var value = elem.val();
+      const elem = $(this);
+      const value = elem.val();
       if(value === "") {
         valid = false;
       }
@@ -115,7 +115,7 @@ export default function WizardController(store, pages) {
   }
 
   function generateHandler(event) {
-    var n = $(".current").nextAll(".page:not(.disabled):first");
+    const n = $(".current").nextAll(".page:not(.disabled):first");
     $(".current").removeClass("current").hide();
     n.addClass("current").show();
     validatePage();
@@ -170,7 +170,7 @@ export default function WizardController(store, pages) {
    * Previous page button handler.
    */
   function prevHandler(event) {
-    var p = $(".current").prevAll(".page:not(.disabled):first");
+    const p = $(".current").prevAll(".page:not(.disabled):first");
     $(".current").removeClass("current").hide();
     p.addClass("current").show();
     validatePage();
@@ -181,7 +181,7 @@ export default function WizardController(store, pages) {
    * Next page button handler.
    */
   function nextHandler(event) {
-    var n = $(".current").nextAll(".page:not(.disabled):first");
+    const n = $(".current").nextAll(".page:not(.disabled):first");
     $(".current").removeClass("current").hide();
     n.addClass("current").show();
     validatePage();
@@ -190,8 +190,7 @@ export default function WizardController(store, pages) {
 
   /** Set location fragment to current page. */
   function setFragment(i) {
-    let hash = $(".current").attr("id");
-    location.hash = hash;
+    location.hash = $(".current").attr("id");
   }
 
   /** Check if location fragment has changed and change page accordingly. */

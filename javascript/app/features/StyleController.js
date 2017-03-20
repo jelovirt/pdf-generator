@@ -17,7 +17,7 @@ export default function StyleController(store) {
     view.$styleForm.find(":input[id='" + field + "']").change(styleEditorHandler)
   })
 
-  var pdfStyleSelectorCurrent
+  let pdfStyleSelectorCurrent;
   view.$styleSelector.change(styleHandler).val('body').change()
 
   return {
@@ -37,13 +37,13 @@ export default function StyleController(store) {
    * @param event UI change event
    */
   function styleHandler(event) {
-    var target = $(event.target)
-    var style = target.val()
+    const target = $(event.target);
+    const style = target.val();
     view.$styleForm.find('[data-style]').each(function() {
-      var f = $(this)
+      const f = $(this);
       f.toggle($(this).attr('data-style').split(" ").indexOf(style) !== -1)
     })
-    var type = target.find(":selected").parent("optgroup.block")
+    const type = target.find(":selected").parent("optgroup.block");
     const $blocks = view.$styleForm.find(".style-selector-block")
     if(type.length === 0) {
       view.$styleForm.find(".style-selector-block").hide().find(":input").attr('disabled', true)
@@ -60,7 +60,7 @@ export default function StyleController(store) {
    */
   function readFromModel(type) {
     const currentStyle = store.getState().configuration.style[type]
-    for (var i = 0; i < allFields.length; i++) {
+    for (let i = 0; i < allFields.length; i++) {
       const property = allFields[i]
       let value = currentStyle[property]
       // // if no value, inherit from body
@@ -110,7 +110,7 @@ export default function StyleController(store) {
 
     const currentStyle = store.getState().configuration.style
     const oldValue = currentStyle[pdfStyleSelectorCurrent][field]
-    var newValue
+    let newValue;
     if(input.is(":checkbox")) {
       if(input.is(":checked")) {
         newValue = input.val()

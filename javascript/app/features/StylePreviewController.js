@@ -8,17 +8,17 @@ const f = 0.9
 export default function StylePreviewController(store) {
   const $element = $(template)
 
-  // styleModel.change.subscribe(previewSpaceHandler)
   return {
     $element: $element,
     previewSpaceHandler: previewSpaceHandler
   }
 
   function previewSpaceHandler() {
+    // TODO cache previous state, diff with new state, only update changed properties
     _.forEach(store.getState().configuration.style, (elementValue, type) => {
       _.forEach(elementValue, (v, field) => {
-        var isLength = false
-        var property
+        let isLength = false;
+        let property;
         switch (field) {
           case 'space-before':
             property = 'margin-top'
@@ -85,7 +85,7 @@ export default function StylePreviewController(store) {
             isLength = false
             break;
           default:
-            var all = $element.find("[data-field='" + field + "'][data-style='" + type + "']")
+            const all = $element.find("[data-field='" + field + "'][data-style='" + type + "']");
             if(all.length) {
               if(all.filter("[data-value]").length) {
                 all.hide()

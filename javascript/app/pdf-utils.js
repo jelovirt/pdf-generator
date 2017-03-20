@@ -20,8 +20,8 @@ function toMm(val) {
   if(val === undefined) {
     return undefined;
   }
-  var unit = val.substring(val.length - 2);
-  var value = stripUnit(val);
+  const unit = val.substring(val.length - 2);
+  const value = stripUnit(val);
   if(unit === "cm") {
     return value * 10;
   } else if(unit === "in") {
@@ -37,7 +37,7 @@ function toMm(val) {
   }
 
   function stripUnit(val) {
-    return new Number(val.substring(0, val.length - 2));
+    return Number(val.substring(0, val.length - 2));
   }
 }
 
@@ -51,8 +51,8 @@ function toPt(val) {
   if(val === undefined) {
     return undefined;
   }
-  var unit = val.substring(val.length - 2);
-  var value = val.substring(0, val.length - 2);
+  const unit = val.substring(val.length - 2);
+  const value = Number(val.substring(0, val.length - 2));
   if(unit === "cm") {
     return value / 2.54 * 72;
   } else if(unit === "mm") {
@@ -62,8 +62,8 @@ function toPt(val) {
   } else if(unit === "pc") {
     return value * 12;
   } else if(unit === "em") {
-    var val = $(":input[name='font-size.body']").val();
-    return val.substring(0, val.length - 2) * value;
+    let v = $(":input[name='font-size.body']").val();
+    return v.substring(0, v.length - 2) * value;
   } else if(unit === "pt") {
     return value;
   } else {
