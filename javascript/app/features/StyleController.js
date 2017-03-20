@@ -1,7 +1,6 @@
 import $ from 'jquery'
 import _ from 'lodash'
 import StyleView from './StyleView'
-import StyleModel from './StyleModel'
 import StylePreviewController from './StylePreviewController'
 import styles from '../../lib/styles'
 import {setAction} from '../Utils'
@@ -9,13 +8,10 @@ import {setAction} from '../Utils'
 export default function StyleController(store) {
   const view = StyleView()
   const allFields = getAllFields()
-  const styleModel = StyleModel(view, allFields)
 
   const stylePreview = StylePreviewController(store)
 
   store.subscribe(stylePreview.previewSpaceHandler)
-  // styleModel.change(stylePreview.previewSpaceHandler)
-  styleModel.fields.change()
 
   _.forEach(allFields, function(field) {
     view.$styleForm.find(":input[id='" + field + "']").change(styleEditorHandler)
@@ -55,11 +51,42 @@ export default function StyleController(store) {
       view.$styleForm.find(".style-selector-block").show().find(":input").removeAttr('disabled')
     }
     pdfStyleSelectorCurrent = target.val()
-    styleModel.readFromModel(target.val())
+    readFromModel(pdfStyleSelectorCurrent)
+  }
+
+  /**
+   * Read fields from store to UI.
+   * @param type
+   */
+  function readFromModel(type) {
+    const currentStyle = store.getState().configuration.style[type]
+    for (var i = 0; i < allFields.length; i++) {
+      const property = allFields[i]
+      let value = currentStyle[property]
+      // // if no value, inherit from body
+      // if((property.data('inherit') !== undefined || property.data('inherit') !== null) &&
+      //   (property.val() === undefined || property.val() === null || property.val() === "")) {
+      //   property = getField(field, 'body')
+      // }
+      const input = view.$styleForm.find(":input[id='" + property + "']")
+      if(property === 'border-before-style') {
+        view.$styleForm.find(":input[id='border']").val(value === 'solid' ? 'all' : 'none')
+        //.change()
+      } else if(input.is(":checkbox")) {
+        input.prop('checked', value === input.val())
+        //.change()
+      } else if(input.is(".editable-list")) {
+        input.val(value)
+        //.change()
+      } else {
+        input.val(value)
+        //.change()
+      }
+    }
   }
 
   function getValue(element, property, value) {
-    if (!(styles.styles[element] && styles.styles[element][property])) {
+    if(!(styles.styles[element] && styles.styles[element][property])) {
       return value
     }
     switch (typeof styles.styles[element][property].default) {
@@ -114,8 +141,6 @@ export default function StyleController(store) {
       }
     })
     store.dispatch(setAction(action))
-
-    styleModel.writeFieldToModel(field, pdfStyleSelectorCurrent)
   }
 
 }
