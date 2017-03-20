@@ -68,18 +68,23 @@ export default function StyleController(store) {
       //   (property.val() === undefined || property.val() === null || property.val() === "")) {
       //   property = getField(field, 'body')
       // }
-      const input = view.$styleForm.find(":input[id='" + property + "']")
+      const $input = view.$styleForm.find(":input[id='" + property + "']")
       if(property === 'border-before-style') {
         view.$styleForm.find(":input[id='border']").val(value === 'solid' ? 'all' : 'none')
         //.change()
-      } else if(input.is(":checkbox")) {
-        input.prop('checked', value === input.val())
+      } else if($input.is(":checkbox")) {
+        const checked = value === $input.val()
+        $input.prop('checked', checked).toggleClass('active', checked)
         //.change()
-      } else if(input.is(".editable-list")) {
-        input.val(value)
+      } else if($input.is(".editable-list")) {
+        $input.val(value)
+        //.change()
+      } else if($input.is("[type=hidden]") || property === 'text-align') {
+        // XXX use custom reset event instead of change because change is slow
+        $input.val(value).trigger('reset')
         //.change()
       } else {
-        input.val(value)
+        $input.val(value)
         //.change()
       }
     }

@@ -32,11 +32,14 @@ export default function StyleView() {
   function initAlign() {
     const store = $styleForm.find('#text-align')
 
-    store.change((event) => {
+    function setState() {
       const value = store.val()
       $styleForm.find('.btn-text-align').removeClass('active')
         .filter('[value=' + value + ']').addClass('active')
-    })
+    }
+
+    store.change(setState)
+    store.on('reset', setState)
     $styleForm.find('.btn-text-align').click((event) => {
       const $ui = $(event.target)
       store.val($ui.val()).trigger('change')
@@ -47,13 +50,17 @@ export default function StyleView() {
     const store = $styleForm.find('#' + type)
     const button = $styleForm.find('.btn-' + type)
 
-    store.change(() => {
+    function setState() {
       const checked = store.val() === on
       button.toggleClass('active', checked)
-    })
+    }
+
+    store.change(setState)
+    store.on('reset', setState)
     button.click(() => {
       const checked = store.val() === off
       store.val(checked ? on : off).trigger('change')
     })
+
   }
 }

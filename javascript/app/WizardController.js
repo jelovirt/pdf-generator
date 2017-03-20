@@ -120,50 +120,9 @@ export default function WizardController(store, pages) {
     n.addClass("current").show();
     validatePage();
     setFragment();
-    // FIXME
-    readArguments();
     $(':input[name=json]').val(JSON.stringify(store.getState()))
-    $('form#generate-plugin').submit();
-  }
-
-  function readArguments() {
-    store.getState().configuration.style = {}
-    const types = _(styles.styles).map((f, k) => {
-      return k
-    }).uniq().value()
-    const properties = _(styles.styles).map((f, k) => {
-      return _.map(f, (v, p) => {
-        return p
-      })
-    }).flatten().uniq().value()
-    types.forEach((__type) => {
-      let group = {}
-      properties.forEach((__property) => {
-        let v = $(`:input[name="${__property}.${__type}"]`).val()
-        if(!!v) {
-          switch (typeof styles.styles[__type][__property].default) {
-            case 'boolean':
-              group[__property] = (v === 'true')
-              break
-            case 'number':
-              group[__property] = Number(v)
-              break
-            default:
-              group[__property] = v
-          }
-        }
-      })
-
-      const action = {
-        configuration: {
-          style: {}
-        }
-      }
-      action.configuration.style[__type] = group
-      store.dispatch(setAction(action))
-    })
-
-    return store.getState()
+    console.log(JSON.parse($(':input[name=json]').val()))
+    // $('form#generate-plugin').submit();
   }
 
   /**
