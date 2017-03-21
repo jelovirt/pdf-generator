@@ -8,14 +8,14 @@ export default function CoverHandler(store) {
   $element.find(':input[name=cover_image_metadata]').change((event) => {
     store.dispatch(setAction({
       configuration: {
-        cover_image_metadata: $(event.target).val() || null
+        cover_image_metadata: $(event.target).val() || undefined
       }
     }))
   }).change()
   $element.find(':input[name=cover_image_topic]').change((event) => {
     store.dispatch(setAction({
       configuration: {
-        cover_image_topic: $(event.target).val() || null
+        cover_image_topic: $(event.target).val() || undefined
       }
     }))
   }).change()

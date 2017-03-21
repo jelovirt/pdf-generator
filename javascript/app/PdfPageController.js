@@ -33,7 +33,7 @@ function getInitStyle() {
       return getDefault(v.inherit, property)
     } else {
       // throw new Error(`Unable to find default for ${field}.${property}`)
-      return null
+      return undefined
     }
   }
 }

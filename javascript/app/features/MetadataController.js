@@ -36,7 +36,7 @@ export default function MetadataController(store) {
 
   function pluginVersionChangeHandler(event) {
     store.dispatch(setAction({
-      plugin_version: $(event.target).val() || null
+      plugin_version: $(event.target).val() || undefined
     }))
   }
 }
