@@ -34,8 +34,10 @@ export default function StyleView() {
 
     function setState() {
       const value = store.val()
-      $styleForm.find('.btn-text-align').removeClass('active')
-        .filter('[value=' + value + ']').addClass('active')
+      if (!!value) {
+        $styleForm.find('.btn-text-align').removeClass('active')
+          .filter('[value=' + value + ']').addClass('active')
+      }
     }
 
     store.change(setState)
