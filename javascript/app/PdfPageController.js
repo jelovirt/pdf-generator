@@ -38,10 +38,8 @@ function getInitStyle() {
   }
 }
 
-export default function PdfPageController() {
-  const model = createStore((store, action) => {
-    return _.merge(store, action.value)
-  }, {
+function getInitStore() {
+  return {
     configuration: {
       page: {},
       header: {
@@ -54,7 +52,16 @@ export default function PdfPageController() {
       },
       style: getInitStyle()
     }
-  })
+  }
+}
+
+function reduce(store, action) {
+  return _.merge(store, action.value)
+}
+
+export default function PdfPageController() {
+  const model = createStore(reduce, getInitStore())
+  window.store = model
 
   const view = PdfPageView()
   $('main').html(view.$element)
