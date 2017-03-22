@@ -1264,7 +1264,8 @@ class Generator {
       }
     }
 
-    const list_raw = `
+    if(stylesheet === "lists-attr" || !stylesheet) {
+      const list_raw = `
   <xsl:attribute-set name="ol">
     <xsl:attribute name="provisional-distance-between-starts">
       <xsl:call-template name="e:list-label-length"/>
@@ -1298,7 +1299,6 @@ class Generator {
   </xsl:template>
 `
 
-    if(stylesheet === "lists-attr" || !stylesheet) {
       root.append(ET.Comment("list"))
       utils.copy_xml(root, list_raw)
     }
