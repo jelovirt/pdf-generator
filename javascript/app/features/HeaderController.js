@@ -1,8 +1,9 @@
 import $ from 'jquery'
 import template from '../../lib/header.html'
 import dragula from 'dragula'
+import {setAction} from '../Utils'
 
-export default function HeaderController(model) {
+export default function HeaderController(store) {
   const $element = $(template)
   const root = $element.get(0)
 
@@ -23,14 +24,18 @@ export default function HeaderController(model) {
       label.innerText = '\u200B' // \u200B
       label.focus()
     }
-    model.configuration.header = {
-      odd: readTags($element.find('#odd-header')),
-      even: readTags($element.find('#even-header'))
-    }
-    model.configuration.footer = {
-      odd: readTags($element.find('#odd-footer')),
-      even: readTags($element.find('#even-footer'))
-    }
+    store.dispatch(setAction({
+      configuration: {
+        header: {
+          odd: readTags($element.find('#odd-header')),
+          even: readTags($element.find('#even-header'))
+        },
+        footer: {
+          odd: readTags($element.find('#odd-footer')),
+          even: readTags($element.find('#even-footer'))
+        }
+      }
+    }))
   })
 
   return {

@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import _ from 'lodash'
 import WizardController from './WizardController'
 import MetadataController from './features/MetadataController'
 import HeaderController from './features/HeaderController'
@@ -12,9 +13,33 @@ import PdfPageView from './PdfPageView'
 import PdfPreviewController from './PdfPreviewController'
 import PdfUtils from './pdf-utils'
 import Utils from './Utils'
+import {createStore} from 'redux'
+import styles from '../lib/styles'
 
-export default function PdfPageController() {
-  const model = {
+function getInitStyle() {
+  return _(styles.styles)
+    .mapValues((elementValue, element) => {
+      return _(elementValue).mapValues((propertyValue, property) => {
+        return getDefault(element, property)
+      }).value()
+    })
+    .value()
+
+  function getDefault(field, property) {
+    const v = styles.styles[field][property]
+    if(!!v.default) {
+      return v.default
+    } else if(!!v.inherit) {
+      return getDefault(v.inherit, property)
+    } else {
+      // throw new Error(`Unable to find default for ${field}.${property}`)
+      return undefined
+    }
+  }
+}
+
+function getInitStore() {
+  return {
     configuration: {
       page: {},
       header: {
@@ -24,9 +49,19 @@ export default function PdfPageController() {
       footer: {
         odd: [],
         even: []
-      }
+      },
+      style: getInitStyle()
     }
   }
+}
+
+function reduce(store, action) {
+  return _.merge(store, action.value)
+}
+
+export default function PdfPageController() {
+  const model = createStore(reduce, getInitStore())
+  window.store = model
 
   const view = PdfPageView()
   $('main').html(view.$element)
@@ -60,12 +95,14 @@ export default function PdfPageController() {
       const l = $(":input[id='" + id + ".list']")
       const o = $(":input[id='" + id + ".other']")
       s.change(editableHandler)
+      s.on('reset', editableHandler)
       o.change(function() {
         editableOtherHandler(s, l, o)
       })
       l.change(function() {
         editableListHandler(s, l, o)
       })
+      s.trigger('reset')
     })
 
     function validateLength(event) {
@@ -81,10 +118,10 @@ export default function PdfPageController() {
     // Editable list methods
 
     function editableHandler(event) {
-      var target = $(event.target)
-      var id = target.attr('name') !== undefined ? target.attr('name') : target.attr('id')
-      var list = $(":input[id='" + id + ".list" + "']")
-      var other = $(":input[id='" + id + ".other" + "']")
+      const target = $(event.target);
+      const id = target.attr('name') !== undefined ? target.attr('name') : target.attr('id');
+      const list = $(":input[id='" + id + ".list" + "']");
+      const other = $(":input[id='" + id + ".other" + "']");
       other.val(target.val())
       if(list.find("option[value='" + other.val() + "']").length !== 0) { // same value in list
         other.hide().prop('disabled', true)
@@ -131,12 +168,12 @@ export default function PdfPageController() {
       }
 
       function addToValue(target, add) {
-        var val = target.val()
+        let val = target.val();
         if(val === "") {
           val = target.attr('placeholder')
         }
-        var num = Number(val.substring(0, val.length - 2))
-        var unit = val.substring(val.length - 2)
+        const num = Number(val.substring(0, val.length - 2));
+        const unit = val.substring(val.length - 2);
         target.val((num + add).toString() + unit)
       }
     }

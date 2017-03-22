@@ -18,32 +18,32 @@ class Generator {
     this.variable_languages = ["de", "en", "es", "fi", "fr", "he", "it", "ja", "nl", "ro", "ru", "sv", "zh_CN"]
 
     this.ot_version = new Version("2.4")
-    this.plugin_name = null
-    this.plugin_version = null
+    this.plugin_name = undefined
+    this.plugin_version = undefined
     this.style = {
       ol: true
     }
     this.page = {}
-    this.force_page_count = null
-    this.chapter_layout = null
-    this.body_column_count = null
-    this.index_column_count = null
-    this.bookmark_style = null
+    this.force_page_count = undefined
+    this.chapter_layout = undefined
+    this.body_column_count = undefined
+    this.index_column_count = undefined
+    this.bookmark_style = undefined
     this.toc_maximum_level = 4
     this.task_label = false
-    this.include_related_links = null
-    this.column_gap = null
+    this.include_related_links = undefined
+    this.column_gap = undefined
     this.mirror_page_margins = false
     this.table_continued = false
     this.formatter = "ah"
     this.override_shell = false
-    this.cover_image = null
-    this.cover_image_name = null
-    this.cover_image_metadata = null
-    this.cover_image_topic = null
+    this.cover_image = undefined
+    this.cover_image_name = undefined
+    this.cover_image_metadata = undefined
+    this.cover_image_topic = undefined
     this.header = {}
     this.footer = {}
-    this.page_number = null
+    this.page_number = undefined
     this.options = {}
 
     ET.register_namespace("xsl", "http://www.w3.org/1999/XSL/Transform")
@@ -58,9 +58,9 @@ class Generator {
 
   default_style(type, property) {
     if(_.has(styles, [type, property])) {
-      return styles[type][property].default || null
+      return styles[type][property].default || undefined
     }
-    return null
+    return undefined
   }
 
 //    function get_ns():
@@ -792,7 +792,6 @@ class Generator {
       }
       // caption numbering
       const figCaptionNumber = _.get(this.style.fig, "caption-number")
-      console.log(this.style.fig['caption-number'])
       switch (figCaptionNumber) {
         //case "topic":
         //  utils.copy_xml(root, fig_title_number_topic)

@@ -99,30 +99,26 @@ label.required:after {
     font-weight: bold;
 }
 */
-th {
-  text-align: left;
-  padding-right: 10px;
-  vertical-align: top;
-  font-weight: bold;
-}
-
-table table th {
-  font-weight: normal;
-  padding-left: 10px;
-}
-
-td {
-  text-align: left;
-  vertical-align: top;
-}
 
 table {
   border-collapse: collapse;
-}
 
-table table td,
-table table tr {
-  padding: 1px 0;
+  th {
+    text-align: left;
+    padding-right: 10px;
+    vertical-align: top;
+    font-weight: bold;
+  }
+
+  table {
+    td, tr {
+      padding: 1px 0;
+    }
+    th {
+      font-weight: normal;
+      padding-left: 10px;
+    }
+  }
 }
 
 .action {
