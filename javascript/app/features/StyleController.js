@@ -74,7 +74,7 @@ export default function StyleController(store) {
         view.$styleForm.find(":input[id='border']").val(value === 'solid' ? 'all' : 'none')
         //.change()
       } else if($input.is(":checkbox")) {
-        const checked = value === $input.val()
+        const checked = String(value) === $input.val()
         $input.prop('checked', checked).toggleClass('active', checked)
         //.change()
       } else if($input.is(".editable-list")) {
