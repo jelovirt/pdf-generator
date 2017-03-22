@@ -334,10 +334,10 @@ def main():
 						"padding-bottom": "0pt",
 						"padding-left": "0pt",
 						"end-indent": "0pt",
-						"ul-1": u"\u2022",
-						"ul-2": u"\u2022",
-						"ul-3": u"\u2022",
-						"ul-4": u"\u2022"
+						"ul-1": "-",
+						"ul-2": "-",
+						"ul-3": "-",
+						"ul-4": "-"
 					 },
 					"table": {
 						"font-family": "Times+New+Roman",
@@ -557,7 +557,7 @@ def main():
 		print e
 		help()
 		exit()
-	#function(server, handler, params, url)
+	function(server, handler, params, url)
 
 
 def help():
@@ -567,8 +567,8 @@ Options:
   -o DIR	    output files to plug-ins directory
   -h, --help  print help
 Environments:
-  node    localhost
-  heroku  pdf-generator.elovirta.com
+  localhost    localhost
+  production  pdf-generator.elovirta.com
 Targets:
   pdf
 Version:
@@ -597,13 +597,21 @@ def get(server, handler, params, url):
 
 
 def post(server, handler, params, url):
+	for k, v in params.iteritems():
+		params[k] = v.encode("UTF-8")
 	conn = httplib.HTTPConnection(server[0], server[1])
 	# conn.set_debuglevel(1)
-	conn.request("POST", url, json.dumps(params), {"Content-Type": "application/json"})
+	#conn.request("POST", url, json.dumps(params), {"Content-Type": "application/json"})
+	conn.request("POST", url, urllib.urlencode(params), {"Content-Type": "application/x-www-form-urlencoded"})
 	response = conn.getresponse()
-	with zipfile.ZipFile(StringIO(response.read()), "r") as zip:
-		handler(zip)
-	conn.close()
+	data = response.read()
+	try:
+		with zipfile.ZipFile(StringIO(data), "r") as zip:
+			handler(zip)
+	except:
+		print(data)
+	finally:
+		conn.close()
 
 
 def list(zip):
@@ -614,7 +622,7 @@ def list(zip):
 
 def store(zip, dir):
 	for n in zip.namelist():
-		# print bcolors.HEADER + os.path.join(dir, n) + ":" + bcolors.ENDC
+		#print bcolors.HEADER + os.path.join(dir, n) + ":" + bcolors.ENDC
 		src = zip.open(n)
 		f = os.path.join(dir, n)
 		if not os.path.exists(os.path.dirname(f)):
