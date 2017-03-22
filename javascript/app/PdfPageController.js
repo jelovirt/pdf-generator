@@ -40,7 +40,6 @@ function getInitStyle() {
 
 export default function PdfPageController() {
   const model = createStore((store, action) => {
-    // console.log(action)
     return _.merge(store, action.value)
   }, {
     configuration: {

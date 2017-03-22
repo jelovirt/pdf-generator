@@ -792,7 +792,6 @@ class Generator {
       }
       // caption numbering
       const figCaptionNumber = _.get(this.style.fig, "caption-number")
-      console.log(this.style.fig['caption-number'])
       switch (figCaptionNumber) {
         //case "topic":
         //  utils.copy_xml(root, fig_title_number_topic)
