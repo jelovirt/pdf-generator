@@ -831,7 +831,7 @@ class Generator {
         })
       }
       // tm
-      if(_.has(this.style['tm'], 'symbol-scope') && this.style['tm']['symbol-scope'] !== 'always') {
+      if(_.has(this.style.tm, 'symbol-scope') && this.style.tm['symbol-scope'] !== 'always') {
         const tm_chapter_raw = `
           <xsl:function name="e:tm-value" as="xs:string">
             <xsl:param name="node" as="element()"/>
@@ -865,14 +865,15 @@ class Generator {
           </xsl:template>
           `
         root.append(ET.Comment("tm"))
-        const symbolScope = this.style['tm']['symbol-scope']
+        const symbolScope = this.style.tm['symbol-scope']
         if(symbolScope === 'chapter') {
           utils.copy_xml(root, tm_chapter_raw)
         } else if(symbolScope === 'never') {
           utils.copy_xml(root, tm_never_raw)
-        } else if(symbolScope === 'always') {
-          // NOOP
         }
+        // else if(symbolScope === 'always') {
+        //   // NOOP
+        // }
       }
     }
 
@@ -1019,7 +1020,7 @@ class Generator {
     }
 
     if(stylesheet === 'pr-domain' || !stylesheet) {
-      if(_.has(this.style['codeblock'], 'line-numbering') && this.style['codeblock']['line-numbering']) {
+      if(_.has(this.style.codeblock, 'line-numbering') && this.style.codeblock['line-numbering']) {
         utils.copy_xml(root, `
           <xsl:template match="node()" mode="codeblock.generate-line-number" as="xs:boolean">
             <xsl:sequence select="true()"/>
@@ -1120,7 +1121,7 @@ class Generator {
       this.attribute_set(root, "example", "example")
       // note
       this.attribute_set(root, "note", "note__table")
-      if(!(_.has(this.style.note, "icon") && this.style.note["icon"] === "icon")) {
+      if(!(_.has(this.style.note, "icon") && this.style.note.icon === "icon")) {
         const note_text = ET.SubElement(root, xsl('attribute-set'), {name: "notetextcolumn"})
         ET.SubElement(note_text, xsl('attribute'), {name: "column-number"}).text = "1"
       }
@@ -1187,16 +1188,16 @@ class Generator {
           <xsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>
           <xsl:choose>
             <xsl:when test="$level eq 1">
-              <xsl:value-of select="concat('${this.style['toc_1']['start-indent']} + ', $toc.text-indent)"/>
+              <xsl:value-of select="concat('${this.style.toc_1['start-indent']} + ', $toc.text-indent)"/>
             </xsl:when>
             <xsl:when test="$level eq 2">
-              <xsl:value-of select="concat('${this.style['toc_2']['start-indent']} + ', $toc.text-indent)"/>
+              <xsl:value-of select="concat('${this.style.toc_2['start-indent']} + ', $toc.text-indent)"/>
             </xsl:when>
             <xsl:when test="$level eq 3">
-              <xsl:value-of select="concat('${this.style['toc_3']['start-indent']} + ', $toc.text-indent)"/>
+              <xsl:value-of select="concat('${this.style.toc_3['start-indent']} + ', $toc.text-indent)"/>
             </xsl:when>
             <xsl:when test="$level eq 4">
-              <xsl:value-of select="concat('${this.style['toc_4']['start-indent']} + ', $toc.text-indent)"/>
+              <xsl:value-of select="concat('${this.style.toc_4['start-indent']} + ', $toc.text-indent)"/>
             </xsl:when>
           </xsl:choose>
         </xsl:attribute>
@@ -1204,7 +1205,7 @@ class Generator {
 
       <xsl:attribute-set name="__toc__indent__booklist">
         <xsl:attribute name="start-indent">
-          <xsl:value-of select="concat('${this.style['toc_1']['start-indent']} + ', $toc.text-indent)"/>
+          <xsl:value-of select="concat('${this.style.toc_1['start-indent']} + ', $toc.text-indent)"/>
         </xsl:attribute>
       </xsl:attribute-set>`
 
