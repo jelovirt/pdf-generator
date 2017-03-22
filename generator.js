@@ -416,6 +416,21 @@ class Generator {
     <xsl:value-of select="' '"/>
     <xsl:apply-templates/>
   </xsl:template>
+  
+  <xsl:template name="getNavTitle">
+    <xsl:variable name="topicref" select="key('map-id', @id)[1]"/>
+    <xsl:choose>
+      <xsl:when test="$topicref/@locktitle = 'yes' and $topicref/*[contains(@class, ' map/topicmeta ')]/*[contains(@class, ' topic/navtitle ')]">
+        <xsl:apply-templates select="$topicref/*[contains(@class, ' map/topicmeta ')]/*[contains(@class, ' topic/navtitle ')]/node()"/>
+      </xsl:when>
+      <xsl:when test="$topicref/@locktitle = 'yes' and $topicref/@navtitle">
+        <xsl:value-of select="$topicref/@navtitle"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="*[contains(@class,' topic/title ')]/node()"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 `
 
     const numberless_chapter_raw = `
