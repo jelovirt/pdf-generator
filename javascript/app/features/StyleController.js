@@ -16,6 +16,7 @@ export default function StyleController(store) {
   _.forEach(allFields, function(field) {
     view.$styleForm.find(":input[id='" + field + "']").change(styleEditorHandler)
   })
+  view.$styleForm.find(":input[id='border']").change(borderEditorHandler)
 
   let pdfStyleSelectorCurrent;
   view.$styleSelector.change(styleHandler).val('body').change()
@@ -145,6 +146,42 @@ export default function StyleController(store) {
         action.configuration.style[element][field] = newValue
       }
     })
+    store.dispatch(setAction(action))
+  }
+
+  function borderEditorHandler(event) {
+    const value = $(event.target).val()
+
+    const props = {}
+    const directions = ['before', 'end', 'after', 'start']
+    if (value === 'none') {
+      directions.forEach((direction) => {
+        props[`border-${direction}-style`] = 'none'
+      })
+      directions.forEach((direction) => {
+        props[`border-${direction}-width`] = undefined
+      })
+      directions.forEach((direction) => {
+        props[`border-${direction}-color`] = undefined
+      })
+    } else {
+      directions.forEach((direction) => {
+        props[`border-${direction}-style`] = 'solid'
+      })
+      directions.forEach((direction) => {
+        props[`border-${direction}-width`] = '1pt'
+      })
+      directions.forEach((direction) => {
+        props[`border-${direction}-color`] = 'black'
+      })
+    }
+    const action = {
+      configuration: {
+        style: {}
+      }
+    }
+    action.configuration.style[pdfStyleSelectorCurrent] = props
+
     store.dispatch(setAction(action))
   }
 
