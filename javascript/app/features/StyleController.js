@@ -9,17 +9,16 @@ export default function StyleController(store) {
   const view = StyleView()
   const allFields = getAllFields()
 
-  const stylePreview = StylePreviewController(store)
-
-  store.subscribe(stylePreview.previewSpaceHandler)
-
   _.forEach(allFields, function(field) {
     view.$styleForm.find(":input[id='" + field + "']").change(styleEditorHandler)
   })
   view.$styleForm.find(":input[id='border']").change(borderEditorHandler)
 
-  let pdfStyleSelectorCurrent;
-  view.$styleSelector.change(styleHandler).val('body').change()
+  let pdfStyleSelectorCurrent = 'body'
+  view.$styleSelector.change(styleHandler).val(pdfStyleSelectorCurrent).change()
+
+  const stylePreview = StylePreviewController(store)
+  store.subscribe(stylePreview.previewSpaceHandler)
 
   return {
     $element: view.$element.add(stylePreview.$element)
