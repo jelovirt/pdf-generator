@@ -578,22 +578,22 @@ Version:
 """)
 
 
-def get(server, handler, params, url):
-	for k, v in params.iteritems():
-		params[k] = v.encode("UTF-8")
-	conn = httplib.HTTPConnection(server[0], server[1])
-	#conn.set_debuglevel(1)
-	#conn.request("POST", url, urllib.urlencode(params))
-	conn.request("POST", url, urllib.urlencode(params), {"Content-Type": "application/x-www-form-urlencoded"})
-	response = conn.getresponse()
-	data = response.read()
-	try:
-		with zipfile.ZipFile(StringIO(data), "r") as zip:
-			handler(zip)
-	except:
-		print(data)
-	finally:
-		conn.close()
+#def get(server, handler, params, url):
+#	for k, v in params.iteritems():
+#		params[k] = v.encode("UTF-8")
+#	conn = httplib.HTTPConnection(server[0], server[1])
+#	#conn.set_debuglevel(1)
+#	#conn.request("POST", url, urllib.urlencode(params))
+#	conn.request("POST", url, urllib.urlencode(params), {"Content-Type": "application/x-www-form-urlencoded"})
+#	response = conn.getresponse()
+#	data = response.read()
+#	try:
+#		with zipfile.ZipFile(StringIO(data), "r") as zip:
+#			handler(zip)
+#	except:
+#		print(data)
+#	finally:
+#		conn.close()
 
 
 def post(server, handler, params, url):
