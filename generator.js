@@ -201,6 +201,7 @@ class Generator {
     }
     if(stylesheet === "commons" || !stylesheet) {
       require('./lib/commons').xsl(root, this)
+      require('./lib/topic').xsl(root, this)
     }
     if(stylesheet === "links" || !stylesheet) {
       require('./lib/links').xsl(root, this)
@@ -265,6 +266,7 @@ class Generator {
 
     if(stylesheet === "commons-attr" || !stylesheet) {
       require('./lib/commons').attr(root, this)
+      require('./lib/topic').attr(root, this)
     }
     if(stylesheet === "tables-attr" || !stylesheet) {
       require('./lib/tables').attr(root, this)
