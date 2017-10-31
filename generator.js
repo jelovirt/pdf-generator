@@ -318,14 +318,15 @@ class Generator {
 
     // custom XSLT
     if(this.override_shell) {
-      ["front-matter",
+      const files = ["front-matter",
         "commons",
         "tables",
         "toc",
         "links",
         "lists",
         'pr-domain',
-        "static-content"].forEach((s) => {
+        "static-content"]
+      files.forEach((s) => {
         this.run_generation(zip, () => {
           return this.generate_custom(s)
         }, `${this.plugin_name}/xsl/fo/${s}.xsl`)
@@ -340,7 +341,7 @@ class Generator {
     }
     // custom XSLT attribute sets
     if(this.override_shell) {
-      ["front-matter-attr",
+      const files = ["front-matter-attr",
         "commons-attr",
         "layout-masters-attr",
         'static-content-attr',
@@ -348,7 +349,8 @@ class Generator {
         'toc-attr',
         "basic-settings",
         "lists-attr",
-        "pr-domain-attr"].forEach((s) => {
+        "pr-domain-attr"]
+      files.forEach((s) => {
         this.run_generation(zip, () => {
           return this.generate_custom_attr(s)
         }, `${this.plugin_name}/cfg/fo/attrs/${s}.xsl`)
