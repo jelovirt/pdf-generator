@@ -35,9 +35,9 @@ def main():
 					"width": "210mm",
 					"height": "297mm",
 					"top": "20mm",
-					"outside": "20mm",
+					"outside": "10mm",
 					"bottom": "20mm",
-					"inside": "20mm"
+					"inside": "25mm"
 				},
 				"style": {
 					"body": {
@@ -66,7 +66,7 @@ def main():
 					"topic": {
 						"font-family": "Helvetica",
 						"font-size": "18pt",
-						"color": "black",
+						"color": "green",
 						"font-weight": "bold",
 						"font-style": "normal",
 						"text-decoration": "none",
@@ -86,7 +86,7 @@ def main():
 					"topic_topic": {
 						"font-family": "Helvetica",
 						"font-size": "14pt",
-						"color": "black",
+						"color": "orange",
 						"font-weight": "bold",
 						"font-style": "normal",
 						"text-decoration": "none",
@@ -106,7 +106,7 @@ def main():
 					"topic_topic_topic": {
 						"font-family": "Helvetica",
 						"font-size": "12pt",
-						"color": "black",
+						"color": "blue",
 						"font-weight": "bold",
 						"font-style": "normal",
 						"text-decoration": "none",
@@ -125,7 +125,7 @@ def main():
 					"topic_topic_topic_topic": {
 						"font-family": "Times+New+Roman",
 						"font-size": "10pt",
-						"color": "black",
+						"color": "yellow",
 						"font-weight": "bold",
 						"font-style": "normal",
 						"text-decoration": "none",
