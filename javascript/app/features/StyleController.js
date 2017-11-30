@@ -153,7 +153,7 @@ export default function StyleController(store) {
 
     const props = {}
     const directions = ['before', 'end', 'after', 'start']
-    if (value === 'none') {
+    if(value === 'none') {
       directions.forEach((direction) => {
         props[`border-${direction}-style`] = 'none'
       })

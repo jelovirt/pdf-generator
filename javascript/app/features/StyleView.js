@@ -21,7 +21,7 @@ export default function StyleView() {
 
     function setState() {
       const value = store.val()
-      if (!!value) {
+      if(!!value) {
         $styleForm.find('.btn-text-align').removeClass('active')
           .filter('[value=' + value + ']').addClass('active')
       }
