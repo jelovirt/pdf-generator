@@ -10,17 +10,25 @@ module.exports = {
     filename: "[name].js"
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js?$/,
         include: [
           path.join(__dirname, "javascript")
         ],
-        loaders: ["babel"]
+        use: [
+          {
+            loader: "babel-loader"
+          }
+        ]
       },
       {
         test: /\.html$/,
-        loader: "html-loader"
+        use: [
+          {
+            loader: "html-loader"
+          }
+        ]
       }
       // {
       //     test: /\.svg$/,
@@ -29,8 +37,9 @@ module.exports = {
     ]
   },
   resolve: {
-    root: [
-      path.resolve(path.join(__dirname, "javascript"))
+    modules: [
+      path.resolve(path.join(__dirname, "javascript")),
+      "node_modules"
     ]
   },
   plugins: [
