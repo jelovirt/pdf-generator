@@ -23,7 +23,6 @@
     "elementtree": "^0.1.7",
     "express": "~4.13.1",
     "gulp": "^3.9.0",
-    "gulp-babel": "^6.1.1",
     "gulp-sass": "^3.1.0",
     "gulp-watch": "^4.3.5",
     "html-loader": "^0.4.5",

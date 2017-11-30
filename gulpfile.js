@@ -1,6 +1,5 @@
 const gulp = require('gulp')
 const util = require('gulp-util')
-const babel = require('gulp-babel')
 const sass = require('gulp-sass')
 const watch = require('gulp-watch')
 const webpack = require('webpack');
