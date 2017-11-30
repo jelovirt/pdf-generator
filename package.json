@@ -1,9 +1,10 @@
 {
   "name": "pdf-generator",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
+  "homepage": "https://github.com/jelovirt/pdf-generator",
+  "license": "Apache-2.0",
   "scripts": {
-    "install": "./node_modules/.bin/gulp",
+    "install": "node ./node_modules/gulp/bin/gulp.js",
     "start": "node ./bin/www"
   },
   "devDependencies": {
