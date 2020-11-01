@@ -25,7 +25,7 @@ footer form {
 p#loading {
   height: 300px;
   padding-top: 150px;
-  background-image: url('/images/throbber.gif');
+  background-image: url('../public/images/throbber.gif');
   background-repeat: no-repeat;
   background-position: 50% 130px;
   text-align: center;
@@ -179,7 +179,7 @@ fieldset .instruction, fieldset .help {
 }
 
 .help-icon {
-  background-image: url("../images/help.png");
+  background-image: url("../public/images/help.png");
   background-repeat: no-repeat;
   background-position: center right;
   height: 16px;
@@ -189,7 +189,7 @@ fieldset .instruction, fieldset .help {
 }
 
 .close-icon {
-  background-image: url("../images/close.png");
+  background-image: url("../public/images/close.png");
   background-repeat: no-repeat;
   background-position: center right;
   height: 16px;
@@ -204,7 +204,7 @@ fieldset .instruction, fieldset .help {
 }
 
 .err {
-  background-image: url("../images/software-update-urgent.png");
+  background-image: url("../public/images/software-update-urgent.png");
   background-repeat: no-repeat;
   background-position: 5px center;
   color: red;
