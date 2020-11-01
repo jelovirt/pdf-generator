@@ -1,6 +1,6 @@
 body {
   //font-family: "Gill Sans", sans-serif;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   /*
   margin: 0;
@@ -111,7 +111,8 @@ table {
   }
 
   table {
-    td, tr {
+    td,
+    tr {
       padding: 1px 0;
     }
     th {
@@ -122,7 +123,7 @@ table {
 }
 
 .action {
-  color: #2244BB;
+  color: #2244bb;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -150,7 +151,8 @@ fieldset .controller,
   padding-left: 150px;
 }
 
-fieldset .instruction, fieldset .help {
+fieldset .instruction,
+fieldset .help {
   font-size: 12px;
 }
 
@@ -179,7 +181,7 @@ fieldset .instruction, fieldset .help {
 }
 
 .help-icon {
-  background-image: url("../public/images/help.png");
+  background-image: url('../public/images/help.png');
   background-repeat: no-repeat;
   background-position: center right;
   height: 16px;
@@ -189,7 +191,7 @@ fieldset .instruction, fieldset .help {
 }
 
 .close-icon {
-  background-image: url("../public/images/close.png");
+  background-image: url('../public/images/close.png');
   background-repeat: no-repeat;
   background-position: center right;
   height: 16px;
@@ -204,7 +206,7 @@ fieldset .instruction, fieldset .help {
 }
 
 .err {
-  background-image: url("../public/images/software-update-urgent.png");
+  background-image: url('../public/images/software-update-urgent.png');
   background-repeat: no-repeat;
   background-position: 5px center;
   color: red;

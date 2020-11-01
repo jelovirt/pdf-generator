@@ -10,11 +10,19 @@
     </select>
   </p>
   <p class="controller" id="cover_image_file">
-    <input name="cover_image" id="cover_image_file_value" type="file">
+    <input name="cover_image" id="cover_image_file_value" type="file" />
   </p>
   <p class="controller" id="cover_image_metadata">
-    <label for="cover_image_metadata_value" class="inline">Data element name</label>:
-    <input name="cover_image_metadata" id="cover_image_metadata_value" type="text" value="cover-image" pattern="[^\s]+">
+    <label for="cover_image_metadata_value" class="inline"
+      >Data element name</label
+    >:
+    <input
+      name="cover_image_metadata"
+      id="cover_image_metadata_value"
+      type="text"
+      value="cover-image"
+      pattern="[^\s]+"
+    />
   </p>
   <!--p class="controller" id="cover_image_topic">
     <label for="cover_image_topic_value" class="inline">Outputclass attribute value</label>:
@@ -22,12 +30,18 @@
   </p-->
   <p class="instruction">Image on the cover page.</p>
   <div class="help">
-    <p>Either upload a cover graphic and bundle it with the plug-in, or read the cover graphic file name from map
-      metadata field:</p>
-    <pre>&lt;data name="cover-image"&gt;
+    <p>
+      Either upload a cover graphic and bundle it with the plug-in, or read the
+      cover graphic file name from map metadata field:
+    </p>
+    <pre>
+&lt;data name="cover-image"&gt;
   &lt;image href="cover.svg"/&gt;
-  &lt;/data&gt;</pre>
+  &lt;/data&gt;</pre
+    >
     <p>Or use topic as cover topic:</p>
-    <pre>&lt;topicref href="cover.dita" outputclass="front-cover" toc="no"/&gt;</pre>
+    <pre>
+&lt;topicref href="cover.dita" outputclass="front-cover" toc="no"/&gt;</pre
+    >
   </div>
 </fieldset>

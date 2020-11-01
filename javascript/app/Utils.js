@@ -1,64 +1,64 @@
-import $ from 'jquery'
+import $ from 'jquery';
 
 export default {
   setError: setError,
   setWarning: setWarning,
   setOk: setOk,
   helpHandler: helpHandler,
-  closeHandler: closeHandler
-}
+  closeHandler: closeHandler,
+};
 
 export function setAction(value) {
   return {
     type: 'SET',
-    value
-  }
+    value,
+  };
 }
 
 function setError(input, text, tip) {
-  setMessage(input, "err", text, tip);
-  input.addClass("invalid");
+  setMessage(input, 'err', text, tip);
+  input.addClass('invalid');
 }
 
 function setWarning(input, text, tip) {
-  setMessage(input, "warn", text, tip);
-  input.removeClass("invalid");
+  setMessage(input, 'warn', text, tip);
+  input.removeClass('invalid');
 }
 
 function setOk(input) {
-  setMessage(input, "ok");
-  input.removeClass("invalid");
+  setMessage(input, 'ok');
+  input.removeClass('invalid');
 }
 
 function setMessage(input, level, text, tip) {
-  let msg = input.nextAll(".msg");
-  if(msg.length === 0) {
+  let msg = input.nextAll('.msg');
+  if (msg.length === 0) {
     msg = $("<span class='msg'></span>");
     input.after(msg);
   }
-  msg.removeClass().addClass("msg " + level);
-  if(text !== undefined) {
+  msg.removeClass().addClass('msg ' + level);
+  if (text !== undefined) {
     msg.html(text);
   } else {
     msg.empty();
   }
-  if(tip !== undefined) {
-    msg.attr("title", tip);
+  if (tip !== undefined) {
+    msg.attr('title', tip);
   } else {
-    msg.removeAttr("title");
+    msg.removeAttr('title');
   }
 }
 
 function helpHandler(event) {
-  $(event.target).parents("fieldset:first").find(".help").show("fast");
-  event.stopPropagation()
-  event.preventDefault()
-  return false
+  $(event.target).parents('fieldset:first').find('.help').show('fast');
+  event.stopPropagation();
+  event.preventDefault();
+  return false;
 }
 
 function closeHandler(event) {
-  $(event.target).parents(".help").hide("fast");
-  event.stopPropagation()
-  event.preventDefault()
-  return false
+  $(event.target).parents('.help').hide('fast');
+  event.stopPropagation();
+  event.preventDefault();
+  return false;
 }

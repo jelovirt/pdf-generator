@@ -1,18 +1,29 @@
-<p class="help">A PDF customisation plug-in defines a new DITA-OT
-  transformation type based on the built-in PDF conversion.</p>
+<p class="help">
+  A PDF customisation plug-in defines a new DITA-OT transformation type based on
+  the built-in PDF conversion.
+</p>
 <h3>Target environment</h3>
 <div class="form">
   <fieldset>
     <p>
-      <label for="ot_version" title="Version of DITA-OT for which the plug-in is installed into.">DITA-OT
-        version</label>
-      <select name="ot_version" id="ot_version" title="DITA-OT version" required>
+      <label
+        for="ot_version"
+        title="Version of DITA-OT for which the plug-in is installed into."
+        >DITA-OT version</label
+      >
+      <select
+        name="ot_version"
+        id="ot_version"
+        title="DITA-OT version"
+        required
+      >
         <option value="3.0" selected>3.0</option>
         <option value="2.5">2.5</option>
       </select>
     </p>
-    <p class="instruction">Version of DITA-OT for which the plug-in is
-      installed into.</p>
+    <p class="instruction">
+      Version of DITA-OT for which the plug-in is installed into.
+    </p>
   </fieldset>
   <fieldset>
     <p>
@@ -23,18 +34,30 @@
         <option value="xep">RenderX XEP</option>
       </select>
     </p>
-    <p class="instruction">XSL formatter used to generate PDF output. DITA-OT comes with open source FOP
-      formatter.</p>
-    <p class="help">Note that customisation features available are dependent
-      on the target DITA-OT and XSL formatter.</p>
+    <p class="instruction">
+      XSL formatter used to generate PDF output. DITA-OT comes with open source
+      FOP formatter.
+    </p>
+    <p class="help">
+      Note that customisation features available are dependent on the target
+      DITA-OT and XSL formatter.
+    </p>
   </fieldset>
   <fieldset>
     <p>
       <label for="override_shell">Override shell</label>
-      <input type="checkbox" name="override_shell" id="override_shell" title="Override shell"
-             value="true" checked>
+      <input
+        type="checkbox"
+        name="override_shell"
+        id="override_shell"
+        title="Override shell"
+        value="true"
+        checked
+      />
     </p>
-    <p class="instruction">Override XSLT shell stylesheet. Advanced generation option which will make further
-      developing the generated plug-in easier.</p>
+    <p class="instruction">
+      Override XSLT shell stylesheet. Advanced generation option which will make
+      further developing the generated plug-in easier.
+    </p>
   </fieldset>
 </div>

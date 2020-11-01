@@ -1,10 +1,10 @@
-import $ from 'jquery'
-import templates from '../lib/templates.html'
+import $ from 'jquery';
+import templates from '../lib/templates.html';
 
 export default function PdfPageView() {
-  const $element = $(templates)
+  const $element = $(templates);
 
   return {
-    $element: $element
-  }
+    $element: $element,
+  };
 }

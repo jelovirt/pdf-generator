@@ -85,15 +85,16 @@ h3 {
   table {
     border-collapse: collapse;
   }
-  table, td, th {
+  table,
+  td,
+  th {
     border: solid 1px black;
     margin: 0 auto;
   }
-
 }
 .example:before,
-.example-block:before{
-  content: "Preview:";
+.example-block:before {
+  content: 'Preview:';
   font-size: 10px;
   line-height: 10px;
   display: block;
@@ -208,7 +209,10 @@ h3 {
 #header-source *[data-field] {
   cursor: move;
 }
-#even-header, #odd-header, #even-footer, #odd-footer {
+#even-header,
+#odd-header,
+#even-footer,
+#odd-footer {
   padding: 5px;
   margin: 3px;
   height: 4.5ex;
@@ -219,7 +223,8 @@ h3 {
     padding: 2px;
     cursor: pointer;
 
-    &.label-editable { //[contenteditable]
+    &.label-editable {
+      //[contenteditable]
       cursor: default;
       color: black;
       font-weight: normal;
@@ -233,7 +238,7 @@ h3 {
 }
 
 .shadow {
-  box-shadow: 3px 3px 3px #ccc;;
+  box-shadow: 3px 3px 3px #ccc;
 }
 
 //@import '../node_modules/dragula/dist/dragula.css';
@@ -242,7 +247,7 @@ h3 {
   margin: 0 !important;
   z-index: 9999 !important;
   opacity: 0.8;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=80)';
   filter: alpha(opacity=80);
 }
 .gu-hide {
@@ -256,6 +261,6 @@ h3 {
 }
 .gu-transit {
   opacity: 0.2;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=20)';
   filter: alpha(opacity=20);
 }
