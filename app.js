@@ -30,9 +30,10 @@ app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  return res.status(404).send();
+  // const err = new Error('Not Found');
+  // err.status = 404;
+  // next(err);
 });
 
 // error handlers

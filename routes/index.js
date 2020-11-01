@@ -12,9 +12,9 @@ const generator = require('../generator')
 const styles = require('../javascript/lib/styles').styles
 const Version = require('../lib/version')
 
-router.get('/', function(req, res, next) {
-  res.render('index', {title: 'PDF Plugin Generator'});
-});
+// router.get('/', function(req, res, next) {
+//   res.render('index', {title: 'PDF Plugin Generator'});
+// });
 
 router.post('/', bodyParser.urlencoded({extended: false}), function(req, res, next) { // upload.array()
                                                                                       // app.use(bodyParser.json());
