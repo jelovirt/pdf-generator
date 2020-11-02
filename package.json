@@ -23,6 +23,9 @@
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.4",
+    "@types/lodash": "^4.14.164",
+    "@types/redux": "^3.6.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "bootstrap-sass": "~> 3.4.1",

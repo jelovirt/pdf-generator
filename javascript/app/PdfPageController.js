@@ -13,53 +13,8 @@ import PdfPageView from './PdfPageView';
 import PdfPreviewController from './PdfPreviewController';
 import PdfUtils from './pdf-utils';
 import Utils from './Utils';
-import { createStore } from 'redux';
-import styles from '../lib/styles';
-
-function getInitStyle() {
-  return _(styles.styles)
-    .mapValues((elementValue, element) => {
-      return _(elementValue)
-        .mapValues((propertyValue, property) => {
-          return getDefault(element, property);
-        })
-        .value();
-    })
-    .value();
-
-  function getDefault(field, property) {
-    const v = styles.styles[field][property];
-    if (!!v.default) {
-      return v.default;
-    } else if (!!v.inherit) {
-      return getDefault(v.inherit, property);
-    } else {
-      // throw new Error(`Unable to find default for ${field}.${property}`)
-      return undefined;
-    }
-  }
-}
-
-function getInitStore() {
-  return {
-    configuration: {
-      page: {},
-      header: {
-        odd: [],
-        even: [],
-      },
-      footer: {
-        odd: [],
-        even: [],
-      },
-      style: getInitStyle(),
-    },
-  };
-}
-
-function reduce(store, action) {
-  return _.merge(store, action.value);
-}
+import { createStore, Store } from 'redux';
+import { getInitStore, reduce } from './Model';
 
 export default function PdfPageController() {
   const model = createStore(reduce, getInitStore());

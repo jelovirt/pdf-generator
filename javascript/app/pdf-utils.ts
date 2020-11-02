@@ -1,12 +1,6 @@
 import $ from 'jquery';
 
-export default {
-  getVal: getVal,
-  toMm: toMm,
-  toPt: toPt,
-};
-
-function getVal(input) {
+export function getVal(input: $): string {
   return input.val() !== '' ? input.val() : input.attr('placeholder');
 }
 
@@ -16,7 +10,7 @@ function getVal(input) {
  * @param val length with CSS unit
  * @return Number
  */
-function toMm(val) {
+export function toMm(val: string): number | undefined {
   if (val === undefined) {
     return undefined;
   }
@@ -36,7 +30,7 @@ function toMm(val) {
     return undefined;
   }
 
-  function stripUnit(val) {
+  function stripUnit(val: string): number {
     return Number(val.substring(0, val.length - 2));
   }
 }
@@ -47,7 +41,7 @@ function toMm(val) {
  * @param val length with CSS unit
  * @return Number
  */
-function toPt(val) {
+export function toPt(val: string): number | undefined {
   if (val === undefined) {
     return undefined;
   }

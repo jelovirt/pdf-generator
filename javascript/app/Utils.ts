@@ -8,29 +8,36 @@ export default {
   closeHandler: closeHandler,
 };
 
-export function setAction(value) {
+export type Action = { type: 'SET'; value: string };
+
+export function setAction(value: any): Action {
   return {
     type: 'SET',
     value,
   };
 }
 
-function setError(input, text, tip) {
+function setError(input: JQuery, text: string, tip?: string) {
   setMessage(input, 'err', text, tip);
   input.addClass('invalid');
 }
 
-function setWarning(input, text, tip) {
+function setWarning(input: JQuery, text: string, tip?: string) {
   setMessage(input, 'warn', text, tip);
   input.removeClass('invalid');
 }
 
-function setOk(input) {
+function setOk(input: JQuery) {
   setMessage(input, 'ok');
   input.removeClass('invalid');
 }
 
-function setMessage(input, level, text, tip) {
+function setMessage(
+  input: JQuery,
+  level: 'warn' | 'err' | 'ok',
+  text?: string,
+  tip?: string
+) {
   let msg = input.nextAll('.msg');
   if (msg.length === 0) {
     msg = $("<span class='msg'></span>");
@@ -49,15 +56,15 @@ function setMessage(input, level, text, tip) {
   }
 }
 
-function helpHandler(event) {
-  $(event.target).parents('fieldset:first').find('.help').show('fast');
+function helpHandler(event: Event) {
+  $(event.target!).parents('fieldset:first').find('.help').show('fast');
   event.stopPropagation();
   event.preventDefault();
   return false;
 }
 
-function closeHandler(event) {
-  $(event.target).parents('.help').hide('fast');
+function closeHandler(event: Event) {
+  $(event.target!).parents('.help').hide('fast');
   event.stopPropagation();
   event.preventDefault();
   return false;
