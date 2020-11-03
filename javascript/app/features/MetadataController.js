@@ -1,7 +1,6 @@
 import $ from 'jquery';
-import Utils from '../../app/Utils';
 import template from '../../lib/metadata.html';
-import { setAction } from '../Utils';
+import { setAction, setError, setOk } from '../Utils';
 
 const pluginPatter = new RegExp('[a-zA-Z\\-_]+(\\.[a-zA-Z\\-_]+)*');
 
@@ -34,13 +33,13 @@ export default function MetadataController(store) {
     );
     if (!pluginPatter.test(store.getState().transtype)) {
       //!namePattern.test(val)
-      Utils.setError(
+      setError(
         $(event.target),
         $('<span>Not a valid XML name</span>'),
         'Type ID must be a valid XML name.'
       );
     } else {
-      Utils.setOk($(event.target));
+      setOk($(event.target));
     }
   }
 

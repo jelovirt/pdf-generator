@@ -1,13 +1,5 @@
 import $ from 'jquery';
 
-export default {
-  setError: setError,
-  setWarning: setWarning,
-  setOk: setOk,
-  helpHandler: helpHandler,
-  closeHandler: closeHandler,
-};
-
 export type Action = { type: 'SET'; value: string };
 
 export function setAction(value: any): Action {
@@ -17,17 +9,17 @@ export function setAction(value: any): Action {
   };
 }
 
-function setError(input: JQuery, text: string, tip?: string) {
+export function setError(input: JQuery, text: string, tip?: string) {
   setMessage(input, 'err', text, tip);
   input.addClass('invalid');
 }
 
-function setWarning(input: JQuery, text: string, tip?: string) {
+export function setWarning(input: JQuery, text: string, tip?: string) {
   setMessage(input, 'warn', text, tip);
   input.removeClass('invalid');
 }
 
-function setOk(input: JQuery) {
+export function setOk(input: JQuery) {
   setMessage(input, 'ok');
   input.removeClass('invalid');
 }
@@ -56,14 +48,14 @@ function setMessage(
   }
 }
 
-function helpHandler(event: Event) {
+export function helpHandler(event: Event) {
   $(event.target!).parents('fieldset:first').find('.help').show('fast');
   event.stopPropagation();
   event.preventDefault();
   return false;
 }
 
-function closeHandler(event: Event) {
+export function closeHandler(event: Event) {
   $(event.target!).parents('.help').hide('fast');
   event.stopPropagation();
   event.preventDefault();

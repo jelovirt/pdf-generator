@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import _ from 'lodash';
 import WizardController from './WizardController';
 import MetadataController from './features/MetadataController';
 import HeaderController from './features/HeaderController';
@@ -11,9 +10,9 @@ import CoverController from './features/CoverController';
 import EnvironmentController from './features/EnvironmentController';
 import PdfPageView from './PdfPageView';
 import PdfPreviewController from './PdfPreviewController';
-import PdfUtils from './pdf-utils';
-import Utils from './Utils';
-import { createStore, Store } from 'redux';
+import { toPt, getVal } from './pdf-utils';
+import { setError, setOk, closeHandler, helpHandler } from './Utils';
+import { createStore } from 'redux';
 import { getInitStore, reduce } from './Model';
 
 export default function PdfPageController() {
@@ -64,15 +63,15 @@ export default function PdfPageController() {
 
     function validateLength(event) {
       const target = $(event.target);
-      const val = PdfUtils.toPt(PdfUtils.getVal(target));
+      const val = toPt(getVal(target));
       if (val === undefined) {
-        Utils.setError(
+        setError(
           target,
           $('<span>Invalid value</span>'),
           'Invalid XSL FO length value'
         );
       } else {
-        Utils.setOk(target);
+        setOk(target);
       }
     }
 
@@ -149,7 +148,7 @@ export default function PdfPageController() {
         if (l.parents('fieldset:first').find('.help').length !== 0) {
           l.append(
             $("<span class='help-icon' title='Show help'></span>").click(
-              Utils.helpHandler
+              helpHandler
             )
           );
         }
@@ -160,7 +159,7 @@ export default function PdfPageController() {
           const l = $(this);
           l.prepend(
             $("<span class='close-icon' title='Close help'></span>").click(
-              Utils.closeHandler
+              closeHandler
             )
           );
         });
