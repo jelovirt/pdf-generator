@@ -2,7 +2,7 @@ import $ from 'jquery';
 import _ from 'lodash';
 import StyleView from './StyleView';
 import StylePreviewController from './StylePreviewController';
-import styles from '../../lib/styles';
+import { styles } from '../../lib/styles';
 import { setAction } from '../Utils';
 
 export default function StyleController(store) {
@@ -30,7 +30,7 @@ export default function StyleController(store) {
   };
 
   function getAllFields() {
-    return _(styles.styles)
+    return _(styles)
       .map(function (pv, e) {
         return _.map(pv, function (v, p) {
           return p;
@@ -110,10 +110,10 @@ export default function StyleController(store) {
   }
 
   function getValue(element, property, value) {
-    if (!(styles.styles[element] && styles.styles[element][property])) {
+    if (!(styles[element] && styles[element][property])) {
       return value;
     }
-    switch (typeof styles.styles[element][property].default) {
+    switch (typeof styles[element][property].default) {
       case 'boolean':
         return value === 'true';
       case 'number':
@@ -130,7 +130,7 @@ export default function StyleController(store) {
   function styleEditorHandler(event) {
     const input = $(event.target);
     const field = input.attr('id');
-    const def = styles.styles[pdfStyleSelectorCurrent][field];
+    const def = styles[pdfStyleSelectorCurrent][field];
 
     const currentStyle = store.getState().configuration.style;
     const oldValue = currentStyle[pdfStyleSelectorCurrent][field];
@@ -157,7 +157,7 @@ export default function StyleController(store) {
     };
     action.configuration.style[pdfStyleSelectorCurrent] = {};
     action.configuration.style[pdfStyleSelectorCurrent][field] = newValue;
-    _.forEach(styles.styles, (elementValue, element) => {
+    _.forEach(styles, (elementValue, element) => {
       const def = elementValue[field];
       if (
         !!def &&

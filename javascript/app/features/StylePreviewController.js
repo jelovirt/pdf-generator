@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import _ from 'lodash';
-import Utils from '../../app/pdf-utils';
+import { toPt } from '../../app/pdf-utils';
 import template from '../../lib/style-preview.html';
 
 const f = 0.9;
@@ -106,7 +106,7 @@ export default function StylePreviewController(store) {
               // support undefined values
               return true;
             }
-            v = String(Utils.toPt(v) * f) + 'px';
+            v = String(toPt(v) * f) + 'px';
           }
           $element
             .find("*[class~='example-page-content-" + type + "']")

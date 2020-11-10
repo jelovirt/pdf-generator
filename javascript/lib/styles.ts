@@ -285,8 +285,8 @@ export type StyleName =
 
 function getStyles(): Record<StyleName, Partial<Record<Property, Style>>> {
   const startIndent = 25;
-    const base: Partial<Record<Property, Style>> = {
-    'background-color': {default: 'transparent', inherit: undefined},
+  const base: Partial<Record<Property, Style>> = {
+    'background-color': { default: 'transparent', inherit: undefined },
     'padding-top': { default: '0pt', inherit: undefined },
     'padding-right': { default: '0pt', inherit: undefined },
     'padding-bottom': { default: '0pt', inherit: undefined },

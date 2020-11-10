@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Utils from './pdf-utils';
+import { toPt, getVal } from './pdf-utils';
 
 export default function PdfPreviewController(store) {
   const factor = 0.12;
@@ -65,9 +65,7 @@ export default function PdfPreviewController(store) {
       );
 
       const columns = Number($(":input[name='body-column-count']").val());
-      const columnWidth = Utils.toPt(
-        Utils.getVal($(":input[name='column-gap']"))
-      );
+      const columnWidth = toPt(getVal($(":input[name='column-gap']")));
       const tr = page.find('.example-page-body tr');
       const buf = $('<tr></tr>');
       for (let i = 0; i < columns; i++) {
@@ -104,24 +102,16 @@ export default function PdfPreviewController(store) {
 
     const pageSize = $(":input[name='page-size']").val().split(' ');
     if ($(':input[name=orientation]').val() === 'landscape') {
-      res.pageWidth = Utils.toPt(pageSize[1]);
-      res.pageHeight = Utils.toPt(pageSize[0]);
+      res.pageWidth = toPt(pageSize[1]);
+      res.pageHeight = toPt(pageSize[0]);
     } else {
-      res.pageWidth = Utils.toPt(pageSize[0]);
-      res.pageHeight = Utils.toPt(pageSize[1]);
+      res.pageWidth = toPt(pageSize[0]);
+      res.pageHeight = toPt(pageSize[1]);
     }
-    res.marginTop = Utils.toPt(
-      Utils.getVal($(":input[name='page-margin-top']"))
-    );
-    res.marginOutside = Utils.toPt(
-      Utils.getVal($(":input[name='page-margin-outside']"))
-    );
-    res.marginBottom = Utils.toPt(
-      Utils.getVal($(":input[name='page-margin-bottom']"))
-    );
-    res.marginInside = Utils.toPt(
-      Utils.getVal($(":input[name='page-margin-inside']"))
-    );
+    res.marginTop = toPt(getVal($(":input[name='page-margin-top']")));
+    res.marginOutside = toPt(getVal($(":input[name='page-margin-outside']")));
+    res.marginBottom = toPt(getVal($(":input[name='page-margin-bottom']")));
+    res.marginInside = toPt(getVal($(":input[name='page-margin-inside']")));
 
     return res;
   }
