@@ -49,7 +49,6 @@ export type Property =
   | 'border-top-style'
   | 'border-top-width'
   | 'bottom'
-  | 'bottom'
   | 'break-after'
   | 'break-before'
   | 'caption-side'
@@ -131,7 +130,6 @@ export type Property =
   | 'leader-pattern'
   | 'leader-pattern-width'
   | 'left'
-  | 'left'
   | 'letter-spacing'
   | 'letter-value'
   | 'linefeed-treatment'
@@ -139,12 +137,8 @@ export type Property =
   | 'line-height-shift-adjustment'
   | 'line-stacking-strategy'
   | 'margin-bottom'
-  | 'margin-bottom'
-  | 'margin-left'
   | 'margin-left'
   | 'margin-right'
-  | 'margin-right'
-  | 'margin-top'
   | 'margin-top'
   | 'marker-class-name'
   | 'master-name'
@@ -196,7 +190,6 @@ export type Property =
   | 'retrieve-position-within-table'
   | 'richness'
   | 'right'
-  | 'right'
   | 'role'
   | 'rule-style'
   | 'rule-thickness'
@@ -238,7 +231,6 @@ export type Property =
   | 'text-indent'
   | 'text-shadow'
   | 'text-transform'
-  | 'top'
   | 'top'
   | 'treat-as-word-space'
   | 'unicode-bidi'
@@ -291,10 +283,10 @@ export type StyleName =
   | 'link'
   | 'tm';
 
-function getStyles(): Record<StyleName, Record<Property, Style>> {
+function getStyles(): Record<StyleName, Partial<Record<Property, Style>>> {
   const startIndent = 25;
-  const base: Record<Property, Style> = {
-    'background-color': { default: 'transparent', inherit: undefined },
+    const base: Partial<Record<Property, Style>> = {
+    'background-color': {default: 'transparent', inherit: undefined},
     'padding-top': { default: '0pt', inherit: undefined },
     'padding-right': { default: '0pt', inherit: undefined },
     'padding-bottom': { default: '0pt', inherit: undefined },
@@ -312,7 +304,7 @@ function getStyles(): Record<StyleName, Record<Property, Style>> {
     'border-start-style': { default: undefined, inherit: undefined },
     'border-start-width': { default: undefined, inherit: undefined },
     'border-start-color': { default: undefined, inherit: undefined },
-  } as Record<Property, Style>;
+  };
   return {
     // block
     body: _.defaultsDeep(

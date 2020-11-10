@@ -9,7 +9,7 @@ const multer = require('multer'); // v1.0.5
 const upload = multer(); // for parsing multipart/form-data
 
 const generator = require('../generator');
-const styles = require('../javascript/lib/styles').styles;
+const styles = require('../dist/styles').styles;
 const Version = require('../lib/version');
 
 // router.get('/', function(req, res, next) {
