@@ -37,7 +37,7 @@ export default function WizardController(store, pages) {
   setInterval(checkFragment, 100);
 
   /** Current location fragment. */
-  var hash = location.hash;
+  let hash = location.hash
 
   function validateForm(event) {
     const target = event.target;

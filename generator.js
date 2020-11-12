@@ -36,6 +36,8 @@ class Generator {
   footer;
   page_number;
   options;
+  transtype;
+  title_numbering;
 
   constructor() {
     this.properties = [
