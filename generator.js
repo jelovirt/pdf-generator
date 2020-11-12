@@ -1,16 +1,11 @@
-'use strict';
-
-const _ = require('lodash');
-const JSZip = require('jszip');
-const ET = require('./lib/elementtree');
-const utils = require('./lib/utils');
-const styles = require('./dist/styles').styles;
-const Version = require('./lib/version');
-const vars = require('./lib/vars');
-const shell = require('./lib/shell');
-
-const xsl = utils.xsl;
-const catalog = utils.catalog;
+import JSZip from 'jszip'
+import _ from 'lodash'
+import {styles} from './javascript/lib/styles'
+import shell from './lib/shell'
+import vars from './lib/vars'
+import Version from './lib/version'
+import {xsl, catalog, value} from './lib/utils'
+import ET from './lib/elementtree'
 
 class Generator {
   properties;
@@ -564,7 +559,7 @@ class Generator {
       if (_.includes(properties, p)) {
         ET.SubElement(attrSet, xsl('attribute'), {
           name: p,
-        }).text = utils.value(p, v);
+        }).text = value(p, v);
       }
     });
     return attrSet;
