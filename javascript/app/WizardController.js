@@ -210,8 +210,9 @@ export default function WizardController(store, pages) {
       blank_pages: __config.blank_pages,
     };
 
-    generator.generate_plugin()
-      .then(zipData => FileSaver.saveAs(zipData, `${conf.id}.zip`));
+    generator
+      .generate_plugin()
+      .then((zipData) => FileSaver.saveAs(zipData, `${conf.id}.zip`));
   }
 
   /**
