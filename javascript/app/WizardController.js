@@ -140,8 +140,7 @@ export default function WizardController(store, pages) {
     setFragment();
     $(':input[name=json]').val(JSON.stringify(store.getState()));
     // $('form#generate-plugin').submit();
-    const zipData = generate(store.getState());
-    FileSaver.saveAs(zipData, `${store.getState().id}.zip`);
+    generate(store.getState());
   }
 
   function generate(conf) {
@@ -211,7 +210,8 @@ export default function WizardController(store, pages) {
       blank_pages: __config.blank_pages,
     };
 
-    return generator.generate_plugin();
+    generator.generate_plugin()
+      .then(zipData => FileSaver.saveAs(zipData, `${conf.id}.zip`));
   }
 
   /**
