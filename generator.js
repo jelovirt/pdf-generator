@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { styles } from './javascript/lib/styles';
 import shell from './lib/shell';
 import vars from './lib/vars';
-import Version from './lib/version';
+import { Version } from './lib/version';
 import { xsl, catalog, value } from './lib/utils';
 import ET from './lib/elementtree';
 
