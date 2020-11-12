@@ -1,4 +1,8 @@
 import $ from 'jquery';
+import _ from 'lodash';
+import {Generator} from '../../generator'
+import Version from '../../lib/version'
+import FileSaver from 'file-saver'
 
 export default function WizardController(store, pages) {
   pages.forEach((sections, i) => {
@@ -135,7 +139,79 @@ export default function WizardController(store, pages) {
     validatePage();
     setFragment();
     $(':input[name=json]').val(JSON.stringify(store.getState()));
-    $('form#generate-plugin').submit();
+    // $('form#generate-plugin').submit();
+    const zipData = generate(store.getState());
+    FileSaver.saveAs(zipData, `${store.getState().id}.zip`);
+  }
+
+  function generate(conf) {
+    const generator = new Generator();
+
+    //validate
+    if (!_.has(conf, 'ot_version')) {
+      throw new Error('version missing');
+    }
+    generator.ot_version = new Version(conf['ot_version']);
+    if (!_.has(conf, 'id')) {
+      throw new Error('id missing');
+    }
+    if (_.has(conf, 'plugin_name')) {
+      generator.plugin_name = conf['plugin_name'];
+    } else {
+      generator.plugin_name = conf['id'];
+    }
+    if (_.has(conf, 'plugin_version')) {
+      generator.plugin_version = conf['plugin_version'];
+    }
+    generator.transtype = conf.transtype;
+
+    const __config = conf.configuration;
+    generator.page = __config.page;
+    generator.style = __config.style;
+    generator.force_page_count = __config['force_page_count'];
+    generator.chapter_layout = __config['chapter_layout'];
+    generator.bookmark_style = __config['bookmark_style'];
+    generator.toc_maximum_level = __config['toc_maximum_level'];
+    generator.task_label = __config['task_label'];
+    generator.include_related_links = __config['include_related_links'];
+    if (_.has(__config, 'body_column_count')) {
+      generator.body_column_count = __config['body_column_count'];
+    }
+    if (_.has(__config, 'index_column_count')) {
+      generator.index_column_count = __config['index_column_count'];
+    }
+    if (_.has(__config, 'column_gap')) {
+      generator.column_gap = __config['column_gap'];
+    }
+    generator.mirror_page_margins = __config['mirror_page_margins'];
+    //__dita_gen.dl = __config["dl"]
+    generator.title_numbering = __config['title_numbering'];
+    //__dita_gen.table_numbering = __config["table_numbering"]
+    //__dita_gen.figure_numbering = __config["figure_numbering"]
+    //__dita_gen.link_pagenumber = __config["link_pagenumber"]
+    generator.table_continued = __config['table_continued'];
+    generator.formatter = __config['formatter'];
+    generator.override_shell = __config['override_shell'];
+    //if ("cover_image" in self.request.arguments() && type(self.request.POST["cover_image"]) != unicode) {
+    //  __dita_gen.cover_image = self.request.get("cover_image")
+    //  __dita_gen.cover_image_name = self.request.POST["cover_image"].filename
+    //}
+    if (_.has(__config, 'cover_image_metadata')) {
+      generator.cover_image_metadata = __config['cover_image_metadata'];
+    }
+    if (_.has(__config, 'cover_image_topic')) {
+      generator.cover_image_topic = __config['cover_image_topic'];
+    }
+    generator.header = __config['header'];
+    generator.footer = __config['footer'];
+    if (_.has(__config, 'page_number')) {
+      generator.page_number = __config['page_number'];
+    }
+    generator.options = {
+      blank_pages: __config.blank_pages,
+    };
+
+    return generator.generate_plugin();
   }
 
   /**

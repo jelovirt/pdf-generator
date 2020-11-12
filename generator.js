@@ -13,6 +13,35 @@ const xsl = utils.xsl;
 const catalog = utils.catalog;
 
 class Generator {
+  properties;
+  variable_languages;
+  ot_version;
+  plugin_name;
+  plugin_version;
+  style;
+  page;
+  force_page_count;
+  chapter_layout;
+  body_column_count;
+  index_column_count;
+  bookmark_style;
+  toc_maximum_level;
+  task_label;
+  include_related_links;
+  column_gap;
+  mirror_page_margins;
+  table_continued;
+  formatter;
+  override_shell;
+  cover_image;
+  cover_image_name;
+  cover_image_metadata;
+  cover_image_topic;
+  header;
+  footer;
+  page_number;
+  options;
+
   constructor() {
     this.properties = [
       'absolute-position',
@@ -707,9 +736,9 @@ class Generator {
     //if (this.cover_image) {
     //  store_file(zip, this.cover_image, `${this.plugin_name}/cfg/common/artwork/${this.cover_image_name}`)
     //}
-    return zip.generate({
-      type: 'nodebuffer',
-      platform: process.platform,
+    return zip.generateAsync({
+      type: 'blob',
+      platform: 'UNIX',
     });
   }
 }
