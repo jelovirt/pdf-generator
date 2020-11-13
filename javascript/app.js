@@ -1,9 +1,7 @@
+import $ from 'jquery';
 import PdfPageController from './app/PdfPageController';
 
-window.addEventListener(
-  'load',
-  () => {
-    PdfPageController();
-  },
-  false
-);
+$(document).ready((e) => {
+  console.log('page loaded', e);
+  PdfPageController();
+});
