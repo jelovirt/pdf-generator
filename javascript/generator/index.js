@@ -6,6 +6,17 @@ import vars from './vars';
 import { Version } from '../lib/version';
 import { xsl, catalog, value } from './utils';
 import ET from './elementtree';
+import BasicSettings from './basic-settings';
+import Commons from './commons';
+import FrontMatter from './front-matter';
+import LayoutMasters from './layoutMasters';
+import Links from './links';
+import Lists from './lists';
+import PrDomain from './pr-domain';
+import StaticContent from './staticContent';
+import Tables from './tables';
+import Toc from './toc';
+import Topic from './topic';
 
 class Index {
   properties;
@@ -504,32 +515,32 @@ class Index {
     });
 
     if (stylesheet === 'front-matter' || !stylesheet) {
-      require('./front-matter').xsl(root, this);
+      FrontMatter.xsl(root, this);
     }
     if (stylesheet === 'tables' || !stylesheet) {
-      require('./tables').xsl(root, this);
+      Tables.xsl(root, this);
     }
     if (stylesheet === 'toc' || !stylesheet) {
-      require('./toc').xsl(root, this);
+      Toc.xsl(root, this);
     }
     if (stylesheet === 'commons' || !stylesheet) {
-      require('./commons').xsl(root, this);
-      require('./topic').xsl(root, this);
+      Commons.xsl(root, this);
+      Topic.xsl(root, this);
     }
     if (stylesheet === 'links' || !stylesheet) {
-      require('./links').xsl(root, this);
+      Links.xsl(root, this);
     }
     if (stylesheet === 'lists' || !stylesheet) {
-      require('./lists').xsl(root, this);
+      Lists.xsl(root, this);
     }
     if (stylesheet === 'static-content' || !stylesheet) {
-      require('./staticContent').xsl(root, this);
+      StaticContent.xsl(root, this);
     }
     if (stylesheet === 'layout-masters' || !stylesheet) {
-      require('./layoutMasters').xsl(root, this.options);
+      LayoutMasters.xsl(root, this.options);
     }
     if (stylesheet === 'pr-domain' || !stylesheet) {
-      require('./pr-domain').xsl(root, this);
+      PrDomain.xsl(root, this);
     }
     if (!stylesheet) {
       if (!this.override_shell && this.toc_maximum_level) {
@@ -584,29 +595,29 @@ class Index {
     });
 
     if (stylesheet === 'commons-attr' || !stylesheet) {
-      require('./commons').attr(root, this);
-      require('./topic').attr(root, this);
+      Commons.attr(root, this);
+      Topic.attr(root, this);
     }
     if (stylesheet === 'tables-attr' || !stylesheet) {
-      require('./tables').attr(root, this);
+      Tables.attr(root, this);
     }
     if (stylesheet === 'layout-masters-attr' || !stylesheet) {
-      require('./layoutMasters').attr(root, this);
+      LayoutMasters.attr(root, this);
     }
     if (stylesheet === 'toc-attr' || !stylesheet) {
-      require('./toc').attr(root, this);
+      Toc.attr(root, this);
     }
     if (stylesheet === 'basic-settings' || !stylesheet) {
-      require('./basic-settings').attr(root, this);
+      BasicSettings.attr(root, this);
     }
     if (stylesheet === 'lists-attr' || !stylesheet) {
-      require('./lists').attr(root, this);
+      Lists.attr(root, this);
     }
     if (stylesheet === 'pr-domain-attr' || !stylesheet) {
-      require('./pr-domain').attr(root, this);
+      PrDomain.attr(root, this);
     }
     if (stylesheet === 'static-content-attr' || !stylesheet) {
-      require('./staticContent').attr(root, this);
+      StaticContent.attr(root, this);
     }
 
     // ditagen.generator.indent(root)
