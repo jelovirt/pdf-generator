@@ -1,13 +1,13 @@
 import JSZip from 'jszip';
 import _ from 'lodash';
-import { styles } from './javascript/lib/styles';
-import shell from './lib/shell';
-import vars from './lib/vars';
-import { Version } from './lib/version';
-import { xsl, catalog, value } from './lib/utils';
-import ET from './lib/elementtree';
+import { styles } from '../lib/styles';
+import shell from './shell';
+import vars from './vars';
+import { Version } from '../lib/version';
+import { xsl, catalog, value } from './utils';
+import ET from './elementtree';
 
-class Generator {
+class Index {
   properties;
   variable_languages;
   ot_version;
@@ -504,32 +504,32 @@ class Generator {
     });
 
     if (stylesheet === 'front-matter' || !stylesheet) {
-      require('./lib/front-matter').xsl(root, this);
+      require('./front-matter').xsl(root, this);
     }
     if (stylesheet === 'tables' || !stylesheet) {
-      require('./lib/tables').xsl(root, this);
+      require('./tables').xsl(root, this);
     }
     if (stylesheet === 'toc' || !stylesheet) {
-      require('./lib/toc').xsl(root, this);
+      require('./toc').xsl(root, this);
     }
     if (stylesheet === 'commons' || !stylesheet) {
-      require('./lib/commons').xsl(root, this);
-      require('./lib/topic').xsl(root, this);
+      require('./commons').xsl(root, this);
+      require('./topic').xsl(root, this);
     }
     if (stylesheet === 'links' || !stylesheet) {
-      require('./lib/links').xsl(root, this);
+      require('./links').xsl(root, this);
     }
     if (stylesheet === 'lists' || !stylesheet) {
-      require('./lib/lists').xsl(root, this);
+      require('./lists').xsl(root, this);
     }
     if (stylesheet === 'static-content' || !stylesheet) {
-      require('./lib/staticContent').xsl(root, this);
+      require('./staticContent').xsl(root, this);
     }
     if (stylesheet === 'layout-masters' || !stylesheet) {
-      require('./lib/layoutMasters').xsl(root, this.options);
+      require('./layoutMasters').xsl(root, this.options);
     }
     if (stylesheet === 'pr-domain' || !stylesheet) {
-      require('./lib/pr-domain').xsl(root, this);
+      require('./pr-domain').xsl(root, this);
     }
     if (!stylesheet) {
       if (!this.override_shell && this.toc_maximum_level) {
@@ -584,29 +584,29 @@ class Generator {
     });
 
     if (stylesheet === 'commons-attr' || !stylesheet) {
-      require('./lib/commons').attr(root, this);
-      require('./lib/topic').attr(root, this);
+      require('./commons').attr(root, this);
+      require('./topic').attr(root, this);
     }
     if (stylesheet === 'tables-attr' || !stylesheet) {
-      require('./lib/tables').attr(root, this);
+      require('./tables').attr(root, this);
     }
     if (stylesheet === 'layout-masters-attr' || !stylesheet) {
-      require('./lib/layoutMasters').attr(root, this);
+      require('./layoutMasters').attr(root, this);
     }
     if (stylesheet === 'toc-attr' || !stylesheet) {
-      require('./lib/toc').attr(root, this);
+      require('./toc').attr(root, this);
     }
     if (stylesheet === 'basic-settings' || !stylesheet) {
-      require('./lib/basic-settings').attr(root, this);
+      require('./basic-settings').attr(root, this);
     }
     if (stylesheet === 'lists-attr' || !stylesheet) {
-      require('./lib/lists').attr(root, this);
+      require('./lists').attr(root, this);
     }
     if (stylesheet === 'pr-domain-attr' || !stylesheet) {
-      require('./lib/pr-domain').attr(root, this);
+      require('./pr-domain').attr(root, this);
     }
     if (stylesheet === 'static-content-attr' || !stylesheet) {
-      require('./lib/staticContent').attr(root, this);
+      require('./staticContent').attr(root, this);
     }
 
     // ditagen.generator.indent(root)
@@ -741,5 +741,5 @@ class Generator {
 }
 
 module.exports = {
-  Generator: Generator,
+  Generator: Index,
 };

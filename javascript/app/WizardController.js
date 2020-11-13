@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import _ from 'lodash';
-import { Generator } from '../../generator';
-import { Version } from '../../lib/version';
+import { Generator } from '../generator';
+import { Version } from '../lib/version';
 import FileSaver from 'file-saver';
 
 export default function WizardController(store, pages) {

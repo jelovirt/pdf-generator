@@ -16,11 +16,11 @@
  */
 
 import { sprintf } from 'elementtree/lib/sprintf';
-import utils from './../node_modules/elementtree/lib/utils';
-import ElementPath from './../node_modules/elementtree/lib/elementpath';
+import utils from 'elementtree/lib/utils';
+import ElementPath from 'elementtree/lib/elementpath';
 import { TreeBuilder } from 'elementtree/lib/treebuilder';
 import { get_parser } from 'elementtree/lib/parser';
-import constants from './../node_modules/elementtree/lib/constants';
+import constants from 'elementtree/lib/constants';
 
 let element_ids = 0;
 
