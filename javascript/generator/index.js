@@ -5,18 +5,18 @@ import shell from './shell';
 import vars from './vars';
 import { Version } from '../lib/version';
 import { xsl, catalog, value } from './utils';
-import ET from './elementtree';
-import BasicSettings from './basic-settings';
-import Commons from './commons';
-import FrontMatter from './front-matter';
-import LayoutMasters from './layoutMasters';
-import Links from './links';
-import Lists from './lists';
-import PrDomain from './pr-domain';
-import StaticContent from './staticContent';
-import Tables from './tables';
-import Toc from './toc';
-import Topic from './topic';
+import * as ET from './elementtree';
+import * as BasicSettings from './basic-settings';
+import * as Commons from './commons';
+import * as FrontMatter from './front-matter';
+import * as LayoutMasters from './layoutMasters';
+import * as Links from './links';
+import * as Lists from './lists';
+import * as PrDomain from './pr-domain';
+import * as StaticContent from './staticContent';
+import * as Tables from './tables';
+import * as Toc from './toc';
+import * as Topic from './topic';
 
 class Index {
   properties;
@@ -515,32 +515,32 @@ class Index {
     });
 
     if (stylesheet === 'front-matter' || !stylesheet) {
-      FrontMatter.xsl(root, this);
+      FrontMatter.generate_custom(root, this);
     }
     if (stylesheet === 'tables' || !stylesheet) {
-      Tables.xsl(root, this);
+      Tables.generate_custom(root, this);
     }
     if (stylesheet === 'toc' || !stylesheet) {
-      Toc.xsl(root, this);
+      Toc.generate_custom(root, this);
     }
     if (stylesheet === 'commons' || !stylesheet) {
-      Commons.xsl(root, this);
-      Topic.xsl(root, this);
+      Commons.generate_custom(root, this);
+      Topic.generate_custom(root, this);
     }
     if (stylesheet === 'links' || !stylesheet) {
-      Links.xsl(root, this);
+      Links.generate_custom(root, this);
     }
     if (stylesheet === 'lists' || !stylesheet) {
-      Lists.xsl(root, this);
+      Lists.generate_custom(root, this);
     }
     if (stylesheet === 'static-content' || !stylesheet) {
-      StaticContent.xsl(root, this);
+      StaticContent.generate_custom(root, this);
     }
     if (stylesheet === 'layout-masters' || !stylesheet) {
-      LayoutMasters.xsl(root, this.options);
+      LayoutMasters.generate_custom(root, this.options);
     }
     if (stylesheet === 'pr-domain' || !stylesheet) {
-      PrDomain.xsl(root, this);
+      PrDomain.generate_custom(root, this);
     }
     if (!stylesheet) {
       if (!this.override_shell && this.toc_maximum_level) {
@@ -595,29 +595,29 @@ class Index {
     });
 
     if (stylesheet === 'commons-attr' || !stylesheet) {
-      Commons.attr(root, this);
-      Topic.attr(root, this);
+      Commons.generate_custom_attr(root, this);
+      Topic.generate_custom_attr(root, this);
     }
     if (stylesheet === 'tables-attr' || !stylesheet) {
-      Tables.attr(root, this);
+      Tables.generate_custom_attr(root, this);
     }
     if (stylesheet === 'layout-masters-attr' || !stylesheet) {
-      LayoutMasters.attr(root, this);
+      LayoutMasters.generate_custom_attr(root, this);
     }
     if (stylesheet === 'toc-attr' || !stylesheet) {
-      Toc.attr(root, this);
+      Toc.generate_custom_attr(root, this);
     }
     if (stylesheet === 'basic-settings' || !stylesheet) {
-      BasicSettings.attr(root, this);
+      BasicSettings.generate_custom_attr(root, this);
     }
     if (stylesheet === 'lists-attr' || !stylesheet) {
-      Lists.attr(root, this);
+      Lists.generate_custom_attr(root, this);
     }
     if (stylesheet === 'pr-domain-attr' || !stylesheet) {
-      PrDomain.attr(root, this);
+      PrDomain.generate_custom_attr(root, this);
     }
     if (stylesheet === 'static-content-attr' || !stylesheet) {
-      StaticContent.attr(root, this);
+      StaticContent.generate_custom_attr(root, this);
     }
 
     // ditagen.generator.indent(root)

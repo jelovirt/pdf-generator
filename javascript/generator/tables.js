@@ -2,9 +2,9 @@
 
 import _ from 'lodash';
 import ET from './elementtree';
-import { fo, xsl, copy_xml } from './utils';
+import { xsl, copy_xml } from './utils';
 
-function generate_custom(root, conf) {
+export function generate_custom(root, conf) {
   // empty table footer
   const table_footer_raw = `
   <xsl:template match="*[contains(@class, ' topic/tbody ')]" name="topic.tbody">
@@ -215,7 +215,7 @@ function generate_custom(root, conf) {
   }
 }
 
-function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root, conf) {
   // dl
   if (_.has(conf.style.dl, 'dl-type')) {
     conf.attribute_set(root, 'dl', 'e:dl');
@@ -261,8 +261,3 @@ function generate_custom_attr(root, conf) {
     name: 'background-color',
   }).text = 'inherit';
 }
-
-module.exports = {
-  xsl: generate_custom,
-  attr: generate_custom_attr,
-};

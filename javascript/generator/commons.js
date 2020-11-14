@@ -4,7 +4,7 @@ import _ from 'lodash';
 import ET from './elementtree';
 import { fo, xsl, copy_xml } from './utils';
 
-function generate_custom(root, conf) {
+export function generate_custom(root, conf) {
   const get_title_raw = `
   <xsl:template match="*[contains(@class, ' topic/topic ')]/*[contains(@class, ' topic/title ')]" mode="getTitle">
     <xsl:variable name="topic" select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]"/>
@@ -348,7 +348,7 @@ function generate_custom(root, conf) {
   }
 }
 
-function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root, conf) {
   ET.SubElement(root, xsl('variable'), {
     name: 'e:root-id',
     select: `'root'`,
@@ -421,8 +421,3 @@ function generate_custom_attr(root, conf) {
   // fig
   conf.attribute_set(root, 'fig', 'fig');
 }
-
-module.exports = {
-  xsl: generate_custom,
-  attr: generate_custom_attr,
-};

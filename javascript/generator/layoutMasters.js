@@ -123,13 +123,13 @@ const blank_raw = `
 </xsl:template>
 `;
 
-function generate_custom(root, conf) {
+export function generate_custom(root, conf) {
   if (!!conf.blank_pages) {
     copy_xml(root, blank_raw);
   }
 }
 
-function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root, conf) {
   // page column count
   if (conf.body_column_count) {
     ['region-body.odd', 'region-body.even'].forEach((a) => {
@@ -166,8 +166,3 @@ function generate_custom_attr(root, conf) {
     }
   }
 }
-
-module.exports = {
-  xsl: generate_custom,
-  attr: generate_custom_attr,
-};

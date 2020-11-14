@@ -3,7 +3,7 @@
 import ET from './elementtree';
 import { fo, xsl, copy_xml } from './utils';
 
-function generate_custom(root, conf) {
+export function generate_custom(root, conf) {
   const cover_metadata_raw = `
   <xsl:template name="e:cover-image">
     <xsl:for-each select="($map//*[contains(@class, ' topic/data ')][@name = '${conf.cover_image_metadata}']/*[contains(@class, ' topic/image ')])[1]">
@@ -87,7 +87,7 @@ function generate_custom(root, conf) {
   }
 }
 
-function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root, conf) {
   // if (stylesheet === "front-matter-attr" or not stylesheet) {
   // if (this.cover_image_name) {
   //     ET.SubElement(root, xsl('variable'), name="e:cover-image-path", select="concat($artworkPrefix, 'Customization/OpenTopic/common/artwork/%s'" % cover_image_name)
@@ -97,8 +97,3 @@ function generate_custom_attr(root, conf) {
   //     cover_image_path = ET.SubElement(root, xsl('variable'), name="e:cover-image")
   //     ET.SubElement(cover_image_path, xsl('apply-templates'), select="($map//*[contains(@class, ' topic/data ')][@name = '%s']/*[contains(@class, ' topic/image ')])[1]" % cover_image_metadata, mode="e:cover-image")
 }
-
-module.exports = {
-  xsl: generate_custom,
-  attr: generate_custom_attr,
-};

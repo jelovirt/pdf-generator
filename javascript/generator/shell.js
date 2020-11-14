@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { xsl } from './utils';
 import ET from './elementtree';
 
-function generate(conf) {
+export default function generate(conf) {
   const root = ET.Element(xsl('stylesheet'), {
     'xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
     'xmlns:e': conf.plugin_name,
@@ -192,5 +192,3 @@ function get_formatter_imports(formatter) {
     .map((i) => plugin + ':' + i)
     .value();
 }
-
-module.exports = generate;

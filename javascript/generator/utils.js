@@ -2,7 +2,7 @@
 
 import ET from './elementtree';
 
-function copy_xml(root, raw) {
+export function copy_xml(root, raw) {
   const r = ET.parse(
     `
 <xsl:stylesheet xmlns:fo="http://www.w3.org/1999/XSL/Format"
@@ -18,19 +18,19 @@ function copy_xml(root, raw) {
   }
 }
 
-function xsl(elem) {
+export function xsl(elem) {
   return '{http://www.w3.org/1999/XSL/Transform}' + elem;
 }
 
-function fo(elem) {
+export function fo(elem) {
   return '{http://www.w3.org/1999/XSL/Format}' + elem;
 }
 
-function catalog(elem) {
+export function catalog(elem) {
   return '{urn:oasis:names:tc:entity:xmlns:xml:catalog}' + elem;
 }
 
-function value(property, value) {
+export function value(property, value) {
   if (property === 'start-indent') {
     return `from-parent(start-indent) + ${value}`;
   } else if (property === 'end-indent') {
@@ -38,11 +38,3 @@ function value(property, value) {
   }
   return value;
 }
-
-module.exports = {
-  xsl: xsl,
-  fo: fo,
-  catalog: catalog,
-  copy_xml: copy_xml,
-  value: value,
-};

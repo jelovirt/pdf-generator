@@ -1,7 +1,7 @@
 'use strict';
 
 import ET from './elementtree';
-import { fo, xsl, copy_xml } from './utils';
+import { xsl, copy_xml } from './utils';
 
 const static_blanks_raw = `
 <xsl:template name="insertBodyStaticContents">
@@ -456,7 +456,7 @@ const static_blanks_raw = `
 </xsl:template>
 `;
 
-function generate_custom(root, conf) {
+export function generate_custom(root, conf) {
   if (!!conf.options.blank_pages) {
     copy_xml(root, static_blanks_raw);
   }
@@ -484,7 +484,6 @@ function generateInsert(root, header, flow, type) {
   const block = ET.SubElement(staticContent, 'fo:block', {
     'xsl:use-attribute-sets': `__body__${type}__${flow}`,
   });
-  console.log(header);
   header.forEach((field) => {
     switch (field) {
       case 'copyright':
@@ -516,7 +515,7 @@ function generateInsert(root, header, flow, type) {
   });
 }
 
-function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root, conf) {
   if (!!conf.options.blank_pages) {
     const attr = ET.SubElement(root, xsl('attribute-set'), {
       name: 'blank_page',
@@ -528,8 +527,3 @@ function generate_custom_attr(root, conf) {
       'center';
   }
 }
-
-module.exports = {
-  xsl: generate_custom,
-  attr: generate_custom_attr,
-};

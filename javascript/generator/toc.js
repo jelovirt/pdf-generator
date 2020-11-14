@@ -2,9 +2,9 @@
 
 import _ from 'lodash';
 import ET from './elementtree';
-import { fo, xsl, copy_xml } from './utils';
+import { xsl, copy_xml } from './utils';
 
-function generate_custom(root, conf) {
+export function generate_custom(root, conf) {
   const tocRaw = `
 <xsl:template match="*[contains(@class, ' bookmap/appendix ')]" mode="tocText">
   <xsl:param name="tocItemContent"/>
@@ -88,7 +88,7 @@ function generate_custom(root, conf) {
   }
 }
 
-function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root, conf) {
   //<xsl:variable name="toc.toc-indent" select="'30pt'"/>
   const tocIndentRaw = `
       <xsl:attribute-set name="__toc__indent">
@@ -194,8 +194,3 @@ function generate_custom_attr(root, conf) {
     _.difference(conf.properties, ['start-indent'])
   );
 }
-
-module.exports = {
-  xsl: generate_custom,
-  attr: generate_custom_attr,
-};

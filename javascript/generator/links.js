@@ -2,9 +2,9 @@
 
 import _ from 'lodash';
 import ET from './elementtree';
-import { fo, xsl, copy_xml } from './utils';
+import { copy_xml } from './utils';
 
-function generate_custom(root, conf) {
+export function generate_custom(root, conf) {
   const link_raw = `
   <xsl:template match="*[contains(@class,' topic/xref ')]" name="topic.xref">
     <fo:inline>
@@ -80,9 +80,4 @@ function generate_custom(root, conf) {
   }
 }
 
-function generate_custom_attr(root, conf) {}
-
-module.exports = {
-  xsl: generate_custom,
-  attr: generate_custom_attr,
-};
+export function generate_custom_attr(root, conf) {}

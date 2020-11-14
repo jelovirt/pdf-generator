@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import { fo, xsl, copy_xml } from './utils';
+import { xsl } from './utils';
 import ET from './elementtree';
 
-function generate_custom(root, conf) {}
+export function generate_custom(root, conf) {}
 
-function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root, conf) {
   ET.SubElement(root, 'xsl:param', {
     name: 'pdfFormatter',
     select: `'${conf.formatter}'`,
@@ -50,8 +50,3 @@ function generate_custom_attr(root, conf) {
       conf.style.body['start-indent'];
   }
 }
-
-module.exports = {
-  xsl: generate_custom,
-  attr: generate_custom_attr,
-};

@@ -201,7 +201,7 @@ const langs = {
   },
 };
 
-function generate_vars(lang, options) {
+export default function generate_vars(lang, options) {
   const root = ET.Element('vars', {
     xmlns: 'http://www.idiominc.com/opentopic/vars',
   });
@@ -364,5 +364,3 @@ function generate_vars(lang, options) {
   ET.register_namespace('', 'http://www.idiominc.com/opentopic/vars');
   return d.write();
 }
-
-module.exports = generate_vars;

@@ -2,9 +2,9 @@
 
 import _ from 'lodash';
 import ET from './elementtree';
-import { fo, xsl, copy_xml, value } from './utils';
+import { xsl, copy_xml, value } from './utils';
 
-function generate_custom(root, conf) {
+export function generate_custom(root, conf) {
   if (
     _.has(conf.style.codeblock, 'line-numbering') &&
     conf.style.codeblock['line-numbering']
@@ -20,7 +20,7 @@ function generate_custom(root, conf) {
   }
 }
 
-function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root, conf) {
   // codeblock
   const pre_attr = ET.SubElement(root, xsl('attribute-set'), {
     name: 'codeblock',
@@ -29,8 +29,3 @@ function generate_custom_attr(root, conf) {
     ET.SubElement(pre_attr, xsl('attribute'), { name: k }).text = value(k, v);
   });
 }
-
-module.exports = {
-  xsl: generate_custom,
-  attr: generate_custom_attr,
-};

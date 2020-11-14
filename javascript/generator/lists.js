@@ -2,9 +2,9 @@
 
 import _ from 'lodash';
 import ET from './elementtree';
-import { fo, xsl, copy_xml } from './utils';
+import { copy_xml } from './utils';
 
-function generate_custom(root, conf) {
+export function generate_custom(root, conf) {
   const list_raw = `
 <xsl:template match="*[contains(@class, ' topic/ul ')]/*[contains(@class, ' topic/li ')]">
     <xsl:variable name="depth" select="count(ancestor::*[contains(@class, ' topic/ul ')])"/>
@@ -65,7 +65,7 @@ function generate_custom(root, conf) {
   }
 }
 
-function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root, conf) {
   const list_raw = `
   <xsl:attribute-set name="ol">
     <xsl:attribute name="provisional-distance-between-starts">
@@ -103,8 +103,3 @@ function generate_custom_attr(root, conf) {
   root.append(ET.Comment('list'));
   copy_xml(root, list_raw);
 }
-
-module.exports = {
-  xsl: generate_custom,
-  attr: generate_custom_attr,
-};
