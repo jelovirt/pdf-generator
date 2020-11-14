@@ -4,7 +4,7 @@ import { styles } from '../lib/styles';
 import shell from './shell';
 import vars from './vars';
 import { Version } from '../lib/version';
-import { xsl, catalog, value } from './utils';
+import { catalog, value, xsl } from './utils';
 import * as ET from './elementtree';
 import * as BasicSettings from './basic-settings';
 import * as Commons from './commons';
@@ -50,7 +50,7 @@ export default class Generator {
   transtype;
   title_numbering;
 
-  constructor() {
+  constructor(conf) {
     this.properties = [
       'absolute-position',
       'active-state',
@@ -321,34 +321,68 @@ export default class Generator {
       'zh_CN',
     ];
 
-    this.ot_version = new Version('2.4');
-    this.plugin_name = undefined;
-    this.plugin_version = undefined;
-    this.style = {
-      ol: true,
+    //validate
+    if (!_.has(conf, 'ot_version')) {
+      throw new Error('version missing');
+    }
+    this.ot_version = new Version(conf.ot_version);
+    if (!_.has(conf, 'id')) {
+      throw new Error('id missing');
+    }
+    if (_.has(conf, 'plugin_name')) {
+      this.plugin_name = conf.plugin_name;
+    } else {
+      this.plugin_name = conf.id;
+    }
+    if (_.has(conf, 'plugin_version')) {
+      this.plugin_version = conf.plugin_version;
+    }
+    this.transtype = conf.transtype;
+
+    this.page = conf.configuration.page;
+    this.style = conf.configuration.style;
+    this.force_page_count = conf.configuration.force_page_count;
+    this.chapter_layout = conf.configuration.chapter_layout;
+    this.bookmark_style = conf.configuration.bookmark_style;
+    this.toc_maximum_level = conf.configuration.toc_maximum_level;
+    this.task_label = conf.configuration.task_label;
+    this.include_related_links = conf.configuration.include_related_links;
+    if (_.has(conf.configuration, 'body_column_count')) {
+      this.body_column_count = conf.configuration.body_column_count;
+    }
+    if (_.has(conf.configuration, 'index_column_count')) {
+      this.index_column_count = conf.configuration.index_column_count;
+    }
+    if (_.has(conf.configuration, 'column_gap')) {
+      this.column_gap = conf.configuration.column_gap;
+    }
+    this.mirror_page_margins = conf.configuration.mirror_page_margins;
+    //__dita_gen.dl = __config["dl"]
+    this.title_numbering = conf.configuration.title_numbering;
+    //__dita_gen.table_numbering = __config["table_numbering"]
+    //__dita_gen.figure_numbering = __config["figure_numbering"]
+    //__dita_gen.link_pagenumber = __config["link_pagenumber"]
+    this.table_continued = conf.configuration.table_continued;
+    this.formatter = conf.configuration.formatter;
+    this.override_shell = conf.configuration.override_shell;
+    //if ("cover_image" in self.request.arguments() && type(self.request.POST["cover_image"]) != unicode) {
+    //  __dita_gen.cover_image = self.request.get("cover_image")
+    //  __dita_gen.cover_image_name = self.request.POST["cover_image"].filename
+    //}
+    if (_.has(conf.configuration, 'cover_image_metadata')) {
+      this.cover_image_metadata = conf.configuration.cover_image_metadata;
+    }
+    if (_.has(conf.configuration, 'cover_image_topic')) {
+      this.cover_image_topic = conf.configuration.cover_image_topic;
+    }
+    this.header = conf.configuration.header;
+    this.footer = conf.configuration.footer;
+    if (_.has(conf.configuration, 'page_number')) {
+      this.page_number = conf.configuration.page_number;
+    }
+    this.options = {
+      blank_pages: conf.configuration.blank_pages,
     };
-    this.page = {};
-    this.force_page_count = undefined;
-    this.chapter_layout = undefined;
-    this.body_column_count = undefined;
-    this.index_column_count = undefined;
-    this.bookmark_style = undefined;
-    this.toc_maximum_level = 4;
-    this.task_label = false;
-    this.include_related_links = undefined;
-    this.column_gap = undefined;
-    this.mirror_page_margins = false;
-    this.table_continued = false;
-    this.formatter = 'ah';
-    this.override_shell = false;
-    this.cover_image = undefined;
-    this.cover_image_name = undefined;
-    this.cover_image_metadata = undefined;
-    this.cover_image_topic = undefined;
-    this.header = {};
-    this.footer = {};
-    this.page_number = undefined;
-    this.options = {};
 
     ET.register_namespace('xsl', 'http://www.w3.org/1999/XSL/Transform');
     ET.register_namespace('fo', 'http://www.w3.org/1999/XSL/Format');
