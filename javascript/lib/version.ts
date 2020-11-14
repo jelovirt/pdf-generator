@@ -3,7 +3,9 @@
 import _ from 'lodash';
 
 export class Version {
-  constructor(v) {
+  version: string;
+  tokens: number[];
+  constructor(v: string) {
     this.version = v;
     this.tokens = _(v.split('.')).map(Number).value();
   }
@@ -12,7 +14,7 @@ export class Version {
     return this.version;
   }
 
-  compareTo(other) {
+  compareTo(other: Version) {
     if (this.version === other.version) {
       return 0;
     } else {
