@@ -18,7 +18,7 @@ import * as Tables from './tables';
 import * as Toc from './toc';
 import * as Topic from './topic';
 
-class Index {
+export default class Generator {
   properties;
   variable_languages;
   ot_version;
@@ -750,7 +750,3 @@ class Index {
     });
   }
 }
-
-module.exports = {
-  Generator: Index,
-};
