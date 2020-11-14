@@ -4,20 +4,26 @@ DITA-OT PDF plug-in generator is a TypeScript/JavaScript program that generates 
 
 ## Development
 
-1.  Install dependencies and start development server
+1.  Install dependencies
     ```sh
     > nvm use
     > npm install
+    ```
+2.  Start development server
+    ```sh
     > npm start
     ```
     Generator UI is available at http://localhost:1234.
 
 ## Distribution
 
-1.  Install dependencies and run distribution build
+1.  Install dependencies
     ```sh
     > nvm use
     > npm install
+    ```
+2.  Run distribution build
+    ```sh
     > npm run build
     ```
     Distribution files are available in `dist` directory.
