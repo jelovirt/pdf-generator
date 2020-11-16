@@ -38,6 +38,7 @@ export type Model = {
     blank_pages: boolean;
     index_column_count: number;
     column_gap: Length;
+    title_numbering: boolean;
     force_page_count: 'auto' | 'even' | 'odd';
     chapter_layout: 'MINITOC' | 'BASIC';
     cover_image_metadata: string;
