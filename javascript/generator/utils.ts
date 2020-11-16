@@ -1,9 +1,10 @@
 'use strict';
 
-import ET from './elementtree';
+import { parse, Element } from './elementtree';
+import { Property } from '../lib/styles';
 
-export function copy_xml(root, raw) {
-  const r = ET.parse(
+export function copy_xml(root: Element, raw: string) {
+  const r = parse(
     `
 <xsl:stylesheet xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -18,19 +19,19 @@ export function copy_xml(root, raw) {
   }
 }
 
-export function xsl(elem) {
+export function xsl(elem: string) {
   return '{http://www.w3.org/1999/XSL/Transform}' + elem;
 }
 
-export function fo(elem) {
+export function fo(elem: string) {
   return '{http://www.w3.org/1999/XSL/Format}' + elem;
 }
 
-export function catalog(elem) {
+export function catalog(elem: string) {
   return '{urn:oasis:names:tc:entity:xmlns:xml:catalog}' + elem;
 }
 
-export function value(property, value) {
+export function value(property: Property, value: any) {
   if (property === 'start-indent') {
     return `from-parent(start-indent) + ${value}`;
   } else if (property === 'end-indent') {
