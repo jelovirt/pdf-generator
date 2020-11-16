@@ -1,6 +1,6 @@
 import JSZip from 'jszip';
 import _ from 'lodash';
-import { styles } from '../lib/styles';
+import { Property, Style, StyleName, styles } from '../lib/styles';
 import shell from './shell';
 import vars from './vars';
 import { Version } from '../lib/version';
@@ -17,14 +17,57 @@ import * as StaticContent from './staticContent';
 import * as Tables from './tables';
 import * as Toc from './toc';
 import * as Topic from './topic';
+import { Model } from '../app/Model';
+
+type Language =
+  | 'de'
+  | 'en'
+  | 'es'
+  | 'fi'
+  | 'fr'
+  | 'he'
+  | 'it'
+  | 'ja'
+  | 'nl'
+  | 'ro'
+  | 'ru'
+  | 'sv'
+  | 'zh_CN';
+
+type Options = {
+  blank_pages: boolean;
+};
+
+type TemplateName =
+  | 'layout-masters'
+  | 'front-matter'
+  | 'tables'
+  | 'toc'
+  | 'commons'
+  | 'links'
+  | 'lists'
+  | 'static-content'
+  | 'layout-masters'
+  | 'pr-domain';
+type AttrTemplateName =
+  | 'basic-settings'
+  | 'front-matter-attr'
+  | 'tables-attr'
+  | 'toc-attr'
+  | 'commons-attr'
+  | 'links-attr'
+  | 'lists-attr'
+  | 'static-content-attr'
+  | 'layout-masters-attr'
+  | 'pr-domain-attr';
 
 export default class Generator {
-  properties;
-  variable_languages;
+  properties: Property[];
+  variable_languages: Language[];
   ot_version;
   plugin_name;
   plugin_version;
-  style;
+  style: Record<StyleName, Record<Property, Style>>;
   page;
   force_page_count;
   chapter_layout;
@@ -39,18 +82,18 @@ export default class Generator {
   table_continued;
   formatter;
   override_shell;
-  cover_image;
-  cover_image_name;
+  // cover_image;
+  // cover_image_name;
   cover_image_metadata;
   cover_image_topic;
   header;
   footer;
   page_number;
-  options;
+  options: Options;
   transtype;
   title_numbering;
 
-  constructor(conf) {
+  constructor(conf: Model) {
     this.properties = [
       'absolute-position',
       'active-state',
@@ -380,9 +423,7 @@ export default class Generator {
     if (_.has(conf.configuration, 'page_number')) {
       this.page_number = conf.configuration.page_number;
     }
-    this.options = {
-      blank_pages: conf.configuration.blank_pages,
-    };
+    this.options = { ...conf.configuration };
 
     ET.register_namespace('xsl', 'http://www.w3.org/1999/XSL/Transform');
     ET.register_namespace('fo', 'http://www.w3.org/1999/XSL/Format');
@@ -403,9 +444,9 @@ export default class Generator {
     );
   }
 
-  default_style(type, property) {
+  default_style(type: StyleName, property: Property) {
     if (_.has(styles, [type, property])) {
-      return styles[type][property].default || undefined;
+      return styles[type][property]?.default || undefined;
     }
     return undefined;
   }
@@ -534,7 +575,7 @@ export default class Generator {
   /**
    * Generate plugin custom XSLT file.
    */
-  generate_custom(stylesheet) {
+  generate_custom(stylesheet: TemplateName) {
     const root = ET.Element(xsl('stylesheet'), {
       //"xmlns:xsl": "http://www.w3.org/1999/XSL/Transform",
       'xmlns:fo': 'http://www.w3.org/1999/XSL/Format',
@@ -595,13 +636,20 @@ export default class Generator {
   /**
    * Generate attribute set.
    */
-  attribute_set(root, style, attribute_set, properties, uses) {
+  attribute_set(
+    root: Element,
+    style: StyleName,
+    attribute_set: string,
+    properties: Property[],
+    uses?: string
+  ) {
     properties = properties || this.properties;
-    const attrs = { name: attribute_set };
+    const attrs: { [key: string]: string } = { name: attribute_set };
     if (uses !== undefined) {
       attrs['use-attribute-sets'] = uses;
     }
     const attrSet = ET.SubElement(root, xsl('attribute-set'), attrs);
+    //: Record<StyleName, Record<Property, Style>>;
     _.forEach(this.style[style], (v, p) => {
       if (_.includes(properties, p)) {
         ET.SubElement(attrSet, xsl('attribute'), {
@@ -615,7 +663,7 @@ export default class Generator {
   /**
    * Generate plugin custom XSLT file.
    */
-  generate_custom_attr(stylesheet) {
+  generate_custom_attr(stylesheet: AttrTemplateName) {
     const root = ET.Element(xsl('stylesheet'), {
       'xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
       'xmlns:e': this.plugin_name,
@@ -663,7 +711,7 @@ export default class Generator {
   /**
    * Run a file generation.
    */
-  run_generation(zip, func, filename) {
+  run_generation(zip: JSZip, func: any, filename: string) {
     const buf = func.apply(this, [this]);
     zip.file(filename, buf, {
       date: new Date(),
@@ -694,7 +742,7 @@ export default class Generator {
 
     // custom XSLT
     if (this.override_shell) {
-      const files = [
+      const files: TemplateName[] = [
         'front-matter',
         'commons',
         'tables',
@@ -713,7 +761,7 @@ export default class Generator {
           `${this.plugin_name}/xsl/fo/${s}.xsl`
         );
       });
-      ['layout-masters'].forEach((s) => {
+      ['layout-masters' as TemplateName].forEach((s) => {
         this.run_generation(
           zip,
           () => {
@@ -731,7 +779,7 @@ export default class Generator {
     }
     // custom XSLT attribute sets
     if (this.override_shell) {
-      const files = [
+      const files: AttrTemplateName[] = [
         'front-matter-attr',
         'commons-attr',
         'layout-masters-attr',
