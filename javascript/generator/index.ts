@@ -1,6 +1,6 @@
 import JSZip from 'jszip';
 import _ from 'lodash';
-import { Property, Style, StyleName, styles } from '../lib/styles';
+import { FoProperty, Property, Style, StyleName, styles } from '../lib/styles';
 import shell from './shell';
 import vars from './vars';
 import { Version } from '../lib/version';
@@ -69,7 +69,7 @@ type AttrTemplateName =
 
 export default class Generator {
   conf: Model;
-  properties: Property[] = [
+  properties: FoProperty[] = [
     'absolute-position',
     'active-state',
     'alignment-adjust',
@@ -536,17 +536,28 @@ export default class Generator {
       });
     }
     SubElement(root, 'require', { plugin: 'org.dita.pdf2' });
-    SubElement(root, 'feature', {
-      extension: 'dita.conductor.transtype.check',
-      value: this.transtype,
-    });
+    if (this.conf.ot_version === '3.5') {
+      SubElement(root, 'transtype', {
+        name: this.transtype,
+        extends: 'pdf',
+      });
+      SubElement(root, 'feature', {
+        extension: 'ant.import',
+        file: 'integrator.xml',
+      });
+    } else {
+      SubElement(root, 'feature', {
+        extension: 'dita.conductor.transtype.check',
+        value: this.transtype,
+      });
+      SubElement(root, 'feature', {
+        extension: 'dita.conductor.target.relative',
+        file: 'integrator.xml',
+      });
+    }
     SubElement(root, 'feature', {
       extension: 'dita.transtype.print',
       value: this.transtype,
-    });
-    SubElement(root, 'feature', {
-      extension: 'dita.conductor.target.relative',
-      file: 'integrator.xml',
     });
     //ditagen.generator.indent(root)
     const d = new ElementTree(root);
@@ -645,7 +656,7 @@ export default class Generator {
     root: Element,
     style: StyleName,
     attribute_set: string,
-    properties: Property[],
+    properties: FoProperty[],
     uses?: string
   ) {
     properties = properties || this.properties;

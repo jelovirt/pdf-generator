@@ -1,9 +1,8 @@
-import _ from 'lodash';
 import { xsl } from './utils';
-import ET from './elementtree';
+import { Comment, Element, ElementTree, SubElement } from './elementtree';
 
 export default function generate(conf) {
-  const root = ET.Element(xsl('stylesheet'), {
+  const root = Element(xsl('stylesheet'), {
     'xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
     'xmlns:e': conf.plugin_name,
     'xmlns:ditaarch': 'http://dita.oasis-open.org/architecture/2005/',
@@ -11,10 +10,10 @@ export default function generate(conf) {
     'xmlns:opentopic-func': 'http://www.idiominc.com/opentopic/exsl/function',
     version: '2.0',
     'exclude-result-prefixes': 'ditaarch opentopic e',
-    'e:version': conf.ot_version.toString(),
+    'e:version': conf.ot_version.version,
   });
 
-  root.append(ET.Comment('base imports'));
+  root.append(Comment('base imports'));
   const fs = [];
   fs.push('plugin:org.dita.base:xsl/common/dita-utilities.xsl');
   fs.push('plugin:org.dita.base:xsl/common/dita-textonly.xsl');
@@ -57,6 +56,10 @@ export default function generate(conf) {
     fs.push(`plugin:${conf.plugin_name}:xsl/fo/tables.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:xsl/fo/root-processing.xsl');
+  if (conf.ot_version.version === '3.5') {
+    fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/topic-attr.xsl');
+    fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/concept-attr.xsl');
+  }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/commons-attr.xsl');
   if (conf.override_shell) {
     fs.push(`plugin:${conf.plugin_name}:cfg/fo/attrs/commons-attr.xsl`);
@@ -115,6 +118,12 @@ export default function generate(conf) {
   fs.push('plugin:org.dita.pdf2:xsl/fo/markup-domain.xsl');
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/xml-domain-attr.xsl');
   fs.push('plugin:org.dita.pdf2:xsl/fo/xml-domain.xsl');
+  if (conf.ot_version.version === '3.5') {
+    fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/svg-domain-attr.xsl');
+    fs.push('plugin:org.dita.pdf2:xsl/fo/svg-domain.xsl');
+    fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/hazard-d-attr.xsl');
+    fs.push('plugin:org.dita.pdf2:xsl/fo/hazard-d.xsl');
+  }
 
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/static-content-attr.xsl');
   if (conf.override_shell) {
@@ -136,59 +145,72 @@ export default function generate(conf) {
   fs.push('plugin:org.dita.pdf2:xsl/fo/flagging-from-preprocess.xsl');
 
   fs.forEach((i) => {
-    ET.SubElement(root, xsl('import'), { href: i });
+    SubElement(root, xsl('import'), { href: i });
   });
 
-  root.append(ET.Comment('formatter specific imports'));
-  get_formatter_imports(conf.formatter).forEach((i) => {
-    ET.SubElement(root, xsl('import'), { href: i });
+  root.append(Comment('formatter specific imports'));
+  get_formatter_imports(conf).forEach((i) => {
+    SubElement(root, xsl('import'), { href: i });
   });
 
   if (!conf.override_shell) {
-    root.append(ET.Comment('configuration overrides'));
-    ET.SubElement(root, xsl('import'), { href: 'cfg:fo/attrs/custom.xsl' });
-    ET.SubElement(root, xsl('import'), { href: 'cfg:fo/xsl/custom.xsl' });
+    root.append(Comment('configuration overrides'));
+    SubElement(root, xsl('import'), { href: 'cfg:fo/attrs/custom.xsl' });
+    SubElement(root, xsl('import'), { href: 'cfg:fo/xsl/custom.xsl' });
   }
 
-  root.append(ET.Comment('parameters'));
+  root.append(Comment('parameters'));
 
   //ditagen.generator.indent(root)
-  const d = new ET.ElementTree(root);
+  const d = new ElementTree(root);
   return d.write({ indent: 2 });
 }
 
-function get_formatter_imports(formatter) {
+function get_formatter_imports(conf) {
   let imports = [];
   let plugin = 'plugin:org.dita.pdf2';
-  if (formatter === 'ah') {
-    plugin = plugin + '.axf';
-    imports = [
-      'cfg/fo/attrs/tables-attr_axf.xsl',
-      'cfg/fo/attrs/toc-attr_axf.xsl',
-      'cfg/fo/attrs/index-attr_axf.xsl',
-      'xsl/fo/root-processing_axf.xsl',
-      'xsl/fo/index_axf.xsl',
-    ];
-  } else if (formatter === 'fop') {
-    plugin = plugin + '.fop';
-    imports = [
-      'cfg/fo/attrs/commons-attr_fop.xsl',
-      'cfg/fo/attrs/tables-attr_fop.xsl',
-      'cfg/fo/attrs/toc-attr_fop.xsl',
-      'xsl/fo/root-processing_fop.xsl',
-      'xsl/fo/index_fop.xsl',
-    ];
-    imports.push('xsl/fo/tables_fop.xsl', 'xsl/fo/flagging_fop.xsl');
-  } else if (formatter === 'xep') {
-    plugin = plugin + '.xep';
-    imports = [
-      'cfg/fo/attrs/commons-attr_xep.xsl',
-      'cfg/fo/attrs/layout-masters-attr_xep.xsl',
-      'xsl/fo/root-processing_xep.xsl',
-      'xsl/fo/index_xep.xsl',
-    ];
+  switch (conf.formatter) {
+    case 'ah':
+      plugin = plugin + '.axf';
+      imports.push('cfg/fo/attrs/tables-attr_axf.xsl');
+      imports.push('cfg/fo/attrs/toc-attr_axf.xsl');
+      imports.push('cfg/fo/attrs/index-attr_axf.xsl');
+      imports.push('xsl/fo/root-processing_axf.xsl');
+      imports.push('xsl/fo/index_axf.xsl');
+      if (conf.ot_version.version === '3.5') {
+        imports.push('xsl/fo/topic_axf.xsl');
+      }
+      break;
+    case 'fop':
+      plugin = plugin + '.fop';
+      imports.push('cfg/fo/attrs/commons-attr_fop.xsl');
+      imports.push('cfg/fo/attrs/tables-attr_fop.xsl');
+      if (conf.ot_version.version !== '3.5') {
+        imports.push('cfg/fo/attrs/toc-attr_fop.xsl');
+      }
+      imports.push('xsl/fo/root-processing_fop.xsl');
+      imports.push('xsl/fo/index_fop.xsl');
+      if (conf.ot_version.version === '3.5') {
+        imports.push('xsl/fo/topic_fop.xsl');
+      }
+      imports.push('xsl/fo/tables_fop.xsl');
+      if (conf.ot_version.version !== '3.5') {
+        imports.push('xsl/fo/flagging_fop.xsl');
+      }
+      break;
+    case 'xep':
+      plugin = plugin + '.xep';
+      imports.push('cfg/fo/attrs/commons-attr_xep.xsl');
+      imports.push('cfg/fo/attrs/layout-masters-attr_xep.xsl');
+      if (conf.ot_version.version === '3.5') {
+        imports.push('cfg/fo/attrs/index-attr_xep.xsl');
+      }
+      imports.push('xsl/fo/root-processing_xep.xsl');
+      imports.push('xsl/fo/index_xep.xsl');
+      if (conf.ot_version.version === '3.5') {
+        imports.push('xsl/fo/topic_xep.xsl');
+      }
+      break;
   }
-  return _(imports)
-    .map((i) => plugin + ':' + i)
-    .value();
+  return imports.map((href) => plugin + ':' + href);
 }

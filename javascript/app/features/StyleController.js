@@ -181,10 +181,10 @@ export default function StyleController(store) {
         props[`border-${direction}-style`] = 'none';
       });
       directions.forEach((direction) => {
-        props[`border-${direction}-width`] = undefined;
+        props[`border-${direction}-width`] = '1pt';
       });
       directions.forEach((direction) => {
-        props[`border-${direction}-color`] = undefined;
+        props[`border-${direction}-color`] = 'black';
       });
     } else {
       directions.forEach((direction) => {

@@ -22,10 +22,11 @@ export function generate_custom(root, conf) {
 
 export function generate_custom_attr(root, conf) {
   // codeblock
-  const pre_attr = ET.SubElement(root, xsl('attribute-set'), {
-    name: 'codeblock',
-  });
-  _.forEach(conf.style.codeblock, (v, k) => {
-    ET.SubElement(pre_attr, xsl('attribute'), { name: k }).text = value(k, v);
-  });
+  // const pre_attr = ET.SubElement(root, xsl('attribute-set'), {
+  //   name: 'codeblock',
+  // });
+  conf.attribute_set(root, 'codeblock', 'codeblock');
+  // _.forEach(conf.style.codeblock, (v, k) => {
+  //   ET.SubElement(pre_attr, xsl('attribute'), { name: k }).text = value(k, v);
+  // });
 }
