@@ -114,7 +114,7 @@ export function getInitStore(): Model {
       column_gap: '12pt',
       title_numbering: true,
       force_page_count: 'even',
-      chapter_layout: 'MINITOC',
+      chapter_layout: 'BASIC',
       cover_image_metadata: 'cover-image',
       cover_image_topic: '',
       bookmark_style: 'COLLAPSED',

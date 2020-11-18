@@ -1,8 +1,11 @@
 import $ from 'jquery';
+import { Store } from 'redux';
 import template from '../../lib/page.html';
+import { Model } from '../Model';
 import { setAction } from '../Utils';
+import ChangeEvent = JQuery.ChangeEvent;
 
-export default function StyleController(store) {
+export default function StyleController(store: Store<Model>) {
   const $element = $(template);
 
   $element
@@ -50,8 +53,9 @@ export default function StyleController(store) {
     $element: $element,
   };
 
-  function pageSizeChangeHandler(event) {
-    const s = $element.find(':input[name=page-size]').val().split(' ');
+  function pageSizeChangeHandler(event: ChangeEvent) {
+    const value = $element.find(':input[name=page-size]').val() as string;
+    const s = value.split(' ');
     if ($element.find(':input[name=orientation]').val() === 'landscape') {
       s.reverse();
     }
@@ -67,25 +71,31 @@ export default function StyleController(store) {
     );
   }
 
-  function marginChangeHandler(margin) {
-    return (event) => {
+  function marginChangeHandler(
+    margin: 'top' | 'outside' | 'bottom' | 'inside'
+  ) {
+    return (event: ChangeEvent) => {
       const action = {
         configuration: {
-          page: {},
+          page: {
+            [margin]: $(event.target).val() || '20mm',
+          },
         },
       };
-      action.configuration.page[margin] = $(event.target).val() || '20mm';
       store.dispatch(setAction(action));
     };
   }
 
-  function columnChangeHandler(page) {
-    return (event) => {
-      const target = $(event.target);
+  function columnChangeHandler(
+    page: 'body_column_count' | 'index_column_count'
+  ) {
+    return (event: ChangeEvent) => {
+      const target = $(event.target!);
       const action = {
-        configuration: {},
+        configuration: {
+          [page]: Number(target.val()),
+        },
       };
-      action.configuration[page] = Number(target.val());
       store.dispatch(setAction(action));
       if (
         store.getState().configuration.body_column_count === 1 &&
@@ -106,21 +116,21 @@ export default function StyleController(store) {
     };
   }
 
-  function mirrorPageChangeHandler(event) {
+  function mirrorPageChangeHandler(event: ChangeEvent) {
     store.dispatch(
       setAction({
         configuration: {
-          mirror_page_margins: $(event.target).is(':checked'),
+          mirror_page_margins: $(event.target!).is(':checked'),
         },
       })
     );
   }
 
-  function columnGapChangeHandler(event) {
+  function columnGapChangeHandler(event: ChangeEvent) {
     store.dispatch(
       setAction({
         configuration: {
-          column_gap: $(event.target).val(),
+          column_gap: $(event.target!).val(),
         },
       })
     );
