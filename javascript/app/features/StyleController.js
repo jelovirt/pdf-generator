@@ -53,7 +53,6 @@ export default function StyleController(store) {
       f.toggle($(this).attr('data-style').split(' ').indexOf(style) !== -1);
     });
     const type = target.find(':selected').parent('optgroup.block');
-    const $blocks = view.$styleForm.find('.style-selector-block');
     if (type.length === 0) {
       view.$styleForm
         .find('.style-selector-block')
