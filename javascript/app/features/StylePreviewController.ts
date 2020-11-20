@@ -1,11 +1,14 @@
 import $ from 'jquery';
 import _ from 'lodash';
+import { Store } from 'redux';
 import { toPt } from '../../app/pdf-utils';
+// @ts-ignore
 import template from '../../lib/style-preview.html';
+import {Model} from "../Model";
 
 const f = 0.9;
 
-export default function StylePreviewController(store) {
+export default function StylePreviewController(store: Store<Model>) {
   const $element = $(template);
 
   return {
@@ -106,7 +109,7 @@ export default function StylePreviewController(store) {
               // support undefined values
               return true;
             }
-            v = String(toPt(v) * f) + 'px';
+            v = String(toPt(v)! * f) + 'px';
           }
           $element
             .find("*[class~='example-page-content-" + type + "']")
