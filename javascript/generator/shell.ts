@@ -1,7 +1,8 @@
 import { xsl } from './utils';
 import { Comment, Element, ElementTree, SubElement } from './elementtree';
+import Generator from './index';
 
-export default function generate(conf) {
+export default function generate(conf: Generator) {
   const root = Element(xsl('stylesheet'), {
     'xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
     'xmlns:e': conf.plugin_name,
@@ -166,7 +167,7 @@ export default function generate(conf) {
   return d.write({ indent: 2 });
 }
 
-function get_formatter_imports(conf) {
+function get_formatter_imports(conf: Generator) {
   let imports = [];
   let plugin = 'plugin:org.dita.pdf2';
   switch (conf.formatter) {

@@ -1,10 +1,11 @@
 'use strict';
 
 import _ from 'lodash';
-import ET from './elementtree';
+import { Comment, Element, SubElement } from './elementtree';
 import { xsl, copy_xml } from './utils';
+import Generator from './index';
 
-export function generate_custom(root, conf) {
+export function generate_custom(root: Element, conf: Generator) {
   const tocRaw = `
 <xsl:template match="*[contains(@class, ' bookmap/appendix ')]" mode="tocText">
   <xsl:param name="tocItemContent"/>
@@ -77,18 +78,18 @@ export function generate_custom(root, conf) {
 </xsl:template>
 `;
 
-  root.append(ET.Comment('toc'));
+  root.append(Comment('toc'));
   copy_xml(root, tocRaw);
 
   if (_.has(conf.style, 'toc_1.prefix') && !conf.style.toc_1.prefix) {
-    ET.SubElement(root, xsl('template'), {
+    SubElement(root, xsl('template'), {
       match: 'node()',
       mode: 'tocPrefix',
     });
   }
 }
 
-export function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root: Element, conf: Generator) {
   //<xsl:variable name="toc.toc-indent" select="'30pt'"/>
   const tocIndentRaw = `
       <xsl:attribute-set name="__toc__indent">

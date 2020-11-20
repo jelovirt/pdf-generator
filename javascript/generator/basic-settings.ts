@@ -1,52 +1,53 @@
 import _ from 'lodash';
 import { xsl } from './utils';
-import ET from './elementtree';
+import { Element, SubElement } from './elementtree';
+import Generator from './index';
 
-export function generate_custom(root, conf) {}
+export function generate_custom(root: Element, conf: Generator) {}
 
-export function generate_custom_attr(root, conf) {
-  ET.SubElement(root, 'xsl:param', {
+export function generate_custom_attr(root: Element, conf: Generator) {
+  SubElement(root, 'xsl:param', {
     name: 'pdfFormatter',
     select: `'${conf.formatter}'`,
   });
-  ET.SubElement(root, 'xsl:param', {
+  SubElement(root, 'xsl:param', {
     name: 'tocMaximumLevel',
     select: conf.toc_maximum_level,
   });
   // page size
-  ET.SubElement(root, xsl('variable'), { name: 'page-width' }).text =
+  SubElement(root, xsl('variable'), { name: 'page-width' }).text =
     conf.page.width;
-  ET.SubElement(root, xsl('variable'), { name: 'page-height' }).text =
+  SubElement(root, xsl('variable'), { name: 'page-height' }).text =
     conf.page.height;
   // mirror pages
   if (conf.mirror_page_margins) {
-    ET.SubElement(root, xsl('variable'), {
+    SubElement(root, xsl('variable'), {
       name: 'mirror-page-margins',
       select: 'true()',
     });
   }
   // page margins
   ['top', 'outside', 'bottom', 'inside'].forEach((k) => {
-    const v = conf.page[k];
+    const v = conf.page[k as 'top' | 'outside' | 'bottom' | 'inside'];
     if (v) {
-      ET.SubElement(root, xsl('variable'), {
+      SubElement(root, xsl('variable'), {
         name: `page-margin-${k}`,
       }).text = v;
     }
   });
   // font size
   if (_.has(conf.style.body, 'font-size')) {
-    ET.SubElement(root, xsl('variable'), { name: 'default-font-size' }).text =
+    SubElement(root, xsl('variable'), { name: 'default-font-size' }).text =
       conf.style.body['font-size'];
   }
   // line height
   if (_.has(conf.style.body, 'line-height')) {
-    ET.SubElement(root, xsl('variable'), { name: 'default-line-height' }).text =
+    SubElement(root, xsl('variable'), { name: 'default-line-height' }).text =
       conf.style.body['line-height'];
   }
   // body indent
   if (_.has(conf.style.body, 'start-indent')) {
-    ET.SubElement(root, xsl('variable'), { name: 'side-col-width' }).text =
+    SubElement(root, xsl('variable'), { name: 'side-col-width' }).text =
       conf.style.body['start-indent'];
   }
 }

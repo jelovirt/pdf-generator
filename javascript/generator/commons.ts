@@ -1,10 +1,11 @@
 'use strict';
 
 import _ from 'lodash';
-import ET from './elementtree';
+import { Comment, Element, SubElement } from './elementtree';
 import { fo, xsl, copy_xml } from './utils';
+import Generator from './index';
 
-export function generate_custom(root, conf) {
+export function generate_custom(root: Element, conf: Generator) {
   const get_title_raw = `
   <xsl:template match="*[contains(@class, ' topic/topic ')]/*[contains(@class, ' topic/title ')]" mode="getTitle">
     <xsl:variable name="topic" select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]"/>
@@ -229,22 +230,25 @@ export function generate_custom(root, conf) {
 `;
 
   copy_xml(root, commons_raw);
-  root.append(ET.Comment('title numbering'));
-  const number_levels = _([
+  root.append(Comment('title numbering'));
+  const number_levels = ([
     'topic',
     'topic_topic',
     'topic_topic_topic',
     'topic_topic_topic_topic',
-  ])
-    .map((s) => {
-      return (
-        _.has(conf.style, s) &&
-        _.has(conf.style[s], 'title-numbering') &&
-        conf.style[s]['title-numbering'] === true
-      );
-    })
-    .value();
-  ET.SubElement(root, xsl('variable'), {
+  ] as (
+    | 'topic'
+    | 'topic_topic'
+    | 'topic_topic_topic'
+    | 'topic_topic_topic_topic'
+  )[]).map((s) => {
+    return (
+      conf.style[s] !== undefined &&
+      conf.style[s]['title-numbering'] !== undefined &&
+      conf.style[s]['title-numbering'] === true
+    );
+  });
+  SubElement(root, xsl('variable'), {
     name: 'e:number-levels',
     select:
       '(' +
@@ -257,13 +261,13 @@ export function generate_custom(root, conf) {
   });
   copy_xml(root, get_title_raw);
   if (
-    _.has(conf.style.topic, 'title-numbering') &&
-    conf.style.topic['title-numbering'] !== true
+    conf.style.topic['title-numbering'] !== undefined &&
+    conf.style.topic['title-numbering'] !== 'true'
   ) {
     copy_xml(root, numberless_chapter_raw);
   }
   if (!(_.has(conf.style.note, 'icon') && conf.style.note.icon === 'icon')) {
-    root.append(ET.Comment('note'));
+    root.append(Comment('note'));
     copy_xml(root, note_raw);
   }
   if (conf.page_number) {
@@ -293,7 +297,7 @@ export function generate_custom(root, conf) {
     copy_xml(root, fig_raw);
   }
   if (conf.cover_image_topic) {
-    ET.SubElement(root, xsl('template'), {
+    SubElement(root, xsl('template'), {
       match: `*[contains(@class, ' topic/topic ')][@outputclass = '${conf.cover_image_topic}']`,
       priority: '1000',
     });
@@ -335,7 +339,7 @@ export function generate_custom(root, conf) {
             </fo:inline>
           </xsl:template>
           `;
-    root.append(ET.Comment('tm'));
+    root.append(Comment('tm'));
     const symbolScope = conf.style.tm['symbol-scope'];
     if (symbolScope === 'chapter') {
       copy_xml(root, tm_chapter_raw);
@@ -348,18 +352,18 @@ export function generate_custom(root, conf) {
   }
 }
 
-export function generate_custom_attr(root, conf) {
-  ET.SubElement(root, xsl('variable'), {
+export function generate_custom_attr(root: Element, conf: Generator) {
+  SubElement(root, xsl('variable'), {
     name: 'e:root-id',
     select: `'root'`,
     as: 'xs:string',
   });
   // force page count
   if (conf.force_page_count) {
-    const page_count_attr = ET.SubElement(root, xsl('attribute-set'), {
+    const page_count_attr = SubElement(root, xsl('attribute-set'), {
       name: '__force__page__count',
     });
-    ET.SubElement(page_count_attr, xsl('attribute'), {
+    SubElement(page_count_attr, xsl('attribute'), {
       name: 'force-page-count',
     }).text = conf.force_page_count;
   }
@@ -369,19 +373,19 @@ export function generate_custom_attr(root, conf) {
     'color',
     'text-align',
   ]);
-  ET.SubElement(foRootAttrSet, xsl('attribute'), {
+  SubElement(foRootAttrSet, xsl('attribute'), {
     name: 'id',
     select: '$e:root-id',
   });
   // titles
   _.forEach(conf.style, (e, k) => {
-    if (k.startsWith('topic') || k === 'section') {
-      const title_attr = ET.SubElement(root, xsl('attribute-set'), {
+    if (k.substring(0, 5) === 'topic' || k === 'section') {
+      const title_attr = SubElement(root, xsl('attribute-set'), {
         name: k.replace(/_/g, '.') + '.title',
       });
       _.forEach(e, (v, p) => {
         if (_.includes(conf.properties, p)) {
-          ET.SubElement(title_attr, xsl('attribute'), { name: p }).text = v;
+          SubElement(title_attr, xsl('attribute'), { name: p }).text = v;
         }
       });
     }
@@ -409,10 +413,10 @@ export function generate_custom_attr(root, conf) {
   // note
   conf.attribute_set(root, 'note', 'note__table');
   if (!(_.has(conf.style.note, 'icon') && conf.style.note.icon === 'icon')) {
-    const note_text = ET.SubElement(root, xsl('attribute-set'), {
+    const note_text = SubElement(root, xsl('attribute-set'), {
       name: 'notetextcolumn',
     });
-    ET.SubElement(note_text, xsl('attribute'), { name: 'column-number' }).text =
+    SubElement(note_text, xsl('attribute'), { name: 'column-number' }).text =
       '1';
   }
   // pre

@@ -341,7 +341,7 @@ export default class Generator {
   ot_version;
   plugin_name;
   plugin_version;
-  style: Record<StyleName, Record<Property, Style>>;
+  style: Record<StyleName, Record<Property, string | boolean>>;
   page;
   force_page_count;
   chapter_layout;
@@ -656,7 +656,7 @@ export default class Generator {
     root: Element,
     style: StyleName,
     attribute_set: string,
-    properties: FoProperty[],
+    properties?: FoProperty[],
     uses?: string
   ) {
     properties = properties || this.properties;
@@ -666,11 +666,13 @@ export default class Generator {
     }
     const attrSet = SubElement(root, xsl('attribute-set'), attrs);
     //: Record<StyleName, Record<Property, Style>>;
+
     _.forEach(this.style[style], (v, p) => {
-      if (_.includes(properties, p)) {
+      const property = p as FoProperty;
+      if (_.includes(properties, property)) {
         SubElement(attrSet, xsl('attribute'), {
-          name: p,
-        }).text = value(p, v);
+          name: property,
+        }).text = value(property, v);
       }
     });
     return attrSet;

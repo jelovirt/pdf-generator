@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@types/dragula": "^3.7.0",
+    "@types/elementtree": "^0.1.0",
     "@types/jquery": "^3.5.4",
     "@types/lodash": "^4.14.164",
     "@types/redux": "^3.6.0",

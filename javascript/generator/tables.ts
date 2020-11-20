@@ -1,10 +1,11 @@
 'use strict';
 
 import _ from 'lodash';
-import ET from './elementtree';
+import { Comment, Element, SubElement } from './elementtree';
 import { xsl, copy_xml } from './utils';
+import Generator from './index';
 
-export function generate_custom(root, conf) {
+export function generate_custom(root: Element, conf: Generator) {
   // empty table footer
   const table_footer_raw = `
   <xsl:template match="*[contains(@class, ' topic/tbody ')]" name="topic.tbody">
@@ -177,7 +178,7 @@ export function generate_custom(root, conf) {
   </fo:block>
 </xsl:template>`;
 
-  root.append(ET.Comment('table'));
+  root.append(Comment('table'));
   // caption numbering
   const tableCaptionNumber = _.get(conf.style.table, 'caption-number');
   switch (tableCaptionNumber) {
@@ -206,58 +207,58 @@ export function generate_custom(root, conf) {
   }
   if (_.has(conf.style.dl, 'dl-type')) {
     if (conf.style.dl['dl-type'] === 'list') {
-      root.append(ET.Comment('dl'));
+      root.append(Comment('dl'));
       copy_xml(root, dl_list_raw);
     } else if (conf.style.dl['dl-type'] === 'html') {
-      root.append(ET.Comment('dl'));
+      root.append(Comment('dl'));
       copy_xml(root, dl_html_raw);
     }
   }
 }
 
-export function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root: Element, conf: Generator) {
   // dl
   if (_.has(conf.style.dl, 'dl-type')) {
     conf.attribute_set(root, 'dl', 'e:dl');
-    const dt_attr = ET.SubElement(root, xsl('attribute-set'), {
+    const dt_attr = SubElement(root, xsl('attribute-set'), {
       name: 'e:dlentry.dt__content',
     });
-    ET.SubElement(dt_attr, xsl('attribute'), { name: 'font-weight' }).text =
+    SubElement(dt_attr, xsl('attribute'), { name: 'font-weight' }).text =
       'bold';
-    ET.SubElement(dt_attr, xsl('attribute'), { name: 'keep-with-next' }).text =
+    SubElement(dt_attr, xsl('attribute'), { name: 'keep-with-next' }).text =
       'always';
-    const dd_attr = ET.SubElement(root, xsl('attribute-set'), {
+    const dd_attr = SubElement(root, xsl('attribute-set'), {
       name: 'e:dlentry.dd__content',
     });
     if (conf.style.dl['dl-type'] === 'html') {
-      ET.SubElement(dd_attr, xsl('attribute'), { name: 'start-indent' }).text =
+      SubElement(dd_attr, xsl('attribute'), { name: 'start-indent' }).text =
         'from-parent(start-indent) + 5mm';
     }
   }
   // table continued
   if (conf.table_continued) {
-    const table_continued_attr = ET.SubElement(root, xsl('attribute-set'), {
+    const table_continued_attr = SubElement(root, xsl('attribute-set'), {
       name: 'e:tfoot.row.entry.continued',
     });
-    ET.SubElement(table_continued_attr, xsl('attribute'), {
+    SubElement(table_continued_attr, xsl('attribute'), {
       name: 'border-right-style',
     }).text = 'hidden';
-    ET.SubElement(table_continued_attr, xsl('attribute'), {
+    SubElement(table_continued_attr, xsl('attribute'), {
       name: 'border-left-style',
     }).text = 'hidden';
-    ET.SubElement(table_continued_attr, xsl('attribute'), {
+    SubElement(table_continued_attr, xsl('attribute'), {
       name: 'text-align',
     }).text = 'end';
-    ET.SubElement(table_continued_attr, xsl('attribute'), {
+    SubElement(table_continued_attr, xsl('attribute'), {
       name: 'font-style',
     }).text = 'italic';
   }
   // table
   conf.attribute_set(root, 'table', 'table.tgroup');
-  const thead_row_entry_attr = ET.SubElement(root, xsl('attribute-set'), {
+  const thead_row_entry_attr = SubElement(root, xsl('attribute-set'), {
     name: 'thead.row.entry',
   });
-  ET.SubElement(thead_row_entry_attr, xsl('attribute'), {
+  SubElement(thead_row_entry_attr, xsl('attribute'), {
     name: 'background-color',
   }).text = 'inherit';
 }

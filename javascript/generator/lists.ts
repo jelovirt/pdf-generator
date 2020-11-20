@@ -1,10 +1,11 @@
 'use strict';
 
 import _ from 'lodash';
-import ET from './elementtree';
+import { Comment, Element } from './elementtree';
 import { copy_xml } from './utils';
+import Generator from './index';
 
-export function generate_custom(root, conf) {
+export function generate_custom(root: Element, conf: Generator) {
   const list_raw = `
 <xsl:template match="*[contains(@class, ' topic/ul ')]/*[contains(@class, ' topic/li ')]">
     <xsl:variable name="depth" select="count(ancestor::*[contains(@class, ' topic/ul ')])"/>
@@ -60,12 +61,12 @@ export function generate_custom(root, conf) {
 `;
 
   if (_.has(conf.style, 'ol') || _.has(conf.style, 'ul')) {
-    root.append(ET.Comment('list'));
+    root.append(Comment('list'));
     copy_xml(root, list_raw);
   }
 }
 
-export function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root: Element, conf: Generator) {
   const list_raw = `
   <xsl:attribute-set name="ol">
     <xsl:attribute name="provisional-distance-between-starts">
@@ -100,6 +101,6 @@ export function generate_custom_attr(root, conf) {
   </xsl:template>
 `;
 
-  root.append(ET.Comment('list'));
+  root.append(Comment('list'));
   copy_xml(root, list_raw);
 }

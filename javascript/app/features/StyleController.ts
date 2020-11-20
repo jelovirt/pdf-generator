@@ -119,7 +119,11 @@ export default function StyleController(store: Store<Model>) {
     property: Property,
     value: boolean | number | string
   ) {
-    if (!(styles[element] && styles[element][property])) {
+    if (
+      !(
+        styles[element] !== undefined && styles[element][property] !== undefined
+      )
+    ) {
       return value;
     }
     switch (typeof styles[element][property]!.default) {

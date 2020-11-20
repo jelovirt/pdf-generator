@@ -1,10 +1,10 @@
 'use strict';
 
 import _ from 'lodash';
-import ET from './elementtree';
 import { xsl, copy_xml, value } from './utils';
+import Generator from './index';
 
-export function generate_custom(root, conf) {
+export function generate_custom(root: Element, conf: Generator) {
   if (
     _.has(conf.style.codeblock, 'line-numbering') &&
     conf.style.codeblock['line-numbering']
@@ -20,7 +20,7 @@ export function generate_custom(root, conf) {
   }
 }
 
-export function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root: Element, conf: Generator) {
   // codeblock
   // const pre_attr = ET.SubElement(root, xsl('attribute-set'), {
   //   name: 'codeblock',

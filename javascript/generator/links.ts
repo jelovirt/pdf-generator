@@ -1,10 +1,11 @@
 'use strict';
 
 import _ from 'lodash';
-import ET from './elementtree';
+import { Comment, Element } from './elementtree';
 import { copy_xml } from './utils';
+import Generator from './index';
 
-export function generate_custom(root, conf) {
+export function generate_custom(root: Element, conf: Generator) {
   const link_raw = `
   <xsl:template match="*[contains(@class,' topic/xref ')]" name="topic.xref">
     <fo:inline>
@@ -75,9 +76,9 @@ export function generate_custom(root, conf) {
     _.has(conf.style.link, 'link-url') &&
     conf.style.link['link-url'] === true
   ) {
-    root.append(ET.Comment('link'));
+    root.append(Comment('link'));
     copy_xml(root, link_raw);
   }
 }
 
-export function generate_custom_attr(root, conf) {}
+export function generate_custom_attr(root: Element, conf: Generator) {}

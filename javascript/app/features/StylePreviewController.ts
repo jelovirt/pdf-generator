@@ -4,7 +4,7 @@ import { Store } from 'redux';
 import { toPt } from '../../app/pdf-utils';
 // @ts-ignore
 import template from '../../lib/style-preview.html';
-import {Model} from "../Model";
+import { Model } from '../Model';
 
 const f = 0.9;
 

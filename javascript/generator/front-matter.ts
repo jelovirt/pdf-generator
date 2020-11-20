@@ -1,9 +1,10 @@
 'use strict';
 
-import ET from './elementtree';
+import { Comment, Element, SubElement } from './elementtree';
 import { fo, xsl, copy_xml } from './utils';
+import Generator from './index';
 
-export function generate_custom(root, conf) {
+export function generate_custom(root: Element, conf: Generator) {
   const cover_metadata_raw = `
   <xsl:template name="e:cover-image">
     <xsl:for-each select="($map//*[contains(@class, ' topic/data ')][@name = '${conf.cover_image_metadata}']/*[contains(@class, ' topic/image ')])[1]">
@@ -70,16 +71,17 @@ export function generate_custom(root, conf) {
 `;
 
   if (
-    conf.cover_image_name ||
+    // conf.cover_image_name ||
     conf.cover_image_metadata ||
     conf.cover_image_topic
   ) {
-    root.append(ET.Comment('cover'));
+    root.append(Comment('cover'));
     copy_xml(root, cover_raw_2);
     //copy_xml(root, cover_contents_raw)
-    if (conf.cover_image_name) {
-      copy_xml(root, cover_file_raw);
-    } else if (conf.cover_image_metadata) {
+    // if (conf.cover_image_name) {
+    //   copy_xml(root, cover_file_raw);
+    // } else
+    if (conf.cover_image_metadata) {
       copy_xml(root, cover_metadata_raw);
     } else if (conf.cover_image_topic) {
       copy_xml(root, cover_topic_raw);
@@ -87,13 +89,13 @@ export function generate_custom(root, conf) {
   }
 }
 
-export function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root: Element, conf: Generator) {
   // if (stylesheet === "front-matter-attr" or not stylesheet) {
   // if (this.cover_image_name) {
-  //     ET.SubElement(root, xsl('variable'), name="e:cover-image-path", select="concat($artworkPrefix, 'Customization/OpenTopic/common/artwork/%s'" % cover_image_name)
+  //     SubElement(root, xsl('variable'), name="e:cover-image-path", select="concat($artworkPrefix, 'Customization/OpenTopic/common/artwork/%s'" % cover_image_name)
   // el
   // if (this.cover_image_metadata) {
-  //    cover_image_path = ET.SubElement(root, xsl('variable'), name="e:cover-image-path", select="($map//*[contains(@class, ' topic/data ')][@name = '%s'])[1]/@href" % cover_image_metadata)
-  //     cover_image_path = ET.SubElement(root, xsl('variable'), name="e:cover-image")
-  //     ET.SubElement(cover_image_path, xsl('apply-templates'), select="($map//*[contains(@class, ' topic/data ')][@name = '%s']/*[contains(@class, ' topic/image ')])[1]" % cover_image_metadata, mode="e:cover-image")
+  //    cover_image_path = SubElement(root, xsl('variable'), name="e:cover-image-path", select="($map//*[contains(@class, ' topic/data ')][@name = '%s'])[1]/@href" % cover_image_metadata)
+  //     cover_image_path = SubElement(root, xsl('variable'), name="e:cover-image")
+  //     SubElement(cover_image_path, xsl('apply-templates'), select="($map//*[contains(@class, ' topic/data ')][@name = '%s']/*[contains(@class, ' topic/image ')])[1]" % cover_image_metadata, mode="e:cover-image")
 }
