@@ -82,10 +82,9 @@ export default function StyleController(store: Store<Model>) {
    */
   function readFromModel(type: StyleName) {
     const currentStyle = store.getState().configuration.style[type];
-    console.log(currentStyle);
     for (let i = 0; i < allFields.length; i++) {
       const property = allFields[i];
-      let value = currentStyle[property] as any;
+      let value = currentStyle[property];
       // // if no value, inherit from body
       // if((property.data('inherit') !== undefined || property.data('inherit') !== null) &&
       //   (property.val() === undefined || property.val() === null || property.val() === "")) {
@@ -168,7 +167,7 @@ export default function StyleController(store: Store<Model>) {
           },
         },
       },
-    } as any;
+    };
     _.forEach(styles, (elementValue: any, element: any) => {
       const def = elementValue[field];
       if (
