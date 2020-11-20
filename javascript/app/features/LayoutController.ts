@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import { Store } from 'redux';
+// @ts-ignore
 import template from '../../lib/layout.html';
 import { Model } from '../Model';
 import { setAction } from '../Utils';

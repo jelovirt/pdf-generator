@@ -1,4 +1,5 @@
 import $ from 'jquery';
+// @ts-ignore
 import template from '../../lib/environment.html';
 import { setAction } from '../Utils';
 import { Model } from '../Model';

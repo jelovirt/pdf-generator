@@ -523,7 +523,7 @@ function getStyles(): Record<StyleName, Partial<Record<Property, Style>>> {
       'space-before': { default: '15pt', inherit: undefined },
       'space-after': { default: undefined, inherit: 'body' },
       'text-align': { default: undefined, inherit: 'body' },
-      'start-indent': { default: '31pt', inherit: 'body' }, //+6pt
+      'start-indent': { default: undefined, inherit: 'body' },
       'line-height': { default: undefined, inherit: 'body' },
       // custom
       'line-numbering': { default: false, inherit: undefined },

@@ -33,7 +33,7 @@ export default function StyleView() {
     store.change(setState);
     store.on('reset', setState);
     $styleForm.find('.btn-text-align').click((event) => {
-      const value = $(event.currentTarget).val()
+      const value = $(event.currentTarget).val();
       store.val(value).trigger('change');
     });
   }

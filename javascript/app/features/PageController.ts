@@ -18,34 +18,42 @@ export default function StyleController(store: Store<Model>) {
     .change();
   $element
     .find(':input[name=page-margin-top]')
+    .val(store.getState().configuration.page.top)
     .change(marginChangeHandler('top'))
     .change();
   $element
     .find(':input[name=page-margin-outside]')
+    .val(store.getState().configuration.page.outside)
     .change(marginChangeHandler('outside'))
     .change();
   $element
     .find(':input[name=page-margin-bottom]')
+    .val(store.getState().configuration.page.bottom)
     .change(marginChangeHandler('bottom'))
     .change();
   $element
     .find(':input[name=page-margin-inside]')
+    .val(store.getState().configuration.page.inside)
     .change(marginChangeHandler('inside'))
     .change();
   $element
     .find(':input[name=mirror-page-margins]')
+    .prop('checked', store.getState().configuration.mirror_page_margins)
     .change(mirrorPageChangeHandler)
     .change();
   $element
     .find(':input[name=body-column-count]')
+    .val(store.getState().configuration.body_column_count)
     .change(columnChangeHandler('body_column_count'))
     .change();
   $element
     .find(':input[name=index-column-count]')
+    .val(store.getState().configuration.index_column_count)
     .change(columnChangeHandler('index_column_count'))
     .change();
   $element
     .find(':input[name=column-gap]')
+    .val(store.getState().configuration.column_gap)
     .change(columnGapChangeHandler)
     .change();
 

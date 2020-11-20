@@ -7,6 +7,7 @@ export default function CoverHandler(store) {
 
   $element
     .find(':input[name=cover_image_metadata]')
+    .val(store.getState().configuration.cover_image_metadata)
     .change((event) => {
       store.dispatch(
         setAction({
@@ -19,6 +20,7 @@ export default function CoverHandler(store) {
     .change();
   $element
     .find(':input[name=cover_image_topic]')
+    .val(store.getState().configuration.cover_image_topic)
     .change((event) => {
       store.dispatch(
         setAction({
