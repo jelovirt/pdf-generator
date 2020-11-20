@@ -1,8 +1,12 @@
 import $ from 'jquery';
+// @ts-ignore
 import template from '../../lib/cover.html';
 import { setAction } from '../Utils';
+import { Model } from '../Model';
+import { Store } from 'redux';
+import ChangeEvent = JQuery.ChangeEvent;
 
-export default function CoverHandler(store) {
+export default function CoverHandler(store: Store<Model>) {
   const $element = $(template);
 
   $element
@@ -37,7 +41,7 @@ export default function CoverHandler(store) {
     $element: $element,
   };
 
-  function coverChangeHandler(event) {
+  function coverChangeHandler(event: ChangeEvent) {
     const target = $(event.target);
     const $all = $element.find(
       '#cover_image_file, #cover_image_metadata, #cover_image_topic'
@@ -52,10 +56,12 @@ export default function CoverHandler(store) {
       .prop('disabled', true)
       .hide()
       .each((i, elem) => {
+        const field = $(elem).attr('id')!;
         const action = {
-          configuration: {},
+          configuration: {
+            [field]: undefined,
+          },
         };
-        action.configuration[$(elem).attr('id')] = undefined;
         store.dispatch(setAction(action));
       });
   }

@@ -1,10 +1,13 @@
 import $ from 'jquery';
 import template from '../../lib/metadata.html';
 import { setAction, setError, setOk } from '../Utils';
+import { Model } from '../Model';
+import { Store } from 'redux';
+import ChangeEvent = JQuery.ChangeEvent;
 
 const pluginPatter = new RegExp('[a-zA-Z\\-_]+(\\.[a-zA-Z\\-_]+)*');
 
-export default function MetadataController(store) {
+export default function MetadataController(store: Store<Model>) {
   const $element = $(template);
 
   $element.find(":input[name='id']").change(idChangeHandler);
@@ -17,7 +20,7 @@ export default function MetadataController(store) {
     $element: $element,
   };
 
-  function idChangeHandler(event) {
+  function idChangeHandler(event: ChangeEvent) {
     store.dispatch(
       setAction({
         id: $(event.target).val(),
@@ -25,21 +28,22 @@ export default function MetadataController(store) {
     );
   }
 
-  function transtypeChangeHandler(event) {
+  function transtypeChangeHandler(event: ChangeEvent) {
     store.dispatch(
       setAction({
         transtype: $(event.target).val(),
       })
     );
-    if (!pluginPatter.test(store.getState().transtype)) {
+    const transtype = store.getState().transtype;
+    if (transtype !== null && pluginPatter.test(transtype)) {
+      setOk($(event.target));
+    } else {
       //!namePattern.test(val)
       setError(
         $(event.target),
         $('<span>Not a valid XML name</span>'),
         'Type ID must be a valid XML name.'
       );
-    } else {
-      setOk($(event.target));
     }
   }
 

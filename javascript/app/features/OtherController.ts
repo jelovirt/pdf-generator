@@ -1,8 +1,11 @@
 import $ from 'jquery';
+import { Store } from 'redux';
+// @ts-ignore
 import template from '../../lib/other.html';
+import { Model } from '../Model';
 import { setAction } from '../Utils';
 
-export default function OtherHandler(store) {
+export default function OtherHandler(store: Store<Model>) {
   const $element = $(template);
 
   $element
@@ -33,7 +36,7 @@ export default function OtherHandler(store) {
     .change();
   $element
     .find(':input[name=task-label]')
-    .val(store.getState().configuration.task_label)
+    .prop('checked', store.getState().configuration.task_label)
     .change((event) => {
       store.dispatch(
         setAction({
@@ -59,7 +62,7 @@ export default function OtherHandler(store) {
     .change();
   $element
     .find(':input[name=table-continued]')
-    .val(store.getState().configuration.table_continued)
+    .prop('checked', store.getState().configuration.table_continued)
     .change((event) => {
       store.dispatch(
         setAction({
