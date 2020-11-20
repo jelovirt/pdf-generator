@@ -279,7 +279,7 @@ export type Property = FoProperty | CustomProperty;
 
 export type Style =
   | {
-      default: string | boolean;
+      default: string | boolean | number;
       inherit: StyleName | undefined;
     }
   | {

@@ -1,4 +1,5 @@
 import $ from 'jquery';
+// @ts-ignore
 import template from '../../lib/styles.html';
 
 export default function StyleView() {
@@ -33,12 +34,16 @@ export default function StyleView() {
     store.change(setState);
     store.on('reset', setState);
     $styleForm.find('.btn-text-align').click((event) => {
-      const value = $(event.currentTarget).val();
+      const value = $(event.currentTarget).val()!;
       store.val(value).trigger('change');
     });
   }
 
-  function initButton(type, on, off) {
+  function initButton(
+    type: 'font-weight' | 'font-style' | 'text-decoration',
+    on: 'bold' | 'italic' | 'underline',
+    off: 'normal' | 'none'
+  ) {
     const store = $styleForm.find('#' + type);
     const button = $styleForm.find('.btn-' + type);
 
