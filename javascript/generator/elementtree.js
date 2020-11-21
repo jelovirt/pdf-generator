@@ -15,12 +15,12 @@
  *
  */
 
-import { sprintf } from 'elementtree/lib/sprintf';
-import utils from 'elementtree/lib/utils';
-import ElementPath from 'elementtree/lib/elementpath';
-import { TreeBuilder } from 'elementtree/lib/treebuilder';
-import { get_parser } from 'elementtree/lib/parser';
-import constants from 'elementtree/lib/constants';
+const { sprintf } = require('elementtree/lib/sprintf');
+const utils = require('elementtree/lib/utils');
+const ElementPath = require('elementtree/lib/elementpath');
+const { TreeBuilder } = require('elementtree/lib/treebuilder');
+const { get_parser } = require('elementtree/lib/parser');
+const constants = require('elementtree/lib/constants');
 
 let element_ids = 0;
 

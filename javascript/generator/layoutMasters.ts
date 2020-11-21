@@ -1,7 +1,8 @@
 'use strict';
 
-import ET from './elementtree';
+import { Element, SubElement } from './elementtree';
 import { xsl, copy_xml } from './utils';
+import Generator from './index';
 
 const blank_raw = `
 <xsl:variable name="blank-pages" select="true()"/>
@@ -123,45 +124,45 @@ const blank_raw = `
 </xsl:template>
 `;
 
-export function generate_custom(root, conf) {
-  if (!!conf.blank_pages) {
+export function generate_custom(root: Element, conf: Generator) {
+  if (!!conf.conf.configuration.blank_pages) {
     copy_xml(root, blank_raw);
   }
 }
 
-export function generate_custom_attr(root, conf) {
+export function generate_custom_attr(root: Element, conf: Generator) {
   // page column count
   if (conf.body_column_count) {
     ['region-body.odd', 'region-body.even'].forEach((a) => {
-      const region_body_attr = ET.SubElement(root, xsl('attribute-set'), {
+      const region_body_attr = SubElement(root, xsl('attribute-set'), {
         name: a,
       });
-      ET.SubElement(region_body_attr, xsl('attribute'), {
+      SubElement(region_body_attr, xsl('attribute'), {
         name: 'column-count',
-      }).text = conf.body_column_count;
+      }).text = conf.body_column_count!.toString();
       if (conf.column_gap) {
-        ET.SubElement(region_body_attr, xsl('attribute'), {
+        SubElement(region_body_attr, xsl('attribute'), {
           name: 'column-gap',
         }).text = conf.column_gap;
       }
     });
     let atts = ['region-bodyfrontmatter.odd', 'region-bodyfrontmatter.even'];
     atts.forEach((a) => {
-      const region_body_attr = ET.SubElement(root, xsl('attribute-set'), {
+      const region_body_attr = SubElement(root, xsl('attribute-set'), {
         name: a,
       });
-      ET.SubElement(region_body_attr, xsl('attribute'), {
+      SubElement(region_body_attr, xsl('attribute'), {
         name: 'column-count',
       }).text = '1';
     });
     if (conf.index_column_count) {
       ['region-bodyindex.odd', 'region-bodyindex.even'].forEach((a) => {
-        const region_body_attr = ET.SubElement(root, xsl('attribute-set'), {
+        const region_body_attr = SubElement(root, xsl('attribute-set'), {
           name: a,
         });
-        ET.SubElement(region_body_attr, xsl('attribute'), {
+        SubElement(region_body_attr, xsl('attribute'), {
           name: 'column-count',
-        }).text = conf.index_column_count;
+        }).text = conf.index_column_count!.toString();
       });
     }
   }

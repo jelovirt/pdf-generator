@@ -15,6 +15,7 @@ import {
 import * as BasicSettings from './basic-settings';
 import * as Commons from './commons';
 import * as FrontMatter from './front-matter';
+// @ts-ignore
 import * as LayoutMasters from './layoutMasters';
 import * as Links from './links';
 import * as Lists from './lists';
@@ -483,7 +484,7 @@ export default class Generator {
     });
     SubElement(init, 'property', {
       name: 'pdf2.i18n.skip',
-      value: true,
+      value: 'true',
     });
     if (this.override_shell) {
       SubElement(init, 'property', {
@@ -538,7 +539,7 @@ export default class Generator {
     SubElement(root, 'require', { plugin: 'org.dita.pdf2' });
     if (this.conf.ot_version === '3.5') {
       SubElement(root, 'transtype', {
-        name: this.transtype,
+        name: this.transtype ?? undefined,
         extends: 'pdf',
       });
       SubElement(root, 'feature', {
@@ -548,7 +549,7 @@ export default class Generator {
     } else {
       SubElement(root, 'feature', {
         extension: 'dita.conductor.transtype.check',
-        value: this.transtype,
+        value: this.transtype ?? undefined,
       });
       SubElement(root, 'feature', {
         extension: 'dita.conductor.target.relative',
@@ -557,7 +558,7 @@ export default class Generator {
     }
     SubElement(root, 'feature', {
       extension: 'dita.transtype.print',
-      value: this.transtype,
+      value: this.transtype ?? undefined,
     });
     //ditagen.generator.indent(root)
     const d = new ElementTree(root);

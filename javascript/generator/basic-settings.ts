@@ -12,7 +12,7 @@ export function generate_custom_attr(root: Element, conf: Generator) {
   });
   SubElement(root, 'xsl:param', {
     name: 'tocMaximumLevel',
-    select: conf.toc_maximum_level,
+    select: conf.toc_maximum_level.toString(),
   });
   // page size
   SubElement(root, xsl('variable'), { name: 'page-width' }).text =

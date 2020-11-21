@@ -1,6 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
+import { Element } from './elementtree';
 import { xsl, copy_xml, value } from './utils';
 import Generator from './index';
 

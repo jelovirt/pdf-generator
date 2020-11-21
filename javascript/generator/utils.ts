@@ -15,7 +15,7 @@ export function copy_xml(root: Element, raw: string) {
                 version="2.0">${raw}</xsl:stylesheet>`
   ).getroot();
   for (let i = 0; i < r.len(); i++) {
-    root.append(r.getItem(i));
+    root.append(r.getItem(i)!);
   }
 }
 

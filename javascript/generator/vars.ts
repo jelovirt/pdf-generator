@@ -351,7 +351,7 @@ export default function generate_vars(lang: Language, options: Generator) {
     ) {
       varE.text = options.style['ol'][olBeforeField];
     } else {
-      varE.text = options.default_style('ol', olBeforeField);
+      varE.text = options.default_style('ol', olBeforeField)!;
     }
     const p = SubElement(varE, 'param', { 'ref-name': 'number' });
     const olAfterField = `ol-after-${level}` as CustomProperty;
@@ -359,9 +359,9 @@ export default function generate_vars(lang: Language, options: Generator) {
       options.style['ol'] !== undefined &&
       options.style['ol'][olAfterField] !== undefined
     ) {
-      p.tail = options.style['ol'][olAfterField];
+      p.tail = options.style['ol'][olAfterField]!.toString();
     } else {
-      p.tail = options.default_style('ol', olAfterField);
+      p.tail = options.default_style('ol', olAfterField)!.toString();
     }
   });
   _.range(1, 5).forEach((level) => {
@@ -375,7 +375,7 @@ export default function generate_vars(lang: Language, options: Generator) {
     ) {
       varE.text = options.style['ol'][olField];
     } else {
-      varE.text = options.default_style('ol', olField);
+      varE.text = options.default_style('ol', olField)!;
     }
   });
   _.range(1, 5).forEach((level) => {
@@ -389,7 +389,7 @@ export default function generate_vars(lang: Language, options: Generator) {
     ) {
       varE.text = options.style['ul'][ulLevel];
     } else {
-      varE.text = options.default_style('ul', ulLevel);
+      varE.text = options.default_style('ul', ulLevel)!;
     }
   });
   //    ditagen.generator.indent(root, max=1)

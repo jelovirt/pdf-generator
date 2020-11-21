@@ -476,7 +476,7 @@ function generateInsert(
 ) {
   const flowCase = flow.substring(0, 1).toUpperCase() + flow.substring(1);
   const typeCase = type.substring(0, 1).toUpperCase() + type.substring(1);
-  Comment(root, `${flow} ${type}`);
+  root.append(Comment(`${flow} ${type}`));
   const template = SubElement(root, xsl('template'), {
     name: `insertBody${typeCase}${flowCase}`,
   });
