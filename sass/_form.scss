@@ -181,23 +181,16 @@ fieldset .help {
 }
 
 .help-icon {
-  background-image: url('../public/images/help.png');
-  background-repeat: no-repeat;
-  background-position: center right;
-  height: 16px;
-  width: 16px;
-  padding-left: 20px;
+  padding-left: 4px;
   cursor: pointer;
+  opacity: 0.3;
+  &:hover {
+    opacity: 0.7;
+  }
 }
 
 .close-icon {
-  background-image: url('../public/images/close.png');
-  background-repeat: no-repeat;
-  background-position: center right;
-  height: 16px;
-  width: 16px;
-  padding-left: 20px;
-  cursor: pointer;
+  @extend .help-icon;
   float: right;
 }
 

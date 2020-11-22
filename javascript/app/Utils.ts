@@ -9,12 +9,12 @@ export function setAction(value: any): Action {
   };
 }
 
-export function setError(input: JQuery, text: string, tip?: string) {
+export function setError(input: JQuery, text: string | JQuery, tip?: string) {
   setMessage(input, 'err', text, tip);
   input.addClass('invalid');
 }
 
-export function setWarning(input: JQuery, text: string, tip?: string) {
+export function setWarning(input: JQuery, text: string | JQuery, tip?: string) {
   setMessage(input, 'warn', text, tip);
   input.removeClass('invalid');
 }
@@ -27,7 +27,7 @@ export function setOk(input: JQuery) {
 function setMessage(
   input: JQuery,
   level: 'warn' | 'err' | 'ok',
-  text?: string,
+  text?: string | JQuery,
   tip?: string
 ) {
   let msg = input.nextAll('.msg');
@@ -37,7 +37,7 @@ function setMessage(
   }
   msg.removeClass().addClass('msg ' + level);
   if (text !== undefined) {
-    msg.html(text);
+    msg.html(text.toString());
   } else {
     msg.empty();
   }

@@ -1,4 +1,9 @@
 import $ from 'jquery';
+import _ from 'lodash';
+import Generator from '../generator';
+import { Version } from '../lib/version';
+import FileSaver from 'file-saver';
+import JSZip from 'jszip';
 
 export default function WizardController(store, pages) {
   pages.forEach((sections, i) => {
@@ -33,7 +38,7 @@ export default function WizardController(store, pages) {
   setInterval(checkFragment, 100);
 
   /** Current location fragment. */
-  var hash = location.hash;
+  let hash = location.hash;
 
   function validateForm(event) {
     const target = event.target;
@@ -135,7 +140,18 @@ export default function WizardController(store, pages) {
     validatePage();
     setFragment();
     $(':input[name=json]').val(JSON.stringify(store.getState()));
-    $('form#generate-plugin').submit();
+    // $('form#generate-plugin').submit();
+    const generator = new Generator(store.getState());
+    const zip = new JSZip();
+    generator.generate_plugin(zip);
+    zip
+      .generateAsync({
+        type: 'blob',
+        platform: 'UNIX',
+      })
+      .then((zipData) =>
+        FileSaver.saveAs(zipData, `${store.getState().id}.zip`)
+      );
   }
 
   /**
