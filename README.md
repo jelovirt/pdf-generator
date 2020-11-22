@@ -1,4 +1,4 @@
-# DITA-OT PDF plug-in generator
+# DITA-OT PDF plug-in generator [![Netlify Status](https://api.netlify.com/api/v1/badges/55797fd8-f3be-41c7-b252-c52de60e3917/deploy-status)](https://app.netlify.com/sites/thirsty-hodgkin-a5249a/deploys)
 
 DITA-OT PDF plug-in generator is a TypeScript/JavaScript program that generates DITA-OT plug-ins that extend the default PDF2 plug-in.
 
@@ -14,6 +14,13 @@ DITA-OT PDF plug-in generator is a TypeScript/JavaScript program that generates 
     > npm start
     ```
     Generator UI is available at http://localhost:1234.
+
+### Testing
+
+1.  Run unit-tests
+    ```sh
+    > npm test
+    ```
 
 ## Distribution
 
