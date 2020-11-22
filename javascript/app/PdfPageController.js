@@ -147,9 +147,9 @@ export default function PdfPageController() {
         const l = $(this);
         if (l.parents('fieldset:first').find('.help').length !== 0) {
           l.append(
-            $("<span class='help-icon' title='Show help'></span>").click(
-              helpHandler
-            )
+            $(
+              "<span class='help-icon glyphicon glyphicon-info-sign' title='Show help'></span>"
+            ).click(helpHandler)
           );
         }
       });
@@ -158,9 +158,9 @@ export default function PdfPageController() {
         .each(function () {
           const l = $(this);
           l.prepend(
-            $("<span class='close-icon' title='Close help'></span>").click(
-              closeHandler
-            )
+            $(
+              "<span class='close-icon glyphicon glyphicon-remove-circle' title='Close help'></span>"
+            ).click(closeHandler)
           );
         });
     }
