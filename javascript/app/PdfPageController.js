@@ -23,12 +23,16 @@ export default function PdfPageController() {
   $('main').html(view.$element);
 
   WizardController(model, [
-    [EnvironmentController(model)],
-    [PageController(model)],
-    [HeaderController(model), LayoutController(model)],
-    [StyleController(model)],
-    [CoverController(model), OtherController(model)],
-    [MetadataController(model)],
+    [
+      EnvironmentController(model),
+      PageController(model),
+      HeaderController(model),
+      LayoutController(model),
+      StyleController(model),
+      CoverController(model),
+      OtherController(model),
+      MetadataController(model),
+    ],
   ]);
 
   PdfPreviewController(model);
