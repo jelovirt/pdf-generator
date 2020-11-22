@@ -1,6 +1,6 @@
-# DITA-OT PDF plug-in generator [![Netlify Status](https://api.netlify.com/api/v1/badges/55797fd8-f3be-41c7-b252-c52de60e3917/deploy-status)](https://app.netlify.com/sites/thirsty-hodgkin-a5249a/deploys)
+# DITA-OT PDF plug-in generator ![Node.js CI] ![Netlify Status]
 
-DITA-OT PDF plug-in generator is a TypeScript/JavaScript program that generates DITA-OT plug-ins that extend the default PDF2 plug-in.
+DITA-OT PDF plug-in generator is a TypeScript program that generates DITA-OT plug-ins that extend the default PDF2 plug-in.
 
 ## Development
 
@@ -42,3 +42,6 @@ Support this project and others by [@jelovirt](https://github.com/jelovirt) via 
 ## License
 
 DITA-OT PDF plug-in generator is licensed for use under the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+[netlify status]: https://api.netlify.com/api/v1/badges/55797fd8-f3be-41c7-b252-c52de60e3917/deploy-status
+[node.js ci]: https://github.com/jelovirt/pdf-generator/workflows/Node.js%20CI/badge.svg
