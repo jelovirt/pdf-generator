@@ -3,6 +3,7 @@ import _ from 'lodash';
 import Generator from '../generator';
 import { Version } from '../lib/version';
 import FileSaver from 'file-saver';
+import JSZip from 'jszip';
 
 export default function WizardController(store, pages) {
   pages.forEach((sections, i) => {
@@ -141,8 +142,13 @@ export default function WizardController(store, pages) {
     $(':input[name=json]').val(JSON.stringify(store.getState()));
     // $('form#generate-plugin').submit();
     const generator = new Generator(store.getState());
-    generator
-      .generate_plugin()
+    const zip = new JSZip();
+    generator.generate_plugin(zip);
+    zip
+      .generateAsync({
+        type: 'blob',
+        platform: 'UNIX',
+      })
       .then((zipData) =>
         FileSaver.saveAs(zipData, `${store.getState().id}.zip`)
       );

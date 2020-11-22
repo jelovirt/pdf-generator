@@ -629,7 +629,7 @@ export default class Generator {
       StaticContent.generate_custom(root, this);
     }
     if (stylesheet === 'layout-masters' || !stylesheet) {
-      LayoutMasters.generate_custom(root, this.options);
+      LayoutMasters.generate_custom(root, this);
     }
     if (stylesheet === 'pr-domain' || !stylesheet) {
       PrDomain.generate_custom(root, this);
@@ -738,8 +738,8 @@ export default class Generator {
     });
   }
 
-  generate_plugin() {
-    const zip = new JSZip();
+  generate_plugin(zip: JSZip) {
+    // const zip = new JSZip();
     // integrator
     this.run_generation(
       zip,
@@ -845,9 +845,9 @@ export default class Generator {
     //if (this.cover_image) {
     //  store_file(zip, this.cover_image, `${this.plugin_name}/cfg/common/artwork/${this.cover_image_name}`)
     //}
-    return zip.generateAsync({
-      type: 'blob',
-      platform: 'UNIX',
-    });
+    // return zip.generateAsync({
+    //   type: 'blob',
+    //   platform: 'UNIX',
+    // });
   }
 }
