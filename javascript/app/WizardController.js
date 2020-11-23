@@ -1,7 +1,5 @@
 import $ from 'jquery';
-import _ from 'lodash';
 import Generator from '../generator';
-import { Version } from '../lib/version';
 import FileSaver from 'file-saver';
 import JSZip from 'jszip';
 
@@ -26,10 +24,11 @@ export default function WizardController(store, pages) {
   const prev = $(
     "<button type='button' class='btn btn-default' id='prev'>&lt; Previous</button>"
   ).click(prevHandler);
-  const next = $(
-    "<button type='button' class='btn btn-default' id='next'>Next &gt;</button>"
-  ).click(nextHandler);
-  $('#generate').before(prev).before(' ').before(next).before(' ');
+  // const next = $(
+  //   "<button type='button' class='btn btn-default' id='next'>Next &gt;</button>"
+  // ).click(nextHandler);
+  $('#generate').before(prev).before(' ');
+  //.before(next).before(' ');
 
   $('#generate').attr('type', 'button').click(generateHandler);
 
@@ -100,30 +99,30 @@ export default function WizardController(store, pages) {
 
     if ($('.current').prevAll('.page:first').length === 0) {
       // first page
-      $('#prev').attr('disabled', true);
+      $('#prev').hide().prop('disabled', true);
     } else {
-      $('#prev').removeAttr('disabled');
+      $('#prev').show().prop('disabled', false);
     }
 
-    if ($('.current#p6').length !== 0) {
+    if ($('#p1.current').length !== 0) {
       // last page
-      $('#next').attr('disabled', true);
+      // $('#next').prop('disabled', true);
       if (valid) {
-        $('#generate').removeAttr('disabled');
+        $('#generate').show().prop('disabled', false);
       } else {
-        $('#generate').attr('disabled', true);
+        $('#generate').show().prop('disabled', true);
       }
     } else if ($('.current').nextAll('.page:first').length === 0) {
       // download page
-      $('#next').attr('disabled', true);
-      $('#generate').attr('disabled', true);
+      // $('#next').prop('disabled', true);
+      $('#generate').hide().prop('disabled', true);
     } else {
-      if (valid) {
-        $('#next').removeAttr('disabled');
-      } else {
-        $('#next').attr('disabled', true);
-      }
-      $('#generate').attr('disabled', true);
+      // if (valid) {
+      //   $('#next').removeAttr('disabled');
+      // } else {
+      //   $('#next').prop('disabled', true);
+      // }
+      $('#generate').hide().prop('disabled', true);
     }
     //alert(valid);
     return true;
@@ -139,7 +138,7 @@ export default function WizardController(store, pages) {
     n.addClass('current').show();
     validatePage();
     setFragment();
-    $(':input[name=json]').val(JSON.stringify(store.getState()));
+    // $(':input[name=json]').val(JSON.stringify(store.getState()));
     // $('form#generate-plugin').submit();
     const generator = new Generator(store.getState());
     const zip = new JSZip();
@@ -165,16 +164,16 @@ export default function WizardController(store, pages) {
     setFragment();
   }
 
-  /**
-   * Next page button handler.
-   */
-  function nextHandler(event) {
-    const n = $('.current').nextAll('.page:not(.disabled):first');
-    $('.current').removeClass('current').hide();
-    n.addClass('current').show();
-    validatePage();
-    setFragment();
-  }
+  // /**
+  //  * Next page button handler.
+  //  */
+  // function nextHandler(event) {
+  //   const n = $('.current').nextAll('.page:not(.disabled):first');
+  //   $('.current').removeClass('current').hide();
+  //   n.addClass('current').show();
+  //   validatePage();
+  //   setFragment();
+  // }
 
   /** Set location fragment to current page. */
   function setFragment(i) {

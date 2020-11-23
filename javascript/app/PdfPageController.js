@@ -23,12 +23,16 @@ export default function PdfPageController() {
   $('main').html(view.$element);
 
   WizardController(model, [
-    [EnvironmentController(model)],
-    [PageController(model)],
-    [HeaderController(model), LayoutController(model)],
-    [StyleController(model)],
-    [CoverController(model), OtherController(model)],
-    [MetadataController(model)],
+    [
+      EnvironmentController(model),
+      PageController(model),
+      HeaderController(model),
+      LayoutController(model),
+      StyleController(model),
+      CoverController(model),
+      OtherController(model),
+      MetadataController(model),
+    ],
   ]);
 
   PdfPreviewController(model);
@@ -44,7 +48,9 @@ export default function PdfPageController() {
     $(':input[name=formatter]').change();
 
     $(':input.length-value').keydown(valueChangeHandler).change(validateLength);
-    $(':input.length-or-number-value').keydown(valueChangeHandler).change(validateLengthOrNumber);
+    $(':input.length-or-number-value')
+      .keydown(valueChangeHandler)
+      .change(validateLengthOrNumber);
     // widget initialization
     $(':input.editable-list').each(function () {
       const s = $(this);
@@ -64,11 +70,11 @@ export default function PdfPageController() {
 
     function validateLengthOrNumber(event) {
       const target = $(event.target);
-      const value = getVal(target)
+      const value = getVal(target);
       if (!isNaN(Number(value))) {
         setOk(target);
       } else {
-        validateLength(event)
+        validateLength(event);
       }
     }
 
