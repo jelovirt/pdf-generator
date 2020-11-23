@@ -27,8 +27,8 @@ export default function WizardController(store, pages) {
   // const next = $(
   //   "<button type='button' class='btn btn-default' id='next'>Next &gt;</button>"
   // ).click(nextHandler);
-  $('#generate').before(prev).before(' ')
-    //.before(next).before(' ');
+  $('#generate').before(prev).before(' ');
+  //.before(next).before(' ');
 
   $('#generate').attr('type', 'button').click(generateHandler);
 
@@ -138,7 +138,7 @@ export default function WizardController(store, pages) {
     n.addClass('current').show();
     validatePage();
     setFragment();
-    $(':input[name=json]').val(JSON.stringify(store.getState()));
+    // $(':input[name=json]').val(JSON.stringify(store.getState()));
     // $('form#generate-plugin').submit();
     const generator = new Generator(store.getState());
     const zip = new JSZip();

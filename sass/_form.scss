@@ -18,6 +18,11 @@ body {
   text-align: left;
 }
 
+.form {
+  clear: both;
+  margin-top: 15px;
+}
+
 footer form {
   display: inline;
 }
@@ -37,17 +42,14 @@ h1 a {
 }
 
 h3 {
-  clear: left;
+  margin-top: 0px;
+  &:not(:first-child) {
+    margin-top: 15px;
+  }
 }
 
 h4 {
   //margin: 0;
-}
-
-.form {
-  h3 {
-    margin-left: -15px;
-  }
 }
 
 fieldset {
