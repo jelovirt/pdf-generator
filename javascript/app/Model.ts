@@ -60,7 +60,28 @@ export type Model = {
 
 export type Values = {
   cover_image_chooser: 'metadata' | '';
+  page_size: string;
+  orientation: 'portrait' | 'landscape';
 } & Model;
+
+export function toModel(values: Values): Model {
+  const pageDimensions = values.page_size.split(' ');
+  if (values.orientation === 'landscape') {
+    pageDimensions.reverse();
+  }
+  const model = {
+    ...values,
+    configuration: {
+      ...values.configuration,
+      page: {
+        ...values.configuration.page,
+        height: pageDimensions[1],
+        width: pageDimensions[0],
+      },
+    },
+  };
+  return model;
+}
 
 function getInitStyle(): Record<StyleName, Record<Property, string>> {
   return (_(styles)
@@ -95,6 +116,8 @@ export function getInitValues(): Values {
   return {
     ...getInitStore(),
     cover_image_chooser: '',
+    page_size: '210mm 297mm',
+    orientation: 'portrait',
   };
 }
 

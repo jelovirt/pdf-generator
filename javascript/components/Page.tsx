@@ -11,11 +11,11 @@ export default function Page() {
         <h3>Page</h3>
         <fieldset>
           <p>
-            <label htmlFor="page-size">Page size</label>
+            <label htmlFor="page_size">Page size</label>
             <Field
               component="select"
-              name="page-size"
-              id="page-size"
+              name="page_size"
+              id="page_size"
               title="Page size"
               required
             >

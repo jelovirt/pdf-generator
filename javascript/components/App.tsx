@@ -9,13 +9,12 @@ import Other from './Other';
 import Metadata from './Metadata';
 import Download from './Download';
 import { Form, Formik, FormikHelpers, FormikValues } from 'formik';
-import { getInitValues, Values } from '../app/Model';
+import { getInitValues, toModel, Values } from '../app/Model';
 
 const initialValues: Values = getInitValues();
 
 const onSubmit = (values: FormikValues, actions: FormikHelpers<Values>) => {
-  console.log({ values, actions });
-  alert(JSON.stringify(values, null, 2));
+  console.log(toModel(values as Values));
   actions.setSubmitting(false);
 };
 
