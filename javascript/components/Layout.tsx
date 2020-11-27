@@ -9,13 +9,11 @@ export default function Layout() {
         <h3>Layout</h3>
         <fieldset>
           <p>
-            <label htmlFor="configuration.force_page_count">
-              Chapter start
-            </label>
+            <label htmlFor="force_page_count">Chapter start</label>
             <Field
               component="select"
-              name="configuration.force_page_count"
-              id="configuration.force_page_count"
+              name="force_page_count"
+              id="force_page_count"
               title="Force page count"
             >
               {/*// <!-- TODO -->*/}
@@ -36,11 +34,11 @@ export default function Layout() {
         </fieldset>
         <fieldset>
           <p>
-            <label htmlFor="configuration.blank_pages">Blank pages</label>
+            <label htmlFor="blank_pages">Blank pages</label>
             <Field
               component="select"
-              name="configuration.blank_pages"
-              id="configuration.blank_pages"
+              name="blank_pages"
+              id="blank_pages"
               title="Mark blank pages"
             >
               <option value="true">mark blank page</option>
@@ -54,10 +52,10 @@ export default function Layout() {
         </fieldset>
         <fieldset>
           <p>
-            <label htmlFor="configuration.chapter_layout">Chapter layout</label>
+            <label htmlFor="chapter_layout">Chapter layout</label>
             <select
-              name="configuration.chapter_layout"
-              id="configuration.chapter_layout"
+              name="chapter_layout"
+              id="chapter_layout"
               title="Chapter page layout"
             >
               <option value="MINITOC">chapter TOC</option>

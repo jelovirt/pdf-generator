@@ -366,7 +366,7 @@ export default class Generator {
   page_number;
   options: Options;
   transtype;
-  title_numbering;
+  // title_numbering;
 
   constructor(conf: Model) {
     this.conf = conf;
@@ -407,7 +407,7 @@ export default class Generator {
     }
     this.mirror_page_margins = conf.configuration.mirror_page_margins;
     //__dita_gen.dl = __config["dl"]
-    this.title_numbering = conf.configuration.title_numbering;
+    // this.title_numbering = conf.configuration.title_numbering;
     //__dita_gen.table_numbering = __config["table_numbering"]
     //__dita_gen.figure_numbering = __config["figure_numbering"]
     //__dita_gen.link_pagenumber = __config["link_pagenumber"]

@@ -18,17 +18,14 @@ export default function Cover() {
       {/*  <input name="cover_image" id="cover_image_file_value" type="file" />*/}
       {/*</p>*/}
       {values.cover_image_chooser === 'metadata' && (
-        <p className="controller" id="configuration.cover_image_metadata">
-          <label
-            htmlFor="configuration.cover_image_metadata_value"
-            className="inline"
-          >
+        <p className="controller" id="cover_image_metadata">
+          <label htmlFor="cover_image_metadata_value" className="inline">
             Data element name
           </label>
           :
           <Field
-            name="configuration.cover_image_metadata"
-            id="configuration.cover_image_metadata_value"
+            name="cover_image_metadata"
+            id="cover_image_metadata_value"
             type="text"
             pattern="[^\s]+"
           />

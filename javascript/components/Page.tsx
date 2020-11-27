@@ -48,40 +48,40 @@ export default function Page() {
         <h3>Margins</h3>
         <fieldset>
           <p>
-            <label htmlFor="configuration.page.top">Top</label>
+            <label htmlFor="page.top">Top</label>
             <Field
-              name="configuration.page.top"
-              id="configuration.page.top"
+              name="page.top"
+              id="page.top"
               pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
               className="length-value"
               required
             />
           </p>
           <p>
-            <label htmlFor="configuration.page.outside">Outside</label>
+            <label htmlFor="page.outside">Outside</label>
             <Field
-              name="configuration.page.outside"
-              id="configuration.page.outside"
+              name="page.outside"
+              id="page.outside"
               pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
               className="length-value"
               required
             />
           </p>
           <p>
-            <label htmlFor="configuration.page.bottom">Bottom</label>
+            <label htmlFor="page.bottom">Bottom</label>
             <Field
-              name="configuration.page.bottom"
-              id="configuration.page.bottom"
+              name="page.bottom"
+              id="page.bottom"
               pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
               className="length-value"
               required
             />
           </p>
           <p>
-            <label htmlFor="configuration.page.inside">Inside</label>
+            <label htmlFor="page.inside">Inside</label>
             <Field
-              name="configuration.page.inside"
-              id="configuration.page.inside"
+              name="page.inside"
+              id="page.inside"
               pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
               className="length-value"
               required
@@ -102,13 +102,11 @@ export default function Page() {
         <h3>Columns</h3>
         <fieldset>
           <p>
-            <label htmlFor="configuration.body_column_count">
-              Body column count
-            </label>
+            <label htmlFor="body_column_count">Body column count</label>
             <Field
               component="select"
-              name="configuration.body_column_count"
-              id="configuration.body_column_count"
+              name="body_column_count"
+              id="body_column_count"
               required
             >
               <option value="1">1</option>
@@ -116,13 +114,11 @@ export default function Page() {
             </Field>
           </p>
           <p>
-            <label htmlFor="configuration.index_column_count">
-              Index column count
-            </label>
+            <label htmlFor="index_column_count">Index column count</label>
             <Field
               component="select"
-              name="configuration.index_column_count"
-              id="configuration.index_column_count"
+              name="index_column_count"
+              id="index_column_count"
               required
             >
               <option value="1">1</option>
@@ -131,13 +127,12 @@ export default function Page() {
               <option value="4">4</option>
             </Field>
           </p>
-          {(values.configuration.index_column_count > 1 ||
-            values.configuration.body_column_count > 1) && (
+          {(values.index_column_count > 1 || values.body_column_count > 1) && (
             <p>
-              <label htmlFor="configuration.column_gap">Column gap</label>
+              <label htmlFor="column_gap">Column gap</label>
               <Field
-                name="configuration.column_gap"
-                id="configuration.column_gap"
+                name="column_gap"
+                id="column_gap"
                 pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                 className="length-value"
               />

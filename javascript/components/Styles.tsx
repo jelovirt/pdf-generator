@@ -54,7 +54,7 @@ export default function Styles() {
               </label>
               <Field
                 component="select"
-                name={`configuration.style.${values.style_selector}.font-family`}
+                name={`style.${values.style_selector}.font-family`}
                 title="Font family"
                 aria-label="Font family"
               >
@@ -90,7 +90,7 @@ export default function Styles() {
               </label>
               <Field
                 component="select"
-                name={`configuration.style.${values.style_selector}.font-size`}
+                name={`style.${values.style_selector}.font-size`}
                 title="Font size"
                 aria-label="Font size"
               >
@@ -115,9 +115,8 @@ export default function Styles() {
                 <button
                   type="button"
                   className={`btn btn-default btn-font-weight btn-xs ${
-                    values.configuration.style[values.style_selector][
-                      'font-weight'
-                    ] === 'bold'
+                    values.style[values.style_selector]['font-weight'] ===
+                    'bold'
                       ? 'active'
                       : ''
                   }`}
@@ -125,10 +124,9 @@ export default function Styles() {
                   title="Bold"
                   onClick={() =>
                     setFieldValue(
-                      `configuration.style.${values.style_selector}.font-weight`,
-                      values.configuration.style[values.style_selector][
-                        'font-weight'
-                      ] === 'normal'
+                      `style.${values.style_selector}.font-weight`,
+                      values.style[values.style_selector]['font-weight'] ===
+                        'normal'
                         ? 'bold'
                         : 'normal'
                     )
@@ -142,9 +140,8 @@ export default function Styles() {
                 <button
                   type="button"
                   className={`btn btn-default btn-font-weight btn-xs ${
-                    values.configuration.style[values.style_selector][
-                      'font-style'
-                    ] === 'italic'
+                    values.style[values.style_selector]['font-style'] ===
+                    'italic'
                       ? 'active'
                       : ''
                   }`}
@@ -152,10 +149,9 @@ export default function Styles() {
                   title="Italic"
                   onClick={() =>
                     setFieldValue(
-                      `configuration.style.${values.style_selector}.font-style`,
-                      values.configuration.style[values.style_selector][
-                        'font-style'
-                      ] === 'normal'
+                      `style.${values.style_selector}.font-style`,
+                      values.style[values.style_selector]['font-style'] ===
+                        'normal'
                         ? 'italic'
                         : 'normal'
                     )
@@ -169,9 +165,8 @@ export default function Styles() {
                 <button
                   type="button"
                   className={`btn btn-default btn-font-weight btn-xs ${
-                    values.configuration.style[values.style_selector][
-                      'text-decoration'
-                    ] === 'underline'
+                    values.style[values.style_selector]['text-decoration'] ===
+                    'underline'
                       ? 'active'
                       : ''
                   }`}
@@ -179,10 +174,9 @@ export default function Styles() {
                   title="Underline"
                   onClick={() =>
                     setFieldValue(
-                      `configuration.style.${values.style_selector}.text-decoration`,
-                      values.configuration.style[values.style_selector][
-                        'text-decoration'
-                      ] === 'none'
+                      `style.${values.style_selector}.text-decoration`,
+                      values.style[values.style_selector]['text-decoration'] ===
+                        'none'
                         ? 'underline'
                         : 'none'
                     )
@@ -225,7 +219,7 @@ export default function Styles() {
               <Field
                 type="text"
                 // id="color.other"
-                name={`configuration.style.${values.style_selector}.color`}
+                name={`style.${values.style_selector}.color`}
                 // style={{ display: 'none' }}
                 size={7}
               />
@@ -308,9 +302,8 @@ export default function Styles() {
                     key={conf.value}
                     type="button"
                     className={`btn btn-default btn-font-weight btn-xs ${
-                      values.configuration.style[values.style_selector][
-                        'text-align'
-                      ] === conf.value
+                      values.style[values.style_selector]['text-align'] ===
+                      conf.value
                         ? 'active'
                         : ''
                     }`}
@@ -319,7 +312,7 @@ export default function Styles() {
                     value={conf.value}
                     onClick={() =>
                       setFieldValue(
-                        `configuration.style.${values.style_selector}.text-align`,
+                        `style.${values.style_selector}.text-align`,
                         conf.value
                       )
                     }
@@ -348,7 +341,7 @@ export default function Styles() {
                     </th>
                     <td>
                       <Field
-                        name={`configuration.style.${values.style_selector}.start-indent`}
+                        name={`style.${values.style_selector}.start-indent`}
                         id="start-indent"
                         pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                         size={5}
@@ -366,7 +359,7 @@ export default function Styles() {
                     </th>
                     <td>
                       <Field
-                        name={`configuration.style.${values.style_selector}.end-indent`}
+                        name={`style.${values.style_selector}.end-indent`}
                         pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                         size={5}
                         className="length-value"
@@ -386,52 +379,52 @@ export default function Styles() {
             </td>
           </tr>
           {values.style_selector === 'link' && (
-          <tr data-style="link">
-            <td>
-              <label htmlFor="link-page-number" className="inline">
-                Page number
-              </label>
-              :
-              <Field
-                name={`configuration.style.${values.style_selector}.link-page-number`}
-                type="checkbox"
-                value="true"
-                checked
-                title="Add page number to links."
-              />
-            </td>
-            <td>
-              <label htmlFor="link-url" className="inline">
-                Show URL
-              </label>
-              :
-              <Field
-                name={`configuration.style.${values.style_selector}.link-url`}
-                type="checkbox"
-                value="true"
-                title="Show external link address."
-              />
-            </td>
-          </tr>
-          }
+            <tr data-style="link">
+              <td>
+                <label htmlFor="link-page-number" className="inline">
+                  Page number
+                </label>
+                :
+                <Field
+                  name={`style.${values.style_selector}.link-page-number`}
+                  type="checkbox"
+                  value="true"
+                  checked
+                  title="Add page number to links."
+                />
+              </td>
+              <td>
+                <label htmlFor="link-url" className="inline">
+                  Show URL
+                </label>
+                :
+                <Field
+                  name={`style.${values.style_selector}.link-url`}
+                  type="checkbox"
+                  value="true"
+                  title="Show external link address."
+                />
+              </td>
+            </tr>
+          )}
           {values.style_selector === 'tm' && (
-          <tr data-style="tm">
-            <td colSpan={2}>
-              <label htmlFor="symbol-scope" className="inline">
-                Symbol scope
-              </label>
-              :
-              <Field
-                component="select"
-                name={`configuration.style.${values.style_selector}.symbol-scope`}
-              >
-                <option value="always">always</option>
-                <option value="chapter">chapter</option>
-                <option value="never">never</option>
-              </Field>
-            </td>
-          </tr>
-          }
+            <tr data-style="tm">
+              <td colSpan={2}>
+                <label htmlFor="symbol-scope" className="inline">
+                  Symbol scope
+                </label>
+                :
+                <Field
+                  component="select"
+                  name={`style.${values.style_selector}.symbol-scope`}
+                >
+                  <option value="always">always</option>
+                  <option value="chapter">chapter</option>
+                  <option value="never">never</option>
+                </Field>
+              </td>
+            </tr>
+          )}
           <tr className="style-selector-block">
             <td>
               <label className="inline">Spacing</label>
@@ -446,7 +439,7 @@ export default function Styles() {
                     </th>
                     <td>
                       <Field
-                        name={`configuration.style.${values.style_selector}.space-before`}
+                        name={`style.${values.style_selector}.space-before`}
                         pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                         size={5}
                         className="length-value"
@@ -462,7 +455,7 @@ export default function Styles() {
                     </th>
                     <td>
                       <Field
-                        name={`configuration.style.${values.style_selector}.space-after`}
+                        name={`style.${values.style_selector}.space-after`}
                         pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                         size={5}
                         className="length-value"
@@ -492,7 +485,7 @@ export default function Styles() {
                       {/*/>*/}
                       <Field
                         component="select"
-                        name={`configuration.style.${values.style_selector}.line-height-list`}
+                        name={`style.${values.style_selector}.line-height-list`}
                       >
                         <option value="1.2">Single</option>
                         <option value="1.8">1.5 lines</option>
@@ -500,13 +493,12 @@ export default function Styles() {
                         <option value="#other">Exactly</option>
                       </Field>
                     </td>
-                    {values.configuration.style[values.style_selector][
-                      'line-height-list'
-                    ] === '#other' && (
+                    {values.style[values.style_selector]['line-height-list'] ===
+                      '#other' && (
                       <td>
                         <Field
                           // id="line-height.other"
-                          name={`configuration.style.${values.style_selector}.line-height`}
+                          name={`style.${values.style_selector}.line-height`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)?"
                           size={5}
                           style={{ display: 'none' }}
@@ -533,7 +525,7 @@ export default function Styles() {
                     </th>
                     <td>
                       <Field
-                        name={`configuration.style.${values.style_selector}.padding-left`}
+                        name={`style.${values.style_selector}.padding-left`}
                         pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                         size={5}
                         className="length-value"
@@ -549,7 +541,7 @@ export default function Styles() {
                     </th>
                     <td>
                       <Field
-                        name={`configuration.style.${values.style_selector}.padding-right`}
+                        name={`style.${values.style_selector}.padding-right`}
                         pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                         size={5}
                         className="length-value"
@@ -565,7 +557,7 @@ export default function Styles() {
                     </th>
                     <td>
                       <Field
-                        name={`configuration.style.${values.style_selector}.padding-top`}
+                        name={`style.${values.style_selector}.padding-top`}
                         pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                         size={5}
                         className="length-value"
@@ -581,7 +573,7 @@ export default function Styles() {
                     </th>
                     <td>
                       <Field
-                        name={`configuration.style.${values.style_selector}.padding-bottom`}
+                        name={`style.${values.style_selector}.padding-bottom`}
                         pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                         size={5}
                         className="length-value"
@@ -600,7 +592,7 @@ export default function Styles() {
               :
               <Field
                 component="select"
-                name={`configuration.style.${values.style_selector}.border`}
+                name={`style.${values.style_selector}.border`}
               >
                 <option value="none">no border</option>
                 <option value="all">all</option>
@@ -627,7 +619,7 @@ export default function Styles() {
                 </label>
                 :
                 <Field
-                  name={`configuration.style.${values.style_selector}.title-numbering`}
+                  name={`style.${values.style_selector}.title-numbering`}
                   type="checkbox"
                   value="true"
                   title="Title numbering"
@@ -637,290 +629,290 @@ export default function Styles() {
           </tbody>
         )}
         {values.style_selector === 'dl' && (
-        <tbody data-style="dl">
-          <tr>
-            <th colSpan={2}>
-              <h4>List styles</h4>
-            </th>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <label htmlFor="dl-type" className="inline">
-                List type
-              </label>
-              :
-              <Field
-                component="select"
-                name={`configuration.style.${values.style_selector}.dl-type`}
-                title="Definition list style"
-              >
-                <option value="table">table</option>
-                <option value="html">HTML style</option>
-                <option value="list">bullet list</option>
-              </Field>
-            </td>
-          </tr>
-        </tbody>
-        }
-        {values.style_selector === 'ol' && (
-        <tbody data-style="ol">
-          <tr>
-            <th colSpan={2}>
-              <h4>Ordered list styles</h4>
-            </th>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Level</th>
-                    <th>Numbering</th>
-                    <th>Before</th>
-                    <th>After</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th>1</th>
-                    <td>
-                      <Field
-                        component="select"
-                        name={`configuration.style.${values.style_selector}.ol-1`}
-                      >
-                        <option value="1">1, 2, 3, …</option>
-                        <option value="A">A, B, C, …</option>
-                        <option value="a">a, b, c, …</option>
-                        <option value="I">I, II, III, …</option>
-                        <option value="i">i, ii, iii, …</option>
-                      </Field>
-                    </td>
-                    <td>
-                      <Field
-                        name={`configuration.style.${values.style_selector}.ol-before-1`}
-                        size={1}
-                      />
-                    </td>
-                    <td>
-                      <Field
-                        name={`configuration.style.${values.style_selector}.ol-after-1`}
-                        size={2}
-                        value=". "
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>2</th>
-                    <td>
-                      <Field
-                        component="select"
-                        name={`configuration.style.${values.style_selector}.ol-2`}
-                      >
-                        <option value="1">1, 2, 3, …</option>
-                        <option value="A">A, B, C, …</option>
-                        <option value="a">a, b, c, …</option>
-                        <option value="I">I, II, III, …</option>
-                        <option value="i">i, ii, iii, …</option>
-                      </Field>
-                    </td>
-                    <td>
-                      <Field
-                        name={`configuration.style.${values.style_selector}.ol-before-2`}
-                        size={1}
-                      />
-                    </td>
-                    <td>
-                      <Field
-                        name={`configuration.style.${values.style_selector}.ol-after-2`}
-                        size={2}
-                        value=". "
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>3</th>
-                    <td>
-                      <Field
-                        component="select"
-                        name={`configuration.style.${values.style_selector}.ol-3`}
-                      >
-                        <option value="1">1, 2, 3, …</option>
-                        <option value="A">A, B, C, …</option>
-                        <option value="a">a, b, c, …</option>
-                        <option value="I">I, II, III, …</option>
-                        <option value="i">i, ii, iii, …</option>
-                      </Field>
-                    </td>
-                    <td>
-                      <Field
-                        name={`configuration.style.${values.style_selector}.ol-before-3`}
-                        size={1}
-                      />
-                    </td>
-                    <td>
-                      <Field
-                        name={`configuration.style.${values.style_selector}.ol-after-3`}
-                        size={2}
-                        value=". "
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>4</th>
-                    <td>
-                      <Field
-                        component="select"
-                        name={`configuration.style.${values.style_selector}.ol-4`}
-                      >
-                        <option value="1">1, 2, 3, …</option>
-                        <option value="A">A, B, C, …</option>
-                        <option value="a">a, b, c, …</option>
-                        <option value="I">I, II, III, …</option>
-                        <option value="i">i, ii, iii, …</option>
-                      </Field>
-                    </td>
-                    <td>
-                      <Field
-                        name={`configuration.style.${values.style_selector}.ol-before-4`}
-                        size={1}
-                      />
-                    </td>
-                    <td>
-                      <Field
-                        name={`configuration.style.${values.style_selector}.ol-after-4`}
-                        size={2}
-                        value=". "
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-        }
-        {values.style_selector === 'ul' && (
-        <tbody data-style="ul">
-          <tr>
-            <th colSpan={2}>
-              <h4>Unordered list styles</h4>
-            </th>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Level</th>
-                    <th>Character</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th>1</th>
-                    <td>
-                      <Field
-                        component="select"
-                        name={`configuration.style.${values.style_selector}.ul-1`}
-                      >
-                        <option value="&#x2022;">&#x2022;</option>
-                        <option value="&#x25C6;">&#x25C6;</option>
-                        <option value="&#x2014;">&#x2014;</option>
-                        <option value="&#x2013;">&#x2013;</option>
-                        <option value="&#x2012;">&#x2012;</option>
-                      </Field>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>2</th>
-                    <td>
-                      <Field
-                        component="select"
-                        name={`configuration.style.${values.style_selector}.ul-2`}
-                      >
-                        <option value="&#x2022;">&#x2022;</option>
-                        <option value="&#x25C6;">&#x25C6;</option>
-                        <option value="&#x2014;">&#x2014;</option>
-                        <option value="&#x2013;">&#x2013;</option>
-                        <option value="&#x2012;">&#x2012;</option>
-                      </Field>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>3</th>
-                    <td>
-                      <Field
-                        component="select"
-                        name={`configuration.style.${values.style_selector}.ul-3`}
-                      >
-                        <option value="&#x2022;">&#x2022;</option>
-                        <option value="&#x25C6;">&#x25C6;</option>
-                        <option value="&#x2014;">&#x2014;</option>
-                        <option value="&#x2013;">&#x2013;</option>
-                        <option value="&#x2012;">&#x2012;</option>
-                      </Field>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>4</th>
-                    <td>
-                      <Field
-                        component="select"
-                        name={`configuration.style.${values.style_selector}.ul-4`}
-                      >
-                        <option value="&#x2022;">&#x2022;</option>
-                        <option value="&#x25C6;">&#x25C6;</option>
-                        <option value="&#x2014;">&#x2014;</option>
-                        <option value="&#x2013;">&#x2013;</option>
-                        <option value="&#x2012;">&#x2012;</option>
-                      </Field>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-        }
-        {(values.style_selector === 'table') ||
-          (values.style_selector === 'fig') && (
-          <tbody data-style="table fig">
+          <tbody data-style="dl">
             <tr>
               <th colSpan={2}>
-                <h4>Captions</h4>
+                <h4>List styles</h4>
               </th>
             </tr>
             <tr>
               <td colSpan={2}>
-                <label htmlFor="caption-number" className="inline">
-                  Numbering
+                <label htmlFor="dl-type" className="inline">
+                  List type
                 </label>
                 :
                 <Field
                   component="select"
-                  name={`configuration.style.${values.style_selector}.caption-number`}
-                  title="Caption numbering"
+                  name={`style.${values.style_selector}.dl-type`}
+                  title="Definition list style"
                 >
-                  <option value="document">Document wide</option>
-                  <option value="chapter">Chapter wide</option>
-                  <option value="none">No numbering</option>
-                </Field>
-                <label htmlFor="caption-position" className="inline">
-                  Position
-                </label>
-                :
-                <Field
-                  component="select"
-                  name={`configuration.style.${values.style_selector}.caption-position`}
-                  title="Caption position"
-                >
-                  <option value="before">Above</option>
-                  <option value="after">Below</option>
+                  <option value="table">table</option>
+                  <option value="html">HTML style</option>
+                  <option value="list">bullet list</option>
                 </Field>
               </td>
             </tr>
           </tbody>
         )}
+        {values.style_selector === 'ol' && (
+          <tbody data-style="ol">
+            <tr>
+              <th colSpan={2}>
+                <h4>Ordered list styles</h4>
+              </th>
+            </tr>
+            <tr>
+              <td colSpan={2}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Level</th>
+                      <th>Numbering</th>
+                      <th>Before</th>
+                      <th>After</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>1</th>
+                      <td>
+                        <Field
+                          component="select"
+                          name={`style.${values.style_selector}.ol-1`}
+                        >
+                          <option value="1">1, 2, 3, …</option>
+                          <option value="A">A, B, C, …</option>
+                          <option value="a">a, b, c, …</option>
+                          <option value="I">I, II, III, …</option>
+                          <option value="i">i, ii, iii, …</option>
+                        </Field>
+                      </td>
+                      <td>
+                        <Field
+                          name={`style.${values.style_selector}.ol-before-1`}
+                          size={1}
+                        />
+                      </td>
+                      <td>
+                        <Field
+                          name={`style.${values.style_selector}.ol-after-1`}
+                          size={2}
+                          value=". "
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>2</th>
+                      <td>
+                        <Field
+                          component="select"
+                          name={`style.${values.style_selector}.ol-2`}
+                        >
+                          <option value="1">1, 2, 3, …</option>
+                          <option value="A">A, B, C, …</option>
+                          <option value="a">a, b, c, …</option>
+                          <option value="I">I, II, III, …</option>
+                          <option value="i">i, ii, iii, …</option>
+                        </Field>
+                      </td>
+                      <td>
+                        <Field
+                          name={`style.${values.style_selector}.ol-before-2`}
+                          size={1}
+                        />
+                      </td>
+                      <td>
+                        <Field
+                          name={`style.${values.style_selector}.ol-after-2`}
+                          size={2}
+                          value=". "
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>3</th>
+                      <td>
+                        <Field
+                          component="select"
+                          name={`style.${values.style_selector}.ol-3`}
+                        >
+                          <option value="1">1, 2, 3, …</option>
+                          <option value="A">A, B, C, …</option>
+                          <option value="a">a, b, c, …</option>
+                          <option value="I">I, II, III, …</option>
+                          <option value="i">i, ii, iii, …</option>
+                        </Field>
+                      </td>
+                      <td>
+                        <Field
+                          name={`style.${values.style_selector}.ol-before-3`}
+                          size={1}
+                        />
+                      </td>
+                      <td>
+                        <Field
+                          name={`style.${values.style_selector}.ol-after-3`}
+                          size={2}
+                          value=". "
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>4</th>
+                      <td>
+                        <Field
+                          component="select"
+                          name={`style.${values.style_selector}.ol-4`}
+                        >
+                          <option value="1">1, 2, 3, …</option>
+                          <option value="A">A, B, C, …</option>
+                          <option value="a">a, b, c, …</option>
+                          <option value="I">I, II, III, …</option>
+                          <option value="i">i, ii, iii, …</option>
+                        </Field>
+                      </td>
+                      <td>
+                        <Field
+                          name={`style.${values.style_selector}.ol-before-4`}
+                          size={1}
+                        />
+                      </td>
+                      <td>
+                        <Field
+                          name={`style.${values.style_selector}.ol-after-4`}
+                          size={2}
+                          value=". "
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        )}
+        {values.style_selector === 'ul' && (
+          <tbody data-style="ul">
+            <tr>
+              <th colSpan={2}>
+                <h4>Unordered list styles</h4>
+              </th>
+            </tr>
+            <tr>
+              <td colSpan={2}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Level</th>
+                      <th>Character</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>1</th>
+                      <td>
+                        <Field
+                          component="select"
+                          name={`style.${values.style_selector}.ul-1`}
+                        >
+                          <option value="&#x2022;">&#x2022;</option>
+                          <option value="&#x25C6;">&#x25C6;</option>
+                          <option value="&#x2014;">&#x2014;</option>
+                          <option value="&#x2013;">&#x2013;</option>
+                          <option value="&#x2012;">&#x2012;</option>
+                        </Field>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>2</th>
+                      <td>
+                        <Field
+                          component="select"
+                          name={`style.${values.style_selector}.ul-2`}
+                        >
+                          <option value="&#x2022;">&#x2022;</option>
+                          <option value="&#x25C6;">&#x25C6;</option>
+                          <option value="&#x2014;">&#x2014;</option>
+                          <option value="&#x2013;">&#x2013;</option>
+                          <option value="&#x2012;">&#x2012;</option>
+                        </Field>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>3</th>
+                      <td>
+                        <Field
+                          component="select"
+                          name={`style.${values.style_selector}.ul-3`}
+                        >
+                          <option value="&#x2022;">&#x2022;</option>
+                          <option value="&#x25C6;">&#x25C6;</option>
+                          <option value="&#x2014;">&#x2014;</option>
+                          <option value="&#x2013;">&#x2013;</option>
+                          <option value="&#x2012;">&#x2012;</option>
+                        </Field>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>4</th>
+                      <td>
+                        <Field
+                          component="select"
+                          name={`style.${values.style_selector}.ul-4`}
+                        >
+                          <option value="&#x2022;">&#x2022;</option>
+                          <option value="&#x25C6;">&#x25C6;</option>
+                          <option value="&#x2014;">&#x2014;</option>
+                          <option value="&#x2013;">&#x2013;</option>
+                          <option value="&#x2012;">&#x2012;</option>
+                        </Field>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        )}
+        {values.style_selector === 'table' ||
+          (values.style_selector === 'fig' && (
+            <tbody data-style="table fig">
+              <tr>
+                <th colSpan={2}>
+                  <h4>Captions</h4>
+                </th>
+              </tr>
+              <tr>
+                <td colSpan={2}>
+                  <label htmlFor="caption-number" className="inline">
+                    Numbering
+                  </label>
+                  :
+                  <Field
+                    component="select"
+                    name={`style.${values.style_selector}.caption-number`}
+                    title="Caption numbering"
+                  >
+                    <option value="document">Document wide</option>
+                    <option value="chapter">Chapter wide</option>
+                    <option value="none">No numbering</option>
+                  </Field>
+                  <label htmlFor="caption-position" className="inline">
+                    Position
+                  </label>
+                  :
+                  <Field
+                    component="select"
+                    name={`style.${values.style_selector}.caption-position`}
+                    title="Caption position"
+                  >
+                    <option value="before">Above</option>
+                    <option value="after">Below</option>
+                  </Field>
+                </td>
+              </tr>
+            </tbody>
+          ))}
         {values.style_selector === 'toc_1' && (
           <tbody data-style="toc_1">
             <tr>
@@ -935,7 +927,7 @@ export default function Styles() {
                 </label>
                 :
                 <Field
-                  name={`configuration.style.${values.style_selector}.prefix`}
+                  name={`style.${values.style_selector}.prefix`}
                   title="Chapter prefix"
                   type="checkbox"
                   value="true"
@@ -958,7 +950,7 @@ export default function Styles() {
                 </label>
                 :
                 <Field
-                  name={`configuration.style.${values.style_selector}.line-numbering`}
+                  name={`style.${values.style_selector}.line-numbering`}
                   title="Line numbering"
                   type="checkbox"
                   value="true"

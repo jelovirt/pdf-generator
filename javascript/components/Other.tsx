@@ -12,11 +12,11 @@ export default function Other() {
         <h3>Table of Contents</h3>
         <fieldset>
           <p>
-            <label htmlFor="configuration.toc_maximum_level">Show level</label>
+            <label htmlFor="toc_maximum_level">Show level</label>
             <Field
               component="select"
-              name="configuration.toc_maximum_level"
-              id="configuration.toc_maximum_level"
+              name="toc_maximum_level"
+              id="toc_maximum_level"
             >
               <option value="2">1</option>
               <option value="3">2</option>
@@ -31,13 +31,11 @@ export default function Other() {
         <h3>PDF Bookmarks</h3>
         <fieldset>
           <p>
-            <label htmlFor="configuration.bookmark_style">
-              Bookmarks state
-            </label>
+            <label htmlFor="bookmark_style">Bookmarks state</label>
             <Field
               component="select"
-              name="configuration.bookmark_style"
-              id="configuration.bookmark_style"
+              name="bookmark_style"
+              id="bookmark_style"
               title="Bookmark initial state"
             >
               <option value="COLLAPSED">collapsed</option>
@@ -51,11 +49,11 @@ export default function Other() {
         <h3>Labels</h3>
         <fieldset>
           <p>
-            <label htmlFor="configuration.task_label">Task labels</label>
+            <label htmlFor="task_label">Task labels</label>
             <Field
               type="checkbox"
-              name="configuration.task_label"
-              id="configuration.task_label"
+              name="task_label"
+              id="task_label"
               title="Task labels"
             />
           </p>
@@ -64,25 +62,21 @@ export default function Other() {
           </p>
         </fieldset>
         <fieldset
-          className={
-            values.configuration.formatter !== 'ah' ? 'disabled' : undefined
-          }
+          className={values.formatter !== 'ah' ? 'disabled' : undefined}
         >
-          {values.configuration.formatter !== 'ah' && (
+          {values.formatter !== 'ah' && (
             <p className="not-available">
               Not available for FOP and RenderX XEP
             </p>
           )}
           <p>
-            <label htmlFor="configuration.table_continued">
-              Table continued
-            </label>
+            <label htmlFor="table_continued">Table continued</label>
             <Field
               type="checkbox"
-              name="configuration.table_continued"
-              id="configuration.table_continued"
+              name="table_continued"
+              id="table_continued"
               title="Mark continued table"
-              disabled={values.configuration.formatter !== 'ah'}
+              disabled={values.formatter !== 'ah'}
             />
           </p>
           <p className="instruction">
@@ -96,13 +90,11 @@ export default function Other() {
         <h3>Linking</h3>
         <fieldset>
           <p>
-            <label htmlFor="configuration.include_related_links">
-              Related links
-            </label>
+            <label htmlFor="include_related_links">Related links</label>
             <Field
               component="select"
-              name="configuration.include_related_links"
-              id="configuration.include_related_links"
+              name="include_related_links"
+              id="include_related_links"
               title="Related links"
             >
               <option value="none">none</option>

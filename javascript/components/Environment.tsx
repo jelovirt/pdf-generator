@@ -35,11 +35,11 @@ export default function Environment() {
       </fieldset>
       <fieldset>
         <p>
-          <label htmlFor="configuration.formatter">XSL formatter</label>
+          <label htmlFor="formatter">XSL formatter</label>
           <Field
             component="select"
-            name="configuration.formatter"
-            id="configuration.formatter"
+            name="formatter"
+            id="formatter"
             title="XSL formatter"
             required
           >

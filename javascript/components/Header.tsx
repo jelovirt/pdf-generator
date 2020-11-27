@@ -85,23 +85,19 @@ export default function Header() {
         </p>
       </fieldset>
       {/*<h3>Page numbering</h3>*/}
-      <fieldset
-        className={
-          values.configuration.formatter !== 'ah' ? 'disabled' : undefined
-        }
-      >
-        {values.configuration.formatter !== 'ah' && (
+      <fieldset className={values.formatter !== 'ah' ? 'disabled' : undefined}>
+        {values.formatter !== 'ah' && (
           <p className="xnot-available">
             Not available for FOP and RenderX XEP
           </p>
         )}
         <p>
-          <label htmlFor="configuration.page_number">Page number</label>
+          <label htmlFor="page_number">Page number</label>
           <Field
             component="select"
-            name="configuration.page_number"
-            id="configuration.page_number"
-            disabled={values.configuration.formatter !== 'ah'}
+            name="page_number"
+            id="page_number"
+            disabled={values.formatter !== 'ah'}
           >
             <option value="page">1</option>
             <option value="chapter-page">1-1</option>
