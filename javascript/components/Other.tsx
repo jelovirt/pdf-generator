@@ -85,7 +85,7 @@ export default function Other() {
           </p>
         </fieldset>
       </div>
-      <OtherPreview />
+      <OtherPreview task_label={values.task_label} />
       <div className="form col-md-12">
         <h3>Linking</h3>
         <fieldset>
