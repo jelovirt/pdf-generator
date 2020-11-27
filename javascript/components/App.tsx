@@ -28,7 +28,7 @@ export default function App() {
             <Page />
             <Header />
             <Layout />
-            {/*<Styles />*/}
+            <Styles />
             <Cover />
             <Other />
             <Metadata />

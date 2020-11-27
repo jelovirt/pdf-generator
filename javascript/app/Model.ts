@@ -62,6 +62,7 @@ export type Values = {
   cover_image_chooser: 'metadata' | '';
   page_size: string;
   orientation: 'portrait' | 'landscape';
+  style_selector: StyleName;
 } & Model;
 
 export function toModel(values: Values): Model {
@@ -118,6 +119,7 @@ export function getInitValues(): Values {
     cover_image_chooser: '',
     page_size: '210mm 297mm',
     orientation: 'portrait',
+    style_selector: 'body',
   };
 }
 

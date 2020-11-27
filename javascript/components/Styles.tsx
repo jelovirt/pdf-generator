@@ -1,11 +1,15 @@
+import { Field, useFormikContext } from 'formik';
 import React from 'react';
+import { Values } from '../app/Model';
+import { Property } from '../lib/styles';
 
 export default function Styles() {
+  const { values, setFieldValue } = useFormikContext<Values>();
   return (
     <div className="form col-md-5" id="style-form">
       <h3>Style</h3>
-      <input type="hidden" id="style-selector-current" />
-      <select id="style-selector">
+      {/*<Field type="hidden" id="style-selector-current" />*/}
+      <Field component="select" name="style_selector">
         <optgroup label="Block" className="block">
           <option value="body">Normal</option>
           <option value="topic">Heading 1</option>
@@ -33,21 +37,22 @@ export default function Styles() {
           <option value="link">Link</option>
           <option value="tm">Trademark</option>
         </optgroup>
-      </select>
+      </Field>
       <table>
         <tbody>
           <tr>
-            <th colspan="2">
+            <th colSpan={2}>
               <h4>Formatting</h4>
             </th>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colSpan={2}>
               <label htmlFor="font-family" className="inline hidden">
                 Family
               </label>
-              <select
-                id="font-family"
+              <Field
+                component="select"
+                name={`configuration.style.${values.style_selector}.font-family`}
                 title="Font family"
                 aria-label="Font family"
               >
@@ -77,11 +82,16 @@ export default function Styles() {
                 <option value="Trebuchet MS">Trebuchet MS</option>
                 <option value="Verdana">Verdana</option>
                 <option value="Webdings">Webdings</option>
-              </select>
+              </Field>
               <label htmlFor="font-size" className="inline hidden">
                 Size
               </label>
-              <select id="font-size" title="Font size" aria-label="Font size">
+              <Field
+                component="select"
+                name={`configuration.style.${values.style_selector}.font-size`}
+                title="Font size"
+                aria-label="Font size"
+              >
                 <option value="8pt">8</option>
                 <option value="9pt">9</option>
                 <option value="10pt">10</option>
@@ -98,13 +108,29 @@ export default function Styles() {
                 <option value="36pt">36</option>
                 <option value="48pt">48</option>
                 <option value="72pt">72</option>
-              </select>
+              </Field>
               <div className="btn-group btn-group-inline" role="group">
                 <button
                   type="button"
-                  className="btn btn-default btn-font-weight btn-xs"
+                  className={`btn btn-default btn-font-weight btn-xs ${
+                    values.configuration.style[values.style_selector][
+                      'font-weight'
+                    ] === 'bold'
+                      ? 'active'
+                      : ''
+                  }`}
                   aria-label="Bold"
                   title="Bold"
+                  onClick={() =>
+                    setFieldValue(
+                      `configuration.style.${values.style_selector}.font-weight`,
+                      values.configuration.style[values.style_selector][
+                        'font-weight'
+                      ] === 'normal'
+                        ? 'bold'
+                        : 'normal'
+                    )
+                  }
                 >
                   <span
                     className="glyphicon glyphicon-bold"
@@ -113,9 +139,25 @@ export default function Styles() {
                 </button>
                 <button
                   type="button"
-                  className="btn btn-default btn-font-style btn-xs"
+                  className={`btn btn-default btn-font-weight btn-xs ${
+                    values.configuration.style[values.style_selector][
+                      'font-style'
+                    ] === 'italic'
+                      ? 'active'
+                      : ''
+                  }`}
                   aria-label="Italic"
                   title="Italic"
+                  onClick={() =>
+                    setFieldValue(
+                      `configuration.style.${values.style_selector}.font-style`,
+                      values.configuration.style[values.style_selector][
+                        'font-style'
+                      ] === 'normal'
+                        ? 'italic'
+                        : 'normal'
+                    )
+                  }
                 >
                   <span
                     className="glyphicon glyphicon-italic"
@@ -124,9 +166,25 @@ export default function Styles() {
                 </button>
                 <button
                   type="button"
-                  className="btn btn-default btn-text-decoration btn-xs"
+                  className={`btn btn-default btn-font-weight btn-xs ${
+                    values.configuration.style[values.style_selector][
+                      'text-decoration'
+                    ] === 'underline'
+                      ? 'active'
+                      : ''
+                  }`}
                   aria-label="Underline"
                   title="Underline"
+                  onClick={() =>
+                    setFieldValue(
+                      `configuration.style.${values.style_selector}.text-decoration`,
+                      values.configuration.style[values.style_selector][
+                        'text-decoration'
+                      ] === 'none'
+                        ? 'underline'
+                        : 'none'
+                    )
+                  }
                 >
                   <span
                     className="glyphicon glyphicon-text-color"
@@ -134,16 +192,16 @@ export default function Styles() {
                   ></span>
                 </button>
               </div>
-              <input id="font-weight" type="hidden" />
-              <input id="font-style" type="hidden" />
-              <input id="text-decoration" type="hidden" />
+              {/*<Field id="font-weight" type="hidden" />*/}
+              {/*<Field id="font-style" type="hidden" />*/}
+              {/*<Field id="text-decoration" type="hidden" />*/}
               <br />
               <label htmlFor="color" className="inline">
                 Color
               </label>
               :
-              <input type="hidden" id="color" className="editable-list" />
-              <select id="color.list" title="Color">
+              <Field type="hidden" id="color" className="editable-list" />
+              <Field component="select" id="color.list" title="Color">
                 <option value="aqua">aqua</option>
                 <option value="black">black</option>
                 <option value="blue">blue</option>
@@ -161,27 +219,32 @@ export default function Styles() {
                 <option value="white">white</option>
                 <option value="yellow">yellow</option>
                 <option value="#other">other…</option>
-              </select>
-              <input
+              </Field>
+              <Field
                 type="text"
-                id="color.other"
-                style={{ display: 'none' }}
-                size="7"
+                // id="color.other"
+                name={`configuration.style.${values.style_selector}.color`}
+                // style={{ display: 'none' }}
+                size={7}
               />
             </td>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colSpan={2}>
               <label htmlFor="background-color" className="inline">
                 Background color
               </label>
               :
-              <input
+              <Field
                 type="hidden"
                 id="background-color"
                 className="editable-list"
               />
-              <select id="background-color.list" title="Background color">
+              <Field
+                component="select"
+                id="background-color.list"
+                title="Background color"
+              >
                 <option value="transparent">transparent</option>
                 <option value="aqua">aqua</option>
                 <option value="black">black</option>
@@ -200,113 +263,116 @@ export default function Styles() {
                 <option value="white">white</option>
                 <option value="yellow">yellow</option>
                 <option value="#other">other…</option>
-              </select>
-              <input
+              </Field>
+              <Field
                 type="text"
                 id="background-color.other"
                 style={{ display: 'none' }}
-                size="7"
+                size={7}
               />
             </td>
           </tr>
           <tr className="style-selector-block">
-            <th colspan="2">
+            <th colSpan={2}>
               <h4>Indents and Spacing</h4>
             </th>
           </tr>
           <tr className="style-selector-block">
-            <td colspan="2">
+            <td colSpan={2}>
               <div className="btn-group" role="group">
-                <button
-                  type="button"
-                  className="btn btn-default btn-text-align btn-xs"
-                  aria-label="Left align"
-                  title="Left align"
-                  value="start"
-                >
-                  <span
-                    className="glyphicon glyphicon-align-left"
-                    aria-hidden="true"
-                  ></span>
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-default btn-text-align btn-xs"
-                  aria-label="Center align"
-                  title="Center align"
-                  value="center"
-                >
-                  <span
-                    className="glyphicon glyphicon-align-center"
-                    aria-hidden="true"
-                  ></span>
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-default btn-text-align btn-xs"
-                  aria-label="Right align"
-                  title="Right align"
-                  value="end"
-                >
-                  <span
-                    className="glyphicon glyphicon-align-right"
-                    aria-hidden="true"
-                  ></span>
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-default btn-text-align btn-xs"
-                  aria-label="Justify"
-                  title="Justify"
-                  value="justify"
-                >
-                  <span
-                    className="glyphicon glyphicon-align-justify"
-                    aria-hidden="true"
-                  ></span>
-                </button>
+                {[
+                  {
+                    label: 'Left align',
+                    value: 'start',
+                    icon: 'glyphicon-align-left',
+                  },
+                  {
+                    label: 'Center align',
+                    value: 'center',
+                    icon: 'glyphicon-align-center',
+                  },
+                  {
+                    label: 'Right align',
+                    value: 'end',
+                    icon: 'glyphicon-align-right',
+                  },
+                  {
+                    label: 'Justify',
+                    value: 'justify',
+                    icon: 'glyphicon-align-justify',
+                  },
+                ].map((conf) => (
+                  <button
+                    key={conf.value}
+                    type="button"
+                    className={`btn btn-default btn-font-weight btn-xs ${
+                      values.configuration.style[values.style_selector][
+                        'text-align'
+                      ] === conf.value
+                        ? 'active'
+                        : ''
+                    }`}
+                    aria-label={conf.label}
+                    title={conf.label}
+                    value={conf.value}
+                    onClick={() =>
+                      setFieldValue(
+                        `configuration.style.${values.style_selector}.text-align`,
+                        conf.value
+                      )
+                    }
+                  >
+                    <span
+                      className={`glyphicon ${conf.icon}`}
+                      aria-hidden="true"
+                    ></span>
+                  </button>
+                ))}
               </div>
-              <input type="hidden" id="text-align" />
+              {/*<Field type="hidden" id="text-align" />*/}
             </td>
           </tr>
           <tr className="style-selector-block">
             <td>
               <label className="inline">Indentation</label>
               <table>
-                <tr className="style-selector-block">
-                  <th>
-                    <label htmlFor="start-indent" className="inline">
-                      Left
-                    </label>
-                    :
-                  </th>
-                  <td>
-                    <input
-                      id="start-indent"
-                      pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                      size="5"
-                      className="length-value"
-                      title="Before text indent"
-                    />
-                  </td>
-                </tr>
-                <tr className="style-selector-block">
-                  <th>
-                    <label htmlFor="end-indent" className="inline">
-                      Right
-                    </label>
-                    :
-                  </th>
-                  <td>
-                    <input
-                      id="end-indent"
-                      pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                      size="5"
-                      className="length-value"
-                      title="After text indent"
-                    />
-                  </td>
-                </tr>
+                <tbody>
+                  <tr className="style-selector-block">
+                    <th>
+                      <label htmlFor="start-indent" className="inline">
+                        Left
+                      </label>
+                      :
+                    </th>
+                    <td>
+                      <Field
+                        name={`configuration.style.${values.style_selector}.start-indent`}
+                        id="start-indent"
+                        pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                        size={5}
+                        className="length-value"
+                        title="Before text indent"
+                      />
+                    </td>
+                  </tr>
+                  <tr className="style-selector-block">
+                    <th>
+                      <label htmlFor="end-indent" className="inline">
+                        Right
+                      </label>
+                      :
+                    </th>
+                    <td>
+                      <Field
+                        name={`configuration.style.${values.style_selector}.end-indent`}
+                        pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                        size={5}
+                        className="length-value"
+                        title="After text indent"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </td>
             <td data-style="note">
@@ -314,7 +380,7 @@ export default function Styles() {
                 Note icon
               </label>
               :
-              <input id="icon" type="checkbox" value="icon" checked />
+              <Field id="icon" type="checkbox" value="icon" checked />
             </td>
           </tr>
           <tr data-style="link">
@@ -323,8 +389,8 @@ export default function Styles() {
                 Page number
               </label>
               :
-              <input
-                id="link-page-number"
+              <Field
+                name={`configuration.style.${values.style_selector}.link-page-number`}
                 type="checkbox"
                 value="true"
                 checked
@@ -336,8 +402,8 @@ export default function Styles() {
                 Show URL
               </label>
               :
-              <input
-                id="link-url"
+              <Field
+                name={`configuration.style.${values.style_selector}.link-url`}
                 type="checkbox"
                 value="true"
                 title="Show external link address."
@@ -345,94 +411,98 @@ export default function Styles() {
             </td>
           </tr>
           <tr data-style="tm">
-            <td colspan="2">
+            <td colSpan={2}>
               <label htmlFor="symbol-scope" className="inline">
                 Symbol scope
               </label>
               :
-              <select id="symbol-scope">
-                <option value="always" selected>
-                  always
-                </option>
+              <Field
+                component="select"
+                name={`configuration.style.${values.style_selector}.symbol-scope`}
+              >
+                <option value="always">always</option>
                 <option value="chapter">chapter</option>
                 <option value="never">never</option>
-              </select>
+              </Field>
             </td>
           </tr>
           <tr className="style-selector-block">
             <td>
               <label className="inline">Spacing</label>
               <table>
-                <tr className="style-selector-block">
-                  <th>
-                    <label htmlFor="space-before" className="inline">
-                      Before
-                    </label>
-                    :
-                  </th>
-                  <td>
-                    <input
-                      id="space-before"
-                      pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                      size="5"
-                      className="length-value"
-                    />
-                  </td>
-                </tr>
-                <tr className="style-selector-block">
-                  <th>
-                    <label htmlFor="space-after" className="inline">
-                      After
-                    </label>
-                    :
-                  </th>
-                  <td>
-                    <input
-                      id="space-after"
-                      pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                      size="5"
-                      className="length-value"
-                    />
-                  </td>
-                </tr>
+                <tbody>
+                  <tr className="style-selector-block">
+                    <th>
+                      <label htmlFor="space-before" className="inline">
+                        Before
+                      </label>
+                      :
+                    </th>
+                    <td>
+                      <Field
+                        name={`configuration.style.${values.style_selector}.space-before`}
+                        pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                        size={5}
+                        className="length-value"
+                      />
+                    </td>
+                  </tr>
+                  <tr className="style-selector-block">
+                    <th>
+                      <label htmlFor="space-after" className="inline">
+                        After
+                      </label>
+                      :
+                    </th>
+                    <td>
+                      <Field
+                        name={`configuration.style.${values.style_selector}.space-after`}
+                        pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                        size={5}
+                        className="length-value"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </td>
             <td>
               <table>
-                <tr>
-                  <th colspan="2">
-                    <label htmlFor="line-height" className="inline">
-                      Line spacing
-                    </label>
-                    :
-                  </th>
-                </tr>
-                <tr>
-                  <td>
-                    <input
-                      type="hidden"
-                      id="line-height"
-                      className="editable-list"
-                    />
-                    <select id="line-height.list">
-                      <option value="1.2" selected>
-                        Single
-                      </option>
-                      <option value="1.8">1.5 lines</option>
-                      <option value="2.4">Double</option>
-                      <option value="#other">Exactly</option>
-                    </select>
-                  </td>
-                  <td>
-                    <input
-                      id="line-height.other"
-                      pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)?"
-                      size="5"
-                      style={{ display: 'none' }}
-                      className="length-or-number-value"
-                    />
-                  </td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <th colSpan={2}>
+                      <label htmlFor="line-height" className="inline">
+                        Line spacing
+                      </label>
+                      :
+                    </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      {/*<Field*/}
+                      {/*  type="hidden"*/}
+                      {/*  id="line-height"*/}
+                      {/*  className="editable-list"*/}
+                      {/*/>*/}
+                      <Field component="select" id="line-height.list">
+                        <option value="1.2">Single</option>
+                        <option value="1.8">1.5 lines</option>
+                        <option value="2.4">Double</option>
+                        <option value="#other">Exactly</option>
+                      </Field>
+                    </td>
+                    <td>
+                      <Field
+                        // id="line-height.other"
+                        name={`configuration.style.${values.style_selector}.line-height`}
+                        pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)?"
+                        size={5}
+                        style={{ display: 'none' }}
+                        className="length-or-number-value"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </td>
           </tr>
@@ -440,102 +510,105 @@ export default function Styles() {
             <td>
               <label className="inline">Padding</label>
               <table>
-                <tr className="style-selector-block">
-                  <th>
-                    <label htmlFor="padding-left" className="inline">
-                      Left
-                    </label>
-                    :
-                  </th>
-                  <td>
-                    <input
-                      id="padding-left"
-                      pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                      size="5"
-                      className="length-value"
-                    />
-                  </td>
-                </tr>
-                <tr className="style-selector-block">
-                  <th>
-                    <label htmlFor="padding-right" className="inline">
-                      Right
-                    </label>
-                    :
-                  </th>
-                  <td>
-                    <input
-                      id="padding-right"
-                      pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                      size="5"
-                      className="length-value"
-                    />
-                  </td>
-                </tr>
-                <tr className="style-selector-block">
-                  <th>
-                    <label htmlFor="padding-top" className="inline">
-                      Top
-                    </label>
-                    :
-                  </th>
-                  <td>
-                    <input
-                      id="padding-top"
-                      pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                      size="5"
-                      className="length-value"
-                    />
-                  </td>
-                </tr>
-                <tr className="style-selector-block">
-                  <th>
-                    <label htmlFor="padding-bottom" className="inline">
-                      Bottom
-                    </label>
-                    :
-                  </th>
-                  <td>
-                    <input
-                      id="padding-bottom"
-                      pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                      size="5"
-                      className="length-value"
-                    />
-                  </td>
-                </tr>
+                <tbody>
+                  <tr className="style-selector-block">
+                    <th>
+                      <label htmlFor="padding-left" className="inline">
+                        Left
+                      </label>
+                      :
+                    </th>
+                    <td>
+                      <Field
+                        name={`configuration.style.${values.style_selector}.padding-left`}
+                        pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                        size={5}
+                        className="length-value"
+                      />
+                    </td>
+                  </tr>
+                  <tr className="style-selector-block">
+                    <th>
+                      <label htmlFor="padding-right" className="inline">
+                        Right
+                      </label>
+                      :
+                    </th>
+                    <td>
+                      <Field
+                        name={`configuration.style.${values.style_selector}.padding-right`}
+                        pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                        size={5}
+                        className="length-value"
+                      />
+                    </td>
+                  </tr>
+                  <tr className="style-selector-block">
+                    <th>
+                      <label htmlFor="padding-top" className="inline">
+                        Top
+                      </label>
+                      :
+                    </th>
+                    <td>
+                      <Field
+                        name={`configuration.style.${values.style_selector}.padding-top`}
+                        pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                        size={5}
+                        className="length-value"
+                      />
+                    </td>
+                  </tr>
+                  <tr className="style-selector-block">
+                    <th>
+                      <label htmlFor="padding-bottom" className="inline">
+                        Bottom
+                      </label>
+                      :
+                    </th>
+                    <td>
+                      <Field
+                        name={`configuration.style.${values.style_selector}.padding-bottom`}
+                        pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                        size={5}
+                        className="length-value"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </td>
           </tr>
           <tr className="style-selector-block">
-            <td colspan="2">
+            <td colSpan={2}>
               <label htmlFor="border" className="inline">
                 Border
               </label>
               :
-              <select id="border">
-                <option value="none" selected>
-                  no border
-                </option>
+              <Field
+                component="select"
+                name={`configuration.style.${values.style_selector}.border`}
+              >
+                <option value="none">no border</option>
                 <option value="all">all</option>
-              </select>
+              </Field>
             </td>
           </tr>
         </tbody>
         <tbody data-style="topic topic_topic topic_topic_topic topic_topic_topic_topic">
           <tr>
-            <th colspan="2">
+            <th colSpan={2}>
               <h4>Numbering</h4>
             </th>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colSpan={2}>
               <label htmlFor="title-numbering" className="inline">
                 Title numbering
               </label>
               :
-              <input
-                id="title-numbering"
+              <Field
+                name={`configuration.style.${values.style_selector}.title-numbering`}
                 type="checkbox"
                 value="true"
                 title="Title numbering"
@@ -545,35 +618,37 @@ export default function Styles() {
         </tbody>
         <tbody data-style="dl">
           <tr>
-            <th colspan="2">
+            <th colSpan={2}>
               <h4>List styles</h4>
             </th>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colSpan={2}>
               <label htmlFor="dl-type" className="inline">
                 List type
               </label>
               :
-              <select id="dl-type" title="Definition list style">
-                <option value="table" selected>
-                  table
-                </option>
+              <Field
+                component="select"
+                name={`configuration.style.${values.style_selector}.dl-type`}
+                title="Definition list style"
+              >
+                <option value="table">table</option>
                 <option value="html">HTML style</option>
                 <option value="list">bullet list</option>
-              </select>
+              </Field>
             </td>
           </tr>
         </tbody>
 
         <tbody data-style="ol">
           <tr>
-            <th colspan="2">
+            <th colSpan={2}>
               <h4>Ordered list styles</h4>
             </th>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colSpan={2}>
               <table>
                 <thead>
                   <tr>
@@ -587,73 +662,113 @@ export default function Styles() {
                   <tr>
                     <th>1</th>
                     <td>
-                      <select id="ol-1">
+                      <Field
+                        component="select"
+                        name={`configuration.style.${values.style_selector}.ol-1`}
+                      >
                         <option value="1">1, 2, 3, …</option>
                         <option value="A">A, B, C, …</option>
                         <option value="a">a, b, c, …</option>
                         <option value="I">I, II, III, …</option>
                         <option value="i">i, ii, iii, …</option>
-                      </select>
+                      </Field>
                     </td>
                     <td>
-                      <input id="ol-before-1" size="1" />
+                      <Field
+                        name={`configuration.style.${values.style_selector}.ol-before-1`}
+                        size={1}
+                      />
                     </td>
                     <td>
-                      <input id="ol-after-1" size="2" value=". " />
+                      <Field
+                        name={`configuration.style.${values.style_selector}.ol-after-1`}
+                        size={2}
+                        value=". "
+                      />
                     </td>
                   </tr>
                   <tr>
                     <th>2</th>
                     <td>
-                      <select id="ol-2">
+                      <Field
+                        component="select"
+                        name={`configuration.style.${values.style_selector}.ol-2`}
+                      >
                         <option value="1">1, 2, 3, …</option>
                         <option value="A">A, B, C, …</option>
                         <option value="a">a, b, c, …</option>
                         <option value="I">I, II, III, …</option>
                         <option value="i">i, ii, iii, …</option>
-                      </select>
+                      </Field>
                     </td>
                     <td>
-                      <input id="ol-before-2" size="1" />
+                      <Field
+                        name={`configuration.style.${values.style_selector}.ol-before-2`}
+                        size={1}
+                      />
                     </td>
                     <td>
-                      <input id="ol-after-2" size="2" value=". " />
+                      <Field
+                        name={`configuration.style.${values.style_selector}.ol-after-2`}
+                        size={2}
+                        value=". "
+                      />
                     </td>
                   </tr>
                   <tr>
                     <th>3</th>
                     <td>
-                      <select id="ol-3">
+                      <Field
+                        component="select"
+                        name={`configuration.style.${values.style_selector}.ol-3`}
+                      >
                         <option value="1">1, 2, 3, …</option>
                         <option value="A">A, B, C, …</option>
                         <option value="a">a, b, c, …</option>
                         <option value="I">I, II, III, …</option>
                         <option value="i">i, ii, iii, …</option>
-                      </select>
+                      </Field>
                     </td>
                     <td>
-                      <input id="ol-before-3" size="1" />
+                      <Field
+                        name={`configuration.style.${values.style_selector}.ol-before-3`}
+                        size={1}
+                      />
                     </td>
                     <td>
-                      <input id="ol-after-3" size="2" value=". " />
+                      <Field
+                        name={`configuration.style.${values.style_selector}.ol-after-3`}
+                        size={2}
+                        value=". "
+                      />
                     </td>
                   </tr>
                   <tr>
                     <th>4</th>
                     <td>
-                      <select id="ol-4">
+                      <Field
+                        component="select"
+                        name={`configuration.style.${values.style_selector}.ol-4`}
+                      >
                         <option value="1">1, 2, 3, …</option>
                         <option value="A">A, B, C, …</option>
                         <option value="a">a, b, c, …</option>
                         <option value="I">I, II, III, …</option>
                         <option value="i">i, ii, iii, …</option>
-                      </select>
+                      </Field>
                     </td>
                     <td>
-                      <input id="ol-before-4" size="1" />
+                      <Field
+                        name={`configuration.style.${values.style_selector}.ol-before-4`}
+                        size={1}
+                      />
                     </td>
                     <td>
-                      <input id="ol-after-4" size="2" value=". " />
+                      <Field
+                        name={`configuration.style.${values.style_selector}.ol-after-4`}
+                        size={2}
+                        value=". "
+                      />
                     </td>
                   </tr>
                 </tbody>
@@ -664,12 +779,12 @@ export default function Styles() {
 
         <tbody data-style="ul">
           <tr>
-            <th colspan="2">
+            <th colSpan={2}>
               <h4>Unordered list styles</h4>
             </th>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colSpan={2}>
               <table>
                 <thead>
                   <tr>
@@ -681,49 +796,61 @@ export default function Styles() {
                   <tr>
                     <th>1</th>
                     <td>
-                      <select id="ul-1">
+                      <Field
+                        component="select"
+                        name={`configuration.style.${values.style_selector}.ul-1`}
+                      >
                         <option value="&#x2022;">&#x2022;</option>
                         <option value="&#x25C6;">&#x25C6;</option>
                         <option value="&#x2014;">&#x2014;</option>
                         <option value="&#x2013;">&#x2013;</option>
                         <option value="&#x2012;">&#x2012;</option>
-                      </select>
+                      </Field>
                     </td>
                   </tr>
                   <tr>
                     <th>2</th>
                     <td>
-                      <select id="ul-2">
+                      <Field
+                        component="select"
+                        name={`configuration.style.${values.style_selector}.ul-2`}
+                      >
                         <option value="&#x2022;">&#x2022;</option>
                         <option value="&#x25C6;">&#x25C6;</option>
                         <option value="&#x2014;">&#x2014;</option>
                         <option value="&#x2013;">&#x2013;</option>
                         <option value="&#x2012;">&#x2012;</option>
-                      </select>
+                      </Field>
                     </td>
                   </tr>
                   <tr>
                     <th>3</th>
                     <td>
-                      <select id="ul-3">
+                      <Field
+                        component="select"
+                        name={`configuration.style.${values.style_selector}.ul-3`}
+                      >
                         <option value="&#x2022;">&#x2022;</option>
                         <option value="&#x25C6;">&#x25C6;</option>
                         <option value="&#x2014;">&#x2014;</option>
                         <option value="&#x2013;">&#x2013;</option>
                         <option value="&#x2012;">&#x2012;</option>
-                      </select>
+                      </Field>
                     </td>
                   </tr>
                   <tr>
                     <th>4</th>
                     <td>
-                      <select id="ul-4">
+                      <Field
+                        component="select"
+                        name={`configuration.style.${values.style_selector}.ul-4`}
+                      >
                         <option value="&#x2022;">&#x2022;</option>
                         <option value="&#x25C6;">&#x25C6;</option>
                         <option value="&#x2014;">&#x2014;</option>
                         <option value="&#x2013;">&#x2013;</option>
                         <option value="&#x2012;">&#x2012;</option>
-                      </select>
+                      </Field>
                     </td>
                   </tr>
                 </tbody>
@@ -734,49 +861,55 @@ export default function Styles() {
 
         <tbody data-style="table fig">
           <tr>
-            <th colspan="2">
+            <th colSpan={2}>
               <h4>Captions</h4>
             </th>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colSpan={2}>
               <label htmlFor="caption-number" className="inline">
                 Numbering
               </label>
               :
-              <select id="caption-number" title="Caption numbering">
-                <option value="document" selected>
-                  Document wide
-                </option>
+              <Field
+                component="select"
+                name={`configuration.style.${values.style_selector}.caption-number`}
+                title="Caption numbering"
+              >
+                <option value="document">Document wide</option>
                 <option value="chapter">Chapter wide</option>
                 <option value="none">No numbering</option>
-              </select>
+              </Field>
               <label htmlFor="caption-position" className="inline">
                 Position
               </label>
               :
-              <select id="caption-position" title="Caption position">
+              <Field
+                component="select"
+                name={`configuration.style.${values.style_selector}.caption-position`}
+                title="Caption position"
+              >
                 <option value="before">Above</option>
                 <option value="after">Below</option>
-              </select>
+              </Field>
             </td>
           </tr>
         </tbody>
 
         <tbody data-style="toc_1">
           <tr>
-            <th colspan="2">
+            <th colSpan={2}>
               <h4>Chapter prefix</h4>
             </th>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colSpan={2}>
               <label htmlFor="prefix" className="inline">
                 Top-level prefix
               </label>
               :
-              <input
-                id="prefix"
+              <Field
+                name={`configuration.style.${values.style_selector}.prefix`}
                 title="Chapter prefix"
                 type="checkbox"
                 value="true"
@@ -787,18 +920,18 @@ export default function Styles() {
 
         <tbody data-style="codeblock">
           <tr>
-            <th colspan="2">
+            <th colSpan={2}>
               <h4>Numbering</h4>
             </th>
           </tr>
           <tr>
-            <td colspan="2">
+            <td colSpan={2}>
               <label htmlFor="line-numbering" className="inline">
                 Line numbering
               </label>
               :
-              <input
-                id="line-numbering"
+              <Field
+                name={`configuration.style.${values.style_selector}.line-numbering`}
                 title="Line numbering"
                 type="checkbox"
                 value="true"
