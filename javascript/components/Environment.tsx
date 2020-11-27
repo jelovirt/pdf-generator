@@ -1,4 +1,5 @@
 import React from 'react';
+import { Field } from 'formik';
 
 export default function Environment() {
   return (
@@ -11,23 +12,22 @@ export default function Environment() {
       <fieldset>
         <p>
           <label
-            for="ot_version"
+            htmlFor="ot_version"
             title="Version of DITA-OT for which the plug-in is installed into."
           >
             DITA-OT version
           </label>
-          <select
+          <Field
+            component="select"
             name="ot_version"
             id="ot_version"
             title="DITA-OT version"
             required
           >
-            <option value="3.5" selected>
-              3.5
-            </option>
+            <option value="3.5">3.5</option>
             <option value="3.0">3.0</option>
             <option value="2.5">2.5</option>
-          </select>
+          </Field>
         </p>
         <p className="instruction">
           Version of DITA-OT for which the plug-in is installed into.
@@ -35,19 +35,18 @@ export default function Environment() {
       </fieldset>
       <fieldset>
         <p>
-          <label for="formatter">XSL formatter</label>
-          <select
+          <label htmlFor="formatter">XSL formatter</label>
+          <Field
+            component="select"
             name="formatter"
             id="formatter"
             title="XSL formatter"
             required
           >
-            <option value="fop" selected>
-              FOP
-            </option>
+            <option value="fop">FOP</option>
             <option value="ah">AntennaHouse Formatter</option>
             <option value="xep">RenderX XEP</option>
-          </select>
+          </Field>
         </p>
         <p className="instruction">
           XSL formatter used to generate PDF output. DITA-OT comes with open
@@ -60,15 +59,8 @@ export default function Environment() {
       </fieldset>
       <fieldset>
         <p>
-          <label for="override_shell">Override shell</label>
-          <input
-            type="checkbox"
-            name="override_shell"
-            id="override_shell"
-            title="Override shell"
-            value="true"
-            checked
-          />
+          <label htmlFor="override_shell">Override shell</label>
+          <Field id="override_shell" name="override_shell" type="checkbox" />
         </p>
         <p className="instruction">
           Override XSLT shell stylesheet. Advanced generation option which will

@@ -7,7 +7,7 @@ export default function Page() {
         <h3>Page</h3>
         <fieldset>
           <p>
-            <label for="page-size">Page size</label>
+            <label htmlFor="page-size">Page size</label>
             <select name="page-size" id="page-size" title="Page size" required>
               <option value="210mm 297mm">A3</option>
               <option value="210mm 297mm" selected>
@@ -25,7 +25,7 @@ export default function Page() {
         </fieldset>
         <fieldset>
           <p>
-            <label for="orientation">Orientation</label>
+            <label htmlFor="orientation">Orientation</label>
             <select name="orientation" id="orientation" required>
               <option value="portrait" selected>
                 portrait
@@ -37,7 +37,7 @@ export default function Page() {
         <h3>Margins</h3>
         <fieldset>
           <p>
-            <label for="page-margin-top">Top</label>
+            <label htmlFor="page-margin-top">Top</label>
             <input
               name="page-margin-top"
               id="page-margin-top"
@@ -48,7 +48,7 @@ export default function Page() {
             />
           </p>
           <p>
-            <label for="page-margin-outside">Outside</label>
+            <label htmlFor="page-margin-outside">Outside</label>
             <input
               name="page-margin-outside"
               id="page-margin-outside"
@@ -59,7 +59,7 @@ export default function Page() {
             />
           </p>
           <p>
-            <label for="page-margin-bottom">Bottom</label>
+            <label htmlFor="page-margin-bottom">Bottom</label>
             <input
               name="page-margin-bottom"
               id="page-margin-bottom"
@@ -70,7 +70,7 @@ export default function Page() {
             />
           </p>
           <p>
-            <label for="page-margin-inside">Inside</label>
+            <label htmlFor="page-margin-inside">Inside</label>
             <input
               name="page-margin-inside"
               id="page-margin-inside"
@@ -84,7 +84,7 @@ export default function Page() {
         </fieldset>
         <fieldset>
           <p>
-            <label for="mirror-page-margins">Mirror margins</label>
+            <label htmlFor="mirror-page-margins">Mirror margins</label>
             <input
               type="checkbox"
               name="mirror-page-margins"
@@ -96,7 +96,7 @@ export default function Page() {
         <h3>Columns</h3>
         <fieldset>
           <p>
-            <label for="body-column-count">Body column count</label>
+            <label htmlFor="body-column-count">Body column count</label>
             <select name="body-column-count" id="body-column-count" required>
               <option value="1" selected>
                 1
@@ -105,7 +105,7 @@ export default function Page() {
             </select>
           </p>
           <p>
-            <label for="index-column-count">Index column count</label>
+            <label htmlFor="index-column-count">Index column count</label>
             <select name="index-column-count" id="index-column-count" required>
               <option value="1">1</option>
               <option value="2" selected>
@@ -116,7 +116,7 @@ export default function Page() {
             </select>
           </p>
           <p>
-            <label for="column-gap">Column gap</label>
+            <label htmlFor="column-gap">Column gap</label>
             <input
               name="column-gap"
               id="column-gap"

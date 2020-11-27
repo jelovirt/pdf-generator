@@ -10,15 +10,21 @@
     "test": "jest"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-redux": "^7.1.11",
     "dragula": "^3.7.2",
     "elementtree": "^0.1.7",
     "file-saver": "^2.0.2",
+    "formik": "^2.2.5",
     "jquery": "^3.5.1",
     "jszip": "^3.5.0",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "redux": "^3.7.2"
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@types/dragula": "^3.7.0",

@@ -43,7 +43,7 @@ export default function Styles() {
           </tr>
           <tr>
             <td colspan="2">
-              <label for="font-family" className="inline hidden">
+              <label htmlFor="font-family" className="inline hidden">
                 Family
               </label>
               <select
@@ -78,7 +78,7 @@ export default function Styles() {
                 <option value="Verdana">Verdana</option>
                 <option value="Webdings">Webdings</option>
               </select>
-              <label for="font-size" className="inline hidden">
+              <label htmlFor="font-size" className="inline hidden">
                 Size
               </label>
               <select id="font-size" title="Font size" aria-label="Font size">
@@ -138,7 +138,7 @@ export default function Styles() {
               <input id="font-style" type="hidden" />
               <input id="text-decoration" type="hidden" />
               <br />
-              <label for="color" className="inline">
+              <label htmlFor="color" className="inline">
                 Color
               </label>
               :
@@ -172,7 +172,7 @@ export default function Styles() {
           </tr>
           <tr>
             <td colspan="2">
-              <label for="background-color" className="inline">
+              <label htmlFor="background-color" className="inline">
                 Background color
               </label>
               :
@@ -275,7 +275,7 @@ export default function Styles() {
               <table>
                 <tr className="style-selector-block">
                   <th>
-                    <label for="start-indent" className="inline">
+                    <label htmlFor="start-indent" className="inline">
                       Left
                     </label>
                     :
@@ -292,7 +292,7 @@ export default function Styles() {
                 </tr>
                 <tr className="style-selector-block">
                   <th>
-                    <label for="end-indent" className="inline">
+                    <label htmlFor="end-indent" className="inline">
                       Right
                     </label>
                     :
@@ -310,7 +310,7 @@ export default function Styles() {
               </table>
             </td>
             <td data-style="note">
-              <label for="icon" className="inline">
+              <label htmlFor="icon" className="inline">
                 Note icon
               </label>
               :
@@ -319,7 +319,7 @@ export default function Styles() {
           </tr>
           <tr data-style="link">
             <td>
-              <label for="link-page-number" className="inline">
+              <label htmlFor="link-page-number" className="inline">
                 Page number
               </label>
               :
@@ -332,7 +332,7 @@ export default function Styles() {
               />
             </td>
             <td>
-              <label for="link-url" className="inline">
+              <label htmlFor="link-url" className="inline">
                 Show URL
               </label>
               :
@@ -346,7 +346,7 @@ export default function Styles() {
           </tr>
           <tr data-style="tm">
             <td colspan="2">
-              <label for="symbol-scope" className="inline">
+              <label htmlFor="symbol-scope" className="inline">
                 Symbol scope
               </label>
               :
@@ -365,7 +365,7 @@ export default function Styles() {
               <table>
                 <tr className="style-selector-block">
                   <th>
-                    <label for="space-before" className="inline">
+                    <label htmlFor="space-before" className="inline">
                       Before
                     </label>
                     :
@@ -381,7 +381,7 @@ export default function Styles() {
                 </tr>
                 <tr className="style-selector-block">
                   <th>
-                    <label for="space-after" className="inline">
+                    <label htmlFor="space-after" className="inline">
                       After
                     </label>
                     :
@@ -401,7 +401,7 @@ export default function Styles() {
               <table>
                 <tr>
                   <th colspan="2">
-                    <label for="line-height" className="inline">
+                    <label htmlFor="line-height" className="inline">
                       Line spacing
                     </label>
                     :
@@ -442,7 +442,7 @@ export default function Styles() {
               <table>
                 <tr className="style-selector-block">
                   <th>
-                    <label for="padding-left" className="inline">
+                    <label htmlFor="padding-left" className="inline">
                       Left
                     </label>
                     :
@@ -458,7 +458,7 @@ export default function Styles() {
                 </tr>
                 <tr className="style-selector-block">
                   <th>
-                    <label for="padding-right" className="inline">
+                    <label htmlFor="padding-right" className="inline">
                       Right
                     </label>
                     :
@@ -474,7 +474,7 @@ export default function Styles() {
                 </tr>
                 <tr className="style-selector-block">
                   <th>
-                    <label for="padding-top" className="inline">
+                    <label htmlFor="padding-top" className="inline">
                       Top
                     </label>
                     :
@@ -490,7 +490,7 @@ export default function Styles() {
                 </tr>
                 <tr className="style-selector-block">
                   <th>
-                    <label for="padding-bottom" className="inline">
+                    <label htmlFor="padding-bottom" className="inline">
                       Bottom
                     </label>
                     :
@@ -509,7 +509,7 @@ export default function Styles() {
           </tr>
           <tr className="style-selector-block">
             <td colspan="2">
-              <label for="border" className="inline">
+              <label htmlFor="border" className="inline">
                 Border
               </label>
               :
@@ -530,7 +530,7 @@ export default function Styles() {
           </tr>
           <tr>
             <td colspan="2">
-              <label for="title-numbering" className="inline">
+              <label htmlFor="title-numbering" className="inline">
                 Title numbering
               </label>
               :
@@ -551,7 +551,7 @@ export default function Styles() {
           </tr>
           <tr>
             <td colspan="2">
-              <label for="dl-type" className="inline">
+              <label htmlFor="dl-type" className="inline">
                 List type
               </label>
               :
@@ -740,7 +740,7 @@ export default function Styles() {
           </tr>
           <tr>
             <td colspan="2">
-              <label for="caption-number" className="inline">
+              <label htmlFor="caption-number" className="inline">
                 Numbering
               </label>
               :
@@ -751,7 +751,7 @@ export default function Styles() {
                 <option value="chapter">Chapter wide</option>
                 <option value="none">No numbering</option>
               </select>
-              <label for="caption-position" className="inline">
+              <label htmlFor="caption-position" className="inline">
                 Position
               </label>
               :
@@ -771,7 +771,7 @@ export default function Styles() {
           </tr>
           <tr>
             <td colspan="2">
-              <label for="prefix" className="inline">
+              <label htmlFor="prefix" className="inline">
                 Top-level prefix
               </label>
               :
@@ -793,7 +793,7 @@ export default function Styles() {
           </tr>
           <tr>
             <td colspan="2">
-              <label for="line-numbering" className="inline">
+              <label htmlFor="line-numbering" className="inline">
                 Line numbering
               </label>
               :

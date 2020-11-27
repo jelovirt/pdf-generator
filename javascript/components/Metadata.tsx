@@ -1,3 +1,4 @@
+import { Field } from 'formik';
 import React from 'react';
 
 export default function Metadata() {
@@ -6,14 +7,13 @@ export default function Metadata() {
       <h3>Metadata</h3>
       <fieldset>
         <p>
-          <label for="id" className="required">
+          <label htmlFor="id" className="required">
             Plug-in ID
           </label>
-          <input
+          <Field
             type="text"
             name="id"
             id="id"
-            className="required"
             required
             title="ID of the new topic type or shell"
           />
@@ -25,16 +25,10 @@ export default function Metadata() {
       </fieldset>
       <fieldset>
         <p>
-          <label for="transtype" className="required">
+          <label htmlFor="transtype" className="required">
             Transtype
           </label>
-          <input
-            name="transtype"
-            id="transtype"
-            className="required"
-            required
-            title="Transtype"
-          />
+          <Field name="transtype" id="transtype" required title="Transtype" />
         </p>
         <p className="instruction">Name of the new transformation type.</p>
         <p className="help">
@@ -43,8 +37,8 @@ export default function Metadata() {
       </fieldset>
       <fieldset>
         <p title="Generated plugin version number">
-          <label for="plugin-version">Plug-in version</label>
-          <input
+          <label htmlFor="plugin-version">Plug-in version</label>
+          <Field
             type="text"
             name="plugin-version"
             id="plugin-version"

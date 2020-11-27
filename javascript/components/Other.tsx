@@ -8,7 +8,7 @@ export default function Other() {
         <h3>Table of Contents</h3>
         <fieldset>
           <p>
-            <label for="toc-maximum-level">Show level</label>
+            <label htmlFor="toc-maximum-level">Show level</label>
             <select name="toc-maximum-level" id="toc-maximum-level">
               <option value="2">1</option>
               <option value="3">2</option>
@@ -27,7 +27,7 @@ export default function Other() {
         <fieldset className="fah">
           <p className="not-available">Not available for FOP and RenderX XEP</p>
           <p>
-            <label for="page-number">Page number</label>
+            <label htmlFor="page-number">Page number</label>
             <select name="page-number" id="page-number">
               <option value="page" selected>
                 1
@@ -44,7 +44,7 @@ export default function Other() {
         <h3>PDF Bookmarks</h3>
         <fieldset>
           <p>
-            <label for="bookmark-style">Bookmarks state</label>
+            <label htmlFor="bookmark-style">Bookmarks state</label>
             <select
               name="bookmark-style"
               id="bookmark-style"
@@ -63,7 +63,7 @@ export default function Other() {
         <h3>Labels</h3>
         <fieldset>
           <p>
-            <label for="task-label">Task labels</label>
+            <label htmlFor="task-label">Task labels</label>
             <input
               type="checkbox"
               name="task-label"
@@ -79,7 +79,7 @@ export default function Other() {
         <fieldset className="fah">
           <p className="not-available">Not available for FOP and RenderX XEP</p>
           <p>
-            <label for="table-continued">Table continued</label>
+            <label htmlFor="table-continued">Table continued</label>
             <input
               type="checkbox"
               name="table-continued"
@@ -116,7 +116,7 @@ export default function Other() {
         <h3>Linking</h3>
         <fieldset>
           <p>
-            <label for="include-related-links">Related links</label>
+            <label htmlFor="include-related-links">Related links</label>
             <select
               name="include-related-links"
               id="include-related-links"

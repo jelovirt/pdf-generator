@@ -15,7 +15,7 @@ export default function Cover() {
         <input name="cover_image" id="cover_image_file_value" type="file" />
       </p>
       <p className="controller" id="cover_image_metadata">
-        <label for="cover_image_metadata_value" className="inline">
+        <label htmlFor="cover_image_metadata_value" className="inline">
           Data element name
         </label>
         :

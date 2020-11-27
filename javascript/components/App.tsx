@@ -8,28 +8,42 @@ import Cover from './Cover';
 import Other from './Other';
 import Metadata from './Metadata';
 import Download from './Download';
+import { Form, Formik, FormikHelpers, FormikValues } from 'formik';
+import { getInitStore, Model } from '../app/Model';
+
+const initialValues: Model = getInitStore();
+
+const onSubmit = (values: FormikValues, actions: FormikHelpers<Model>) => {
+  console.log({ values, actions });
+  alert(JSON.stringify(values, null, 2));
+  actions.setSubmitting(false);
+};
 
 export default function App() {
   return (
-    <div id="generate-plugin">
-      <section className="page container" id="p1">
-        <Environment />
-        <Page />
-        <Header />
-        <Layout />
-        <Styles />
-        <Cover />
-        <Other />
-        <Metadata />
-      </section>
-      <section className="page container" id="p2">
-        <Download />
-      </section>
-      <div id="controls">
-        <button id="generate" className="btn btn-primary" type="submit">
-          Generate
-        </button>
-      </div>
-    </div>
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      <Form>
+        <div id="generate-plugin">
+          <section className="page container" id="p1">
+            <Environment />
+            {/*<Page />*/}
+            {/*<Header />*/}
+            {/*<Layout />*/}
+            {/*<Styles />*/}
+            {/*<Cover />*/}
+            {/*<Other />*/}
+            <Metadata />
+          </section>
+          <section className="page container" id="p2">
+            <Download />
+          </section>
+          <div id="controls">
+            <button id="generate" className="btn btn-primary" type="submit">
+              Generate
+            </button>
+          </div>
+        </div>
+      </Form>
+    </Formik>
   );
 }

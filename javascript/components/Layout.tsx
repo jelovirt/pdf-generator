@@ -7,7 +7,7 @@ export default function Layout() {
         <h3>Layout</h3>
         <fieldset>
           <p>
-            <label for="force-page-count">Chapter start</label>
+            <label htmlFor="force-page-count">Chapter start</label>
             <select
               name="force-page-count"
               id="force-page-count"
@@ -33,7 +33,7 @@ export default function Layout() {
         </fieldset>
         <fieldset>
           <p>
-            <label for="blank_pages">Blank pages</label>
+            <label htmlFor="blank_pages">Blank pages</label>
             <select
               name="blank_pages"
               id="blank_pages"
@@ -52,7 +52,7 @@ export default function Layout() {
         </fieldset>
         <fieldset>
           <p>
-            <label for="chapter-layout">Chapter layout</label>
+            <label htmlFor="chapter-layout">Chapter layout</label>
             <select
               name="chapter-layout"
               id="chapter-layout"
