@@ -1,4 +1,6 @@
+import { Field } from 'formik';
 import React from 'react';
+import LayoutPreview from './LayoutPreview';
 
 export default function Layout() {
   return (
@@ -7,20 +9,19 @@ export default function Layout() {
         <h3>Layout</h3>
         <fieldset>
           <p>
-            <label htmlFor="force-page-count">Chapter start</label>
-            <select
-              name="force-page-count"
-              id="force-page-count"
+            <label htmlFor="configuration.force_page_count">Chapter start</label>
+            <Field
+              component="select"
+              name="configuration.force_page_count"
+              id="configuration.force_page_count"
               title="Force page count"
             >
               {/*// <!-- TODO -->*/}
               {/*// <!--option value="together">no break</option-->*/}
               <option value="auto">new page</option>
-              <option value="even" selected>
-                odd page
-              </option>
+              <option value="even">odd page</option>
               <option value="odd">even page</option>
-            </select>
+            </Field>
           </p>
           <p className="instruction">
             Chapters can be made to always start on an odd page or directly
@@ -33,17 +34,16 @@ export default function Layout() {
         </fieldset>
         <fieldset>
           <p>
-            <label htmlFor="blank_pages">Blank pages</label>
-            <select
-              name="blank_pages"
-              id="blank_pages"
+            <label htmlFor="configuration.blank_pages">Blank pages</label>
+            <Field
+              component="select"
+              name="configuration.blank_pages"
+              id="configuration.blank_pages"
               title="Mark blank pages"
             >
               <option value="true">mark blank page</option>
-              <option value="false" selected>
-                empty blank page
-              </option>
-            </select>
+              <option value="false">empty blank page</option>
+            </Field>
           </p>
           <p className="instruction">
             Blank pages are marked with
@@ -52,15 +52,13 @@ export default function Layout() {
         </fieldset>
         <fieldset>
           <p>
-            <label htmlFor="chapter-layout">Chapter layout</label>
+            <label htmlFor="configuration.chapter_layout">Chapter layout</label>
             <select
-              name="chapter-layout"
-              id="chapter-layout"
+              name="configuration.chapter_layout"
+              id="configuration.chapter_layout"
               title="Chapter page layout"
             >
-              <option value="MINITOC" selected>
-                chapter TOC
-              </option>
+              <option value="MINITOC">chapter TOC</option>
               <option value="BASIC">no chapter TOC</option>
             </select>
           </p>
@@ -70,140 +68,7 @@ export default function Layout() {
           </p>
         </fieldset>
       </div>
-      <div className="example-block col-md-7">
-        <div className="force-page-count_example_auto">
-          <div className="example-page even" title="Even page">
-            <table className="example-page-body">
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div
-            className="example-page odd"
-            title="Even odd, last page of chapter"
-          >
-            <table className="example-page-body cut-off">
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div
-            className="example-page even"
-            title="Even page, first page of chapter"
-          >
-            <table className="example-page-body">
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div className="example-page odd" title="Odd page">
-            <table className="example-page-body">
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div className="force-page-count_example_even">
-          <div className="example-page even" title="Even page">
-            <table className="example-page-body">
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div
-            className="example-page odd"
-            title="Odd page, last page of chapter"
-          >
-            <table className="example-page-body cut-off">
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div className="example-page even" title="Even page, blank page">
-            <table className="example-page-body-empty">
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div
-            className="example-page odd"
-            title="Odd page, first page of chapter"
-          >
-            <table className="example-page-body">
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div className="force-page-count_example_odd">
-          <div
-            className="example-page even"
-            title="Even page, last page of chapter"
-          >
-            <table className="example-page-body cut-off">
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div className="example-page odd" title="Odd page, blank page">
-            <table className="example-page-body-empty">
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div
-            className="example-page even"
-            title="Even page, first page of chapter"
-          >
-            <table className="example-page-body">
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <div className="example-page odd" title="Odd page">
-            <table className="example-page-body">
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
+      <LayoutPreview />
     </>
   );
 }

@@ -27,8 +27,8 @@ export default function App() {
           <section className="page container" id="p1">
             <Environment />
             <Page />
-            {/*<Header />*/}
-            {/*<Layout />*/}
+            <Header />
+            <Layout />
             {/*<Styles />*/}
             {/*<Cover />*/}
             {/*<Other />*/}
