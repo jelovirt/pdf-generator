@@ -63,6 +63,13 @@ export type Values = {
   page_size: string;
   orientation: 'portrait' | 'landscape';
   style_selector: StyleName;
+  configuration: {
+    style: {
+      [key: string]: {
+        'line-height-list': string;
+      };
+    };
+  };
 } & Model;
 
 export function toModel(values: Values): Model {
@@ -114,8 +121,21 @@ function getInitStyle(): Record<StyleName, Record<Property, string>> {
 }
 
 export function getInitValues(): Values {
+  const init = getInitStore();
   return {
-    ...getInitStore(),
+    ...init,
+    configuration: {
+      ...init.configuration,
+      style: Object.fromEntries(
+        Object.entries(init.configuration.style).map(([styleName, value]) => [
+          styleName,
+          {
+            ...value,
+            'line-height-list': '1.2',
+          },
+        ])
+      ) as any,
+    },
     cover_image_chooser: '',
     page_size: '210mm 297mm',
     orientation: 'portrait',

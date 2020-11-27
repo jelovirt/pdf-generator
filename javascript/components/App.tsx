@@ -12,7 +12,7 @@ import { Form, Formik, FormikHelpers, FormikValues } from 'formik';
 import { getInitValues, toModel, Values } from '../app/Model';
 
 const initialValues: Values = getInitValues();
-
+console.log(initialValues);
 const onSubmit = (values: FormikValues, actions: FormikHelpers<Values>) => {
   console.log(toModel(values as Values));
   actions.setSubmitting(false);

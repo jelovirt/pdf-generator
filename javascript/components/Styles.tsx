@@ -28,14 +28,16 @@ export default function Styles() {
           <option value="dl">Definition list</option>
           <option value="table">Table</option>
           <option value="fig">Figure</option>
-          <option value="toc_1">TOC 1</option>
-          <option value="toc_2">TOC 2</option>
-          <option value="toc_3">TOC 3</option>
-          <option value="toc_4">TOC 4</option>
         </optgroup>
         <optgroup label="Inline">
           <option value="link">Link</option>
           <option value="tm">Trademark</option>
+        </optgroup>
+        <optgroup label="Table of contents">
+          <option value="toc_1">level 1</option>
+          <option value="toc_2">level 2</option>
+          <option value="toc_3">level 3</option>
+          <option value="toc_4">level 4</option>
         </optgroup>
       </Field>
       <table>
@@ -383,6 +385,7 @@ export default function Styles() {
               <Field id="icon" type="checkbox" value="icon" checked />
             </td>
           </tr>
+          {values.style_selector === 'link' && (
           <tr data-style="link">
             <td>
               <label htmlFor="link-page-number" className="inline">
@@ -410,6 +413,8 @@ export default function Styles() {
               />
             </td>
           </tr>
+          }
+          {values.style_selector === 'tm' && (
           <tr data-style="tm">
             <td colSpan={2}>
               <label htmlFor="symbol-scope" className="inline">
@@ -426,6 +431,7 @@ export default function Styles() {
               </Field>
             </td>
           </tr>
+          }
           <tr className="style-selector-block">
             <td>
               <label className="inline">Spacing</label>
@@ -484,23 +490,30 @@ export default function Styles() {
                       {/*  id="line-height"*/}
                       {/*  className="editable-list"*/}
                       {/*/>*/}
-                      <Field component="select" id="line-height.list">
+                      <Field
+                        component="select"
+                        name={`configuration.style.${values.style_selector}.line-height-list`}
+                      >
                         <option value="1.2">Single</option>
                         <option value="1.8">1.5 lines</option>
                         <option value="2.4">Double</option>
                         <option value="#other">Exactly</option>
                       </Field>
                     </td>
-                    <td>
-                      <Field
-                        // id="line-height.other"
-                        name={`configuration.style.${values.style_selector}.line-height`}
-                        pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)?"
-                        size={5}
-                        style={{ display: 'none' }}
-                        className="length-or-number-value"
-                      />
-                    </td>
+                    {values.configuration.style[values.style_selector][
+                      'line-height-list'
+                    ] === '#other' && (
+                      <td>
+                        <Field
+                          // id="line-height.other"
+                          name={`configuration.style.${values.style_selector}.line-height`}
+                          pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)?"
+                          size={5}
+                          style={{ display: 'none' }}
+                          className="length-or-number-value"
+                        />
+                      </td>
+                    )}
                   </tr>
                 </tbody>
               </table>
@@ -595,27 +608,35 @@ export default function Styles() {
             </td>
           </tr>
         </tbody>
-        <tbody data-style="topic topic_topic topic_topic_topic topic_topic_topic_topic">
-          <tr>
-            <th colSpan={2}>
-              <h4>Numbering</h4>
-            </th>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <label htmlFor="title-numbering" className="inline">
-                Title numbering
-              </label>
-              :
-              <Field
-                name={`configuration.style.${values.style_selector}.title-numbering`}
-                type="checkbox"
-                value="true"
-                title="Title numbering"
-              />
-            </td>
-          </tr>
-        </tbody>
+        {[
+          'topic',
+          'topic_topic',
+          'topic_topic_topic',
+          'topic_topic_topic_topic',
+        ].includes(values.style_selector) && (
+          <tbody data-style="topic topic_topic topic_topic_topic topic_topic_topic_topic">
+            <tr>
+              <th colSpan={2}>
+                <h4>Numbering</h4>
+              </th>
+            </tr>
+            <tr>
+              <td colSpan={2}>
+                <label htmlFor="title-numbering" className="inline">
+                  Title numbering
+                </label>
+                :
+                <Field
+                  name={`configuration.style.${values.style_selector}.title-numbering`}
+                  type="checkbox"
+                  value="true"
+                  title="Title numbering"
+                />
+              </td>
+            </tr>
+          </tbody>
+        )}
+        {values.style_selector === 'dl' && (
         <tbody data-style="dl">
           <tr>
             <th colSpan={2}>
@@ -640,7 +661,8 @@ export default function Styles() {
             </td>
           </tr>
         </tbody>
-
+        }
+        {values.style_selector === 'ol' && (
         <tbody data-style="ol">
           <tr>
             <th colSpan={2}>
@@ -776,7 +798,8 @@ export default function Styles() {
             </td>
           </tr>
         </tbody>
-
+        }
+        {values.style_selector === 'ul' && (
         <tbody data-style="ul">
           <tr>
             <th colSpan={2}>
@@ -858,87 +881,92 @@ export default function Styles() {
             </td>
           </tr>
         </tbody>
-
-        <tbody data-style="table fig">
-          <tr>
-            <th colSpan={2}>
-              <h4>Captions</h4>
-            </th>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <label htmlFor="caption-number" className="inline">
-                Numbering
-              </label>
-              :
-              <Field
-                component="select"
-                name={`configuration.style.${values.style_selector}.caption-number`}
-                title="Caption numbering"
-              >
-                <option value="document">Document wide</option>
-                <option value="chapter">Chapter wide</option>
-                <option value="none">No numbering</option>
-              </Field>
-              <label htmlFor="caption-position" className="inline">
-                Position
-              </label>
-              :
-              <Field
-                component="select"
-                name={`configuration.style.${values.style_selector}.caption-position`}
-                title="Caption position"
-              >
-                <option value="before">Above</option>
-                <option value="after">Below</option>
-              </Field>
-            </td>
-          </tr>
-        </tbody>
-
-        <tbody data-style="toc_1">
-          <tr>
-            <th colSpan={2}>
-              <h4>Chapter prefix</h4>
-            </th>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <label htmlFor="prefix" className="inline">
-                Top-level prefix
-              </label>
-              :
-              <Field
-                name={`configuration.style.${values.style_selector}.prefix`}
-                title="Chapter prefix"
-                type="checkbox"
-                value="true"
-              />
-            </td>
-          </tr>
-        </tbody>
-
-        <tbody data-style="codeblock">
-          <tr>
-            <th colSpan={2}>
-              <h4>Numbering</h4>
-            </th>
-          </tr>
-          <tr>
-            <td colSpan={2}>
-              <label htmlFor="line-numbering" className="inline">
-                Line numbering
-              </label>
-              :
-              <Field
-                name={`configuration.style.${values.style_selector}.line-numbering`}
-                title="Line numbering"
-                type="checkbox"
-                value="true"
-              />
-            </td>
-          </tr>
-        </tbody>
+        }
+        {(values.style_selector === 'table') ||
+          (values.style_selector === 'fig') && (
+          <tbody data-style="table fig">
+            <tr>
+              <th colSpan={2}>
+                <h4>Captions</h4>
+              </th>
+            </tr>
+            <tr>
+              <td colSpan={2}>
+                <label htmlFor="caption-number" className="inline">
+                  Numbering
+                </label>
+                :
+                <Field
+                  component="select"
+                  name={`configuration.style.${values.style_selector}.caption-number`}
+                  title="Caption numbering"
+                >
+                  <option value="document">Document wide</option>
+                  <option value="chapter">Chapter wide</option>
+                  <option value="none">No numbering</option>
+                </Field>
+                <label htmlFor="caption-position" className="inline">
+                  Position
+                </label>
+                :
+                <Field
+                  component="select"
+                  name={`configuration.style.${values.style_selector}.caption-position`}
+                  title="Caption position"
+                >
+                  <option value="before">Above</option>
+                  <option value="after">Below</option>
+                </Field>
+              </td>
+            </tr>
+          </tbody>
+        )}
+        {values.style_selector === 'toc_1' && (
+          <tbody data-style="toc_1">
+            <tr>
+              <th colSpan={2}>
+                <h4>Chapter prefix</h4>
+              </th>
+            </tr>
+            <tr>
+              <td colSpan={2}>
+                <label htmlFor="prefix" className="inline">
+                  Top-level prefix
+                </label>
+                :
+                <Field
+                  name={`configuration.style.${values.style_selector}.prefix`}
+                  title="Chapter prefix"
+                  type="checkbox"
+                  value="true"
+                />
+              </td>
+            </tr>
+          </tbody>
+        )}
+        {values.style_selector === 'codeblock' && (
+          <tbody data-style="codeblock">
+            <tr>
+              <th colSpan={2}>
+                <h4>Numbering</h4>
+              </th>
+            </tr>
+            <tr>
+              <td colSpan={2}>
+                <label htmlFor="line-numbering" className="inline">
+                  Line numbering
+                </label>
+                :
+                <Field
+                  name={`configuration.style.${values.style_selector}.line-numbering`}
+                  title="Line numbering"
+                  type="checkbox"
+                  value="true"
+                />
+              </td>
+            </tr>
+          </tbody>
+        )}
       </table>
     </div>
   );
