@@ -9,7 +9,9 @@ export default function Layout() {
         <h3>Layout</h3>
         <fieldset>
           <p>
-            <label htmlFor="configuration.force_page_count">Chapter start</label>
+            <label htmlFor="configuration.force_page_count">
+              Chapter start
+            </label>
             <Field
               component="select"
               name="configuration.force_page_count"

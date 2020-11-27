@@ -9,11 +9,11 @@ import Other from './Other';
 import Metadata from './Metadata';
 import Download from './Download';
 import { Form, Formik, FormikHelpers, FormikValues } from 'formik';
-import { getInitStore, Model } from '../app/Model';
+import { getInitValues, Values } from '../app/Model';
 
-const initialValues: Model = getInitStore();
+const initialValues: Values = getInitValues();
 
-const onSubmit = (values: FormikValues, actions: FormikHelpers<Model>) => {
+const onSubmit = (values: FormikValues, actions: FormikHelpers<Values>) => {
   console.log({ values, actions });
   alert(JSON.stringify(values, null, 2));
   actions.setSubmitting(false);
@@ -30,7 +30,7 @@ export default function App() {
             <Header />
             <Layout />
             {/*<Styles />*/}
-            {/*<Cover />*/}
+            <Cover />
             {/*<Other />*/}
             <Metadata />
           </section>

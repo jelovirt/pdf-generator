@@ -1,10 +1,10 @@
 import React from 'react';
 import { Field, useFormikContext } from 'formik';
 import PagePreview from './PagePreview';
-import { Model } from '../app/Model';
+import { Values } from '../app/Model';
 
 export default function Page() {
-  const { values } = useFormikContext<Model>();
+  const { values } = useFormikContext<Values>();
   return (
     <>
       <div className="form col-md-5">

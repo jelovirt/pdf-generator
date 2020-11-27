@@ -58,6 +58,10 @@ export type Model = {
   title_numbering?: string;
 };
 
+export type Values = {
+  cover_image_chooser: 'metadata' | '';
+} & Model;
+
 function getInitStyle(): Record<StyleName, Record<Property, string>> {
   return (_(styles)
     .mapValues(
@@ -85,6 +89,13 @@ function getInitStyle(): Record<StyleName, Record<Property, string>> {
       return undefined;
     }
   }
+}
+
+export function getInitValues(): Values {
+  return {
+    ...getInitStore(),
+    cover_image_chooser: '',
+  };
 }
 
 export function getInitStore(): Model {
@@ -127,8 +138,10 @@ export function getInitStore(): Model {
       page_number: 'page',
     },
     ot_version: '3.5',
-    id: null,
-    transtype: null,
+    id: '',
+    plugin_name: '',
+    plugin_version: '',
+    transtype: '',
   };
 }
 

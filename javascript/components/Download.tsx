@@ -1,9 +1,9 @@
 import React from 'react';
 import { useFormikContext } from 'formik';
-import { Model } from '../app/Model';
+import { Values } from '../app/Model';
 
 export default function Download() {
-  const { values } = useFormikContext<Model>();
+  const { values } = useFormikContext<Values>();
   return (
     <>
       <h3>Download</h3>

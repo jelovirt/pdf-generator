@@ -37,11 +37,11 @@ export default function Metadata() {
       </fieldset>
       <fieldset>
         <p title="Generated plugin version number">
-          <label htmlFor="plugin-version">Plug-in version</label>
+          <label htmlFor="plugin_version">Plug-in version</label>
           <Field
             type="text"
-            name="plugin-version"
-            id="plugin-version"
+            name="plugin_version"
+            id="plugin_version"
             placeholder="0.0.0"
             pattern="\d+(\.\d+){0,2}"
           />
