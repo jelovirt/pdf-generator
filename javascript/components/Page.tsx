@@ -19,9 +19,9 @@ export default function Page() {
               title="Page size"
               required
             >
-              <option value="210mm 297mm">A3</option>
+              <option value="297mm 420mm">A3</option>
               <option value="210mm 297mm">A4</option>
-              <option value="210mm 297mm">A5</option>
+              <option value="148mm 210mm">A5</option>
               <option value="184.1mm 266.7mm">Executive</option>
               <option value="182mm 257mm">JIS B5</option>
               <option value="431.8mm 279.4mm">Tabloid</option>
@@ -91,11 +91,11 @@ export default function Page() {
         </fieldset>
         <fieldset>
           <p>
-            <label htmlFor="mirror-page-margins">Mirror margins</label>
+            <label htmlFor="mirror_page_margins">Mirror margins</label>
             <Field
               type="checkbox"
-              name="mirror-page-margins"
-              id="mirror-page-margins"
+              name="mirror_page_margins"
+              id="mirror_page_margins"
             />
           </p>
         </fieldset>
@@ -140,7 +140,15 @@ export default function Page() {
           )}
         </fieldset>
       </div>
-      <PagePreview />
+      <PagePreview
+        mirror_page_margins={values.mirror_page_margins}
+        page_size={values.page_size}
+        orientation={values.orientation}
+        top={values.page.top}
+        outside={values.page.outside}
+        bottom={values.page.bottom}
+        inside={values.page.inside}
+      />
     </>
   );
 }
