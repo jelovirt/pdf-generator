@@ -26,7 +26,7 @@ export default function App() {
         <div id="generate-plugin">
           <section className="page container" id="p1">
             <Environment />
-            {/*<Page />*/}
+            <Page />
             {/*<Header />*/}
             {/*<Layout />*/}
             {/*<Styles />*/}

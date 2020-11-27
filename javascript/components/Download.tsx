@@ -30,10 +30,9 @@ export default function Download() {
         <h4 className="donation">Donations</h4>
         <p className="donation">
           The DITA-OT PDF plugin generator is developed as a spare time project
-          by{' '}
-          <a href="http://fi.linkedin.com/in/jelovirt">Jarno Elovirta</a> and is
-          available for use free of charge. Donations are welcome per "value for
-          value" model:{' '}
+          by <a href="http://fi.linkedin.com/in/jelovirt">Jarno Elovirta</a> and
+          is available for use free of charge. Donations are welcome per "value
+          for value" model:{' '}
           <em>you give value only when you feel you have received value</em>.
         </p>
       </div>
