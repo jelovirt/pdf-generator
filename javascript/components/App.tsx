@@ -31,7 +31,7 @@ export default function App() {
             <Layout />
             {/*<Styles />*/}
             <Cover />
-            {/*<Other />*/}
+            <Other />
             <Metadata />
           </section>
           <section className="page container" id="p2">

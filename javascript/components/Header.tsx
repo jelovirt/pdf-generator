@@ -1,6 +1,9 @@
 import React from 'react';
+import { Field, useFormikContext } from 'formik';
+import { Values } from '../app/Model';
 
 export default function Header() {
+  const { values } = useFormikContext<Values>();
   return (
     <div className="form col-md-12">
       <h3>Header and footer</h3>
@@ -79,6 +82,35 @@ export default function Header() {
         </div>
         <p className="instruction">
           Drag fields for header and footer contents.
+        </p>
+      </fieldset>
+      {/*<h3>Page numbering</h3>*/}
+      <fieldset
+        className={
+          values.configuration.formatter !== 'ah' ? 'disabled' : undefined
+        }
+      >
+        {values.configuration.formatter !== 'ah' && (
+          <p className="xnot-available">
+            Not available for FOP and RenderX XEP
+          </p>
+        )}
+        <p>
+          <label htmlFor="configuration.page_number">Page number</label>
+          <Field
+            component="select"
+            name="configuration.page_number"
+            id="configuration.page_number"
+            disabled={values.configuration.formatter !== 'ah'}
+          >
+            <option value="page">1</option>
+            <option value="chapter-page">1-1</option>
+          </Field>
+        </p>
+        <p className="instruction">Page number format.</p>
+        <p className="help">
+          Either use a simple page number, or reset page numbering for each
+          chapter and prefix page number with chapter number.
         </p>
       </fieldset>
     </div>

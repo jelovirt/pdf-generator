@@ -1,6 +1,10 @@
+import { Field, useFormikContext } from 'formik';
 import React from 'react';
+import OtherPreview from './OtherPreview';
+import { Values } from '../app/Model';
 
 export default function Other() {
+  const { values } = useFormikContext<Values>();
   return (
     <>
       <div className="form col-md-12">
@@ -8,53 +12,37 @@ export default function Other() {
         <h3>Table of Contents</h3>
         <fieldset>
           <p>
-            <label htmlFor="toc-maximum-level">Show level</label>
-            <select name="toc-maximum-level" id="toc-maximum-level">
+            <label htmlFor="configuration.toc_maximum_level">Show level</label>
+            <Field
+              component="select"
+              name="configuration.toc_maximum_level"
+              id="configuration.toc_maximum_level"
+            >
               <option value="2">1</option>
               <option value="3">2</option>
-              <option value="4" selected>
-                3
-              </option>
+              <option value="4">3</option>
               <option value="5">4</option>
-            </select>
+            </Field>
           </p>
           <p className="instruction">
             Number of levels displayed on table of contents page.
           </p>
         </fieldset>
-        {/*// <!-- TODO move this to header -->*/}
-        <h3>Page numbering</h3>
-        <fieldset className="fah">
-          <p className="not-available">Not available for FOP and RenderX XEP</p>
-          <p>
-            <label htmlFor="page-number">Page number</label>
-            <select name="page-number" id="page-number">
-              <option value="page" selected>
-                1
-              </option>
-              <option value="chapter-page">1-1</option>
-            </select>
-          </p>
-          <p className="instruction">Page number format.</p>
-          <p className="help">
-            Either use a simple page number, or reset page numbering for each
-            chapter and prefix page number with chapter number.
-          </p>
-        </fieldset>
         <h3>PDF Bookmarks</h3>
         <fieldset>
           <p>
-            <label htmlFor="bookmark-style">Bookmarks state</label>
-            <select
-              name="bookmark-style"
-              id="bookmark-style"
+            <label htmlFor="configuration.bookmark_style">
+              Bookmarks state
+            </label>
+            <Field
+              component="select"
+              name="configuration.bookmark_style"
+              id="configuration.bookmark_style"
               title="Bookmark initial state"
             >
-              <option value="COLLAPSED" selected>
-                collapsed
-              </option>
+              <option value="COLLAPSED">collapsed</option>
               <option value="EXPANDED">expanded</option>
-            </select>
+            </Field>
           </p>
           <p className="instruction">PDF bookmark node initial state.</p>
         </fieldset>
@@ -63,12 +51,11 @@ export default function Other() {
         <h3>Labels</h3>
         <fieldset>
           <p>
-            <label htmlFor="task-label">Task labels</label>
-            <input
+            <label htmlFor="configuration.task_label">Task labels</label>
+            <Field
               type="checkbox"
-              name="task-label"
-              id="task-label"
-              value="true"
+              name="configuration.task_label"
+              id="configuration.task_label"
               title="Task labels"
             />
           </p>
@@ -76,16 +63,26 @@ export default function Other() {
             Generate titles for task steps and sections.
           </p>
         </fieldset>
-        <fieldset className="fah">
-          <p className="not-available">Not available for FOP and RenderX XEP</p>
+        <fieldset
+          className={
+            values.configuration.formatter !== 'ah' ? 'disabled' : undefined
+          }
+        >
+          {values.configuration.formatter !== 'ah' && (
+            <p className="not-available">
+              Not available for FOP and RenderX XEP
+            </p>
+          )}
           <p>
-            <label htmlFor="table-continued">Table continued</label>
-            <input
+            <label htmlFor="configuration.table_continued">
+              Table continued
+            </label>
+            <Field
               type="checkbox"
-              name="table-continued"
-              id="table-continued"
-              value="true"
+              name="configuration.table_continued"
+              id="configuration.table_continued"
               title="Mark continued table"
+              disabled={values.configuration.formatter !== 'ah'}
             />
           </p>
           <p className="instruction">
@@ -94,40 +91,24 @@ export default function Other() {
           </p>
         </fieldset>
       </div>
-      <div className="example-block col-md-7">
-        <div className="example-text">
-          <p className="example-page-content-para example-task-label">
-            <strong>About this task</strong>
-          </p>
-          <p className="example-page-content-para">
-            Learn how to add nails to walls.
-          </p>
-          <p className="example-page-content-para example-task-label">
-            <strong>Before you start</strong>
-          </p>
-          <p className="example-page-content-para">Buy a hammer and a nail.</p>
-          <p className="example-page-content-para example-task-label">
-            <strong>Procedure</strong>
-          </p>
-          <p className="example-page-content-para">1. Hammer in the nail.</p>
-        </div>
-      </div>
+      <OtherPreview />
       <div className="form col-md-12">
         <h3>Linking</h3>
         <fieldset>
           <p>
-            <label htmlFor="include-related-links">Related links</label>
-            <select
-              name="include-related-links"
-              id="include-related-links"
+            <label htmlFor="configuration.include_related_links">
+              Related links
+            </label>
+            <Field
+              component="select"
+              name="configuration.include_related_links"
+              id="configuration.include_related_links"
               title="Related links"
             >
-              <option value="none" selected>
-                none
-              </option>
+              <option value="none">none</option>
               <option value="nofamily">no family</option>
               <option value="all">all</option>
-            </select>
+            </Field>
           </p>
           <p className="instruction">Related links generated for topics.</p>
         </fieldset>
