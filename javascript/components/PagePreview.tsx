@@ -1,5 +1,4 @@
 import React from 'react';
-import { useFormikContext } from 'formik';
 import { Length } from '../app/Model';
 
 export default function PagePreview(props: {
@@ -11,6 +10,25 @@ export default function PagePreview(props: {
   bottom: Length;
   inside: Length;
 }) {
+  return (
+    <div className="example-block col-md-7" id="margin.example">
+      {props.mirror_page_margins && <PreviewPage {...props} even={true} />}
+      <PreviewPage {...props} even={false} />
+    </div>
+  );
+}
+
+export const PreviewPage = (props: {
+  page_size: string;
+  orientation: 'portrait' | 'landscape';
+  top: Length;
+  outside: Length;
+  bottom: Length;
+  inside: Length;
+  even: boolean;
+  cut_off?: boolean;
+  blank?: boolean;
+}) => {
   const factor = 0.1;
   const dimensions = props.page_size.split(' ');
   if (props.orientation === 'landscape') {
@@ -30,39 +48,25 @@ export default function PagePreview(props: {
     textAlign: 'center',
   };
   return (
-    <div className="example-block col-md-7" id="margin.example">
-      {props.mirror_page_margins && (
-        <div
-          className="example-page even"
-          title="Even page"
-          style={pageStyle(true)}
-        >
-          <table className="example-page-body" style={contentStyle}>
-            <tbody>
-              <tr>
-                <td>
-                  <div>{props.page_size}</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      )}
-      <div
-        className="example-page odd"
-        title="Odd page"
-        style={pageStyle(false)}
+    <div
+      className={`example-page ${props.even ? 'even' : 'odd'}`}
+      title="Odd page"
+      style={pageStyle(props.even)}
+    >
+      <table
+        className={`${
+          props.blank ? 'example-page-body-empty' : 'example-page-body'
+        } ${props.cut_off ? 'cut-off' : ''}`}
+        style={contentStyle}
       >
-        <table className="example-page-body" style={contentStyle}>
-          <tbody>
-            <tr>
-              <td>
-                <div>{props.page_size}</div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <tbody>
+          <tr>
+            <td>
+              <div>{props.page_size}</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
-}
+};

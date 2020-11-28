@@ -1,8 +1,10 @@
-import { Field } from 'formik';
+import { Field, useFormikContext } from 'formik';
 import React from 'react';
 import LayoutPreview from './LayoutPreview';
+import { Values } from '../app/Model';
 
 export default function Layout() {
+  const { values } = useFormikContext<Values>();
   return (
     <>
       <div className="form col-md-5">
@@ -68,7 +70,16 @@ export default function Layout() {
           </p>
         </fieldset>
       </div>
-      <LayoutPreview />
+      <LayoutPreview
+        force_page_count={values.force_page_count}
+        mirror_page_margins={values.mirror_page_margins}
+        page_size={values.page_size}
+        orientation={values.orientation}
+        top={values.page.top}
+        outside={values.page.outside}
+        bottom={values.page.bottom}
+        inside={values.page.inside}
+      />
     </>
   );
 }
