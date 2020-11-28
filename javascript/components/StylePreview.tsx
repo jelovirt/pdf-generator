@@ -1,36 +1,138 @@
 import React from 'react';
+import { Values } from '../app/Model';
+import { Property, StyleName } from '../lib/styles';
+import { toPt } from '../app/pdf-utils';
 
-export default function StylePreview() {
+const f = 0.9;
+
+function previewSpaceHandler(type: StyleName, style: Record<Property, string>) {
+  const properties = (Object.entries(style) as [Property, string][]).map(
+    ([field, value]) => {
+      let v = value;
+      let isLength = false;
+      let property;
+      switch (field) {
+        case 'space-before':
+          property = 'margin-top';
+          isLength = true;
+          break;
+        case 'space-after':
+          property = 'margin-bottom';
+          isLength = true;
+          break;
+        case 'start-indent':
+          property = 'margin-left';
+          isLength = true;
+          break;
+        case 'end-indent':
+          property = 'margin-right';
+          isLength = true;
+          break;
+        case 'font-size':
+          property = field;
+          isLength = true;
+          break;
+        case 'line-height':
+          property = field;
+          isLength = isNaN(Number(v));
+          break;
+        case 'text-align':
+          property = field;
+          switch (v) {
+            case 'start':
+              v = 'left';
+              break;
+            case 'end':
+              v = 'right';
+              break;
+          }
+          break;
+        case 'border-before-style':
+        case 'border-before-width':
+        case 'border-before-color':
+        case 'border-end-style':
+        case 'border-end-width':
+        case 'border-end-color':
+        case 'border-after-style':
+        case 'border-after-width':
+        case 'border-after-color':
+        case 'border-start-style':
+        case 'border-start-width':
+        case 'border-start-color':
+          const tokens = field.split('-');
+          switch (tokens[1]) {
+            case 'before':
+              property = 'border-top-' + tokens[2];
+              break;
+            case 'end':
+              property = 'border-right-' + tokens[2];
+              break;
+            case 'after':
+              property = 'border-bottom-' + tokens[2];
+              break;
+            case 'start':
+              property = 'border-left-' + tokens[2];
+              break;
+          }
+          isLength = false;
+          break;
+        default:
+          // const all = $element.find(
+          //     "[data-field='" + field + "'][data-style='" + type + "']"
+          // );
+          // if (all.length) {
+          //   if (all.filter('[data-value]').length) {
+          //     all.hide();
+          //     all.filter("[data-value='" + v + "']").show();
+          //   } else {
+          //     all.text(v);
+          //   }
+          // } else {
+          property = field;
+          isLength = false;
+          // }
+          break;
+      }
+      if (property !== undefined) {
+        if (isLength) {
+          if (v !== undefined) {
+            v = String(toPt(v)! * f) + 'px';
+          }
+        }
+      }
+      return [property, v];
+      // FIXME
+      // wrapper styling
+      // if (field === 'start-indent' && type === 'body') {
+      //   $element.find('.wrapper > *').css('left', `-${v}`);
+      // }
+    }
+  );
+  return Object.fromEntries(properties);
+}
+
+export default function StylePreview(props: { values: Values }) {
+  const styles = props.values.style;
+  const getStyle = (styleName: StyleName) =>
+    previewSpaceHandler(styleName, styles[styleName]);
   return (
     <div className="example-block col-md-7" id="example-style">
       <div className="example-block-page" id="start-indent.examplex">
         <div className="example-page-content" id="text-align.examplex">
-          <div className="example-page-content-topic">
-            <span
-              data-style="topic"
-              data-field="title-numbering"
-              data-value="true"
-            >
-              1{' '}
-            </span>
+          <div style={getStyle('topic')}>
+            {styles['topic']['title-numbering'] && <span>1 </span>}
             Heading 1
           </div>
-          <div className="example-page-content-topic_topic">
-            <span
-              data-style="topic_topic"
-              data-field="title-numbering"
-              data-value="true"
-            >
-              1.1{' '}
-            </span>
+          <div style={getStyle('topic_topic')}>
+            {styles['topic_topic']['title-numbering'] && <span>1.1 </span>}
             Heading 2
           </div>
-          <p className="example-page-content-body">
+          <p style={getStyle('body')}>
             The quick brown fox jumps over the lazy dog. The quick brown fox
             jumps over the lazy dog. The quick brown fox jumps over the lazy
             dog. The quick brown fox jumps over the lazy dog.
           </p>
-          <table className="example-page-content-note">
+          <table style={getStyle('note')}>
             <tr>
               <td data-style="note" data-field="icon" data-value="icon">
                 <img
@@ -39,100 +141,62 @@ export default function StylePreview() {
                 />
               </td>
               <td>
-                <strong className="example-page-content-note-label">
+                <strong
+                // style={getStyle('note-label')}
+                >
                   Note:
                 </strong>{' '}
                 The quick brown fox jumps over the lazy dog.
               </td>
             </tr>
           </table>
-          <p className="example-page-content-body">
+          <p style={getStyle('body')}>
             The quick brown fox jumps over the lazy dog. The quick brown fox
             jumps over the lazy dog. The quick brown fox jumps over the lazy
             dog. The quick brown fox jumps over the lazy dog. The quick brown
             fox jumps over the lazy dog.
           </p>
-          <ol className="example-page-content-ol">
+          <ol style={getStyle('ol')}>
             <li>
-              <span data-field="ol-before-1" data-style="ol"></span>
-              <span data-field="ol-1" data-style="ol">
-                1
-              </span>
-              <span data-field="ol-after-1" data-style="ol">
-                .
-              </span>
+              <span>{styles['ol']['ol-before-1']}</span>
+              <span>{styles['ol']['ol-1']}</span>
+              <span>{styles['ol']['ol-after-1']}</span>
               The quick brown fox jumps over the lazy dog.
               <ol>
                 <li>
-                  <span data-field="ol-before-2" data-style="ol"></span>
-                  <span
-                    data-field="ol-sublevel"
-                    data-style="ol"
-                    data-value="true"
-                  >
-                    <span data-field="ol-1" data-style="ol">
-                      1
-                    </span>
-                    .
-                  </span>
-                  <span data-field="ol-2" data-style="ol">
-                    1
-                  </span>
-                  <span data-field="ol-after-2" data-style="ol">
-                    .
-                  </span>
+                  <span>{styles['ol']['ol-before-2']}</span>
+                  {styles['ol']['ol-sublevel'] && (
+                    <>
+                      <span>{styles['ol']['ol-1']}</span>.
+                    </>
+                  )}
+                  <span>{styles['ol']['ol-2']}</span>
+                  <span>{styles['ol']['ol-after-2']}</span>
                   The quick brown fox jumps over the lazy dog.
                   <ol>
                     <li>
-                      <span data-field="ol-before-3" data-style="ol"></span>
-                      <span
-                        data-field="ol-sublevel"
-                        data-style="ol"
-                        data-value="true"
-                      >
-                        <span data-field="ol-1" data-style="ol">
-                          1
-                        </span>
-                        .
-                        <span data-field="ol-2" data-style="ol">
-                          1
-                        </span>
-                        .
-                      </span>
-                      <span data-field="ol-3" data-style="ol">
-                        1
-                      </span>
-                      <span data-field="ol-after-3" data-style="ol">
-                        .
-                      </span>
+                      <span>{styles['ol']['ol-before-3']}</span>
+                      {styles['ol']['ol-sublevel'] && (
+                        <>
+                          <span>{styles['ol']['ol-1']}</span>.
+                          <span>{styles['ol']['ol-2']}</span>.
+                        </>
+                      )}
+                      <span>{styles['ol']['ol-3']}</span>
+                      <span>{styles['ol']['ol-after-3']}</span>
                       The quick brown fox jumps over the lazy dog.
                       <ol>
                         <li>
-                          <span data-field="ol-before-4" data-style="ol"></span>
-                          <span
-                            data-field="ol-sublevel"
-                            data-style="ol"
-                            data-value="true"
-                          >
-                            <span data-field="ol-1" data-style="ol">
-                              1
-                            </span>
-                            .
-                            <span data-field="ol-2" data-style="ol">
-                              1
-                            </span>
-                            .
-                            <span data-field="ol-3" data-style="ol">
-                              1
-                            </span>
-                            .
-                          </span>
-                          <span data-field="ol-4" data-style="ol">
-                            1
-                          </span>
-                          <span data-field="ol-after-4" data-style="ol">
-                            .
-                          </span>
+                          <span>{styles['ol']['ol-before-4']}</span>
+                          {styles['ol']['ol-sublevel'] && (
+                            <>
+                              <span>{styles['ol']['ol-1']}</span>.
+                              <span>{styles['ol']['ol-2']}</span>.
+                              <span>{styles['ol']['ol-3']}</span>.
+                            </>
+                          )}
+                          <span>{styles['ol']['ol-4']}</span>
+                          <span>{styles['ol']['ol-after-4']}</span>
                           The quick brown fox jumps over the lazy dog.
                         </li>
                       </ol>
@@ -142,30 +206,21 @@ export default function StylePreview() {
               </ol>
             </li>
           </ol>
-
-          <ul className="example-page-content-ul">
+          <ul style={getStyle('ul')}>
             <li>
-              <span data-field="ul-1" data-style="ul">
-                &#x2022;
-              </span>
+              <span>{styles['ul']['ul-1']}</span>
               The quick brown fox jumps over the lazy dog.
               <ul>
                 <li>
-                  <span data-field="ul-2" data-style="ul">
-                    &#x2022;
-                  </span>
+                  <span>{styles['ul']['ul-2']}</span>
                   The quick brown fox jumps over the lazy dog.
                   <ul>
                     <li>
-                      <span data-field="ul-3" data-style="ul">
-                        &#x2022;
-                      </span>
+                      <span>{styles['ul']['ul-3']}</span>
                       The quick brown fox jumps over the lazy dog.
                       <ul>
                         <li>
-                          <span data-field="ul-4" data-style="ul">
-                            &#x2022;
-                          </span>
+                          <span>{styles['ul']['ul-4']}</span>
                           The quick brown fox jumps over the lazy dog.
                         </li>
                       </ul>
@@ -175,85 +230,68 @@ export default function StylePreview() {
               </ul>
             </li>
           </ul>
-          <dl
-            className="example-page-content-dl"
-            data-style="dl"
-            data-field="dl-type"
-            data-value="html"
-            style={{ width: '100%' }}
-          >
-            <dt>
-              <strong>Pangram</strong>
-            </dt>
-            <dd>The quick brown fox jumps over the lazy dog.</dd>
-            <dt>
-              <strong>XXX</strong>
-            </dt>
-            <dd>The quick brown fox jumps over the lazy dog.</dd>
-          </dl>
-          <table
-            className="example-page-content-dl"
-            data-style="dl"
-            data-field="dl-type"
-            data-value="table"
-            style={{ width: '100%' }}
-          >
-            <colgroup>
-              <col />
-              <col style={{ width: '100%' }} />
-            </colgroup>
-            <tr>
-              <th>
+          {styles['dl']['dl-type'] === 'html' && (
+            <dl style={getStyle('dl')}>
+              <dt>
                 <strong>Pangram</strong>
-              </th>
-              <td>The quick brown fox jumps over the lazy dog.</td>
-            </tr>
-            <tr>
-              <th>
+              </dt>
+              <dd>The quick brown fox jumps over the lazy dog.</dd>
+              <dt>
                 <strong>XXX</strong>
-              </th>
-              <td>The quick brown fox jumps over the lazy dog.</td>
-            </tr>
-          </table>
-          <ul
-            className="example-page-content-dl"
-            data-style="dl"
-            data-field="dl-type"
-            data-value="list"
-            style={{ width: '100%' }}
-          >
-            <li>
-              <strong>Pangram</strong>
-              <br />
-              The quick brown fox jumps over the lazy dog.
-            </li>
-            <li>
-              <strong>XXX</strong>
-              <br />
-              The quick brown fox jumps over the lazy dog.
-            </li>
-          </ul>
-          <p className="example-page-content-body">
-            The quick brown{' '}
-            <span className="example-page-content-link">fox jumps</span>
-            <span
-              data-style="link"
-              data-field="link-page-number"
-              data-value="true"
-            >
-              on page 42
-            </span>
+              </dt>
+              <dd>The quick brown fox jumps over the lazy dog.</dd>
+            </dl>
+          )}
+          {styles['dl']['dl-type'] === 'table' && (
+            <table style={getStyle('dl')}>
+              <colgroup>
+                <col />
+                <col style={{ width: '100%' }} />
+              </colgroup>
+              <tr>
+                <th>
+                  <strong>Pangram</strong>
+                </th>
+                <td>The quick brown fox jumps over the lazy dog.</td>
+              </tr>
+              <tr>
+                <th>
+                  <strong>XXX</strong>
+                </th>
+                <td>The quick brown fox jumps over the lazy dog.</td>
+              </tr>
+            </table>
+          )}
+          {styles['dl']['dl-type'] === 'list' && (
+            <ul style={getStyle('dl')}>
+              <li>
+                <strong>Pangram</strong>
+                <br />
+                The quick brown fox jumps over the lazy dog.
+              </li>
+              <li>
+                <strong>XXX</strong>
+                <br />
+                The quick brown fox jumps over the lazy dog.
+              </li>
+            </ul>
+          )}
+          <p style={getStyle('body')}>
+            The quick brown <span style={getStyle('link')}>fox jumps</span>{' '}
+            {styles['link']['link-page-number'] && (
+              <>
+                <span>on page 42</span>{' '}
+              </>
+            )}
             over the lazy dog. The quick
-            <span className="example-page-content-link">brown fox</span>
-            <span data-style="link" data-field="link-url" data-value="true">
-              at www.example.com
-            </span>
+            <span style={getStyle('link')}>brown fox</span>
+            {styles['link']['link-url'] && <span>at www.example.com</span>}
             jumps over the lazy dog.
           </p>
-          <p className="example-page-content-body">
+          <p style={getStyle('body')}>
             The
-            <span className="example-page-content-tm">
-              quick brown fox
+            <span style={getStyle('tm')}>
+              quick brown fox{' '}
               <span
                 data-style="tm"
                 data-field="symbol-scope"
@@ -270,7 +308,7 @@ export default function StylePreview() {
               </span>
             </span>
             jumps over the
-            <span className="example-page-content-tm">
+            <span style={getStyle('tm')}>
               lazy dog
               <span
                 data-style="tm"
@@ -288,7 +326,7 @@ export default function StylePreview() {
               </span>
             </span>
             . The
-            <span className="example-page-content-tm">
+            <span style={getStyle('tm')}>
               quick brown fox
               <span
                 data-style="tm"
@@ -299,7 +337,7 @@ export default function StylePreview() {
               </span>
             </span>
             jumps over the
-            <span className="example-page-content-tm">
+            <span style={getStyle('tm')}>
               lazy dog
               <span
                 data-style="tm"
@@ -311,56 +349,50 @@ export default function StylePreview() {
             </span>
             .
           </p>
-          <p className="example-page-content-section">Section title</p>
-          <p className="example-page-content-body">
+          <p style={getStyle('section')}>Section title</p>
+          <p style={getStyle('body')}>
             The quick brown fox jumps over the lazy dog. The quick brown fox
             jumps over the lazy dog. The quick brown fox jumps over the lazy
             dog. The quick brown fox jumps over the lazy dog. The quick brown
             fox jumps over the lazy dog.
           </p>
-          <div className="example-page-content-example wrapper">
+          <div
+          // style={getStyle('example wrapper')}
+          >
             <p
-              className="example-page-content-example_title"
-              style={{ marginLeft: '0pt', marginRight: '0pt' }}
+              style={getStyle('example_title')}
+              // style={{ marginLeft: '0pt', marginRight: '0pt' }}
             >
               Example title
             </p>
-            <p className="example-page-content-body">Example content</p>
+            <p style={getStyle('body')}>Example content</p>
           </div>
-          <div className="example-page-content-topic_topic_topic">
-            <span
-              data-style="topic_topic_topic"
-              data-field="title-numbering"
-              data-value="true"
-            >
-              1.1.1{' '}
-            </span>
+          <div style={getStyle('topic_topic_topic')}>
+            {styles['topic_topic_topic']['title-numbering'] && (
+              <span>1.1.1 </span>
+            )}
             Heading 3
           </div>
-          <p className="example-page-content-body">
+          <p style={getStyle('body')}>
             The quick brown fox jumps over the lazy dog. The quick brown fox
             jumps over the lazy dog. The quick brown fox jumps over the lazy
             dog. The quick brown fox jumps over the lazy dog.
           </p>
-          <div className="example-page-content-topic_topic_topic_topic">
-            <span
-              data-style="topic_topic_topic_topic"
-              data-field="title-numbering"
-              data-value="true"
-            >
-              1.1.1.1{' '}
-            </span>
+          <div style={getStyle('topic_topic_topic_topic')}>
+            {styles['topic_topic_topic_topic']['title-numbering'] && (
+              <span>1.1.1.1 </span>
+            )}
             Heading 4
           </div>
-          <p className="example-page-content-body">
+          <p style={getStyle('body')}>
             The quick brown fox jumps over the lazy dog. The quick brown fox
             jumps over the lazy dog. The quick brown fox jumps over the lazy
             dog. The quick brown fox jumps over the lazy dog.
           </p>
-          <pre className="example-page-content-pre">
+          <pre style={getStyle('pre')}>
             The quick brown fox jumps over the lazy dog.
           </pre>
-          <pre className="example-page-content-codeblock">
+          <pre style={getStyle('codeblock')}>
             <span
               data-style="codeblock"
               data-field="line-numbering"
@@ -394,122 +426,110 @@ export default function StylePreview() {
             </span>{' '}
             (* n (factorial (- n 1)))))
           </pre>
-          <p
-            className="example-page-content-body example-page-content-table-title"
-            data-style="table"
-            data-field="caption-position"
-            data-value="before"
-          >
-            <strong>
-              Table
-              <span
-                data-style="table"
-                data-field="caption-number"
-                data-value="document"
+          {styles['table']['caption-position'] === 'before' && (
+            <p
+              // style={getStyle('body example-page-content-table-title')}
+              style={getStyle('body')}
+            >
+              <strong>
+                Table{' '}
+                {styles['table']['caption-number'] === 'document' && (
+                  <span>4</span>
+                )}
+                {styles['table']['caption-number'] === 'chapter' && (
+                  <span>1&#x2014;4</span>
+                )}
+                : Table caption
+              </strong>
+            </p>
+          )}
+          <table style={getStyle('table')}>
+            <tr
+            // style={getStyle('tr')}
+            >
+              <td
+              // style={getStyle('td')}
               >
-                4
-              </span>
-              <span
-                data-style="table"
-                data-field="caption-number"
-                data-value="chapter"
+                Dog
+              </td>
+              <td
+              // style={getStyle('td')}
               >
-                1&#x2014;4
-              </span>
-              : Table caption
-            </strong>
-          </p>
-          <table className="example-page-content-table" border="1">
-            <tr className="example-page-content-tr">
-              <td className="example-page-content-td">Dog</td>
-              <td className="example-page-content-td">lazy</td>
+                lazy
+              </td>
             </tr>
-            <tr className="example-page-content-tr">
-              <td className="example-page-content-td">Fox</td>
-              <td className="example-page-content-td">quick, brown</td>
+            <tr
+            // style={getStyle('tr')}
+            >
+              <td
+              // style={getStyle('td')}
+              >
+                Fox
+              </td>
+              <td
+              // style={getStyle('td')}
+              >
+                quick, brown
+              </td>
             </tr>
           </table>
-          <p
-            className="example-page-content-body example-page-content-table-title"
-            data-style="table"
-            data-field="caption-position"
-            data-value="after"
-          >
-            <strong>
-              Table
-              <span
-                data-style="table"
-                data-field="caption-number"
-                data-value="document"
-              >
-                4
-              </span>
-              <span
-                data-style="table"
-                data-field="caption-number"
-                data-value="chapter"
-              >
-                1&#x2014;4
-              </span>
-              : Table caption
-            </strong>
-          </p>
-          <p
-            className="example-page-content-body example-page-content-fig-title"
-            data-style="fig"
-            data-field="caption-position"
-            data-value="before"
-          >
-            <strong>
-              Figure
-              <span
-                data-style="fig"
-                data-field="caption-number"
-                data-value="document"
-              >
-                6
-              </span>
-              <span
-                data-style="fig"
-                data-field="caption-number"
-                data-value="chapter"
-              >
-                1&#x2014;6
-              </span>
-              : Figure caption
-            </strong>
-          </p>
-          <p className="example-page-content-fig">
+          {styles['table']['caption-position'] === 'after' && (
+            <p
+              // style={getStyle('body example-page-content-table-title')}
+              style={getStyle('body')}
+            >
+              <strong>
+                Table{' '}
+                {styles['table']['caption-number'] === 'document' && (
+                  <span>4</span>
+                )}
+                {styles['table']['caption-number'] === 'chapter' && (
+                  <span>1&#x2014;4</span>
+                )}
+                : Table caption
+              </strong>
+            </p>
+          )}
+          {styles['fig']['caption-position'] === 'before' && (
+            <p
+              // style={getStyle('body example-page-content-fig-title')}
+              style={getStyle('body')}
+            >
+              <strong>
+                Figure{' '}
+                {styles['fig']['caption-number'] === 'document' && (
+                  <span>6</span>
+                )}
+                {styles['fig']['caption-number'] === 'chapter' && (
+                  <span>1&#x2014;6</span>
+                )}
+                : Figure caption
+              </strong>
+            </p>
+          )}
+          <p style={getStyle('fig')}>
             <img
               src="../../public/images/figure.png"
               style={{ height: '30px' }}
             />
           </p>
-          <p
-            className="example-page-content-body example-page-content-fig-title"
-            data-style="fig"
-            data-field="caption-position"
-            data-value="after"
-          >
-            <strong>
-              Figure
-              <span
-                data-style="fig"
-                data-field="caption-number"
-                data-value="document"
-              >
-                6
-              </span>
-              <span
-                data-style="fig"
-                data-field="caption-number"
-                data-value="chapter"
-              >
-                1&#x2014;6
-              </span>
-              : Figure caption
-            </strong>
-          </p>
+          {styles['fig']['caption-position'] === 'after' && (
+            <p
+              // style={getStyle('body example-page-content-fig-title')}
+              style={getStyle('body')}
+            >
+              <strong>
+                Figure{' '}
+                {styles['fig']['caption-number'] === 'document' && (
+                  <span>6</span>
+                )}
+                {styles['fig']['caption-number'] === 'chapter' && (
+                  <span>1&#x2014;6</span>
+                )}
+                : Figure caption
+              </strong>
+            </p>
+          )}
         </div>
       </div>
     </div>

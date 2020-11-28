@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 export type FoProperty =
   | 'absolute-position'
   | 'active-state'
