@@ -13,6 +13,50 @@ export default function Styles() {
       setFieldValue(`style.${values.style_selector}.${field}`, value);
     }
   };
+
+  const nextValue = (value: string, direction: 1 | -1) => {
+    const unit = value.replaceAll(/[\d\.]+/g, '');
+    const num = Number(unit ? value.substring(0, value.indexOf(unit)) : value);
+    if (Number.isNaN(num)) {
+      return value;
+    }
+    let res: number;
+    console.log({ unit });
+    switch (unit) {
+      case 'mm':
+      case 'pt':
+      case 'pc':
+      case 'px':
+        res = num + direction;
+        break;
+      case '':
+      case 'cm':
+      case 'in':
+      case 'em':
+      default:
+        // Hack around floating point number increments
+        res = (num * 10 + 1 * direction) / 10;
+        break;
+    }
+    return `${res}${unit}`;
+  };
+
+  const handleLengthKeydown = (field: Property) => (e: KeyboardEvent) => {
+    switch (e.key) {
+      case 'ArrowDown':
+        setFieldValue(
+          `style.${values.style_selector}.${field}`,
+          nextValue(values.style[values.style_selector][field], -1)
+        );
+        break;
+      case 'ArrowUp':
+        setFieldValue(
+          `style.${values.style_selector}.${field}`,
+          nextValue(values.style[values.style_selector][field], 1)
+        );
+        break;
+    }
+  };
   return (
     <>
       <div className="form col-md-5" id="style-form">
@@ -198,14 +242,11 @@ export default function Styles() {
                     ></span>
                   </button>
                 </div>
-                {/*<Field id="font-weight" type="hidden" />*/}
-                {/*<Field id="font-style" type="hidden" />*/}
-                {/*<Field id="text-decoration" type="hidden" />*/}
                 <br />
                 <label htmlFor="color" className="inline">
                   Color
                 </label>
-                : <Field type="hidden" id="color" className="editable-list" />
+                :{' '}
                 <Field
                   component="select"
                   name={`style.${values.style_selector}.color-list`}
@@ -234,9 +275,7 @@ export default function Styles() {
                   '#other' && (
                   <Field
                     type="text"
-                    // id="color.other"
                     name={`style.${values.style_selector}.color`}
-                    // style={{ display: 'none' }}
                     size={7}
                   />
                 )}
@@ -340,7 +379,6 @@ export default function Styles() {
                     </button>
                   ))}
                 </div>
-                {/*<Field type="hidden" id="text-align" />*/}
               </td>
             </tr>
             <tr className="style-selector-block">
@@ -358,8 +396,8 @@ export default function Styles() {
                       <td>
                         <Field
                           name={`style.${values.style_selector}.start-indent`}
-                          id="start-indent"
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                          onKeyDown={handleLengthKeydown('start-indent')}
                           size={5}
                           className="length-value"
                           title="Before text indent"
@@ -377,6 +415,7 @@ export default function Styles() {
                         <Field
                           name={`style.${values.style_selector}.end-indent`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                          onKeyDown={handleLengthKeydown('end-indent')}
                           size={5}
                           className="length-value"
                           title="After text indent"
@@ -462,6 +501,7 @@ export default function Styles() {
                         <Field
                           name={`style.${values.style_selector}.space-before`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                          onKeyDown={handleLengthKeydown('space-before')}
                           size={5}
                           className="length-value"
                         />
@@ -478,6 +518,7 @@ export default function Styles() {
                         <Field
                           name={`style.${values.style_selector}.space-after`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                          onKeyDown={handleLengthKeydown('space-after')}
                           size={5}
                           className="length-value"
                         />
@@ -499,11 +540,6 @@ export default function Styles() {
                     </tr>
                     <tr>
                       <td>
-                        {/*<Field*/}
-                        {/*  type="hidden"*/}
-                        {/*  id="line-height"*/}
-                        {/*  className="editable-list"*/}
-                        {/*/>*/}
                         <Field
                           component="select"
                           name={`style.${values.style_selector}.line-height-list`}
@@ -520,9 +556,9 @@ export default function Styles() {
                       ] === '#other' && (
                         <td>
                           <Field
-                            // id="line-height.other"
                             name={`style.${values.style_selector}.line-height`}
                             pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)?"
+                            onKeyDown={handleLengthKeydown('line-height')}
                             size={5}
                             className="length-or-number-value"
                           />
@@ -549,6 +585,7 @@ export default function Styles() {
                         <Field
                           name={`style.${values.style_selector}.padding-left`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                          onKeyDown={handleLengthKeydown('padding-left')}
                           size={5}
                           className="length-value"
                         />
@@ -565,6 +602,7 @@ export default function Styles() {
                         <Field
                           name={`style.${values.style_selector}.padding-right`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                          onKeyDown={handleLengthKeydown('padding-right')}
                           size={5}
                           className="length-value"
                         />
@@ -581,6 +619,7 @@ export default function Styles() {
                         <Field
                           name={`style.${values.style_selector}.padding-top`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                          onKeyDown={handleLengthKeydown('padding-top')}
                           size={5}
                           className="length-value"
                         />
@@ -597,6 +636,7 @@ export default function Styles() {
                         <Field
                           name={`style.${values.style_selector}.padding-bottom`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                          onKeyDown={handleLengthKeydown('padding-bottom')}
                           size={5}
                           className="length-value"
                         />
