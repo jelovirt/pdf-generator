@@ -1,16 +1,22 @@
 import { Field, useFormikContext } from 'formik';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Values } from '../app/Model';
-import { Property } from '../lib/styles';
 import StylePreview from './StylePreview';
+import { Property } from '../lib/styles';
 
 export default function Styles() {
-  const { values, setFieldValue } = useFormikContext<Values>();
+  const { values, setFieldValue, handleChange } = useFormikContext<Values>();
+  const handleListChange = (field: Property) => (e: ChangeEvent) => {
+    const value = (e.currentTarget as HTMLSelectElement).value;
+    handleChange(e);
+    if (value !== '#other') {
+      setFieldValue(`style.${values.style_selector}.${field}`, value);
+    }
+  };
   return (
     <>
       <div className="form col-md-5" id="style-form">
         <h3>Style</h3>
-        {/*<Field type="hidden" id="style-selector-current" />*/}
         <Field component="select" name="style_selector">
           <optgroup label="Block" className="block">
             <option value="body">Normal</option>
@@ -18,7 +24,6 @@ export default function Styles() {
             <option value="topic_topic">Heading 2</option>
             <option value="topic_topic_topic">Heading 3</option>
             <option value="topic_topic_topic_topic">Heading 4</option>
-
             <option value="section">Section title</option>
             <option value="example">Example</option>
             <option value="example_title">Example title</option>
@@ -88,7 +93,7 @@ export default function Styles() {
                   <option value="Trebuchet MS">Trebuchet MS</option>
                   <option value="Verdana">Verdana</option>
                   <option value="Webdings">Webdings</option>
-                </Field>
+                </Field>{' '}
                 <label htmlFor="font-size" className="inline hidden">
                   Size
                 </label>
@@ -114,7 +119,7 @@ export default function Styles() {
                   <option value="36pt">36</option>
                   <option value="48pt">48</option>
                   <option value="72pt">72</option>
-                </Field>
+                </Field>{' '}
                 <div className="btn-group btn-group-inline" role="group">
                   <button
                     type="button"
@@ -200,9 +205,13 @@ export default function Styles() {
                 <label htmlFor="color" className="inline">
                   Color
                 </label>
-                :
-                <Field type="hidden" id="color" className="editable-list" />
-                <Field component="select" id="color.list" title="Color">
+                : <Field type="hidden" id="color" className="editable-list" />
+                <Field
+                  component="select"
+                  name={`style.${values.style_selector}.color-list`}
+                  onChange={handleListChange('color')}
+                  title="Color"
+                >
                   <option value="aqua">aqua</option>
                   <option value="black">black</option>
                   <option value="blue">blue</option>
@@ -220,14 +229,17 @@ export default function Styles() {
                   <option value="white">white</option>
                   <option value="yellow">yellow</option>
                   <option value="#other">other…</option>
-                </Field>
-                <Field
-                  type="text"
-                  // id="color.other"
-                  name={`style.${values.style_selector}.color`}
-                  // style={{ display: 'none' }}
-                  size={7}
-                />
+                </Field>{' '}
+                {values.style[values.style_selector]['color-list'] ===
+                  '#other' && (
+                  <Field
+                    type="text"
+                    // id="color.other"
+                    name={`style.${values.style_selector}.color`}
+                    // style={{ display: 'none' }}
+                    size={7}
+                  />
+                )}
               </td>
             </tr>
             <tr>
@@ -235,15 +247,11 @@ export default function Styles() {
                 <label htmlFor="background-color" className="inline">
                   Background color
                 </label>
-                :
-                <Field
-                  type="hidden"
-                  id="background-color"
-                  className="editable-list"
-                />
+                :{' '}
                 <Field
                   component="select"
-                  id="background-color.list"
+                  name={`style.${values.style_selector}.background-color-list`}
+                  onChange={handleListChange('background-color')}
                   title="Background color"
                 >
                   <option value="transparent">transparent</option>
@@ -264,13 +272,16 @@ export default function Styles() {
                   <option value="white">white</option>
                   <option value="yellow">yellow</option>
                   <option value="#other">other…</option>
-                </Field>
-                <Field
-                  type="text"
-                  id="background-color.other"
-                  style={{ display: 'none' }}
-                  size={7}
-                />
+                </Field>{' '}
+                {values.style[values.style_selector][
+                  'background-color-list'
+                ] === '#other' && (
+                  <Field
+                    type="text"
+                    name={`style.${values.style_selector}.background-color`}
+                    size={7}
+                  />
+                )}
               </td>
             </tr>
             <tr className="style-selector-block">
@@ -342,7 +353,7 @@ export default function Styles() {
                         <label htmlFor="start-indent" className="inline">
                           Left
                         </label>
-                        :
+                        :{' '}
                       </th>
                       <td>
                         <Field
@@ -360,7 +371,7 @@ export default function Styles() {
                         <label htmlFor="end-indent" className="inline">
                           Right
                         </label>
-                        :
+                        :{' '}
                       </th>
                       <td>
                         <Field
@@ -380,7 +391,7 @@ export default function Styles() {
                   <label htmlFor="icon" className="inline">
                     Note icon
                   </label>
-                  :
+                  :{' '}
                   <Field
                     name={`style.${values.style_selector}.icon`}
                     type="checkbox"
@@ -394,7 +405,7 @@ export default function Styles() {
                   <label htmlFor="link-page-number" className="inline">
                     Page number
                   </label>
-                  :
+                  :{' '}
                   <Field
                     name={`style.${values.style_selector}.link-page-number`}
                     type="checkbox"
@@ -407,7 +418,7 @@ export default function Styles() {
                   <label htmlFor="link-url" className="inline">
                     Show URL
                   </label>
-                  :
+                  :{' '}
                   <Field
                     name={`style.${values.style_selector}.link-url`}
                     type="checkbox"
@@ -423,7 +434,7 @@ export default function Styles() {
                   <label htmlFor="symbol-scope" className="inline">
                     Symbol scope
                   </label>
-                  :
+                  :{' '}
                   <Field
                     component="select"
                     name={`style.${values.style_selector}.symbol-scope`}
@@ -445,7 +456,7 @@ export default function Styles() {
                         <label htmlFor="space-before" className="inline">
                           Before
                         </label>
-                        :
+                        :{' '}
                       </th>
                       <td>
                         <Field
@@ -461,7 +472,7 @@ export default function Styles() {
                         <label htmlFor="space-after" className="inline">
                           After
                         </label>
-                        :
+                        :{' '}
                       </th>
                       <td>
                         <Field
@@ -483,7 +494,7 @@ export default function Styles() {
                         <label htmlFor="line-height" className="inline">
                           Line spacing
                         </label>
-                        :
+                        :{' '}
                       </th>
                     </tr>
                     <tr>
@@ -496,6 +507,7 @@ export default function Styles() {
                         <Field
                           component="select"
                           name={`style.${values.style_selector}.line-height-list`}
+                          onChange={handleListChange('line-height')}
                         >
                           <option value="1.2">Single</option>
                           <option value="1.8">1.5 lines</option>
@@ -512,7 +524,6 @@ export default function Styles() {
                             name={`style.${values.style_selector}.line-height`}
                             pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)?"
                             size={5}
-                            style={{ display: 'none' }}
                             className="length-or-number-value"
                           />
                         </td>
@@ -532,7 +543,7 @@ export default function Styles() {
                         <label htmlFor="padding-left" className="inline">
                           Left
                         </label>
-                        :
+                        :{' '}
                       </th>
                       <td>
                         <Field
@@ -548,7 +559,7 @@ export default function Styles() {
                         <label htmlFor="padding-right" className="inline">
                           Right
                         </label>
-                        :
+                        :{' '}
                       </th>
                       <td>
                         <Field
@@ -564,7 +575,7 @@ export default function Styles() {
                         <label htmlFor="padding-top" className="inline">
                           Top
                         </label>
-                        :
+                        :{' '}
                       </th>
                       <td>
                         <Field
@@ -580,7 +591,7 @@ export default function Styles() {
                         <label htmlFor="padding-bottom" className="inline">
                           Bottom
                         </label>
-                        :
+                        :{' '}
                       </th>
                       <td>
                         <Field
@@ -600,7 +611,7 @@ export default function Styles() {
                 <label htmlFor="border" className="inline">
                   Border
                 </label>
-                :
+                :{' '}
                 <Field
                   component="select"
                   name={`style.${values.style_selector}.border`}
@@ -628,7 +639,7 @@ export default function Styles() {
                   <label htmlFor="title-numbering" className="inline">
                     Title numbering
                   </label>
-                  :
+                  :{' '}
                   <Field
                     type="checkbox"
                     name={`style.${values.style_selector}.title-numbering`}
@@ -650,7 +661,7 @@ export default function Styles() {
                   <label htmlFor="dl-type" className="inline">
                     List type
                   </label>
-                  :
+                  :{' '}
                   <Field
                     component="select"
                     name={`style.${values.style_selector}.dl-type`}
@@ -897,7 +908,7 @@ export default function Styles() {
                     <label htmlFor="caption-number" className="inline">
                       Numbering
                     </label>
-                    :
+                    :{' '}
                     <Field
                       component="select"
                       name={`style.${values.style_selector}.caption-number`}
@@ -910,7 +921,7 @@ export default function Styles() {
                     <label htmlFor="caption-position" className="inline">
                       Position
                     </label>
-                    :
+                    :{' '}
                     <Field
                       component="select"
                       name={`style.${values.style_selector}.caption-position`}
@@ -935,7 +946,7 @@ export default function Styles() {
                   <label htmlFor="prefix" className="inline">
                     Top-level prefix
                   </label>
-                  :
+                  :{' '}
                   <Field
                     name={`style.${values.style_selector}.prefix`}
                     title="Chapter prefix"
@@ -958,7 +969,7 @@ export default function Styles() {
                   <label htmlFor="line-numbering" className="inline">
                     Line numbering
                   </label>
-                  :
+                  :{' '}
                   <Field
                     name={`style.${values.style_selector}.line-numbering`}
                     title="Line numbering"

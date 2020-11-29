@@ -271,7 +271,10 @@ export type CustomProperty =
   | 'link-page-number'
   | 'link-url'
   | 'title-numbering'
-  | 'icon';
+  | 'icon'
+  | 'line-height-list'
+  | 'color-list'
+  | 'background-color-list';
 
 export type Property = FoProperty | CustomProperty;
 

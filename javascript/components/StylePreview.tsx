@@ -37,6 +37,9 @@ function isCustomProperty(field: Property): boolean {
     'link-url',
     'title-numbering',
     'icon',
+    'line-height-list',
+    'color-list',
+    'background-color-list',
   ].includes(field);
 }
 
@@ -57,7 +60,7 @@ function previewSpaceHandler(type: StyleName, style: Record<Property, string>) {
     .map(([field, value]) => {
       let v = value;
       let isLength = false;
-      let property;
+      let property = field as string;
       switch (field) {
         case 'space-before':
           property = 'margin-top';
@@ -121,41 +124,38 @@ function previewSpaceHandler(type: StyleName, style: Record<Property, string>) {
               property = 'border-left-' + tokens[2];
               break;
           }
-          isLength = false;
+          // isLength = false;
           break;
-        default:
-          // const all = $element.find(
-          //     "[data-field='" + field + "'][data-style='" + type + "']"
-          // );
-          // if (all.length) {
-          //   if (all.filter('[data-value]').length) {
-          //     all.hide();
-          //     all.filter("[data-value='" + v + "']").show();
-          //   } else {
-          //     all.text(v);
-          //   }
-          // } else {
-          property = field;
-          isLength = false;
-          // }
-          break;
+        // default:
+        //   // const all = $element.find(
+        //   //     "[data-field='" + field + "'][data-style='" + type + "']"
+        //   // );
+        //   // if (all.length) {
+        //   //   if (all.filter('[data-value]').length) {
+        //   //     all.hide();
+        //   //     all.filter("[data-value='" + v + "']").show();
+        //   //   } else {
+        //   //     all.text(v);
+        //   //   }
+        //   // } else {
+        //   property = field;
+        //   isLength = false;
+        //   // }
+        //   break;
       }
-      if (property !== undefined) {
-        if (isLength) {
-          if (v !== undefined) {
-            v = String(toPt(v)! * f) + 'px';
-          }
-        }
-      }
-      return [property, v];
+      // if (property !== undefined && v !== undefined && isLength) {
+      //   // v = String(toPt(v)! * f) + 'px';
+      //   v = `calc(${v} * ${f})`;
+      // }
+      return [toCamelCase(property), isLength ? `calc(${v} * ${f})` : v];
       // FIXME
       // wrapper styling
       // if (field === 'start-indent' && type === 'body') {
       //   $element.find('.wrapper > *').css('left', `-${v}`);
       // }
-    })
-    .filter(([field, value]) => field !== undefined)
-    .map(([field, value]) => [toCamelCase(field!), value]);
+    });
+  // .filter(([field, value]) => field !== undefined)
+  // .map(([field, value]) => [toCamelCase(field!), value]);
   return Object.fromEntries(properties);
 }
 
