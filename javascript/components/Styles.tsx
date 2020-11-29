@@ -375,13 +375,18 @@ export default function Styles() {
                   </tbody>
                 </table>
               </td>
-              <td data-style="note">
-                <label htmlFor="icon" className="inline">
-                  Note icon
-                </label>
-                :
-                <Field id="icon" type="checkbox" value="icon" checked />
-              </td>
+              {values.style_selector === 'note' && (
+                <td data-style="note">
+                  <label htmlFor="icon" className="inline">
+                    Note icon
+                  </label>
+                  :
+                  <Field
+                    name={`style.${values.style_selector}.icon`}
+                    type="checkbox"
+                  />
+                </td>
+              )}
             </tr>
             {values.style_selector === 'link' && (
               <tr data-style="link">

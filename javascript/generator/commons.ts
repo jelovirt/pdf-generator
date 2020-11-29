@@ -266,7 +266,7 @@ export function generate_custom(root: Element, conf: Generator) {
   ) {
     copy_xml(root, numberless_chapter_raw);
   }
-  if (!(_.has(conf.style.note, 'icon') && conf.style.note.icon === 'icon')) {
+  if (!(_.has(conf.style.note, 'icon') && conf.style.note.icon)) {
     root.append(Comment('note'));
     copy_xml(root, note_raw);
   }

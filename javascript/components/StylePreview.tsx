@@ -2,12 +2,59 @@ import React from 'react';
 import { Values } from '../app/Model';
 import { Property, StyleName } from '../lib/styles';
 import { toPt } from '../app/pdf-utils';
+import hand from '../../public/images/hand.gif';
+import figure from '../../public/images/figure.png';
 
 const f = 0.9;
 
+function isCustomProperty(field: Property): boolean {
+  return [
+    'prefix',
+    'line-numbering',
+    ' line-height-list',
+    'dl-type',
+    'ol-1',
+    'ol-2',
+    'ol-3',
+    'ol-4',
+    'ol-before-1',
+    'ol-before-2',
+    'ol-before-3',
+    'ol-before-4',
+    'ol-after-1',
+    'ol-after-2',
+    'ol-after-3',
+    'ol-after-4',
+    'ol-sublevel',
+    'ul-1',
+    'ul-2',
+    'ul-3',
+    'ul-4',
+    'caption-number',
+    'caption-position',
+    'symbol-scope',
+    'link-page-number',
+    'link-url',
+    'title-numbering',
+    'icon',
+  ].includes(field);
+}
+
+function toCamelCase(input: string) {
+  const tokens = input.split('-');
+  return (
+    tokens[0] +
+    tokens
+      .slice(1)
+      .map((token) => token.substring(0, 1).toUpperCase() + token.substring(1))
+      .join('')
+  );
+}
+
 function previewSpaceHandler(type: StyleName, style: Record<Property, string>) {
-  const properties = (Object.entries(style) as [Property, string][]).map(
-    ([field, value]) => {
+  const properties = (Object.entries(style) as [Property, string][])
+    .filter(([field, value]) => !isCustomProperty(field))
+    .map(([field, value]) => {
       let v = value;
       let isLength = false;
       let property;
@@ -106,8 +153,9 @@ function previewSpaceHandler(type: StyleName, style: Record<Property, string>) {
       // if (field === 'start-indent' && type === 'body') {
       //   $element.find('.wrapper > *').css('left', `-${v}`);
       // }
-    }
-  );
+    })
+    .filter(([field, value]) => field !== undefined)
+    .map(([field, value]) => [toCamelCase(field!), value]);
   return Object.fromEntries(properties);
 }
 
@@ -133,22 +181,23 @@ export default function StylePreview(props: { values: Values }) {
             dog. The quick brown fox jumps over the lazy dog.
           </p>
           <table style={getStyle('note')}>
-            <tr>
-              <td data-style="note" data-field="icon" data-value="icon">
-                <img
-                  src="../../public/images/hand.gif"
-                  style={{ height: '16px' }}
-                />
-              </td>
-              <td>
-                <strong
-                // style={getStyle('note-label')}
-                >
-                  Note:
-                </strong>{' '}
-                The quick brown fox jumps over the lazy dog.
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                {styles['note']['icon'] && (
+                  <td>
+                    <img src={hand} style={{ height: '16px' }} />
+                  </td>
+                )}
+                <td>
+                  <strong
+                  // style={getStyle('note-label')}
+                  >
+                    Note:
+                  </strong>{' '}
+                  The quick brown fox jumps over the lazy dog.
+                </td>
+              </tr>
+            </tbody>
           </table>
           <p style={getStyle('body')}>
             The quick brown fox jumps over the lazy dog. The quick brown fox
@@ -156,7 +205,7 @@ export default function StylePreview(props: { values: Values }) {
             dog. The quick brown fox jumps over the lazy dog. The quick brown
             fox jumps over the lazy dog.
           </p>
-          <ol style={getStyle('ol')}>
+          <ol style={getStyle('ol')} className="example-page-content-ol">
             <li>
               <span>{styles['ol']['ol-before-1']}</span>
               <span>{styles['ol']['ol-1']}</span>
@@ -206,7 +255,7 @@ export default function StylePreview(props: { values: Values }) {
               </ol>
             </li>
           </ol>
-          <ul style={getStyle('ul')}>
+          <ul style={getStyle('ul')} className="example-page-content-ul">
             <li>
               <span>{styles['ul']['ul-1']}</span>
               The quick brown fox jumps over the lazy dog.
@@ -248,18 +297,20 @@ export default function StylePreview(props: { values: Values }) {
                 <col />
                 <col style={{ width: '100%' }} />
               </colgroup>
-              <tr>
-                <th>
-                  <strong>Pangram</strong>
-                </th>
-                <td>The quick brown fox jumps over the lazy dog.</td>
-              </tr>
-              <tr>
-                <th>
-                  <strong>XXX</strong>
-                </th>
-                <td>The quick brown fox jumps over the lazy dog.</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <th>
+                    <strong>Pangram</strong>
+                  </th>
+                  <td>The quick brown fox jumps over the lazy dog.</td>
+                </tr>
+                <tr>
+                  <th>
+                    <strong>XXX</strong>
+                  </th>
+                  <td>The quick brown fox jumps over the lazy dog.</td>
+                </tr>
+              </tbody>
             </table>
           )}
           {styles['dl']['dl-type'] === 'list' && (
@@ -289,63 +340,27 @@ export default function StylePreview(props: { values: Values }) {
             jumps over the lazy dog.
           </p>
           <p style={getStyle('body')}>
-            The
-            <span style={getStyle('tm')}>
-              quick brown fox{' '}
-              <span
-                data-style="tm"
-                data-field="symbol-scope"
-                data-value="always"
-              >
-                ™
-              </span>
-              <span
-                data-style="tm"
-                data-field="symbol-scope"
-                data-value="chapter"
-              >
-                ™
-              </span>
-            </span>
-            jumps over the
-            <span style={getStyle('tm')}>
-              lazy dog
-              <span
-                data-style="tm"
-                data-field="symbol-scope"
-                data-value="always"
-              >
-                ®
-              </span>
-              <span
-                data-style="tm"
-                data-field="symbol-scope"
-                data-value="chapter"
-              >
-                ®
-              </span>
-            </span>
-            . The
+            The{' '}
             <span style={getStyle('tm')}>
               quick brown fox
-              <span
-                data-style="tm"
-                data-field="symbol-scope"
-                data-value="always"
-              >
-                ™
-              </span>
-            </span>
-            jumps over the
+              {(styles['tm']['symbol-scope'] === 'always' ||
+                styles['tm']['symbol-scope'] === 'chapter') && <span>™</span>}
+            </span>{' '}
+            jumps over the{' '}
             <span style={getStyle('tm')}>
               lazy dog
-              <span
-                data-style="tm"
-                data-field="symbol-scope"
-                data-value="always"
-              >
-                ®
-              </span>
+              {(styles['tm']['symbol-scope'] === 'always' ||
+                styles['tm']['symbol-scope'] === 'chapter') && <span>®</span>}
+            </span>
+            . The{' '}
+            <span style={getStyle('tm')}>
+              quick brown fox
+              {styles['tm']['symbol-scope'] === 'always' && <span>™</span>}
+            </span>{' '}
+            jumps over the{' '}
+            <span style={getStyle('tm')}>
+              lazy dog
+              {styles['tm']['symbol-scope'] === 'always' && <span>®</span>}
             </span>
             .
           </p>
@@ -393,44 +408,18 @@ export default function StylePreview(props: { values: Values }) {
             The quick brown fox jumps over the lazy dog.
           </pre>
           <pre style={getStyle('codeblock')}>
-            <span
-              data-style="codeblock"
-              data-field="line-numbering"
-              data-value="true"
-            >
-              1{' '}
-            </span>
-            (defun factorial (n)
-            <span
-              data-style="codeblock"
-              data-field="line-numbering"
-              data-value="true"
-            >
-              2{' '}
-            </span>
-            (if (&lt;= n 1)
-            <span
-              data-style="codeblock"
-              data-field="line-numbering"
-              data-value="true"
-            >
-              3{' '}
-            </span>{' '}
-            1
-            <span
-              data-style="codeblock"
-              data-field="line-numbering"
-              data-value="true"
-            >
-              4{' '}
-            </span>{' '}
-            (* n (factorial (- n 1)))))
+            {styles['codeblock']['line-numbering'] && <span>1 </span>}
+            (defun factorial (n){'\n'}
+            {styles['codeblock']['line-numbering'] && <span>2 </span>}
+            (if (&lt;= n 1){'\n'}
+            {styles['codeblock']['line-numbering'] && <span>3 </span>}
+            {'  '}1{'\n'}
+            {styles['codeblock']['line-numbering'] && <span>4 </span>}
+            {'  '}
+            (* n (factorial (- n 1))))){'\n'}
           </pre>
           {styles['table']['caption-position'] === 'before' && (
-            <p
-              // style={getStyle('body example-page-content-table-title')}
-              style={getStyle('body')}
-            >
+            <p style={getStyle('body')}>
               <strong>
                 Table{' '}
                 {styles['table']['caption-number'] === 'document' && (
@@ -444,40 +433,39 @@ export default function StylePreview(props: { values: Values }) {
             </p>
           )}
           <table style={getStyle('table')}>
-            <tr
-            // style={getStyle('tr')}
-            >
-              <td
-              // style={getStyle('td')}
+            <tbody>
+              <tr
+              // style={getStyle('tr')}
               >
-                Dog
-              </td>
-              <td
-              // style={getStyle('td')}
+                <td
+                // style={getStyle('td')}
+                >
+                  Dog
+                </td>
+                <td
+                // style={getStyle('td')}
+                >
+                  lazy
+                </td>
+              </tr>
+              <tr
+              // style={getStyle('tr')}
               >
-                lazy
-              </td>
-            </tr>
-            <tr
-            // style={getStyle('tr')}
-            >
-              <td
-              // style={getStyle('td')}
-              >
-                Fox
-              </td>
-              <td
-              // style={getStyle('td')}
-              >
-                quick, brown
-              </td>
-            </tr>
+                <td
+                // style={getStyle('td')}
+                >
+                  Fox
+                </td>
+                <td
+                // style={getStyle('td')}
+                >
+                  quick, brown
+                </td>
+              </tr>
+            </tbody>
           </table>
           {styles['table']['caption-position'] === 'after' && (
-            <p
-              // style={getStyle('body example-page-content-table-title')}
-              style={getStyle('body')}
-            >
+            <p style={getStyle('body')}>
               <strong>
                 Table{' '}
                 {styles['table']['caption-number'] === 'document' && (
@@ -491,10 +479,7 @@ export default function StylePreview(props: { values: Values }) {
             </p>
           )}
           {styles['fig']['caption-position'] === 'before' && (
-            <p
-              // style={getStyle('body example-page-content-fig-title')}
-              style={getStyle('body')}
-            >
+            <p style={getStyle('body')}>
               <strong>
                 Figure{' '}
                 {styles['fig']['caption-number'] === 'document' && (
@@ -508,16 +493,10 @@ export default function StylePreview(props: { values: Values }) {
             </p>
           )}
           <p style={getStyle('fig')}>
-            <img
-              src="../../public/images/figure.png"
-              style={{ height: '30px' }}
-            />
+            <img src={figure} style={{ height: '30px' }} />
           </p>
           {styles['fig']['caption-position'] === 'after' && (
-            <p
-              // style={getStyle('body example-page-content-fig-title')}
-              style={getStyle('body')}
-            >
+            <p style={getStyle('body')}>
               <strong>
                 Figure{' '}
                 {styles['fig']['caption-number'] === 'document' && (

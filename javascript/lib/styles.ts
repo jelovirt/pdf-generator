@@ -496,7 +496,7 @@ export const styles: StyleConfiguration = {
     'start-indent': { default: undefined, inherit: 'body' },
     'line-height': { default: undefined, inherit: 'body' },
     // custom
-    icon: { default: 'icon', inherit: undefined },
+    icon: { default: false, inherit: undefined },
   },
   pre: {
     ...base,
