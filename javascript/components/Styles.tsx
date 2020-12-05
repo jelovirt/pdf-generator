@@ -448,8 +448,6 @@ export default function Styles() {
                   <Field
                     name={`style.${values.style_selector}.link-page-number`}
                     type="checkbox"
-                    value="true"
-                    checked
                     title="Add page number to links."
                   />
                 </td>
@@ -461,7 +459,6 @@ export default function Styles() {
                   <Field
                     name={`style.${values.style_selector}.link-url`}
                     type="checkbox"
-                    value="true"
                     title="Show external link address."
                   />
                 </td>
@@ -758,7 +755,6 @@ export default function Styles() {
                           <Field
                             name={`style.${values.style_selector}.ol-after-1`}
                             size={2}
-                            value=". "
                           />
                         </td>
                       </tr>
@@ -786,7 +782,6 @@ export default function Styles() {
                           <Field
                             name={`style.${values.style_selector}.ol-after-2`}
                             size={2}
-                            value=". "
                           />
                         </td>
                       </tr>
@@ -814,7 +809,6 @@ export default function Styles() {
                           <Field
                             name={`style.${values.style_selector}.ol-after-3`}
                             size={2}
-                            value=". "
                           />
                         </td>
                       </tr>
@@ -842,7 +836,6 @@ export default function Styles() {
                           <Field
                             name={`style.${values.style_selector}.ol-after-4`}
                             size={2}
-                            value=". "
                           />
                         </td>
                       </tr>
@@ -991,7 +984,6 @@ export default function Styles() {
                     name={`style.${values.style_selector}.prefix`}
                     title="Chapter prefix"
                     type="checkbox"
-                    value="true"
                   />
                 </td>
               </tr>
@@ -1014,7 +1006,6 @@ export default function Styles() {
                     name={`style.${values.style_selector}.line-numbering`}
                     title="Line numbering"
                     type="checkbox"
-                    value="true"
                   />
                 </td>
               </tr>

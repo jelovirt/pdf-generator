@@ -397,16 +397,20 @@ export default function StylePreview(props: { values: Values }) {
               </table>
             )}
             {styles['dl']['dl-type'] === 'list' && (
-              <ul style={getStyle('dl')}>
+              <ul style={getStyle('dl')} className="example-page-content-ul">
                 <li>
+                  <span style={{ width: '1em', display: 'inline-block' }}>
+                  {styles['ul']['ul-1']}
+                </span>
                   <strong>Pangram</strong>
-                  <br />
-                  The quick brown fox jumps over the lazy dog.
+                  <div style={{ marginLeft: '1em' }}>The quick brown fox jumps over the lazy dog.</div>
                 </li>
                 <li>
+                  <span style={{ width: '1em', display: 'inline-block' }}>
+                  {styles['ul']['ul-1']}
+                </span>
                   <strong>XXX</strong>
-                  <br />
-                  The quick brown fox jumps over the lazy dog.
+                  <div style={{ marginLeft: '1em' }}>The quick brown fox jumps over the lazy dog.</div>
                 </li>
               </ul>
             )}
@@ -419,9 +423,13 @@ export default function StylePreview(props: { values: Values }) {
                   <span>on page 42</span>{' '}
                 </>
               )}
-              over the lazy dog. The quick
-              <span style={getStyle('link')}>brown fox</span>
-              {styles['link']['link-url'] && <span>at www.example.com</span>}
+              over the lazy dog. The quick{' '}
+              <span style={getStyle('link')}>brown fox</span>{' '}
+              {styles['link']['link-url'] && (
+                <>
+                  <span>at www.example.com</span>{' '}
+                </>
+              )}
               jumps over the lazy dog.
             </p>
           </div>
