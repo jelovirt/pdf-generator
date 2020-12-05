@@ -205,6 +205,15 @@ export default function StylePreview(props: { values: Values }) {
     paddingLeft: `calc(${props.values.page.inside} * ${factor * 0.5} - 2px)`,
   });
 
+  const olLabelStyle = {
+    display: 'inline-block',
+    marginRight: '0.5em',
+    float: 'left',
+  };
+
+  const ulLabelStyle = { width: '1em', display: 'inline-block', float: 'left' };
+
+  const borderStyle = {border: 'solid 1px black'};
   return (
     <div className="example-block col-md-7" id="example-style">
       <div className="example-block-page" style={pageStyle()}>
@@ -260,7 +269,7 @@ export default function StylePreview(props: { values: Values }) {
           <div style={wrapperStyle('ol')}>
             <ol style={getStyle('ol')} className="example-page-content-ol">
               <li>
-                <span style={{ display: 'inline-block', marginRight: '0.5em' }}>
+                <span style={olLabelStyle}>
                   {styles['ol']['ol-before-1']}
                   {styles['ol']['ol-1']}
                   {styles['ol']['ol-after-1']}
@@ -268,9 +277,7 @@ export default function StylePreview(props: { values: Values }) {
                 The quick brown fox jumps over the lazy dog.
                 <ol>
                   <li>
-                    <span
-                      style={{ display: 'inline-block', marginRight: '0.5em' }}
-                    >
+                    <span style={olLabelStyle}>
                       {styles['ol']['ol-before-2']}
                       {styles['ol']['ol-sublevel'] && (
                         <>{styles['ol']['ol-1']}.</>
@@ -281,12 +288,7 @@ export default function StylePreview(props: { values: Values }) {
                     The quick brown fox jumps over the lazy dog.
                     <ol>
                       <li>
-                        <span
-                          style={{
-                            display: 'inline-block',
-                            marginRight: '0.5em',
-                          }}
-                        >
+                        <span style={olLabelStyle}>
                           {styles['ol']['ol-before-3']}
                           {styles['ol']['ol-sublevel'] && (
                             <>
@@ -299,12 +301,7 @@ export default function StylePreview(props: { values: Values }) {
                         The quick brown fox jumps over the lazy dog.
                         <ol>
                           <li>
-                            <span
-                              style={{
-                                display: 'inline-block',
-                                marginRight: '0.5em',
-                              }}
-                            >
+                            <span style={olLabelStyle}>
                               {styles['ol']['ol-before-4']}
                               {styles['ol']['ol-sublevel'] && (
                                 <>
@@ -328,27 +325,19 @@ export default function StylePreview(props: { values: Values }) {
           <div style={wrapperStyle('ul')}>
             <ul style={getStyle('ul')} className="example-page-content-ul">
               <li>
-                <span style={{ width: '1em', display: 'inline-block' }}>
-                  {styles['ul']['ul-1']}
-                </span>
+                <span style={ulLabelStyle}>{styles['ul']['ul-1']}</span>
                 The quick brown fox jumps over the lazy dog.
                 <ul>
                   <li>
-                    <span style={{ width: '1em', display: 'inline-block' }}>
-                      {styles['ul']['ul-2']}
-                    </span>
+                    <span style={ulLabelStyle}>{styles['ul']['ul-2']}</span>
                     The quick brown fox jumps over the lazy dog.
                     <ul>
                       <li>
-                        <span style={{ width: '1em', display: 'inline-block' }}>
-                          {styles['ul']['ul-3']}
-                        </span>
+                        <span style={ulLabelStyle}>{styles['ul']['ul-3']}</span>
                         The quick brown fox jumps over the lazy dog.
                         <ul>
                           <li>
-                            <span
-                              style={{ width: '1em', display: 'inline-block' }}
-                            >
+                            <span style={ulLabelStyle}>
                               {styles['ul']['ul-4']}
                             </span>
                             The quick brown fox jumps over the lazy dog.
@@ -382,16 +371,16 @@ export default function StylePreview(props: { values: Values }) {
                 </colgroup>
                 <tbody>
                   <tr>
-                    <th>
+                    <th style={borderStyle}>
                       <strong>Pangram</strong>
                     </th>
-                    <td>The quick brown fox jumps over the lazy dog.</td>
+                    <td style={borderStyle}>The quick brown fox jumps over the lazy dog.</td>
                   </tr>
                   <tr>
-                    <th>
+                    <th style={borderStyle}>
                       <strong>XXX</strong>
                     </th>
-                    <td>The quick brown fox jumps over the lazy dog.</td>
+                    <td style={borderStyle}>The quick brown fox jumps over the lazy dog.</td>
                   </tr>
                 </tbody>
               </table>
@@ -399,18 +388,14 @@ export default function StylePreview(props: { values: Values }) {
             {styles['dl']['dl-type'] === 'list' && (
               <ul style={getStyle('dl')} className="example-page-content-ul">
                 <li>
-                  <span style={{ width: '1em', display: 'inline-block' }}>
-                    {styles['ul']['ul-1']}
-                  </span>
+                  <span style={ulLabelStyle}>{styles['ul']['ul-1']}</span>
                   <strong>Pangram</strong>
                   <div style={{ marginLeft: '1em' }}>
                     The quick brown fox jumps over the lazy dog.
                   </div>
                 </li>
                 <li>
-                  <span style={{ width: '1em', display: 'inline-block' }}>
-                    {styles['ul']['ul-1']}
-                  </span>
+                  <span style={ulLabelStyle}>{styles['ul']['ul-1']}</span>
                   <strong>XXX</strong>
                   <div style={{ marginLeft: '1em' }}>
                     The quick brown fox jumps over the lazy dog.
@@ -555,11 +540,12 @@ export default function StylePreview(props: { values: Values }) {
                 // style={getStyle('tr')}
                 >
                   <td
+                      style={borderStyle}
                   // style={getStyle('td')}
                   >
                     Dog
                   </td>
-                  <td
+                  <td style={borderStyle}
                   // style={getStyle('td')}
                   >
                     lazy
@@ -568,12 +554,12 @@ export default function StylePreview(props: { values: Values }) {
                 <tr
                 // style={getStyle('tr')}
                 >
-                  <td
+                  <td style={borderStyle}
                   // style={getStyle('td')}
                   >
                     Fox
                   </td>
-                  <td
+                  <td style={borderStyle}
                   // style={getStyle('td')}
                   >
                     quick, brown

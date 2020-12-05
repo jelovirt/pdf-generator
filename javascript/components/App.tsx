@@ -8,8 +8,8 @@ import Cover from './Cover';
 import Other from './Other';
 import Metadata from './Metadata';
 import Download from './Download';
-import {Form, Formik, FormikHelpers, FormikValues} from 'formik';
-import {getInitValues, Values} from '../app/Model';
+import { Form, Formik, FormikHelpers, FormikValues } from 'formik';
+import { getInitValues, Values } from '../app/Model';
 
 const onSubmit = (values: FormikValues, actions: FormikHelpers<Values>) => {
   // console.log(toModel(values as Values));

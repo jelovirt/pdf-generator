@@ -101,9 +101,13 @@ export default function Styles() {
       if (styleName === newStyleName) {
         continue;
       }
+      const style = properties[property];
+      if (style === undefined) {
+        continue;
+      }
       const change = getCascadeChange(
         styleName,
-        properties[property],
+        style,
         newStyleName,
         property,
         value
@@ -127,7 +131,7 @@ export default function Styles() {
       const value = (event.currentTarget as HTMLSelectElement).value;
       cascade(values.style_selector, property, value);
       handleChange(event);
-    }
+    },
   });
 
   return (
@@ -179,10 +183,8 @@ export default function Styles() {
                 <Field
                   component="select"
                   {...fieldProps('font-family')}
-                  // name={`style.${values.style_selector}.font-family`}
                   title="Font family"
                   aria-label="Font family"
-                  // onChange={handleCascadingChange('font-family')}
                 >
                   <option value="Arial">Arial</option>
                   <option value="Arial Black">Arial Black</option>
@@ -218,7 +220,7 @@ export default function Styles() {
                 </label>
                 <Field
                   component="select"
-                  name={`style.${values.style_selector}.font-size`}
+                  {...fieldProps('font-size')}
                   title="Font size"
                   aria-label="Font size"
                 >
@@ -250,15 +252,18 @@ export default function Styles() {
                     }`}
                     aria-label="Bold"
                     title="Bold"
-                    onClick={() =>
+                    onClick={() => {
+                      const value =
+                        values.style[values.style_selector]['font-weight'] ===
+                        'normal'
+                          ? 'bold'
+                          : 'normal';
+                      cascade(values.style_selector, 'font-weight', value);
                       setFieldValue(
                         `style.${values.style_selector}.font-weight`,
-                        values.style[values.style_selector]['font-weight'] ===
-                          'normal'
-                          ? 'bold'
-                          : 'normal'
-                      )
-                    }
+                        value
+                      );
+                    }}
                   >
                     <span
                       className="glyphicon glyphicon-bold"
@@ -275,15 +280,18 @@ export default function Styles() {
                     }`}
                     aria-label="Italic"
                     title="Italic"
-                    onClick={() =>
+                    onClick={() => {
+                      const value =
+                        values.style[values.style_selector]['font-style'] ===
+                        'normal'
+                          ? 'italic'
+                          : 'normal';
+                      cascade(values.style_selector, 'font-style', value);
                       setFieldValue(
                         `style.${values.style_selector}.font-style`,
-                        values.style[values.style_selector]['font-style'] ===
-                          'normal'
-                          ? 'italic'
-                          : 'normal'
-                      )
-                    }
+                        value
+                      );
+                    }}
                   >
                     <span
                       className="glyphicon glyphicon-italic"
@@ -300,16 +308,19 @@ export default function Styles() {
                     }`}
                     aria-label="Underline"
                     title="Underline"
-                    onClick={() =>
-                      setFieldValue(
-                        `style.${values.style_selector}.text-decoration`,
+                    onClick={() => {
+                      const value =
                         values.style[values.style_selector][
                           'text-decoration'
                         ] === 'none'
                           ? 'underline'
-                          : 'none'
-                      )
-                    }
+                          : 'none';
+                      cascade(values.style_selector, 'text-decoration', value);
+                      setFieldValue(
+                        `style.${values.style_selector}.text-decoration`,
+                        value
+                      );
+                    }}
                   >
                     <span
                       className="glyphicon glyphicon-text-color"
@@ -348,11 +359,7 @@ export default function Styles() {
                 </Field>{' '}
                 {values.style[values.style_selector]['color-list'] ===
                   '#other' && (
-                  <Field
-                    type="text"
-                    name={`style.${values.style_selector}.color`}
-                    size={7}
-                  />
+                  <Field type="text" {...fieldProps('color')} size={7} />
                 )}
               </td>
             </tr>
@@ -392,7 +399,7 @@ export default function Styles() {
                 ] === '#other' && (
                   <Field
                     type="text"
-                    name={`style.${values.style_selector}.background-color`}
+                    {...fieldProps('background-color')}
                     size={7}
                   />
                 )}
@@ -440,12 +447,17 @@ export default function Styles() {
                       aria-label={conf.label}
                       title={conf.label}
                       value={conf.value}
-                      onClick={() =>
+                      onClick={() => {
+                        cascade(
+                          values.style_selector,
+                          'text-align',
+                          conf.value
+                        );
                         setFieldValue(
                           `style.${values.style_selector}.text-align`,
                           conf.value
-                        )
-                      }
+                        );
+                      }}
                     >
                       <span
                         className={`glyphicon ${conf.icon}`}
@@ -547,10 +559,7 @@ export default function Styles() {
                     Symbol scope
                   </label>
                   :{' '}
-                  <Field
-                    component="select"
-                    name={`style.${values.style_selector}.symbol-scope`}
-                  >
+                  <Field component="select" {...fieldProps('symbol-scope')}>
                     <option value="always">always</option>
                     <option value="chapter">chapter</option>
                     <option value="never">never</option>
@@ -629,7 +638,7 @@ export default function Styles() {
                       ] === '#other' && (
                         <td>
                           <Field
-                            name={`style.${values.style_selector}.line-height`}
+                            {...fieldProps('line-height')}
                             pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)?"
                             onKeyDown={handleLengthKeydown('line-height')}
                             size={5}
@@ -656,7 +665,7 @@ export default function Styles() {
                       </th>
                       <td>
                         <Field
-                          name={`style.${values.style_selector}.padding-left`}
+                          {...fieldProps('padding-left')}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                           onKeyDown={handleLengthKeydown('padding-left')}
                           size={5}
@@ -673,7 +682,7 @@ export default function Styles() {
                       </th>
                       <td>
                         <Field
-                          name={`style.${values.style_selector}.padding-right`}
+                          {...fieldProps('padding-right')}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                           onKeyDown={handleLengthKeydown('padding-right')}
                           size={5}
@@ -690,7 +699,7 @@ export default function Styles() {
                       </th>
                       <td>
                         <Field
-                          name={`style.${values.style_selector}.padding-top`}
+                          {...fieldProps('padding-top')}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                           onKeyDown={handleLengthKeydown('padding-top')}
                           size={5}
@@ -707,7 +716,7 @@ export default function Styles() {
                       </th>
                       <td>
                         <Field
-                          name={`style.${values.style_selector}.padding-bottom`}
+                          {...fieldProps('padding-bottom')}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                           onKeyDown={handleLengthKeydown('padding-bottom')}
                           size={5}
