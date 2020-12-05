@@ -400,17 +400,21 @@ export default function StylePreview(props: { values: Values }) {
               <ul style={getStyle('dl')} className="example-page-content-ul">
                 <li>
                   <span style={{ width: '1em', display: 'inline-block' }}>
-                  {styles['ul']['ul-1']}
-                </span>
+                    {styles['ul']['ul-1']}
+                  </span>
                   <strong>Pangram</strong>
-                  <div style={{ marginLeft: '1em' }}>The quick brown fox jumps over the lazy dog.</div>
+                  <div style={{ marginLeft: '1em' }}>
+                    The quick brown fox jumps over the lazy dog.
+                  </div>
                 </li>
                 <li>
                   <span style={{ width: '1em', display: 'inline-block' }}>
-                  {styles['ul']['ul-1']}
-                </span>
+                    {styles['ul']['ul-1']}
+                  </span>
                   <strong>XXX</strong>
-                  <div style={{ marginLeft: '1em' }}>The quick brown fox jumps over the lazy dog.</div>
+                  <div style={{ marginLeft: '1em' }}>
+                    The quick brown fox jumps over the lazy dog.
+                  </div>
                 </li>
               </ul>
             )}

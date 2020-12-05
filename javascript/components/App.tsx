@@ -8,19 +8,17 @@ import Cover from './Cover';
 import Other from './Other';
 import Metadata from './Metadata';
 import Download from './Download';
-import { Form, Formik, FormikHelpers, FormikValues } from 'formik';
-import { getInitValues, toModel, Values } from '../app/Model';
+import {Form, Formik, FormikHelpers, FormikValues} from 'formik';
+import {getInitValues, Values} from '../app/Model';
 
-const initialValues: Values = getInitValues();
-// console.log(initialValues);
 const onSubmit = (values: FormikValues, actions: FormikHelpers<Values>) => {
-  console.log(toModel(values as Values));
+  // console.log(toModel(values as Values));
   actions.setSubmitting(false);
 };
 
 export default function App() {
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik initialValues={getInitValues()} onSubmit={onSubmit}>
       <Form>
         <div id="generate-plugin">
           <section className="page container" id="p1">

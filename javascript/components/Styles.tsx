@@ -2,10 +2,15 @@ import { Field, useFormikContext } from 'formik';
 import React, { ChangeEvent } from 'react';
 import { Values } from '../app/Model';
 import StylePreview from './StylePreview';
-import { Property } from '../lib/styles';
+import { Property, Style, StyleName, styles } from '../lib/styles';
 
 export default function Styles() {
-  const { values, setFieldValue, handleChange } = useFormikContext<Values>();
+  const {
+    values,
+    setFieldValue,
+    handleChange,
+    validateOnChange,
+  } = useFormikContext<Values>();
   const handleListChange = (field: Property) => (e: ChangeEvent) => {
     const value = (e.currentTarget as HTMLSelectElement).value;
     handleChange(e);
@@ -21,7 +26,6 @@ export default function Styles() {
       return value;
     }
     let res: number;
-    console.log({ unit });
     switch (unit) {
       case 'mm':
       case 'pt':
@@ -57,6 +61,75 @@ export default function Styles() {
         break;
     }
   };
+
+  const getCascadeChange = (
+    styleName: StyleName,
+    style: Style,
+    newStyleName: StyleName,
+    newProperty: Property,
+    newValue: string
+  ): {
+    styleName: StyleName;
+    property: Property;
+    value: string;
+  } | null => {
+    if (
+      style.inherit === newStyleName &&
+      values.style[styleName][newProperty] ===
+        values.style[newStyleName][newProperty]
+    ) {
+      return {
+        styleName: styleName,
+        property: newProperty,
+        value: newValue,
+      };
+    }
+    return null;
+  };
+
+  const cascade = (
+    newStyleName: StyleName,
+    property: Property,
+    value: string
+  ) => {
+    const changes = [];
+    for (const stylePair of Object.entries(styles)) {
+      const [styleName, properties] = stylePair as [
+        StyleName,
+        Record<Property, Style>
+      ];
+      if (styleName === newStyleName) {
+        continue;
+      }
+      const change = getCascadeChange(
+        styleName,
+        properties[property],
+        newStyleName,
+        property,
+        value
+      );
+      if (change !== null) {
+        changes.push(change);
+      }
+    }
+    const updated: Record<StyleName, Record<Property, string>> = {
+      ...values.style,
+    };
+    for (const change of changes) {
+      updated[change.styleName][change.property] = change.value;
+    }
+    setFieldValue('style', updated);
+  };
+
+  const fieldProps = (property: Property) => ({
+    name: `style.${values.style_selector}.${property}`,
+    onChange: (event: React.ChangeEvent) => {
+      const value = (event.currentTarget as HTMLSelectElement).value;
+      cascade(values.style_selector, property, value);
+      handleChange(event);
+    }
+  });
+
   return (
     <>
       <div className="form col-md-5" id="style-form">
@@ -105,9 +178,11 @@ export default function Styles() {
                 </label>
                 <Field
                   component="select"
-                  name={`style.${values.style_selector}.font-family`}
+                  {...fieldProps('font-family')}
+                  // name={`style.${values.style_selector}.font-family`}
                   title="Font family"
                   aria-label="Font family"
+                  // onChange={handleCascadingChange('font-family')}
                 >
                   <option value="Arial">Arial</option>
                   <option value="Arial Black">Arial Black</option>
@@ -395,7 +470,8 @@ export default function Styles() {
                       </th>
                       <td>
                         <Field
-                          name={`style.${values.style_selector}.start-indent`}
+                          {...fieldProps('start-indent')}
+                          // name={`style.${values.style_selector}.start-indent`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
                           onKeyDown={handleLengthKeydown('start-indent')}
                           size={5}
@@ -1013,6 +1089,9 @@ export default function Styles() {
           )}
         </table>
       </div>
+      {/*<div className="example-block col-md-7" id="example-style">*/}
+      {/*  <pre>{JSON.stringify(values.style[values.style_selector], undefined, 2)}</pre>*/}
+      {/*</div>*/}
       <StylePreview values={values} />
     </>
   );
