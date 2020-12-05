@@ -260,45 +260,61 @@ export default function StylePreview(props: { values: Values }) {
           <div style={wrapperStyle('ol')}>
             <ol style={getStyle('ol')} className="example-page-content-ol">
               <li>
-                <span>{styles['ol']['ol-before-1']}</span>
-                <span>{styles['ol']['ol-1']}</span>
-                <span>{styles['ol']['ol-after-1']}</span>
+                <span style={{ display: 'inline-block', marginRight: '0.5em' }}>
+                  {styles['ol']['ol-before-1']}
+                  {styles['ol']['ol-1']}
+                  {styles['ol']['ol-after-1']}
+                </span>
                 The quick brown fox jumps over the lazy dog.
                 <ol>
                   <li>
-                    <span>{styles['ol']['ol-before-2']}</span>
-                    {styles['ol']['ol-sublevel'] && (
-                      <>
-                        <span>{styles['ol']['ol-1']}</span>.
-                      </>
-                    )}
-                    <span>{styles['ol']['ol-2']}</span>
-                    <span>{styles['ol']['ol-after-2']}</span>
+                    <span
+                      style={{ display: 'inline-block', marginRight: '0.5em' }}
+                    >
+                      {styles['ol']['ol-before-2']}
+                      {styles['ol']['ol-sublevel'] && (
+                        <>{styles['ol']['ol-1']}.</>
+                      )}
+                      {styles['ol']['ol-2']}
+                      {styles['ol']['ol-after-2']}
+                    </span>
                     The quick brown fox jumps over the lazy dog.
                     <ol>
                       <li>
-                        <span>{styles['ol']['ol-before-3']}</span>
-                        {styles['ol']['ol-sublevel'] && (
-                          <>
-                            <span>{styles['ol']['ol-1']}</span>.
-                            <span>{styles['ol']['ol-2']}</span>.
-                          </>
-                        )}
-                        <span>{styles['ol']['ol-3']}</span>
-                        <span>{styles['ol']['ol-after-3']}</span>
+                        <span
+                          style={{
+                            display: 'inline-block',
+                            marginRight: '0.5em',
+                          }}
+                        >
+                          {styles['ol']['ol-before-3']}
+                          {styles['ol']['ol-sublevel'] && (
+                            <>
+                              {styles['ol']['ol-1']}.{styles['ol']['ol-2']}.
+                            </>
+                          )}
+                          {styles['ol']['ol-3']}
+                          {styles['ol']['ol-after-3']}
+                        </span>
                         The quick brown fox jumps over the lazy dog.
                         <ol>
                           <li>
-                            <span>{styles['ol']['ol-before-4']}</span>
-                            {styles['ol']['ol-sublevel'] && (
-                              <>
-                                <span>{styles['ol']['ol-1']}</span>.
-                                <span>{styles['ol']['ol-2']}</span>.
-                                <span>{styles['ol']['ol-3']}</span>.
-                              </>
-                            )}
-                            <span>{styles['ol']['ol-4']}</span>
-                            <span>{styles['ol']['ol-after-4']}</span>
+                            <span
+                              style={{
+                                display: 'inline-block',
+                                marginRight: '0.5em',
+                              }}
+                            >
+                              {styles['ol']['ol-before-4']}
+                              {styles['ol']['ol-sublevel'] && (
+                                <>
+                                  {styles['ol']['ol-1']}.{styles['ol']['ol-2']}.
+                                  {styles['ol']['ol-3']}.
+                                </>
+                              )}
+                              {styles['ol']['ol-4']}
+                              {styles['ol']['ol-after-4']}
+                            </span>
                             The quick brown fox jumps over the lazy dog.
                           </li>
                         </ol>
@@ -312,19 +328,29 @@ export default function StylePreview(props: { values: Values }) {
           <div style={wrapperStyle('ul')}>
             <ul style={getStyle('ul')} className="example-page-content-ul">
               <li>
-                <span>{styles['ul']['ul-1']}</span>
+                <span style={{ width: '1em', display: 'inline-block' }}>
+                  {styles['ul']['ul-1']}
+                </span>
                 The quick brown fox jumps over the lazy dog.
                 <ul>
                   <li>
-                    <span>{styles['ul']['ul-2']}</span>
+                    <span style={{ width: '1em', display: 'inline-block' }}>
+                      {styles['ul']['ul-2']}
+                    </span>
                     The quick brown fox jumps over the lazy dog.
                     <ul>
                       <li>
-                        <span>{styles['ul']['ul-3']}</span>
+                        <span style={{ width: '1em', display: 'inline-block' }}>
+                          {styles['ul']['ul-3']}
+                        </span>
                         The quick brown fox jumps over the lazy dog.
                         <ul>
                           <li>
-                            <span>{styles['ul']['ul-4']}</span>
+                            <span
+                              style={{ width: '1em', display: 'inline-block' }}
+                            >
+                              {styles['ul']['ul-4']}
+                            </span>
                             The quick brown fox jumps over the lazy dog.
                           </li>
                         </ul>
