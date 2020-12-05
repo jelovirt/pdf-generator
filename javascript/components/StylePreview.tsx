@@ -213,7 +213,7 @@ export default function StylePreview(props: { values: Values }) {
 
   const ulLabelStyle = { width: '1em', display: 'inline-block', float: 'left' };
 
-  const borderStyle = {border: 'solid 1px black'};
+  const borderStyle = { border: 'solid 1px black' };
   return (
     <div className="example-block col-md-7" id="example-style">
       <div className="example-block-page" style={pageStyle()}>
@@ -374,13 +374,17 @@ export default function StylePreview(props: { values: Values }) {
                     <th style={borderStyle}>
                       <strong>Pangram</strong>
                     </th>
-                    <td style={borderStyle}>The quick brown fox jumps over the lazy dog.</td>
+                    <td style={borderStyle}>
+                      The quick brown fox jumps over the lazy dog.
+                    </td>
                   </tr>
                   <tr>
                     <th style={borderStyle}>
                       <strong>XXX</strong>
                     </th>
-                    <td style={borderStyle}>The quick brown fox jumps over the lazy dog.</td>
+                    <td style={borderStyle}>
+                      The quick brown fox jumps over the lazy dog.
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -540,13 +544,14 @@ export default function StylePreview(props: { values: Values }) {
                 // style={getStyle('tr')}
                 >
                   <td
-                      style={borderStyle}
-                  // style={getStyle('td')}
+                    style={borderStyle}
+                    // style={getStyle('td')}
                   >
                     Dog
                   </td>
-                  <td style={borderStyle}
-                  // style={getStyle('td')}
+                  <td
+                    style={borderStyle}
+                    // style={getStyle('td')}
                   >
                     lazy
                   </td>
@@ -554,13 +559,15 @@ export default function StylePreview(props: { values: Values }) {
                 <tr
                 // style={getStyle('tr')}
                 >
-                  <td style={borderStyle}
-                  // style={getStyle('td')}
+                  <td
+                    style={borderStyle}
+                    // style={getStyle('td')}
                   >
                     Fox
                   </td>
-                  <td style={borderStyle}
-                  // style={getStyle('td')}
+                  <td
+                    style={borderStyle}
+                    // style={getStyle('td')}
                   >
                     quick, brown
                   </td>

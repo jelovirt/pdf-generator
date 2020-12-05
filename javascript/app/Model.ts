@@ -165,22 +165,29 @@ function getInitStyle(): Record<StyleName, Record<Property, string>> {
 }
 
 export function getInitValues(): Values {
+  const listProperties: Property[] = [
+    'color',
+    'background-color',
+    'line-height',
+  ];
   const init = getInitStore();
   return {
     ...init,
     ...(init.configuration as any),
-    // configuration: {
-    //   ...init,
     style: Object.fromEntries(
-      Object.entries(init.configuration.style).map(([styleName, value]) => [
-        styleName,
-        {
-          ...value,
-          'line-height-list': '1.2',
-        },
-      ])
+      Object.entries(init.configuration.style).map(([styleName, value]) => {
+        const lists = Object.fromEntries(
+          listProperties.map((list) => [`${list}-list`, value[list]])
+        );
+        return [
+          styleName,
+          {
+            ...value,
+            ...lists,
+          },
+        ];
+      })
     ) as any,
-    // } as any,
     cover_image_chooser: '',
     page_size: '210mm 297mm',
     orientation: 'portrait',
