@@ -2,9 +2,43 @@ import React from 'react';
 import { Field, useFormikContext } from 'formik';
 import PagePreview from './PagePreview';
 import { Values } from '../app/Model';
+import { nextValue } from './common';
 
 export default function Page() {
-  const { values } = useFormikContext<Values>();
+  const { setFieldValue, values } = useFormikContext<Values>();
+
+  const handleLengthKeydown = (
+    field: 'top' | 'outside' | 'bottom' | 'inside'
+  ) => (e: KeyboardEvent) => {
+    let value;
+    switch (e.key) {
+      case 'ArrowDown':
+        value = nextValue(values.page[field], -1);
+        break;
+      case 'ArrowUp':
+        value = nextValue(values.page[field], 1);
+        break;
+    }
+    if (value !== undefined) {
+      setFieldValue(`page.${field}`, value);
+    }
+  };
+
+  const handleColumnGapKeydown = (e: KeyboardEvent) => {
+    let value;
+    switch (e.key) {
+      case 'ArrowDown':
+        value = nextValue(values.column_gap, -1);
+        break;
+      case 'ArrowUp':
+        value = nextValue(values.column_gap, 1);
+        break;
+    }
+    if (value !== undefined) {
+      setFieldValue(`column_gap`, value);
+    }
+  };
+
   return (
     <>
       <div className="form col-md-5">
@@ -48,23 +82,29 @@ export default function Page() {
         <h3>Margins</h3>
         <fieldset>
           {[
-            { name: 'page.top', label: 'Top' },
-            { name: 'page.outside', label: 'Outside' },
-            { name: 'page.bottom', label: 'Bottom' },
-            { name: 'page.inside', label: 'Inside' },
-          ].map(({ name, label }) => (
-            <p key={name}>
-              <label htmlFor={name}>{label}</label>
-              <Field
-                name={name}
-                id={name}
-                autoComplete="off"
-                pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                className="length-value"
-                required
-              />
-            </p>
-          ))}
+            { field: 'top', label: 'Top' },
+            { field: 'outside', label: 'Outside' },
+            { field: 'bottom', label: 'Bottom' },
+            { field: 'inside', label: 'Inside' },
+          ].map(({ field, label }) => {
+            const name = `page.${field}`;
+            return (
+              <p key={name}>
+                <label htmlFor={name}>{label}</label>
+                <Field
+                  name={name}
+                  id={name}
+                  autoComplete="off"
+                  pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                  onKeyDown={handleLengthKeydown(
+                    field as 'top' | 'outside' | 'bottom' | 'inside'
+                  )}
+                  className="length-value"
+                  required
+                />
+              </p>
+            );
+          })}
           <p className="instruction">Page margins.</p>
         </fieldset>
         <fieldset>
@@ -112,6 +152,7 @@ export default function Page() {
                 name="column_gap"
                 id="column_gap"
                 pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                onKeyDown={handleColumnGapKeydown}
                 className="length-value"
               />
             </p>
