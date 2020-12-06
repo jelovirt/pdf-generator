@@ -1,4 +1,7 @@
 import React from 'react';
+import { Form, Formik, FormikHelpers, FormikValues } from 'formik';
+import JSZip from 'jszip';
+import FileSaver from 'file-saver';
 import Environment from './Environment';
 import Page from './Page';
 import Header from './Header';
@@ -8,12 +11,21 @@ import Cover from './Cover';
 import Other from './Other';
 import Metadata from './Metadata';
 import Download from './Download';
-import { Form, Formik, FormikHelpers, FormikValues } from 'formik';
-import { getInitValues, Values } from '../app/Model';
+import { getInitValues, toModel, Values } from '../app/Model';
+import Generator from '../generator';
 
 const onSubmit = (values: FormikValues, actions: FormikHelpers<Values>) => {
-  // console.log(toModel(values as Values));
   actions.setSubmitting(false);
+  const model = toModel(values as Values);
+  const generator = new Generator(model);
+  const zip = new JSZip();
+  generator.generate_plugin(zip);
+  zip
+    .generateAsync({
+      type: 'blob',
+      platform: 'UNIX',
+    })
+    .then((zipData) => FileSaver.saveAs(zipData, `${model.id}.zip`));
 };
 
 export default function App() {

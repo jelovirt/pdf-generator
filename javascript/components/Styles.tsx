@@ -137,19 +137,18 @@ export default function Styles() {
   };
 
   const handleLengthKeydown = (field: Property) => (e: KeyboardEvent) => {
+    let value;
     switch (e.key) {
       case 'ArrowDown':
-        setFieldValue(
-          `style.${values.style_selector}.${field}`,
-          nextValue(values.style[values.style_selector][field], -1)
-        );
+        value = nextValue(values.style[values.style_selector][field], -1);
         break;
       case 'ArrowUp':
-        setFieldValue(
-          `style.${values.style_selector}.${field}`,
-          nextValue(values.style[values.style_selector][field], 1)
-        );
+        value = nextValue(values.style[values.style_selector][field], 1);
         break;
+    }
+    if (value !== undefined) {
+      cascade(values.style_selector, field, value);
+      setFieldValue(`style.${values.style_selector}.${field}`, value);
     }
   };
 

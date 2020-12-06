@@ -11,9 +11,6 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "@types/react-redux": "^7.1.11",
     "dragula": "^3.7.2",
     "elementtree": "^0.1.7",
     "file-saver": "^2.0.2",
@@ -29,9 +26,13 @@
   "devDependencies": {
     "@types/dragula": "^3.7.0",
     "@types/elementtree": "^0.1.0",
+    "@types/file-saver": "^2.0.1",
     "@types/jest": "^26.0.15",
     "@types/jquery": "^3.5.4",
     "@types/lodash": "^4.14.164",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-redux": "^7.1.11",
     "@types/redux": "^3.6.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
