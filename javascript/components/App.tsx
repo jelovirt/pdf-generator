@@ -20,26 +20,15 @@ export default function App() {
   return (
     <Formik initialValues={getInitValues()} onSubmit={onSubmit}>
       <Form>
-        <div id="generate-plugin">
-          <section className="page container" id="p1">
-            <Environment />
-            <Page />
-            <Header />
-            <Layout />
-            <Styles />
-            <Cover />
-            <Other />
-            <Metadata />
-          </section>
-          <section className="page container" id="p2">
-            <Download />
-          </section>
-          <div id="controls">
-            <button id="generate" className="btn btn-primary" type="submit">
-              Generate
-            </button>
-          </div>
-        </div>
+        <Environment />
+        <Page />
+        <Header />
+        <Layout />
+        <Styles />
+        <Cover />
+        <Other />
+        <Metadata />
+        <Download />
       </Form>
     </Formik>
   );

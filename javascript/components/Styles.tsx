@@ -4,6 +4,97 @@ import { Values } from '../app/Model';
 import StylePreview from './StylePreview';
 import { Property, Style, StyleName, styles } from '../lib/styles';
 
+const propertySelections = {
+  color: [
+    { value: 'aqua', label: 'aqua' },
+    { value: 'black', label: 'black' },
+    { value: 'blue', label: 'blue' },
+    { value: 'fuchsia', label: 'fuchsia' },
+    { value: 'gray', label: 'gray' },
+    { value: 'green', label: 'green' },
+    { value: 'lime', label: 'lime' },
+    { value: 'maroon', label: 'maroon' },
+    { value: 'navy', label: 'navy' },
+    { value: 'olive', label: 'olive' },
+    { value: 'purple', label: 'purple' },
+    { value: 'red', label: 'red' },
+    { value: 'silver', label: 'silver' },
+    { value: 'teal', label: 'teal' },
+    { value: 'white', label: 'white' },
+    { value: 'yellow', label: 'yellow' },
+  ],
+  'background-color': [
+    { value: 'transparent', label: 'transparent' },
+    { value: 'aqua', label: 'aqua' },
+    { value: 'black', label: 'black' },
+    { value: 'blue', label: 'blue' },
+    { value: 'fuchsia', label: 'fuchsia' },
+    { value: 'gray', label: 'gray' },
+    { value: 'green', label: 'green' },
+    { value: 'lime', label: 'lime' },
+    { value: 'maroon', label: 'maroon' },
+    { value: 'navy', label: 'navy' },
+    { value: 'olive', label: 'olive' },
+    { value: 'purple', label: 'purple' },
+    { value: 'red', label: 'red' },
+    { value: 'silver', label: 'silver' },
+    { value: 'teal', label: 'teal' },
+    { value: 'white', label: 'white' },
+    { value: 'yellow', label: 'yellow' },
+  ],
+  'line-height': [
+    { value: '1.2', label: 'Single' },
+    { value: '1.8', label: '1.5 lines' },
+    { value: '2.4', label: 'Double' },
+  ],
+  'font-size': [
+    { value: '8pt', label: '8' },
+    { value: '9pt', label: '9' },
+    { value: '10pt', label: '10' },
+    { value: '11pt', label: '11' },
+    { value: '12pt', label: '12' },
+    { value: '14pt', label: '14' },
+    { value: '16pt', label: '16' },
+    { value: '18pt', label: '18' },
+    { value: '20pt', label: '20' },
+    { value: '22pt', label: '22' },
+    { value: '24pt', label: '24' },
+    { value: '26pt', label: '26' },
+    { value: '28pt', label: '28' },
+    { value: '36pt', label: '36' },
+    { value: '48pt', label: '48' },
+    { value: '72pt', label: '72' },
+  ],
+  'font-family': [
+    { value: 'Arial', label: 'Arial' },
+    { value: 'Arial Black', label: 'Arial Black' },
+    { value: 'Arial Unicode MS', label: 'Arial Unicode MS' },
+    { value: 'Book Antiqua', label: 'Book Antiqua' },
+    { value: 'Comic Sans MS', label: 'Comic Sans MS' },
+    { value: 'Courier New', label: 'Courier New' },
+    { value: 'Gadget', label: 'Gadget' },
+    { value: 'Geneva', label: 'Geneva' },
+    { value: 'Georgia', label: 'Georgia' },
+    { value: 'Helvetica', label: 'Helvetica' },
+    { value: 'Impact', label: 'Impact' },
+    { value: 'Lucida Console', label: 'Lucida Console' },
+    { value: 'Lucida Grande', label: 'Lucida Grande' },
+    { value: 'Lucida Sans Unicode', label: 'Lucida Sans Unicode' },
+    { value: 'Monaco', label: 'Monaco' },
+    { value: 'MS Serif', label: 'MS Serif' },
+    { value: 'New York', label: 'New York' },
+    { value: 'Palatino', label: 'Palatino' },
+    { value: 'Palatino Linotype', label: 'Palatino Linotype' },
+    { value: 'Symbol', label: 'Symbol' },
+    { value: 'Tahoma', label: 'Tahoma' },
+    { value: 'Times', label: 'Times' },
+    { value: 'Times New Roman', label: 'Times New Roman' },
+    { value: 'Trebuchet MS', label: 'Trebuchet MS' },
+    { value: 'Verdana', label: 'Verdana' },
+    { value: 'Webdings', label: 'Webdings' },
+  ],
+};
+
 export default function Styles() {
   const {
     values,
@@ -186,34 +277,11 @@ export default function Styles() {
                   title="Font family"
                   aria-label="Font family"
                 >
-                  <option value="Arial">Arial</option>
-                  <option value="Arial Black">Arial Black</option>
-                  <option value="Arial Unicode MS">Arial Unicode MS</option>
-                  <option value="Book Antiqua">Book Antiqua</option>
-                  <option value="Comic Sans MS">Comic Sans MS</option>
-                  <option value="Courier New">Courier New</option>
-                  <option value="Gadget">Gadget</option>
-                  <option value="Geneva">Geneva</option>
-                  <option value="Georgia">Georgia</option>
-                  <option value="Helvetica">Helvetica</option>
-                  <option value="Impact">Impact</option>
-                  <option value="Lucida Console">Lucida Console</option>
-                  <option value="Lucida Grande">Lucida Grande</option>
-                  <option value="Lucida Sans Unicode">
-                    Lucida Sans Unicode
-                  </option>
-                  <option value="Monaco">Monaco</option>
-                  <option value="MS Serif">MS Serif</option>
-                  <option value="New York">New York</option>
-                  <option value="Palatino">Palatino</option>
-                  <option value="Palatino Linotype">Palatino Linotype</option>
-                  <option value="Symbol">Symbol</option>
-                  <option value="Tahoma">Tahoma</option>
-                  <option value="Times">Times</option>
-                  <option value="Times New Roman">Times New Roman</option>
-                  <option value="Trebuchet MS">Trebuchet MS</option>
-                  <option value="Verdana">Verdana</option>
-                  <option value="Webdings">Webdings</option>
+                  {propertySelections['font-family'].map(({ value, label }) => (
+                    <option value={value} key={value}>
+                      {label}
+                    </option>
+                  ))}
                 </Field>{' '}
                 <label htmlFor="font-size" className="inline hidden">
                   Size
@@ -224,22 +292,11 @@ export default function Styles() {
                   title="Font size"
                   aria-label="Font size"
                 >
-                  <option value="8pt">8</option>
-                  <option value="9pt">9</option>
-                  <option value="10pt">10</option>
-                  <option value="11pt">11</option>
-                  <option value="12pt">12</option>
-                  <option value="14pt">14</option>
-                  <option value="16pt">16</option>
-                  <option value="18pt">18</option>
-                  <option value="20pt">20</option>
-                  <option value="22pt">22</option>
-                  <option value="24pt">24</option>
-                  <option value="26pt">26</option>
-                  <option value="28pt">28</option>
-                  <option value="36pt">36</option>
-                  <option value="48pt">48</option>
-                  <option value="72pt">72</option>
+                  {propertySelections['font-size'].map(({ value, label }) => (
+                    <option value={value} key={value}>
+                      {label}
+                    </option>
+                  ))}
                 </Field>{' '}
                 <div className="btn-group btn-group-inline" role="group">
                   <button
@@ -339,22 +396,11 @@ export default function Styles() {
                   onChange={handleListChange('color')}
                   title="Color"
                 >
-                  <option value="aqua">aqua</option>
-                  <option value="black">black</option>
-                  <option value="blue">blue</option>
-                  <option value="fuchsia">fuchsia</option>
-                  <option value="gray">gray</option>
-                  <option value="green">green</option>
-                  <option value="lime">lime</option>
-                  <option value="maroon">maroon</option>
-                  <option value="navy">navy</option>
-                  <option value="olive">olive</option>
-                  <option value="purple">purple</option>
-                  <option value="red">red</option>
-                  <option value="silver">silver</option>
-                  <option value="teal">teal</option>
-                  <option value="white">white</option>
-                  <option value="yellow">yellow</option>
+                  {propertySelections['color'].map(({ value, label }) => (
+                    <option value={value} key={value}>
+                      {label}
+                    </option>
+                  ))}
                   <option value="#other">other…</option>
                 </Field>{' '}
                 {values.style[values.style_selector]['color-list'] ===
@@ -375,23 +421,13 @@ export default function Styles() {
                   onChange={handleListChange('background-color')}
                   title="Background color"
                 >
-                  <option value="transparent">transparent</option>
-                  <option value="aqua">aqua</option>
-                  <option value="black">black</option>
-                  <option value="blue">blue</option>
-                  <option value="fuchsia">fuchsia</option>
-                  <option value="gray">gray</option>
-                  <option value="green">green</option>
-                  <option value="lime">lime</option>
-                  <option value="maroon">maroon</option>
-                  <option value="navy">navy</option>
-                  <option value="olive">olive</option>
-                  <option value="purple">purple</option>
-                  <option value="red">red</option>
-                  <option value="silver">silver</option>
-                  <option value="teal">teal</option>
-                  <option value="white">white</option>
-                  <option value="yellow">yellow</option>
+                  {propertySelections['background-color'].map(
+                    ({ value, label }) => (
+                      <option value={value} key={value}>
+                        {label}
+                      </option>
+                    )
+                  )}
                   <option value="#other">other…</option>
                 </Field>{' '}
                 {values.style[values.style_selector][
@@ -627,9 +663,13 @@ export default function Styles() {
                           name={`style.${values.style_selector}.line-height-list`}
                           onChange={handleListChange('line-height')}
                         >
-                          <option value="1.2">Single</option>
-                          <option value="1.8">1.5 lines</option>
-                          <option value="2.4">Double</option>
+                          {propertySelections['line-height'].map(
+                            ({ value, label }) => (
+                              <option value={value} key={value}>
+                                {label}
+                              </option>
+                            )
+                          )}
                           <option value="#other">Exactly</option>
                         </Field>
                       </td>

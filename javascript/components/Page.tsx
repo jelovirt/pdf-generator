@@ -47,46 +47,24 @@ export default function Page() {
         </fieldset>
         <h3>Margins</h3>
         <fieldset>
-          <p>
-            <label htmlFor="page.top">Top</label>
-            <Field
-              name="page.top"
-              id="page.top"
-              pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-              className="length-value"
-              required
-            />
-          </p>
-          <p>
-            <label htmlFor="page.outside">Outside</label>
-            <Field
-              name="page.outside"
-              id="page.outside"
-              pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-              className="length-value"
-              required
-            />
-          </p>
-          <p>
-            <label htmlFor="page.bottom">Bottom</label>
-            <Field
-              name="page.bottom"
-              id="page.bottom"
-              pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-              className="length-value"
-              required
-            />
-          </p>
-          <p>
-            <label htmlFor="page.inside">Inside</label>
-            <Field
-              name="page.inside"
-              id="page.inside"
-              pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-              className="length-value"
-              required
-            />
-          </p>
+          {[
+            { name: 'page.top', label: 'Top' },
+            { name: 'page.outside', label: 'Outside' },
+            { name: 'page.bottom', label: 'Bottom' },
+            { name: 'page.inside', label: 'Inside' },
+          ].map(({ name, label }) => (
+            <p key={name}>
+              <label htmlFor={name}>{label}</label>
+              <Field
+                name={name}
+                id={name}
+                autoComplete="off"
+                pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
+                className="length-value"
+                required
+              />
+            </p>
+          ))}
           <p className="instruction">Page margins.</p>
         </fieldset>
         <fieldset>
