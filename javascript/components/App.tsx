@@ -13,6 +13,8 @@ import Metadata from './Metadata';
 import Download from './Download';
 import { getInitValues, toModel, Values } from '../app/Model';
 import Generator from '../generator';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const onSubmit = (values: FormikValues, actions: FormikHelpers<Values>) => {
   actions.setSubmitting(false);
@@ -30,18 +32,20 @@ const onSubmit = (values: FormikValues, actions: FormikHelpers<Values>) => {
 
 export default function App() {
   return (
-    <Formik initialValues={getInitValues()} onSubmit={onSubmit}>
-      <Form>
-        <Environment />
-        <Page />
-        <Header />
-        <Layout />
-        <Styles />
-        <Cover />
-        <Other />
-        <Metadata />
-        <Download />
-      </Form>
-    </Formik>
+    <DndProvider backend={HTML5Backend}>
+      <Formik initialValues={getInitValues()} onSubmit={onSubmit}>
+        <Form>
+          <Environment />
+          <Page />
+          <Header />
+          <Layout />
+          <Styles />
+          <Cover />
+          <Other />
+          <Metadata />
+          <Download />
+        </Form>
+      </Formik>
+    </DndProvider>
   );
 }
