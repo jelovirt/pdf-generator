@@ -711,6 +711,9 @@ export default class Generator {
     if (stylesheet === 'basic-settings' || !stylesheet) {
       BasicSettings.generate_custom_attr(root, this);
     }
+    if (stylesheet === 'links-attr' || !stylesheet) {
+      Links.generate_custom_attr(root, this);
+    }
     if (stylesheet === 'lists-attr' || !stylesheet) {
       Lists.generate_custom_attr(root, this);
     }
@@ -806,6 +809,7 @@ export default class Generator {
         'tables-attr',
         'toc-attr',
         'basic-settings',
+        'links-attr',
         'lists-attr',
         'pr-domain-attr',
       ];

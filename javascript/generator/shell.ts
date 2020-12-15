@@ -36,6 +36,9 @@ export default function generate(conf: Generator) {
     fs.push(`plugin:${conf.plugin_name}:cfg/fo/layout-masters.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/links-attr.xsl');
+  if (conf.override_shell) {
+    fs.push(`plugin:${conf.plugin_name}:cfg/fo/attrs/links-attr.xsl`);
+  }
   fs.push('plugin:org.dita.pdf2:xsl/fo/links.xsl');
   if (conf.override_shell) {
     fs.push(`plugin:${conf.plugin_name}:xsl/fo/links.xsl`);
