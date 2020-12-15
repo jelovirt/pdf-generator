@@ -68,6 +68,11 @@ export function generate_custom(root: Element, conf: Generator) {
     </fo:table>
   </xsl:template>
 `;
+
+  const note_no_icon = `
+  <xsl:template match="*[contains(@class,' topic/note ')]" mode="setNoteImagePath"/>
+`;
+
   const chapter_page_number_raw = `
 <xsl:template name="startPageNumbering">
   <xsl:variable name="topicType" as="xs:string">
@@ -266,9 +271,9 @@ export function generate_custom(root: Element, conf: Generator) {
   ) {
     copy_xml(root, numberless_chapter_raw);
   }
-  if (!(_.has(conf.style.note, 'icon') && conf.style.note.icon)) {
+  if (!conf.style.note.icon) {
     root.append(Comment('note'));
-    copy_xml(root, note_raw);
+    copy_xml(root, note_no_icon);
   }
   if (conf.page_number) {
     if (conf.page_number === 'chapter-page') {
@@ -412,13 +417,13 @@ export function generate_custom_attr(root: Element, conf: Generator) {
   conf.attribute_set(root, 'example', 'example');
   // note
   conf.attribute_set(root, 'note', 'note__table');
-  if (!(_.has(conf.style.note, 'icon') && conf.style.note.icon === 'icon')) {
-    const note_text = SubElement(root, xsl('attribute-set'), {
-      name: 'notetextcolumn',
-    });
-    SubElement(note_text, xsl('attribute'), { name: 'column-number' }).text =
-      '1';
-  }
+  // if (!conf.style.note.icon) {
+  //   const note_text = SubElement(root, xsl('attribute-set'), {
+  //     name: 'notetextcolumn',
+  //   });
+  //   SubElement(note_text, xsl('attribute'), { name: 'column-number' }).text =
+  //     '1';
+  // }
   // pre
   conf.attribute_set(root, 'pre', 'pre');
 

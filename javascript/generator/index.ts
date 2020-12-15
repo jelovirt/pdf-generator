@@ -388,48 +388,48 @@ export default class Generator {
     }
     this.transtype = conf.transtype;
 
-    this.page = conf.configuration.page;
-    this.style = conf.configuration.style;
-    this.force_page_count = conf.configuration.force_page_count;
-    this.chapter_layout = conf.configuration.chapter_layout;
-    this.bookmark_style = conf.configuration.bookmark_style;
-    this.toc_maximum_level = conf.configuration.toc_maximum_level;
-    this.task_label = conf.configuration.task_label;
-    this.include_related_links = conf.configuration.include_related_links;
-    if (conf.configuration.body_column_count) {
-      this.body_column_count = conf.configuration.body_column_count;
+    this.page = conf.page;
+    this.style = conf.style;
+    this.force_page_count = conf.force_page_count;
+    this.chapter_layout = conf.chapter_layout;
+    this.bookmark_style = conf.bookmark_style;
+    this.toc_maximum_level = conf.toc_maximum_level;
+    this.task_label = conf.task_label;
+    this.include_related_links = conf.include_related_links;
+    if (conf.body_column_count) {
+      this.body_column_count = conf.body_column_count;
     }
-    if (conf.configuration.index_column_count) {
-      this.index_column_count = conf.configuration.index_column_count;
+    if (conf.index_column_count) {
+      this.index_column_count = conf.index_column_count;
     }
-    if (conf.configuration.column_gap) {
-      this.column_gap = conf.configuration.column_gap;
+    if (conf.column_gap) {
+      this.column_gap = conf.column_gap;
     }
-    this.mirror_page_margins = conf.configuration.mirror_page_margins;
+    this.mirror_page_margins = conf.mirror_page_margins;
     //__dita_gen.dl = __config["dl"]
-    // this.title_numbering = conf.configuration.title_numbering;
+    // this.title_numbering = conf.title_numbering;
     //__dita_gen.table_numbering = __config["table_numbering"]
     //__dita_gen.figure_numbering = __config["figure_numbering"]
     //__dita_gen.link_pagenumber = __config["link_pagenumber"]
-    this.table_continued = conf.configuration.table_continued;
-    this.formatter = conf.configuration.formatter;
-    this.override_shell = conf.configuration.override_shell;
+    this.table_continued = conf.table_continued;
+    this.formatter = conf.formatter;
+    this.override_shell = conf.override_shell;
     //if ("cover_image" in self.request.arguments() && type(self.request.POST["cover_image"]) != unicode) {
     //  __dita_gen.cover_image = self.request.get("cover_image")
     //  __dita_gen.cover_image_name = self.request.POST["cover_image"].filename
     //}
-    if (conf.configuration.cover_image_metadata) {
-      this.cover_image_metadata = conf.configuration.cover_image_metadata;
+    if (conf.cover_image_metadata) {
+      this.cover_image_metadata = conf.cover_image_metadata;
     }
-    if (conf.configuration.cover_image_topic) {
-      this.cover_image_topic = conf.configuration.cover_image_topic;
+    if (conf.cover_image_topic) {
+      this.cover_image_topic = conf.cover_image_topic;
     }
-    this.header = conf.configuration.header;
-    this.footer = conf.configuration.footer;
-    if (conf.configuration.page_number) {
-      this.page_number = conf.configuration.page_number;
+    this.header = conf.header;
+    this.footer = conf.footer;
+    if (conf.page_number) {
+      this.page_number = conf.page_number;
     }
-    this.options = { ...conf.configuration };
+    this.options = { ...conf };
 
     register_namespace('xsl', 'http://www.w3.org/1999/XSL/Transform');
     register_namespace('fo', 'http://www.w3.org/1999/XSL/Format');

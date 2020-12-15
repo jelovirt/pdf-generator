@@ -125,7 +125,7 @@ const blank_raw = `
 `;
 
 export function generate_custom(root: Element, conf: Generator) {
-  if (!!conf.conf.configuration.blank_pages) {
+  if (!!conf.conf.blank_pages) {
     copy_xml(root, blank_raw);
   }
 }

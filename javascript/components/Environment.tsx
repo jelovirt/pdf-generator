@@ -24,7 +24,7 @@ export default function Environment() {
             title="DITA-OT version"
             required
           >
-            <option value="3.5">3.5</option>
+            <option value="3.5">3.5 – 3.6</option>
             <option value="3.0">3.0</option>
             <option value="2.5">2.5</option>
           </Field>

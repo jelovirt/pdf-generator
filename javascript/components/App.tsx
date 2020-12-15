@@ -16,9 +16,9 @@ import Generator from '../generator';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-const onSubmit = (values: FormikValues, actions: FormikHelpers<Values>) => {
+const onSubmit = (values: Values, actions: FormikHelpers<Values>) => {
   actions.setSubmitting(false);
-  const model = toModel(values as Values);
+  const model = toModel(values);
   const generator = new Generator(model);
   const zip = new JSZip();
   generator.generate_plugin(zip);
