@@ -55,7 +55,8 @@ type TemplateName =
   | 'lists'
   | 'static-content'
   | 'layout-masters'
-  | 'pr-domain';
+  | 'pr-domain'
+  | 'topic';
 type AttrTemplateName =
   | 'basic-settings'
   | 'front-matter-attr'
@@ -66,7 +67,8 @@ type AttrTemplateName =
   | 'lists-attr'
   | 'static-content-attr'
   | 'layout-masters-attr'
-  | 'pr-domain-attr';
+  | 'pr-domain-attr'
+  | 'topic-attr';
 
 export default class Generator {
   conf: Model;
@@ -723,6 +725,9 @@ export default class Generator {
     if (stylesheet === 'static-content-attr' || !stylesheet) {
       StaticContent.generate_custom_attr(root, this);
     }
+    if (stylesheet === 'topic-attr' || !stylesheet) {
+      Topic.generate_custom_attr(root, this);
+    }
 
     // ditagen.generator.indent(root)
     // ditagen.generator.set_prefixes(root, get_ns())
@@ -773,6 +778,7 @@ export default class Generator {
         'lists',
         'pr-domain',
         'static-content',
+        'topic',
       ];
       files.forEach((s) => {
         this.run_generation(
@@ -812,6 +818,7 @@ export default class Generator {
         'links-attr',
         'lists-attr',
         'pr-domain-attr',
+        'topic-attr',
       ];
       files.forEach((s) => {
         this.run_generation(

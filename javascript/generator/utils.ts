@@ -33,9 +33,11 @@ export function catalog(elem: string) {
 
 export function value(property: Property, value: any) {
   if (property === 'start-indent') {
-    return `from-parent(start-indent) + ${value}`;
+    // return `from-parent(start-indent) + ${value}`;
+    return value;
   } else if (property === 'end-indent') {
-    return `from-parent(end-indent) + ${value}`;
+    // return `from-parent(end-indent) + ${value}`;
+    return value;
   }
   return value;
 }
