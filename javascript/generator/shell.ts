@@ -28,6 +28,11 @@ export default function generate(conf: Generator) {
     fs.push(`plugin:${conf.plugin_name}:cfg/fo/attrs/basic-settings.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/layout-masters-attr.xsl');
+  if (conf.formatter === 'xep') {
+    fs.push(
+      'plugin:org.dita.pdf2.xep:cfg/fo/attrs/layout-masters-attr_xep.xsl'
+    );
+  }
   if (conf.override_shell) {
     fs.push(`plugin:${conf.plugin_name}:cfg/fo/attrs/layout-masters-attr.xsl`);
   }
@@ -52,19 +57,52 @@ export default function generate(conf: Generator) {
     fs.push(`plugin:${conf.plugin_name}:xsl/fo/lists.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/tables-attr.xsl');
+  if (conf.formatter === 'ah') {
+    fs.push('plugin:org.dita.pdf2.axf:cfg/fo/attrs/tables-attr_axf.xsl');
+  }
+  if (conf.formatter === 'fop') {
+    fs.push('plugin:org.dita.pdf2.fop:cfg/fo/attrs/tables-attr_fop.xsl');
+  }
   if (conf.override_shell) {
     fs.push(`plugin:${conf.plugin_name}:cfg/fo/attrs/tables-attr.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:xsl/fo/tables.xsl');
+  if (conf.formatter === 'fop') {
+    fs.push('plugin:org.dita.pdf2.fop:xsl/fo/tables_fop.xsl');
+  }
   if (conf.override_shell) {
     fs.push(`plugin:${conf.plugin_name}:xsl/fo/tables.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:xsl/fo/root-processing.xsl');
+  if (conf.formatter === 'ah') {
+    fs.push('plugin:org.dita.pdf2.axf:xsl/fo/root-processing_axf.xsl');
+  }
+  if (conf.formatter === 'fop') {
+    fs.push('plugin:org.dita.pdf2.fop:xsl/fo/root-processing_fop.xsl');
+  }
+  if (conf.formatter === 'xep') {
+    fs.push('plugin:org.dita.pdf2.xep:xsl/fo/root-processing_xep.xsl');
+  }
   if (conf.ot_version.version === '3.5') {
     fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/topic-attr.xsl');
+    if (conf.formatter === 'ah') {
+      fs.push('plugin:org.dita.pdf2.axf:xsl/fo/topic_axf.xsl');
+    }
+    if (conf.formatter === 'fop') {
+      fs.push('plugin:org.dita.pdf2.fop:xsl/fo/topic_fop.xsl');
+    }
+    if (conf.formatter === 'xep') {
+      fs.push('plugin:org.dita.pdf2.xep:xsl/fo/topic_xep.xsl');
+    }
     fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/concept-attr.xsl');
   }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/commons-attr.xsl');
+  if (conf.formatter === 'fop') {
+    fs.push('plugin:org.dita.pdf2.fop:cfg/fo/attrs/commons-attr_fop.xsl');
+  }
+  if (conf.formatter === 'xep') {
+    fs.push('plugin:org.dita.pdf2.xep:cfg/fo/attrs/commons-attr_xep.xsl');
+  }
   if (conf.override_shell) {
     fs.push(`plugin:${conf.plugin_name}:cfg/fo/attrs/commons-attr.xsl`);
   }
@@ -73,6 +111,14 @@ export default function generate(conf: Generator) {
     fs.push(`plugin:${conf.plugin_name}:xsl/fo/commons.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/toc-attr.xsl');
+  if (conf.formatter === 'ah') {
+    fs.push('plugin:org.dita.pdf2.axf:cfg/fo/attrs/toc-attr_axf.xsl');
+  }
+  if (conf.formatter === 'fop') {
+    if (conf.ot_version.version !== '3.5') {
+      fs.push('plugin:org.dita.pdf2.fop:cfg/fo/attrs/toc-attr_fop.xsl');
+    }
+  }
   if (conf.override_shell) {
     fs.push(`plugin:${conf.plugin_name}:cfg/fo/attrs/toc-attr.xsl`);
   }
@@ -82,7 +128,24 @@ export default function generate(conf: Generator) {
   }
   fs.push('plugin:org.dita.pdf2:xsl/fo/bookmarks.xsl');
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/index-attr.xsl');
+  if (conf.formatter === 'ah') {
+    fs.push('plugin:org.dita.pdf2.axf:cfg/fo/attrs/index-attr_axf.xsl');
+  }
+  if (conf.formatter === 'xep') {
+    if (conf.ot_version.version === '3.5') {
+      fs.push('plugin:org.dita.pdf2.xep:cfg/fo/attrs/index-attr_xep.xsl');
+    }
+  }
   fs.push('plugin:org.dita.pdf2:xsl/fo/index.xsl');
+  if (conf.formatter === 'ah') {
+    fs.push('plugin:org.dita.pdf2.axf:xsl/fo/index_axf.xsl');
+  }
+  if (conf.formatter === 'fop') {
+    fs.push('plugin:org.dita.pdf2.fop:xsl/fo/index_fop.xsl');
+  }
+  if (conf.formatter === 'xep') {
+    fs.push('plugin:org.dita.pdf2.xep:xsl/fo/index_xep.xsl');
+  }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/front-matter-attr.xsl');
   if (conf.override_shell) {
     fs.push(`plugin:${conf.plugin_name}:cfg/fo/attrs/front-matter-attr.xsl`);
@@ -146,14 +209,14 @@ export default function generate(conf: Generator) {
   fs.push('plugin:org.dita.pdf2:xsl/fo/learning-elements.xsl');
 
   fs.push('plugin:org.dita.pdf2:xsl/fo/flagging.xsl');
+  if (conf.formatter === 'fop') {
+    if (conf.ot_version.version !== '3.5') {
+      fs.push('plugin:org.dita.pdf2.fop:xsl/fo/flagging_fop.xsl');
+    }
+  }
   fs.push('plugin:org.dita.pdf2:xsl/fo/flagging-from-preprocess.xsl');
 
   fs.forEach((i) => {
-    SubElement(root, xsl('import'), { href: i });
-  });
-
-  root.append(Comment('formatter specific imports'));
-  get_formatter_imports(conf).forEach((i) => {
     SubElement(root, xsl('import'), { href: i });
   });
 
@@ -168,53 +231,4 @@ export default function generate(conf: Generator) {
   //ditagen.generator.indent(root)
   const d = new ElementTree(root);
   return d.write({ indent: 2 });
-}
-
-function get_formatter_imports(conf: Generator) {
-  let imports = [];
-  let plugin = 'plugin:org.dita.pdf2';
-  switch (conf.formatter) {
-    case 'ah':
-      plugin = plugin + '.axf';
-      imports.push('cfg/fo/attrs/tables-attr_axf.xsl');
-      imports.push('cfg/fo/attrs/toc-attr_axf.xsl');
-      imports.push('cfg/fo/attrs/index-attr_axf.xsl');
-      imports.push('xsl/fo/root-processing_axf.xsl');
-      imports.push('xsl/fo/index_axf.xsl');
-      if (conf.ot_version.version === '3.5') {
-        imports.push('xsl/fo/topic_axf.xsl');
-      }
-      break;
-    case 'fop':
-      plugin = plugin + '.fop';
-      imports.push('cfg/fo/attrs/commons-attr_fop.xsl');
-      imports.push('cfg/fo/attrs/tables-attr_fop.xsl');
-      if (conf.ot_version.version !== '3.5') {
-        imports.push('cfg/fo/attrs/toc-attr_fop.xsl');
-      }
-      imports.push('xsl/fo/root-processing_fop.xsl');
-      imports.push('xsl/fo/index_fop.xsl');
-      if (conf.ot_version.version === '3.5') {
-        imports.push('xsl/fo/topic_fop.xsl');
-      }
-      imports.push('xsl/fo/tables_fop.xsl');
-      if (conf.ot_version.version !== '3.5') {
-        imports.push('xsl/fo/flagging_fop.xsl');
-      }
-      break;
-    case 'xep':
-      plugin = plugin + '.xep';
-      imports.push('cfg/fo/attrs/commons-attr_xep.xsl');
-      imports.push('cfg/fo/attrs/layout-masters-attr_xep.xsl');
-      if (conf.ot_version.version === '3.5') {
-        imports.push('cfg/fo/attrs/index-attr_xep.xsl');
-      }
-      imports.push('xsl/fo/root-processing_xep.xsl');
-      imports.push('xsl/fo/index_xep.xsl');
-      if (conf.ot_version.version === '3.5') {
-        imports.push('xsl/fo/topic_xep.xsl');
-      }
-      break;
-  }
-  return imports.map((href) => plugin + ':' + href);
 }

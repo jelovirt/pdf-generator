@@ -206,12 +206,15 @@ export function generate_custom(root: Element, conf: Generator) {
     copy_xml(root, table_footer_raw);
   }
   if (_.has(conf.style.dl, 'dl-type')) {
-    if (conf.style.dl['dl-type'] === 'list') {
-      root.append(Comment('dl'));
-      copy_xml(root, dl_list_raw);
-    } else if (conf.style.dl['dl-type'] === 'html') {
-      root.append(Comment('dl'));
-      copy_xml(root, dl_html_raw);
+    switch (conf.style.dl['dl-type']) {
+      case 'list':
+        root.append(Comment('dl'));
+        copy_xml(root, dl_list_raw);
+        break;
+      case 'html':
+        root.append(Comment('dl'));
+        copy_xml(root, dl_html_raw);
+        break;
     }
   }
 }
