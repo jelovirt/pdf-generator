@@ -11,7 +11,7 @@ describe('Generator', () => {
       type: 'uint8array',
     });
 
-    expect(zipData.length).toBe(112024);
+    expect(zipData.length).toBe(144062);
     const act = await JSZip.loadAsync(zipData);
 
     expect(new Set(Object.keys(act.files))).toStrictEqual(
@@ -27,6 +27,7 @@ describe('Generator', () => {
         'x/xsl/fo/commons.xsl',
         'x/xsl/fo/tables.xsl',
         'x/xsl/fo/toc.xsl',
+        'x/xsl/fo/topic.xsl',
         'x/xsl/fo/links.xsl',
         'x/xsl/fo/lists.xsl',
         'x/xsl/fo/pr-domain.xsl',
@@ -40,7 +41,9 @@ describe('Generator', () => {
         'x/cfg/fo/attrs/static-content-attr.xsl',
         'x/cfg/fo/attrs/tables-attr.xsl',
         'x/cfg/fo/attrs/toc-attr.xsl',
+        'x/cfg/fo/attrs/topic-attr.xsl',
         'x/cfg/fo/attrs/basic-settings.xsl',
+        'x/cfg/fo/attrs/links-attr.xsl',
         'x/cfg/fo/attrs/lists-attr.xsl',
         'x/cfg/fo/attrs/pr-domain-attr.xsl',
         'x/xsl/fo/topic2fo_shell_fop.xsl',
