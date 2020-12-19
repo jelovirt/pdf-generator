@@ -1,7 +1,6 @@
 import React from 'react';
-import { Values } from '../app/Model';
+import { Length, Values } from '../app/Model';
 import { Property, StyleName } from '../lib/styles';
-import { toPt } from '../app/pdf-utils';
 import hand from '../../public/images/hand.gif';
 import figure from '../../public/images/figure.png';
 
@@ -11,7 +10,7 @@ function isCustomProperty(field: Property): boolean {
   return [
     'prefix',
     'line-numbering',
-    ' line-height-list',
+    'line-height-list',
     'dl-type',
     'ol-1',
     'ol-2',
@@ -54,10 +53,16 @@ function toCamelCase(input: string) {
   );
 }
 
-function previewSpaceHandler(type: StyleName, style: Record<Property, string>) {
+function previewSpaceHandler(
+  type: StyleName,
+  style: Record<Property, string>,
+  parentStyles: StyleName[],
+  styles: Record<StyleName, Record<Property, string>>
+) {
   const properties = (Object.entries(style) as [Property, string][])
     .filter(([field, value]) => !isCustomProperty(field))
-    .map(([field, value]) => {
+    .flatMap(([field, value]) => {
+      const len = (v: Length) => `calc(${v} * ${factor})`;
       let v = value;
       let isLength = false;
       let property = field as string;
@@ -71,9 +76,30 @@ function previewSpaceHandler(type: StyleName, style: Record<Property, string>) {
           isLength = true;
           break;
         case 'start-indent':
-          property = 'margin-left';
+          property = 'left';
           isLength = true;
-          break;
+          v =
+            '(' +
+            [v]
+              .concat(
+                parentStyles.map(
+                  (parentStyle) => styles[parentStyle]['start-indent']
+                )
+              )
+              .concat(styles[type]['padding-left'])
+              .join(' - ') +
+            ')';
+          const res: [string, string][] = [
+            [toCamelCase(property), isLength ? `calc(${v} * ${factor})` : v],
+          ];
+          if (field === 'start-indent') {
+            res.push(['position', 'relative']);
+          }
+          return res;
+        // // property = 'margin-left';
+        // property = 'left';
+        // isLength = true;
+        // break;
         case 'end-indent':
           property = 'margin-right';
           isLength = true;
@@ -97,6 +123,27 @@ function previewSpaceHandler(type: StyleName, style: Record<Property, string>) {
               break;
           }
           break;
+        case 'border':
+          switch (v) {
+            case 'none':
+              return [['border', 'none']];
+            case 'all':
+              return [['border', `solid black calc(${v} * ${factor})`]];
+            case 'top':
+              return [['borderTop', `solid black calc(${v} * ${factor})`]];
+            case 'bottom':
+              return [['borderBottom', `solid black calc(${v} * ${factor})`]];
+            case 'topbot':
+              return [
+                ['borderTop', `solid black calc(${v} * ${factor})`],
+                ['borderBottom', `solid black calc(${v} * ${factor})`],
+              ];
+            case 'sides':
+              return [
+                ['borderRight', `solid black calc(${v} * ${factor})`],
+                ['borderLeft', `solid black calc(${v} * ${factor})`],
+              ];
+          }
         case 'border-before-style':
         case 'border-before-width':
         case 'border-before-color':
@@ -147,7 +194,13 @@ function previewSpaceHandler(type: StyleName, style: Record<Property, string>) {
       //   // v = String(toPt(v)! * f) + 'px';
       //   v = `calc(${v} * ${f})`;
       // }
-      return [toCamelCase(property), isLength ? `calc(${v} * ${factor})` : v];
+      const res: [string, string][] = [
+        [toCamelCase(property), isLength ? `calc(${v} * ${factor})` : v],
+      ];
+      // if (field === 'start-indent') {
+      //   res.push(['position', 'relative']);
+      // }
+      return res;
       // FIXME
       // wrapper styling
       // if (field === 'start-indent' && type === 'body') {
@@ -161,8 +214,8 @@ function previewSpaceHandler(type: StyleName, style: Record<Property, string>) {
 
 export default function StylePreview(props: { values: Values }) {
   const styles = props.values.style;
-  const getStyle = (styleName: StyleName) =>
-    previewSpaceHandler(styleName, styles[styleName]);
+  const getStyle = (styleName: StyleName, ...parentStyles: StyleName[]) =>
+    previewSpaceHandler(styleName, styles[styleName], parentStyles, styles);
   const pageStyle = () => {
     const dimensions = props.values.page_size.split(' ');
     if (props.values.orientation === 'landscape') {
@@ -464,16 +517,18 @@ export default function StylePreview(props: { values: Values }) {
               fox jumps over the lazy dog.
             </p>
           </div>
-          <div style={wrapperStyle('example_title')}>
-            <p
-              style={getStyle('example_title')}
-              // style={{ marginLeft: '0pt', marginRight: '0pt' }}
-            >
-              Example title
-            </p>
-          </div>
           <div style={wrapperStyle('example')}>
-            <p style={getStyle('body')}>Example content</p>
+            <div style={getStyle('example')}>
+              {/*<div style={wrapperStyle('example_title')}>*/}
+              <p
+                style={getStyle('example_title', 'example')}
+                // style={{ marginLeft: '0pt', marginRight: '0pt' }}
+              >
+                Example title
+              </p>
+              {/*</div>*/}
+              <p style={getStyle('body', 'example')}>Example content</p>
+            </div>
           </div>
           <div style={wrapperStyle('topic_topic_topic')}>
             <div style={getStyle('topic_topic_topic')}>

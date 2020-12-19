@@ -16,6 +16,7 @@ export type FoProperty =
   | 'baseline-shift'
   | 'blank-or-not-blank'
   | 'block-progression-dimension'
+  | 'border'
   | 'border-after-color'
   | 'border-after-precedence'
   | 'border-after-style'

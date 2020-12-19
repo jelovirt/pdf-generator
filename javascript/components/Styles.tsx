@@ -754,6 +754,10 @@ export default function Styles() {
                 >
                   <option value="none">no border</option>
                   <option value="all">all</option>
+                  <option value="top">top</option>
+                  <option value="bottom">bottom</option>
+                  <option value="topbot">top and bottom</option>
+                  <option value="sides">sides</option>
                 </Field>
               </td>
             </tr>
