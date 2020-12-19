@@ -504,7 +504,7 @@ export const styles: StyleConfiguration = {
   },
   pre: {
     ...base,
-    'font-family': { default: 'Monaco', inherit: undefined },
+    'font-family': { default: 'Courier New', inherit: undefined },
     'font-size': { default: undefined, inherit: 'body' },
     color: { default: undefined, inherit: 'body' },
     'font-weight': { default: undefined, inherit: 'body' },
@@ -518,7 +518,7 @@ export const styles: StyleConfiguration = {
   },
   codeblock: {
     ...base,
-    'font-family': { default: 'Monaco', inherit: undefined },
+    'font-family': { default: 'Courier New', inherit: undefined },
     'font-size': { default: undefined, inherit: 'body' },
     color: { default: undefined, inherit: 'body' },
     'font-weight': { default: undefined, inherit: 'body' },

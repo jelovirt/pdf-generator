@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Length, Values } from '../app/Model';
 import { Property, StyleName } from '../lib/styles';
 import hand from '../../public/images/hand.gif';
@@ -267,29 +267,36 @@ export default function StylePreview(props: { values: Values }) {
   const ulLabelStyle = { width: '1em', display: 'inline-block', float: 'left' };
 
   const borderStyle = { border: 'solid 1px black' };
+
+  const Block = (props: { type: StyleName; children?: ReactNode }) => {
+    return (
+      <div style={wrapperStyle(props.type)}>
+        <div style={getStyle(props.type)}>{props.children}</div>
+      </div>
+    );
+  };
+
+  const Inline = (props: { type: StyleName; children?: ReactNode }) => {
+    return <span style={getStyle(props.type)}>{props.children}</span>;
+  };
+
   return (
     <div className="example-block col-md-7" id="example-style">
       <div className="example-block-page" style={pageStyle()}>
         <div className="example-page-content" style={contentStyle()}>
-          <div style={wrapperStyle('topic')}>
-            <div style={getStyle('topic')}>
-              {styles['topic']['title-numbering'] && <span>1 </span>}
-              Heading 1
-            </div>
-          </div>
-          <div style={wrapperStyle('topic_topic')}>
-            <div style={getStyle('topic_topic')}>
-              {styles['topic_topic']['title-numbering'] && <span>1.1 </span>}
-              Heading 2
-            </div>
-          </div>
-          <div style={wrapperStyle('body')}>
-            <p style={getStyle('body')}>
-              The quick brown fox jumps over the lazy dog. The quick brown fox
-              jumps over the lazy dog. The quick brown fox jumps over the lazy
-              dog. The quick brown fox jumps over the lazy dog.
-            </p>
-          </div>
+          <Block type="topic">
+            {styles['topic']['title-numbering'] && <span>1 </span>}
+            Heading 1
+          </Block>
+          <Block type="topic_topic">
+            {styles['topic_topic']['title-numbering'] && <span>1.1 </span>}
+            Heading 2
+          </Block>
+          <Block type="body">
+            The quick brown fox jumps over the lazy dog. The quick brown fox
+            jumps over the lazy dog. The quick brown fox jumps over the lazy
+            dog. The quick brown fox jumps over the lazy dog.
+          </Block>
           <div style={wrapperStyle('note')}>
             <table style={getStyle('note')}>
               <tbody>
@@ -311,14 +318,12 @@ export default function StylePreview(props: { values: Values }) {
               </tbody>
             </table>
           </div>
-          <div style={wrapperStyle('body')}>
-            <p style={getStyle('body')}>
-              The quick brown fox jumps over the lazy dog. The quick brown fox
-              jumps over the lazy dog. The quick brown fox jumps over the lazy
-              dog. The quick brown fox jumps over the lazy dog. The quick brown
-              fox jumps over the lazy dog.
-            </p>
-          </div>
+          <Block type="body">
+            The quick brown fox jumps over the lazy dog. The quick brown fox
+            jumps over the lazy dog. The quick brown fox jumps over the lazy
+            dog. The quick brown fox jumps over the lazy dog. The quick brown
+            fox jumps over the lazy dog.
+          </Block>
           <div style={wrapperStyle('ol')}>
             <ol style={getStyle('ol')} className="example-page-content-ol">
               <li>
@@ -417,27 +422,23 @@ export default function StylePreview(props: { values: Values }) {
               </dl>
             )}
             {styles['dl']['dl-type'] === 'table' && (
-              <table style={getStyle('dl')}>
+              <table style={{ ...getStyle('dl'), width: '100%' }}>
                 <colgroup>
-                  <col />
-                  <col style={{ width: '100%' }} />
+                  <col style={{ width: '50%' }} />
+                  <col style={{ width: '50%' }} />
                 </colgroup>
                 <tbody>
                   <tr>
-                    <th style={borderStyle}>
+                    <th>
                       <strong>Pangram</strong>
                     </th>
-                    <td style={borderStyle}>
-                      The quick brown fox jumps over the lazy dog.
-                    </td>
+                    <td>The quick brown fox jumps over the lazy dog.</td>
                   </tr>
                   <tr>
-                    <th style={borderStyle}>
+                    <th>
                       <strong>XXX</strong>
                     </th>
-                    <td style={borderStyle}>
-                      The quick brown fox jumps over the lazy dog.
-                    </td>
+                    <td>The quick brown fox jumps over the lazy dog.</td>
                   </tr>
                 </tbody>
               </table>
@@ -462,104 +463,90 @@ export default function StylePreview(props: { values: Values }) {
             )}
           </div>
           <div style={wrapperStyle('body', 'link')}>
-            <p style={getStyle('body')}>
-              The quick brown <span style={getStyle('link')}>fox jumps</span>{' '}
+            <div style={getStyle('body')}>
+              The quick brown <Inline type="link">fox jumps</Inline>{' '}
               {styles['link']['link-page-number'] && (
                 <>
                   <span>on page 42</span>{' '}
                 </>
               )}
               over the lazy dog. The quick{' '}
-              <span style={getStyle('link')}>brown fox</span>{' '}
+              <Inline type="link">brown fox</Inline>{' '}
               {styles['link']['link-url'] && (
                 <>
                   <span>at www.example.com</span>{' '}
                 </>
               )}
               jumps over the lazy dog.
-            </p>
+            </div>
           </div>
           <div style={wrapperStyle('body', 'tm')}>
-            <p style={getStyle('body')}>
+            <div style={getStyle('body')}>
               The{' '}
-              <span style={getStyle('tm')}>
+              <Inline type="tm">
                 quick brown fox
                 {(styles['tm']['symbol-scope'] === 'always' ||
                   styles['tm']['symbol-scope'] === 'chapter') && <span>™</span>}
-              </span>{' '}
+              </Inline>{' '}
               jumps over the{' '}
-              <span style={getStyle('tm')}>
+              <Inline type="tm">
                 lazy dog
                 {(styles['tm']['symbol-scope'] === 'always' ||
                   styles['tm']['symbol-scope'] === 'chapter') && <span>®</span>}
-              </span>
+              </Inline>
               . The{' '}
-              <span style={getStyle('tm')}>
+              <Inline type="tm">
                 quick brown fox
                 {styles['tm']['symbol-scope'] === 'always' && <span>™</span>}
-              </span>{' '}
+              </Inline>{' '}
               jumps over the{' '}
-              <span style={getStyle('tm')}>
+              <Inline type="tm">
                 lazy dog
                 {styles['tm']['symbol-scope'] === 'always' && <span>®</span>}
-              </span>
+              </Inline>
               .
-            </p>
-          </div>
-          <div style={wrapperStyle('section')}>
-            <p style={getStyle('section')}>Section title</p>
-          </div>
-          <div style={wrapperStyle('body')}>
-            <p style={getStyle('body')}>
-              The quick brown fox jumps over the lazy dog. The quick brown fox
-              jumps over the lazy dog. The quick brown fox jumps over the lazy
-              dog. The quick brown fox jumps over the lazy dog. The quick brown
-              fox jumps over the lazy dog.
-            </p>
-          </div>
-          <div style={wrapperStyle('example')}>
-            <div style={getStyle('example')}>
-              {/*<div style={wrapperStyle('example_title')}>*/}
-              <p
-                style={getStyle('example_title', 'example')}
-                // style={{ marginLeft: '0pt', marginRight: '0pt' }}
-              >
-                Example title
-              </p>
-              {/*</div>*/}
-              <p style={getStyle('body', 'example')}>Example content</p>
             </div>
           </div>
-          <div style={wrapperStyle('topic_topic_topic')}>
-            <div style={getStyle('topic_topic_topic')}>
-              {styles['topic_topic_topic']['title-numbering'] && (
-                <span>1.1.1 </span>
-              )}
-              Heading 3
+          <Block type="section">Section title</Block>
+          <Block type="body">
+            The quick brown fox jumps over the lazy dog. The quick brown fox
+            jumps over the lazy dog. The quick brown fox jumps over the lazy
+            dog. The quick brown fox jumps over the lazy dog. The quick brown
+            fox jumps over the lazy dog.
+          </Block>
+          <Block type="example">
+            {/*<div style={wrapperStyle('example_title')}>*/}
+            <div
+              style={getStyle('example_title', 'example')}
+              // style={{ marginLeft: '0pt', marginRight: '0pt' }}
+            >
+              Example title
             </div>
-          </div>
-          <div style={wrapperStyle('body')}>
-            <p style={getStyle('body')}>
-              The quick brown fox jumps over the lazy dog. The quick brown fox
-              jumps over the lazy dog. The quick brown fox jumps over the lazy
-              dog. The quick brown fox jumps over the lazy dog.
-            </p>
-          </div>
-          <div style={wrapperStyle('topic_topic_topic_topic')}>
-            <div style={getStyle('topic_topic_topic_topic')}>
-              {styles['topic_topic_topic_topic']['title-numbering'] && (
-                <span>1.1.1.1 </span>
-              )}
-              Heading 4
-            </div>
-          </div>
-          <div style={wrapperStyle('dl')}>
-            <p style={getStyle('body')}>
-              The quick brown fox jumps over the lazy dog. The quick brown fox
-              jumps over the lazy dog. The quick brown fox jumps over the lazy
-              dog. The quick brown fox jumps over the lazy dog.
-            </p>
-          </div>
+            {/*</div>*/}
+            <div style={getStyle('body', 'example')}>Example content</div>
+          </Block>
+          <Block type="topic_topic_topic">
+            {styles['topic_topic_topic']['title-numbering'] && (
+              <span>1.1.1 </span>
+            )}
+            Heading 3
+          </Block>
+          <Block type="body">
+            The quick brown fox jumps over the lazy dog. The quick brown fox
+            jumps over the lazy dog. The quick brown fox jumps over the lazy
+            dog. The quick brown fox jumps over the lazy dog.
+          </Block>
+          <Block type="topic_topic_topic_topic">
+            {styles['topic_topic_topic_topic']['title-numbering'] && (
+              <span>1.1.1.1 </span>
+            )}
+            Heading 4
+          </Block>
+          <Block type="body">
+            The quick brown fox jumps over the lazy dog. The quick brown fox
+            jumps over the lazy dog. The quick brown fox jumps over the lazy
+            dog. The quick brown fox jumps over the lazy dog.
+          </Block>
           <div style={wrapperStyle('pre')}>
             <pre style={getStyle('pre')}>
               The quick brown fox jumps over the lazy dog.
@@ -580,7 +567,7 @@ export default function StylePreview(props: { values: Values }) {
           </div>
           <div style={wrapperStyle('table')}>
             {styles['table']['caption-position'] === 'before' && (
-              <p style={getStyle('body')}>
+              <div style={getStyle('body')}>
                 <strong>
                   Table{' '}
                   {styles['table']['caption-number'] === 'document' && (
@@ -591,7 +578,7 @@ export default function StylePreview(props: { values: Values }) {
                   )}
                   : Table caption
                 </strong>
-              </p>
+              </div>
             )}
             <table style={getStyle('table')}>
               <tbody>
@@ -630,7 +617,7 @@ export default function StylePreview(props: { values: Values }) {
               </tbody>
             </table>
             {styles['table']['caption-position'] === 'after' && (
-              <p style={getStyle('body')}>
+              <div style={getStyle('body')}>
                 <strong>
                   Table{' '}
                   {styles['table']['caption-number'] === 'document' && (
@@ -641,12 +628,12 @@ export default function StylePreview(props: { values: Values }) {
                   )}
                   : Table caption
                 </strong>
-              </p>
+              </div>
             )}
           </div>
           <div style={wrapperStyle('fig')}>
             {styles['fig']['caption-position'] === 'before' && (
-              <p style={getStyle('body')}>
+              <div style={getStyle('body')}>
                 <strong>
                   Figure{' '}
                   {styles['fig']['caption-number'] === 'document' && (
@@ -657,13 +644,13 @@ export default function StylePreview(props: { values: Values }) {
                   )}
                   : Figure caption
                 </strong>
-              </p>
+              </div>
             )}
-            <p style={getStyle('fig')}>
+            <div style={getStyle('fig')}>
               <img src={figure} style={{ height: '30px' }} />
-            </p>
+            </div>
             {styles['fig']['caption-position'] === 'after' && (
-              <p style={getStyle('body')}>
+              <div style={getStyle('body')}>
                 <strong>
                   Figure{' '}
                   {styles['fig']['caption-number'] === 'document' && (
@@ -674,7 +661,7 @@ export default function StylePreview(props: { values: Values }) {
                   )}
                   : Figure caption
                 </strong>
-              </p>
+              </div>
             )}
           </div>
         </div>
