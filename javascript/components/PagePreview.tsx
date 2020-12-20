@@ -62,7 +62,7 @@ export const PreviewPage = (props: {
         <tbody>
           <tr>
             <td>
-              <div>{props.page_size}</div>
+              <div></div>
             </td>
           </tr>
         </tbody>
