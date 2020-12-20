@@ -7,7 +7,7 @@
     "build": "parcel build public/index.html",
     "start": "parcel public/index.html",
     "fmt": "prettier --write .",
-    "test": "jest"
+    "test": "jest javascript/**/*.test.ts"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
