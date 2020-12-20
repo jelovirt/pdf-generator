@@ -83,7 +83,7 @@ export default function generate(conf: Generator) {
   if (conf.formatter === 'xep') {
     fs.push('plugin:org.dita.pdf2.xep:xsl/fo/root-processing_xep.xsl');
   }
-  if (conf.ot_version.version === '3.5') {
+  if (conf.ot_version.version === '3.5' || conf.ot_version.version === '3.6') {
     fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/topic-attr.xsl');
     if (conf.formatter === 'ah') {
       fs.push('plugin:org.dita.pdf2.axf:xsl/fo/topic_axf.xsl');
@@ -115,7 +115,10 @@ export default function generate(conf: Generator) {
     fs.push('plugin:org.dita.pdf2.axf:cfg/fo/attrs/toc-attr_axf.xsl');
   }
   if (conf.formatter === 'fop') {
-    if (conf.ot_version.version !== '3.5') {
+    if (
+      conf.ot_version.version !== '3.5' &&
+      conf.ot_version.version !== '3.6'
+    ) {
       fs.push('plugin:org.dita.pdf2.fop:cfg/fo/attrs/toc-attr_fop.xsl');
     }
   }
@@ -132,7 +135,10 @@ export default function generate(conf: Generator) {
     fs.push('plugin:org.dita.pdf2.axf:cfg/fo/attrs/index-attr_axf.xsl');
   }
   if (conf.formatter === 'xep') {
-    if (conf.ot_version.version === '3.5') {
+    if (
+      conf.ot_version.version === '3.5' ||
+      conf.ot_version.version === '3.6'
+    ) {
       fs.push('plugin:org.dita.pdf2.xep:cfg/fo/attrs/index-attr_xep.xsl');
     }
   }
@@ -185,7 +191,7 @@ export default function generate(conf: Generator) {
   fs.push('plugin:org.dita.pdf2:xsl/fo/markup-domain.xsl');
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/xml-domain-attr.xsl');
   fs.push('plugin:org.dita.pdf2:xsl/fo/xml-domain.xsl');
-  if (conf.ot_version.version === '3.5') {
+  if (conf.ot_version.version === '3.5' || conf.ot_version.version === '3.6') {
     fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/svg-domain-attr.xsl');
     fs.push('plugin:org.dita.pdf2:xsl/fo/svg-domain.xsl');
     fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/hazard-d-attr.xsl');
@@ -210,7 +216,10 @@ export default function generate(conf: Generator) {
 
   fs.push('plugin:org.dita.pdf2:xsl/fo/flagging.xsl');
   if (conf.formatter === 'fop') {
-    if (conf.ot_version.version !== '3.5') {
+    if (
+      conf.ot_version.version !== '3.5' &&
+      conf.ot_version.version !== '3.6'
+    ) {
       fs.push('plugin:org.dita.pdf2.fop:xsl/fo/flagging_fop.xsl');
     }
   }

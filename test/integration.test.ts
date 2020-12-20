@@ -1,8 +1,16 @@
+import { promisify } from 'util';
 import fs from 'fs';
 import child_process from 'child_process';
+// import { https } from 'follow-redirects';
 import JSZip from 'jszip';
+import { unzip } from './utils';
 import { getInitStore, OtVersion } from '../javascript/app/Model';
 import Generator from '../javascript/generator/index';
+
+const exists = promisify(fs.exists);
+const readFile = promisify(fs.readFile);
+const writeFile = promisify(fs.writeFile);
+const unlink = promisify(fs.unlink);
 
 const getProcess = (version: OtVersion, ...args: string[]) =>
   new Promise((resolve, reject) => {
@@ -35,19 +43,36 @@ const generatePlugin = async (version: OtVersion) => {
   });
 };
 
-const exists = async (path: string) =>
-  await new Promise((resolve, reject) =>
-    fs.access(path, fs.constants.F_OK, (err) => resolve(!err))
-  );
+// const getDitaOt = async (version: OtVersion) => {
+//   if (!(await exists(`temp/dita-ot-${version}`))) {
+//     const file = fs.createWriteStream(`temp/dita-ot-${version}.zip`);
+//     const request = await new Promise((resolve, reject) =>
+//       https.get(
+//         `https://github.com/dita-ot/dita-ot/releases/download/${version}/dita-ot-${version}.zip`,
+//         (response) => {
+//           response.pipe(file).on('finish', resolve).on('error', reject);
+//         }
+//       )
+//     );
+//     const data = await readFile(`temp/dita-ot-${version}.zip`);
+//     await unzip(data, `temp/dita-ot-${version}`);
+//   }
+// };
 
 describe('DITA-OT', () => {
-  describe(`version 3.0`, () => {
-    const version: OtVersion = '3.0';
+  describe(`version 2.5`, () => {
+    const version: OtVersion = '2.5';
+    const out = `temp/dita-ot-${version}/out`;
+    const pdf = `${out}/root.pdf`;
     jest.setTimeout(30000);
     beforeAll(async () => {
+      // await getDitaOt(version);
       await generatePlugin(version);
-      await getProcess(version, '--uninstall', 'x');
+      await getProcess(version, '--uninstall', 'x').catch((err) => err);
       await getProcess(version, '--install', `temp/out-${version}.zip`);
+      if (await exists(pdf)) {
+        await unlink(pdf);
+      }
     });
     it('should generate PDF', async () => {
       const exitCode = await getProcess(
@@ -55,21 +80,83 @@ describe('DITA-OT', () => {
         '-i',
         'test/root.ditamap',
         '-o',
-        `temp/dita-ot-${version}/out`,
+        out,
         '-f',
         'x'
       );
       expect(exitCode).toBe(0);
-      expect(await exists('temp/root.pdf')).toBe(true);
+      expect(await exists(pdf)).toBe(true);
+    });
+  });
+  describe(`version 3.0`, () => {
+    const version: OtVersion = '3.0';
+    const out = `temp/dita-ot-${version}/out`;
+    const pdf = `${out}/root.pdf`;
+    jest.setTimeout(30000);
+    beforeAll(async () => {
+      // await getDitaOt(version);
+      await generatePlugin(version);
+      await getProcess(version, '--uninstall', 'x').catch((err) => err);
+      await getProcess(version, '--install', `temp/out-${version}.zip`);
+      if (await exists(pdf)) {
+        await unlink(pdf);
+      }
+    });
+    it('should generate PDF', async () => {
+      const exitCode = await getProcess(
+        version,
+        '-i',
+        'test/root.ditamap',
+        '-o',
+        out,
+        '-f',
+        'x'
+      );
+      expect(exitCode).toBe(0);
+      expect(await exists(pdf)).toBe(true);
+    });
+  });
+  describe(`version 3.5`, () => {
+    const version: OtVersion = '3.5';
+    const out = `temp/dita-ot-${version}/out`;
+    const pdf = `${out}/root.pdf`;
+    jest.setTimeout(30000);
+    beforeAll(async () => {
+      // await getDitaOt(version);
+      await generatePlugin(version);
+      await getProcess(version, 'uninstall', 'x').catch((err) => err);
+      await getProcess(version, 'install', `temp/out-${version}.zip`);
+      if (await exists(pdf)) {
+        await unlink(pdf);
+      }
+    });
+    it('should generate PDF', async () => {
+      const exitCode = await getProcess(
+        version,
+        '-i',
+        'test/root.ditamap',
+        '-o',
+        out,
+        '-f',
+        'x'
+      );
+      expect(exitCode).toBe(0);
+      expect(await exists(pdf)).toBe(true);
     });
   });
   describe(`version 3.6`, () => {
-    const version: OtVersion = '3.5';
+    const version: OtVersion = '3.6';
+    const out = `temp/dita-ot-${version}/out`;
+    const pdf = `${out}/root.pdf`;
     jest.setTimeout(30000);
     beforeAll(async () => {
+      // await getDitaOt(version);
       await generatePlugin(version);
-      await getProcess(version, 'uninstall', 'x');
+      await getProcess(version, 'uninstall', 'x').catch((err) => err);
       await getProcess(version, 'install', `temp/out-${version}.zip`);
+      if (await exists(pdf)) {
+        await unlink(pdf);
+      }
     });
     it('should generate PDF', async () => {
       const exitCode = await getProcess(
@@ -77,12 +164,12 @@ describe('DITA-OT', () => {
         '-i',
         'test/root.ditamap',
         '-o',
-        `temp/dita-ot-${version}/out`,
+        out,
         '-f',
         'x'
       );
       expect(exitCode).toBe(0);
-      expect(await exists('temp/root.pdf')).toBe(true);
+      expect(await exists(pdf)).toBe(true);
     });
   });
 });

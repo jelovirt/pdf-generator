@@ -539,7 +539,7 @@ export default class Generator {
       });
     }
     SubElement(root, 'require', { plugin: 'org.dita.pdf2' });
-    if (this.conf.ot_version === '3.5') {
+    if (this.conf.ot_version === '3.5' || this.conf.ot_version === '3.6') {
       SubElement(root, 'transtype', {
         name: this.transtype ?? undefined,
         extends: 'pdf',

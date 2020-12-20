@@ -21,7 +21,9 @@ export default function Download() {
         <a
           target="_blank"
           href={
-            values.ot_version === '3.5'
+            values.ot_version === '3.6'
+              ? 'https://www.dita-ot.org/3.6/topics/plugins-installing.html'
+              : values.ot_version === '3.5'
               ? 'https://www.dita-ot.org/3.5/topics/plugins-installing.html'
               : values.ot_version === '3.0'
               ? 'https://www.dita-ot.org/3.0/topics/plugins-installing.html'
