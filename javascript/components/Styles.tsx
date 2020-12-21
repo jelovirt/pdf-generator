@@ -96,13 +96,125 @@ const propertySelections = {
   ],
 };
 
+const convertBorder = (border: string = 'none') => {
+  switch (border) {
+    case 'none':
+      return {
+        'border-before-style': 'none',
+        'border-before-width': '1pt',
+        'border-before-color': 'black',
+        'border-end-style': 'none',
+        'border-end-width': '1pt',
+        'border-end-color': 'black',
+        'border-after-style': 'none',
+        'border-after-width': '1pt',
+        'border-after-color': 'black',
+        'border-start-style': 'none',
+        'border-start-width': '1pt',
+        'border-start-color': 'black',
+      };
+    case 'all':
+      return {
+        'border-before-style': 'solid',
+        'border-before-width': '1pt',
+        'border-before-color': 'black',
+        'border-end-style': 'solid',
+        'border-end-width': '1pt',
+        'border-end-color': 'black',
+        'border-after-style': 'solid',
+        'border-after-width': '1pt',
+        'border-after-color': 'black',
+        'border-start-style': 'solid',
+        'border-start-width': '1pt',
+        'border-start-color': 'black',
+      };
+    case 'top':
+      return {
+        'border-before-style': 'solid',
+        'border-before-width': '1pt',
+        'border-before-color': 'black',
+        'border-end-style': 'none',
+        'border-end-width': '1pt',
+        'border-end-color': 'black',
+        'border-after-style': 'none',
+        'border-after-width': '1pt',
+        'border-after-color': 'black',
+        'border-start-style': 'none',
+        'border-start-width': '1pt',
+        'border-start-color': 'black',
+      };
+    case 'bottom':
+      return {
+        'border-before-style': 'none',
+        'border-before-width': '1pt',
+        'border-before-color': 'black',
+        'border-end-style': 'none',
+        'border-end-width': '1pt',
+        'border-end-color': 'black',
+        'border-after-style': 'solid',
+        'border-after-width': '1pt',
+        'border-after-color': 'black',
+        'border-start-style': 'none',
+        'border-start-width': '1pt',
+        'border-start-color': 'black',
+      };
+    case 'topbot':
+      return {
+        'border-before-style': 'solid',
+        'border-before-width': '1pt',
+        'border-before-color': 'black',
+        'border-end-style': 'none',
+        'border-end-width': '1pt',
+        'border-end-color': 'black',
+        'border-after-style': 'solid',
+        'border-after-width': '1pt',
+        'border-after-color': 'black',
+        'border-start-style': 'none',
+        'border-start-width': '1pt',
+        'border-start-color': 'black',
+      };
+    case 'sides':
+      return {
+        'border-before-style': 'none',
+        'border-before-width': '1pt',
+        'border-before-color': 'black',
+        'border-end-style': 'solid',
+        'border-end-width': '1pt',
+        'border-end-color': 'black',
+        'border-after-style': 'none',
+        'border-after-width': '1pt',
+        'border-after-color': 'black',
+        'border-start-style': 'solid',
+        'border-start-width': '1pt',
+        'border-start-color': 'black',
+      };
+  }
+};
+
+const reducer = (prevState: Values) => ({
+  ...prevState,
+  style: {
+    ...prevState.style,
+    [prevState.style_selector]: {
+      ...prevState.style[prevState.style_selector],
+      ...convertBorder(prevState.style[prevState.style_selector].border),
+    },
+  },
+});
+
 export default function Styles() {
   const {
     values,
+    setValues,
     setFieldValue,
     handleChange,
     validateOnChange,
   } = useFormikContext<Values>();
+
+  React.useEffect(() => {
+    setValues(reducer, false);
+  }, [values.style[values.style_selector].border]);
+
   const handleListChange = (field: Property) => (e: ChangeEvent) => {
     const value = (e.currentTarget as HTMLSelectElement).value;
     handleChange(e);

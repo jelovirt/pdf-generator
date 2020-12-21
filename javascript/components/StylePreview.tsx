@@ -123,27 +123,27 @@ function previewSpaceHandler(
               break;
           }
           break;
-        case 'border':
-          switch (v) {
-            case 'none':
-              return [['border', 'none']];
-            case 'all':
-              return [['border', `solid black calc(${v} * ${factor})`]];
-            case 'top':
-              return [['borderTop', `solid black calc(${v} * ${factor})`]];
-            case 'bottom':
-              return [['borderBottom', `solid black calc(${v} * ${factor})`]];
-            case 'topbot':
-              return [
-                ['borderTop', `solid black calc(${v} * ${factor})`],
-                ['borderBottom', `solid black calc(${v} * ${factor})`],
-              ];
-            case 'sides':
-              return [
-                ['borderRight', `solid black calc(${v} * ${factor})`],
-                ['borderLeft', `solid black calc(${v} * ${factor})`],
-              ];
-          }
+        // case 'border':
+        //   switch (v) {
+        //     case 'none':
+        //       return [['border', 'none']];
+        //     case 'all':
+        //       return [['border', `solid black calc(1pt * ${factor})`]];
+        //     case 'top':
+        //       return [['borderTop', `solid black calc(1pt * ${factor})`]];
+        //     case 'bottom':
+        //       return [['borderBottom', `solid black calc(1pt * ${factor})`]];
+        //     case 'topbot':
+        //       return [
+        //         ['borderTop', `solid black calc(1pt * ${factor})`],
+        //         ['borderBottom', `solid black calc(1pt * ${factor})`],
+        //       ];
+        //     case 'sides':
+        //       return [
+        //         ['borderRight', `solid black calc(1pt * ${factor})`],
+        //         ['borderLeft', `solid black calc(1pt * ${factor})`],
+        //       ];
+        //   }
         case 'border-before-style':
         case 'border-before-width':
         case 'border-before-color':
