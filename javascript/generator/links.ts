@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { Comment, Element, SubElement } from './elementtree';
 import { copy_xml, xsl } from './utils';
 import Generator from './index';
+import { FoProperty } from '../lib/styles';
 
 export function generate_custom(root: Element, conf: Generator) {
   const link_raw = `
@@ -87,7 +88,7 @@ export function generate_custom_attr(root: Element, conf: Generator) {
     root,
     'body',
     'link__shortdesc',
-    ['space-after']
+    [FoProperty.SPACE_AFTER]
   );
   SubElement(linkShortdescAttrs, xsl('attribute'), {
     name: 'start-indent',

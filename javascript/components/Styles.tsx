@@ -4,6 +4,8 @@ import { Values } from '../app/Model';
 import StylePreview from './StylePreview';
 import {
   convertBorder,
+  CustomProperty,
+  FoProperty,
   Property,
   Style,
   StyleName,
@@ -270,7 +272,7 @@ export default function Styles() {
                 </label>
                 <Field
                   component="select"
-                  {...fieldProps('font-family')}
+                  {...fieldProps(FoProperty.FONT_FAMILY)}
                   title="Font family"
                   aria-label="Font family"
                 >
@@ -285,7 +287,7 @@ export default function Styles() {
                 </label>
                 <Field
                   component="select"
-                  {...fieldProps('font-size')}
+                  {...fieldProps(FoProperty.FONT_SIZE)}
                   title="Font size"
                   aria-label="Font size"
                 >
@@ -312,7 +314,11 @@ export default function Styles() {
                         'normal'
                           ? 'bold'
                           : 'normal';
-                      cascade(values.style_selector, 'font-weight', value);
+                      cascade(
+                        values.style_selector,
+                        FoProperty.FONT_WEIGHT,
+                        value
+                      );
                       setFieldValue(
                         `style.${values.style_selector}.font-weight`,
                         value
@@ -340,7 +346,11 @@ export default function Styles() {
                         'normal'
                           ? 'italic'
                           : 'normal';
-                      cascade(values.style_selector, 'font-style', value);
+                      cascade(
+                        values.style_selector,
+                        FoProperty.FONT_STYLE,
+                        value
+                      );
                       setFieldValue(
                         `style.${values.style_selector}.font-style`,
                         value
@@ -369,7 +379,11 @@ export default function Styles() {
                         ] === 'none'
                           ? 'underline'
                           : 'none';
-                      cascade(values.style_selector, 'text-decoration', value);
+                      cascade(
+                        values.style_selector,
+                        FoProperty.TEXT_DECORATION,
+                        value
+                      );
                       setFieldValue(
                         `style.${values.style_selector}.text-decoration`,
                         value
@@ -390,7 +404,7 @@ export default function Styles() {
                 <Field
                   component="select"
                   name={`style.${values.style_selector}.color-list`}
-                  onChange={handleListChange('color')}
+                  onChange={handleListChange(FoProperty.COLOR)}
                   title="Color"
                 >
                   {propertySelections['color'].map(({ value, label }) => (
@@ -402,7 +416,11 @@ export default function Styles() {
                 </Field>{' '}
                 {values.style[values.style_selector]['color-list'] ===
                   '#other' && (
-                  <Field type="text" {...fieldProps('color')} size={7} />
+                  <Field
+                    type="text"
+                    {...fieldProps(FoProperty.COLOR)}
+                    size={7}
+                  />
                 )}
               </td>
             </tr>
@@ -415,7 +433,7 @@ export default function Styles() {
                 <Field
                   component="select"
                   name={`style.${values.style_selector}.background-color-list`}
-                  onChange={handleListChange('background-color')}
+                  onChange={handleListChange(FoProperty.BACKGROUND_COLOR)}
                   title="Background color"
                 >
                   {propertySelections['background-color'].map(
@@ -432,7 +450,7 @@ export default function Styles() {
                 ] === '#other' && (
                   <Field
                     type="text"
-                    {...fieldProps('background-color')}
+                    {...fieldProps(FoProperty.BACKGROUND_COLOR)}
                     size={7}
                   />
                 )}
@@ -483,7 +501,7 @@ export default function Styles() {
                       onClick={() => {
                         cascade(
                           values.style_selector,
-                          'text-align',
+                          FoProperty.TEXT_ALIGN,
                           conf.value
                         );
                         setFieldValue(
@@ -515,10 +533,12 @@ export default function Styles() {
                       </th>
                       <td>
                         <Field
-                          {...fieldProps('start-indent')}
+                          {...fieldProps(FoProperty.START_INDENT)}
                           // name={`style.${values.style_selector}.start-indent`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                          onKeyDown={handleLengthKeydown('start-indent')}
+                          onKeyDown={handleLengthKeydown(
+                            FoProperty.START_INDENT
+                          )}
                           size={5}
                           className="length-value"
                           title="Before text indent"
@@ -536,7 +556,7 @@ export default function Styles() {
                         <Field
                           name={`style.${values.style_selector}.end-indent`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                          onKeyDown={handleLengthKeydown('end-indent')}
+                          onKeyDown={handleLengthKeydown(FoProperty.END_INDENT)}
                           size={5}
                           className="length-value"
                           title="After text indent"
@@ -592,7 +612,10 @@ export default function Styles() {
                     Symbol scope
                   </label>
                   :{' '}
-                  <Field component="select" {...fieldProps('symbol-scope')}>
+                  <Field
+                    component="select"
+                    {...fieldProps(CustomProperty.SYMBOL_SCOPE)}
+                  >
                     <option value="always">always</option>
                     <option value="chapter">chapter</option>
                     <option value="never">never</option>
@@ -616,7 +639,9 @@ export default function Styles() {
                         <Field
                           name={`style.${values.style_selector}.space-before`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                          onKeyDown={handleLengthKeydown('space-before')}
+                          onKeyDown={handleLengthKeydown(
+                            FoProperty.SPACE_BEFORE
+                          )}
                           size={5}
                           className="length-value"
                         />
@@ -633,7 +658,9 @@ export default function Styles() {
                         <Field
                           name={`style.${values.style_selector}.space-after`}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                          onKeyDown={handleLengthKeydown('space-after')}
+                          onKeyDown={handleLengthKeydown(
+                            FoProperty.SPACE_AFTER
+                          )}
                           size={5}
                           className="length-value"
                         />
@@ -658,7 +685,7 @@ export default function Styles() {
                         <Field
                           component="select"
                           name={`style.${values.style_selector}.line-height-list`}
-                          onChange={handleListChange('line-height')}
+                          onChange={handleListChange(FoProperty.LINE_HEIGHT)}
                         >
                           {propertySelections['line-height'].map(
                             ({ value, label }) => (
@@ -675,9 +702,11 @@ export default function Styles() {
                       ] === '#other' && (
                         <td>
                           <Field
-                            {...fieldProps('line-height')}
+                            {...fieldProps(FoProperty.LINE_HEIGHT)}
                             pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)?"
-                            onKeyDown={handleLengthKeydown('line-height')}
+                            onKeyDown={handleLengthKeydown(
+                              FoProperty.LINE_HEIGHT
+                            )}
                             size={5}
                             className="length-or-number-value"
                           />
@@ -702,9 +731,11 @@ export default function Styles() {
                       </th>
                       <td>
                         <Field
-                          {...fieldProps('padding-left')}
+                          {...fieldProps(FoProperty.PADDING_LEFT)}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                          onKeyDown={handleLengthKeydown('padding-left')}
+                          onKeyDown={handleLengthKeydown(
+                            FoProperty.PADDING_LEFT
+                          )}
                           size={5}
                           className="length-value"
                         />
@@ -719,9 +750,11 @@ export default function Styles() {
                       </th>
                       <td>
                         <Field
-                          {...fieldProps('padding-right')}
+                          {...fieldProps(FoProperty.PADDING_RIGHT)}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                          onKeyDown={handleLengthKeydown('padding-right')}
+                          onKeyDown={handleLengthKeydown(
+                            FoProperty.PADDING_RIGHT
+                          )}
                           size={5}
                           className="length-value"
                         />
@@ -736,9 +769,11 @@ export default function Styles() {
                       </th>
                       <td>
                         <Field
-                          {...fieldProps('padding-top')}
+                          {...fieldProps(FoProperty.PADDING_TOP)}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                          onKeyDown={handleLengthKeydown('padding-top')}
+                          onKeyDown={handleLengthKeydown(
+                            FoProperty.PADDING_TOP
+                          )}
                           size={5}
                           className="length-value"
                         />
@@ -753,9 +788,11 @@ export default function Styles() {
                       </th>
                       <td>
                         <Field
-                          {...fieldProps('padding-bottom')}
+                          {...fieldProps(FoProperty.PADDING_BOTTOM)}
                           pattern="(\d+(\.\d+)?|\.\d+)(pt|mm|in|pc|cm|em)"
-                          onKeyDown={handleLengthKeydown('padding-bottom')}
+                          onKeyDown={handleLengthKeydown(
+                            FoProperty.PADDING_BOTTOM
+                          )}
                           size={5}
                           className="length-value"
                         />

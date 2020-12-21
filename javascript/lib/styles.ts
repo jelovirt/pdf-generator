@@ -429,18 +429,6 @@ const base: Partial<Record<Property, Style>> = {
       { default: value, inherit: undefined },
     ])
   ),
-  // 'border-before-style': { default: 'none', inherit: undefined },
-  // 'border-before-width': { default: '1pt', inherit: undefined },
-  // 'border-before-color': { default: 'black', inherit: undefined },
-  // 'border-end-style': { default: 'none', inherit: undefined },
-  // 'border-end-width': { default: '1pt', inherit: undefined },
-  // 'border-end-color': { default: 'black', inherit: undefined },
-  // 'border-after-style': { default: 'none', inherit: undefined },
-  // 'border-after-width': { default: '1pt', inherit: undefined },
-  // 'border-after-color': { default: 'black', inherit: undefined },
-  // 'border-start-style': { default: 'none', inherit: undefined },
-  // 'border-start-width': { default: '1pt', inherit: undefined },
-  // 'border-start-color': { default: 'black', inherit: undefined },
 };
 
 export const styles: StyleConfiguration = {
@@ -517,7 +505,7 @@ export const styles: StyleConfiguration = {
   },
   topic_topic_topic_topic: {
     ...base,
-    'font-family': { default: 'Times New Roman', inherit: 'body' },
+    'font-family': { default: 'Helvetica', inherit: 'body' },
     'font-size': { default: '10pt', inherit: 'body' },
     color: { default: 'black', inherit: 'body' },
     'font-weight': { default: 'bold', inherit: undefined },
@@ -539,8 +527,8 @@ export const styles: StyleConfiguration = {
     'font-weight': { default: 'bold', inherit: undefined },
     'font-style': { default: undefined, inherit: 'body' },
     'text-decoration': { default: undefined, inherit: 'body' },
-    'space-before': { default: '6pt', inherit: 'body' },
-    'space-after': { default: '6pt', inherit: 'body' },
+    'space-before': { default: undefined, inherit: 'body' },
+    'space-after': { default: undefined, inherit: 'body' },
     'text-align': { default: undefined, inherit: 'body' },
     'start-indent': { default: undefined, inherit: 'body' },
     'line-height': { default: undefined, inherit: 'body' },
@@ -583,7 +571,7 @@ export const styles: StyleConfiguration = {
     'font-weight': { default: 'bold', inherit: undefined },
     'font-style': { default: undefined, inherit: 'body' },
     'text-decoration': { default: undefined, inherit: 'body' },
-    'space-before': { default: '15pt', inherit: undefined },
+    'space-before': { default: undefined, inherit: 'body' },
     'space-after': { default: undefined, inherit: 'body' },
     'text-align': { default: undefined, inherit: 'body' },
     'start-indent': { default: undefined, inherit: 'body' },

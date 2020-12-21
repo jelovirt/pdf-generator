@@ -1,9 +1,10 @@
 'use strict';
 
 import _ from 'lodash';
-import { Comment, Element, SubElement } from './elementtree';
-import { fo, xsl, copy_xml } from './utils';
+import { Element, SubElement } from './elementtree';
+import { copy_xml, xsl } from './utils';
 import Generator from './index';
+import { FoProperty } from '../lib/styles';
 
 export function generate_custom(root: Element, conf: Generator) {
   const chapter_page_number_raw = `
@@ -172,9 +173,9 @@ export function generate_custom_attr(root: Element, conf: Generator) {
   }
   // font family
   const foRootAttrSet = conf.attribute_set(root, 'body', '__fo__root', [
-    'font-family',
-    'color',
-    'text-align',
+    FoProperty.FONT_FAMILY,
+    FoProperty.COLOR,
+    FoProperty.TEXT_ALIGN,
   ]);
   SubElement(foRootAttrSet, xsl('attribute'), {
     name: 'id',
@@ -192,7 +193,7 @@ export function generate_custom_attr(root: Element, conf: Generator) {
       root,
       'body',
       n,
-      _.difference(conf.properties, ['start-indent'])
+      _.difference(conf.properties, [FoProperty.START_INDENT])
     );
   });
 }

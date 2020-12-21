@@ -30,17 +30,22 @@ export default function Header() {
             </thead>
             <tbody>
               <tr>
-                <th className="even">Even header:</th>
-                <th>Odd header:</th>
+                {values.mirror_page_margins && (
+                  <th className="even">Even header:</th>
+                )}
+                <th>{values.mirror_page_margins ? 'Odd header' : 'Header'}:</th>
               </tr>
               <tr>
-                <td className="even">
-                  <TagContainer
-                    fields={values.header.even}
-                    setFields={(fields) => setFieldValue('header.even', fields)}
-                  />
-                  {/*<div id="even-header" ref={drop}></div>*/}
-                </td>
+                {values.mirror_page_margins && (
+                  <td className="even">
+                    <TagContainer
+                      fields={values.header.even}
+                      setFields={(fields) =>
+                        setFieldValue('header.even', fields)
+                      }
+                    />
+                  </td>
+                )}
                 <td>
                   <TagContainer
                     fields={values.header.odd}
@@ -49,16 +54,22 @@ export default function Header() {
                 </td>
               </tr>
               <tr>
-                <th className="even">Even footer:</th>
-                <th>Odd footer:</th>
+                {values.mirror_page_margins && (
+                  <th className="even">Even footer:</th>
+                )}
+                <th>{values.mirror_page_margins ? 'Odd footer' : 'Footer'}:</th>
               </tr>
               <tr>
-                <td className="even">
-                  <TagContainer
-                    fields={values.footer.even}
-                    setFields={(fields) => setFieldValue('footer.even', fields)}
-                  />
-                </td>
+                {values.mirror_page_margins && (
+                  <td className="even">
+                    <TagContainer
+                      fields={values.footer.even}
+                      setFields={(fields) =>
+                        setFieldValue('footer.even', fields)
+                      }
+                    />
+                  </td>
+                )}
                 <td>
                   <TagContainer
                     fields={values.footer.odd}

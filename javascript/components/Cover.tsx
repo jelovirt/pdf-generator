@@ -38,10 +38,10 @@ export default function Cover() {
           &lt;data name="cover-image"&gt; &lt;image href="cover.svg"/&gt;
           &lt;/data&gt;
         </pre>
-        <p>Or use topic as cover topic:</p>
-        <pre>
-          &lt;topicref href="cover.dita" outputclass="front-cover" toc="no"/&gt;
-        </pre>
+        {/*<p>Or use topic as cover topic:</p>*/}
+        {/*<pre>*/}
+        {/*  &lt;topicref href="cover.dita" outputclass="front-cover" toc="no"/&gt;*/}
+        {/*</pre>*/}
       </div>
     </fieldset>
   );
