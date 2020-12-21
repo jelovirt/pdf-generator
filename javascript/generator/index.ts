@@ -55,7 +55,8 @@ type TemplateName =
   | 'lists'
   | 'static-content'
   | 'layout-masters'
-  | 'pr-domain';
+  | 'pr-domain'
+  | 'topic';
 type AttrTemplateName =
   | 'basic-settings'
   | 'front-matter-attr'
@@ -66,264 +67,12 @@ type AttrTemplateName =
   | 'lists-attr'
   | 'static-content-attr'
   | 'layout-masters-attr'
-  | 'pr-domain-attr';
+  | 'pr-domain-attr'
+  | 'topic-attr';
 
 export default class Generator {
   conf: Model;
-  properties: FoProperty[] = [
-    'absolute-position',
-    'active-state',
-    'alignment-adjust',
-    'alignment-baseline',
-    'allowed-height-scale',
-    'allowed-width-scale',
-    'auto-restore',
-    'azimuth',
-    'background-attachment',
-    'background-color',
-    'background-image',
-    'background-position-horizontal',
-    'background-position-vertical',
-    'background-repeat',
-    'baseline-shift',
-    'blank-or-not-blank',
-    'block-progression-dimension',
-    'border-after-color',
-    'border-after-precedence',
-    'border-after-style',
-    'border-after-width',
-    'border-before-color',
-    'border-before-precedence',
-    'border-before-style',
-    'border-before-width',
-    'border-bottom-color',
-    'border-bottom-style',
-    'border-bottom-width',
-    'border-collapse',
-    'border-end-color',
-    'border-end-precedence',
-    'border-end-style',
-    'border-end-width',
-    'border-left-color',
-    'border-left-style',
-    'border-left-width',
-    'border-right-color',
-    'border-right-style',
-    'border-right-width',
-    'border-separation',
-    'border-start-color',
-    'border-start-precedence',
-    'border-start-style',
-    'border-start-width',
-    'border-top-color',
-    'border-top-style',
-    'border-top-width',
-    'bottom',
-    'bottom',
-    'break-after',
-    'break-before',
-    'caption-side',
-    'case-name',
-    'case-title',
-    'change-bar-class',
-    'change-bar-color',
-    'change-bar-offset',
-    'change-bar-placement',
-    'change-bar-style',
-    'change-bar-width',
-    'character',
-    'clear',
-    'clip',
-    'color',
-    'color-profile-name',
-    'column-count',
-    'column-gap',
-    'column-number',
-    'column-width',
-    'content-height',
-    'content-type',
-    'content-width',
-    'country',
-    'cue-after',
-    'cue-before',
-    'destination-placement-offset',
-    'direction',
-    'display-align',
-    'dominant-baseline',
-    'elevation',
-    'empty-cells',
-    'end-indent',
-    'ends-row',
-    'extent',
-    'external-destination',
-    'float',
-    'flow-map-name',
-    'flow-map-reference',
-    'flow-name',
-    'flow-name-reference',
-    'font-family',
-    'font-selection-strategy',
-    'font-size',
-    'font-size-adjust',
-    'font-stretch',
-    'font-style',
-    'font-variant',
-    'font-weight',
-    'force-page-count',
-    'format',
-    'glyph-orientation-horizontal',
-    'glyph-orientation-vertical',
-    'grouping-separator',
-    'grouping-size',
-    'height',
-    'hyphenate',
-    'hyphenation-character',
-    'hyphenation-keep',
-    'hyphenation-ladder-count',
-    'hyphenation-push-character-count',
-    'hyphenation-remain-character-count',
-    'id',
-    'index-class',
-    'index-key',
-    'indicate-destination',
-    'initial-page-number',
-    'inline-progression-dimension',
-    'internal-destination',
-    'intrinsic-scale-value',
-    'intrusion-displace',
-    'keep-together',
-    'keep-with-next',
-    'keep-with-previous',
-    'language',
-    'last-line-end-indent',
-    'leader-alignment',
-    'leader-length',
-    'leader-pattern',
-    'leader-pattern-width',
-    'left',
-    'left',
-    'letter-spacing',
-    'letter-value',
-    'linefeed-treatment',
-    'line-height',
-    'line-height-shift-adjustment',
-    'line-stacking-strategy',
-    'margin-bottom',
-    'margin-bottom',
-    'margin-left',
-    'margin-left',
-    'margin-right',
-    'margin-right',
-    'margin-top',
-    'margin-top',
-    'marker-class-name',
-    'master-name',
-    'master-reference',
-    'maximum-repeats',
-    'media-usage',
-    'merge-pages-across-index-key-references',
-    'merge-ranges-across-index-key-references',
-    'merge-sequential-page-numbers',
-    'number-columns-repeated',
-    'number-columns-spanned',
-    'number-rows-spanned',
-    'odd-or-even',
-    'orphans',
-    'overflow',
-    'padding-after',
-    'padding-before',
-    'padding-bottom',
-    'padding-end',
-    'padding-left',
-    'padding-right',
-    'padding-start',
-    'padding-top',
-    'page-citation-strategy',
-    'page-height',
-    'page-number-treatment',
-    'page-position',
-    'page-width',
-    'pause-after',
-    'pause-before',
-    'pitch',
-    'pitch-range',
-    'play-during',
-    'precedence',
-    'provisional-distance-between-starts',
-    'provisional-label-separation',
-    'reference-orientation',
-    'ref-id',
-    'ref-index-key',
-    'region-name',
-    'region-name-reference',
-    'relative-align',
-    'relative-position',
-    'rendering-intent',
-    'retrieve-boundary',
-    'retrieve-boundary-within-table',
-    'retrieve-class-name',
-    'retrieve-position',
-    'retrieve-position-within-table',
-    'richness',
-    'right',
-    'right',
-    'role',
-    'rule-style',
-    'rule-thickness',
-    'scale-option',
-    'scaling',
-    'scaling-method',
-    'score-spaces',
-    'script',
-    'show-destination',
-    'source-document',
-    'space-after',
-    'space-before',
-    'space-end',
-    'space-start',
-    'span',
-    'speak',
-    'speak-header',
-    'speak-numeral',
-    'speak-punctuation',
-    'speech-rate',
-    'src',
-    'start-indent',
-    'starting-state',
-    'starts-row',
-    'stress',
-    'suppress-at-line-break',
-    'switch-to',
-    'table-layout',
-    'table-omit-footer-at-break',
-    'table-omit-header-at-break',
-    'target-presentation-context',
-    'target-processing-context',
-    'target-stylesheet',
-    'text-align',
-    'text-align-last',
-    'text-altitude',
-    'text-decoration',
-    'text-depth',
-    'text-indent',
-    'text-shadow',
-    'text-transform',
-    'top',
-    'top',
-    'treat-as-word-space',
-    'unicode-bidi',
-    'visibility',
-    'voice-family',
-    'volume',
-    'white-space-collapse',
-    'white-space-treatment',
-    'widows',
-    'width',
-    'word-spacing',
-    'wrap-option',
-    'writing-mode',
-    'z-index',
-  ];
+  properties: FoProperty[] = Object.values(FoProperty);
   variable_languages: Language[] = [
     'de',
     'en',
@@ -366,7 +115,7 @@ export default class Generator {
   page_number;
   options: Options;
   transtype;
-  title_numbering;
+  // title_numbering;
 
   constructor(conf: Model) {
     this.conf = conf;
@@ -388,48 +137,48 @@ export default class Generator {
     }
     this.transtype = conf.transtype;
 
-    this.page = conf.configuration.page;
-    this.style = conf.configuration.style;
-    this.force_page_count = conf.configuration.force_page_count;
-    this.chapter_layout = conf.configuration.chapter_layout;
-    this.bookmark_style = conf.configuration.bookmark_style;
-    this.toc_maximum_level = conf.configuration.toc_maximum_level;
-    this.task_label = conf.configuration.task_label;
-    this.include_related_links = conf.configuration.include_related_links;
-    if (conf.configuration.body_column_count) {
-      this.body_column_count = conf.configuration.body_column_count;
+    this.page = conf.page;
+    this.style = conf.style;
+    this.force_page_count = conf.force_page_count;
+    this.chapter_layout = conf.chapter_layout;
+    this.bookmark_style = conf.bookmark_style;
+    this.toc_maximum_level = conf.toc_maximum_level;
+    this.task_label = conf.task_label;
+    this.include_related_links = conf.include_related_links;
+    if (conf.body_column_count) {
+      this.body_column_count = conf.body_column_count;
     }
-    if (conf.configuration.index_column_count) {
-      this.index_column_count = conf.configuration.index_column_count;
+    if (conf.index_column_count) {
+      this.index_column_count = conf.index_column_count;
     }
-    if (conf.configuration.column_gap) {
-      this.column_gap = conf.configuration.column_gap;
+    if (conf.column_gap) {
+      this.column_gap = conf.column_gap;
     }
-    this.mirror_page_margins = conf.configuration.mirror_page_margins;
+    this.mirror_page_margins = conf.mirror_page_margins;
     //__dita_gen.dl = __config["dl"]
-    this.title_numbering = conf.configuration.title_numbering;
+    // this.title_numbering = conf.title_numbering;
     //__dita_gen.table_numbering = __config["table_numbering"]
     //__dita_gen.figure_numbering = __config["figure_numbering"]
     //__dita_gen.link_pagenumber = __config["link_pagenumber"]
-    this.table_continued = conf.configuration.table_continued;
-    this.formatter = conf.configuration.formatter;
-    this.override_shell = conf.configuration.override_shell;
+    this.table_continued = conf.table_continued;
+    this.formatter = conf.formatter;
+    this.override_shell = conf.override_shell;
     //if ("cover_image" in self.request.arguments() && type(self.request.POST["cover_image"]) != unicode) {
     //  __dita_gen.cover_image = self.request.get("cover_image")
     //  __dita_gen.cover_image_name = self.request.POST["cover_image"].filename
     //}
-    if (conf.configuration.cover_image_metadata) {
-      this.cover_image_metadata = conf.configuration.cover_image_metadata;
+    if (conf.cover_image_metadata) {
+      this.cover_image_metadata = conf.cover_image_metadata;
     }
-    if (conf.configuration.cover_image_topic) {
-      this.cover_image_topic = conf.configuration.cover_image_topic;
+    if (conf.cover_image_topic) {
+      this.cover_image_topic = conf.cover_image_topic;
     }
-    this.header = conf.configuration.header;
-    this.footer = conf.configuration.footer;
-    if (conf.configuration.page_number) {
-      this.page_number = conf.configuration.page_number;
+    this.header = conf.header;
+    this.footer = conf.footer;
+    if (conf.page_number) {
+      this.page_number = conf.page_number;
     }
-    this.options = { ...conf.configuration };
+    this.options = { ...conf };
 
     register_namespace('xsl', 'http://www.w3.org/1999/XSL/Transform');
     register_namespace('fo', 'http://www.w3.org/1999/XSL/Format');
@@ -537,7 +286,7 @@ export default class Generator {
       });
     }
     SubElement(root, 'require', { plugin: 'org.dita.pdf2' });
-    if (this.conf.ot_version === '3.5') {
+    if (this.conf.ot_version === '3.5' || this.conf.ot_version === '3.6') {
       SubElement(root, 'transtype', {
         name: this.transtype ?? undefined,
         extends: 'pdf',
@@ -711,6 +460,9 @@ export default class Generator {
     if (stylesheet === 'basic-settings' || !stylesheet) {
       BasicSettings.generate_custom_attr(root, this);
     }
+    if (stylesheet === 'links-attr' || !stylesheet) {
+      Links.generate_custom_attr(root, this);
+    }
     if (stylesheet === 'lists-attr' || !stylesheet) {
       Lists.generate_custom_attr(root, this);
     }
@@ -719,6 +471,9 @@ export default class Generator {
     }
     if (stylesheet === 'static-content-attr' || !stylesheet) {
       StaticContent.generate_custom_attr(root, this);
+    }
+    if (stylesheet === 'topic-attr' || !stylesheet) {
+      Topic.generate_custom_attr(root, this);
     }
 
     // ditagen.generator.indent(root)
@@ -770,6 +525,7 @@ export default class Generator {
         'lists',
         'pr-domain',
         'static-content',
+        'topic',
       ];
       files.forEach((s) => {
         this.run_generation(
@@ -806,8 +562,10 @@ export default class Generator {
         'tables-attr',
         'toc-attr',
         'basic-settings',
+        'links-attr',
         'lists-attr',
         'pr-domain-attr',
+        'topic-attr',
       ];
       files.forEach((s) => {
         this.run_generation(

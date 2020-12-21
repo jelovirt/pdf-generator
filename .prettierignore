@@ -1,4 +1,4 @@
 .cache
 dist
-test
+temp
 node_modules

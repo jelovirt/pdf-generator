@@ -94,8 +94,10 @@ hr {
   display: none;
 }
 
-#footer {
+footer {
+  border-top: solid 1px black;
   margin-top: 28px;
+  padding: 28px 0px;
   font-size: smaller;
   text-align: right;
   clear: both;
@@ -142,7 +144,7 @@ table {
 
 #controls {
   border-bottom: 1px solid gray;
-  padding-bottom: 14px;
+  padding: 14px 0px;
   clear: both;
 }
 

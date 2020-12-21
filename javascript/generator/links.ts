@@ -1,9 +1,10 @@
 'use strict';
 
 import _ from 'lodash';
-import { Comment, Element } from './elementtree';
-import { copy_xml } from './utils';
+import { Comment, Element, SubElement } from './elementtree';
+import { copy_xml, xsl } from './utils';
 import Generator from './index';
+import { FoProperty } from '../lib/styles';
 
 export function generate_custom(root: Element, conf: Generator) {
   const link_raw = `
@@ -81,4 +82,15 @@ export function generate_custom(root: Element, conf: Generator) {
   }
 }
 
-export function generate_custom_attr(root: Element, conf: Generator) {}
+export function generate_custom_attr(root: Element, conf: Generator) {
+  // related link description
+  const linkShortdescAttrs = conf.attribute_set(
+    root,
+    'body',
+    'link__shortdesc',
+    [FoProperty.SPACE_AFTER]
+  );
+  SubElement(linkShortdescAttrs, xsl('attribute'), {
+    name: 'start-indent',
+  }).text = 'from-parent(start-indent) + 15pt';
+}

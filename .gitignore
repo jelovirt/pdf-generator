@@ -39,6 +39,7 @@ public/javascripts/app.js.map
 public/javascripts/patron.js
 public/javascripts/patron.js.map
 public/fonts
-test
 .cache
 dist
+out.zip
+temp

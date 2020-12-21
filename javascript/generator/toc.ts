@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { Comment, Element, SubElement } from './elementtree';
 import { xsl, copy_xml } from './utils';
 import Generator from './index';
+import { FoProperty } from '../lib/styles';
 
 export function generate_custom(root: Element, conf: Generator) {
   const tocRaw = `
@@ -97,16 +98,24 @@ export function generate_custom_attr(root: Element, conf: Generator) {
           <xsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>
           <xsl:choose>
             <xsl:when test="$level eq 1">
-              <xsl:value-of select="concat('${conf.style.toc_1['start-indent']} + ', $toc.text-indent)"/>
+              <xsl:value-of select="concat('${
+                conf.style.toc_1[FoProperty.START_INDENT]
+              } + ', $toc.text-indent)"/>
             </xsl:when>
             <xsl:when test="$level eq 2">
-              <xsl:value-of select="concat('${conf.style.toc_2['start-indent']} + ', $toc.text-indent)"/>
+              <xsl:value-of select="concat('${
+                conf.style.toc_2[FoProperty.START_INDENT]
+              } + ', $toc.text-indent)"/>
             </xsl:when>
             <xsl:when test="$level eq 3">
-              <xsl:value-of select="concat('${conf.style.toc_3['start-indent']} + ', $toc.text-indent)"/>
+              <xsl:value-of select="concat('${
+                conf.style.toc_3[FoProperty.START_INDENT]
+              } + ', $toc.text-indent)"/>
             </xsl:when>
             <xsl:when test="$level eq 4">
-              <xsl:value-of select="concat('${conf.style.toc_4['start-indent']} + ', $toc.text-indent)"/>
+              <xsl:value-of select="concat('${
+                conf.style.toc_4[FoProperty.START_INDENT]
+              } + ', $toc.text-indent)"/>
             </xsl:when>
           </xsl:choose>
         </xsl:attribute>
@@ -114,14 +123,16 @@ export function generate_custom_attr(root: Element, conf: Generator) {
 
       <xsl:attribute-set name="__toc__indent__booklist">
         <xsl:attribute name="start-indent">
-          <xsl:value-of select="concat('${conf.style.toc_1['start-indent']} + ', $toc.text-indent)"/>
+          <xsl:value-of select="concat('${
+            conf.style.toc_1[FoProperty.START_INDENT]
+          } + ', $toc.text-indent)"/>
         </xsl:attribute>
       </xsl:attribute-set>`;
 
   copy_xml(root, tocIndentRaw);
 
   //const indent = ET.SubElement(root, xsl('attribute-set'), {name: '__toc__indent'})
-  //const indentAttr = ET.SubElement(indent, xsl('attribute'), {name: 'start-indent'})
+  //const indentAttr = ET.SubElement(indent, xsl('attribute'), {name: FoProperty.START_INDENT})
   //
   //_.forEach(conf.style[style], (v, p) => {
   //  if (_.includes(properties, p)) {
@@ -133,28 +144,28 @@ export function generate_custom_attr(root: Element, conf: Generator) {
     root,
     'toc_1',
     '__toc__topic__content',
-    _.difference(conf.properties, ['start-indent'])
+    _.difference(conf.properties, [FoProperty.START_INDENT])
   );
   //conf.attribute_set(root, 'toc_1', '__toc__topic__content_1', _.difference(conf.properties, ["start-indent"]), '__toc__topic__content')
   conf.attribute_set(
     root,
     'toc_2',
     '__toc__topic__content_2',
-    _.difference(conf.properties, ['start-indent']),
+    _.difference(conf.properties, [FoProperty.START_INDENT]),
     '__toc__topic__content'
   );
   conf.attribute_set(
     root,
     'toc_3',
     '__toc__topic__content_3',
-    _.difference(conf.properties, ['start-indent']),
+    _.difference(conf.properties, [FoProperty.START_INDENT]),
     '__toc__topic__content'
   );
   conf.attribute_set(
     root,
     'toc_4',
     '__toc__topic__content_4',
-    _.difference(conf.properties, ['start-indent']),
+    _.difference(conf.properties, [FoProperty.START_INDENT]),
     '__toc__topic__content'
   );
 
@@ -162,36 +173,36 @@ export function generate_custom_attr(root: Element, conf: Generator) {
     root,
     'toc_1',
     '__toc__chapter__content',
-    _.difference(conf.properties, ['start-indent'])
+    _.difference(conf.properties, [FoProperty.START_INDENT])
   );
   conf.attribute_set(
     root,
     'toc_1',
     '__toc__appendix__content',
-    _.difference(conf.properties, ['start-indent'])
+    _.difference(conf.properties, [FoProperty.START_INDENT])
   );
   conf.attribute_set(
     root,
     'toc_1',
     '__toc__part__content',
-    _.difference(conf.properties, ['start-indent'])
+    _.difference(conf.properties, [FoProperty.START_INDENT])
   );
   conf.attribute_set(
     root,
     'toc_1',
     '__toc__preface__content',
-    _.difference(conf.properties, ['start-indent'])
+    _.difference(conf.properties, [FoProperty.START_INDENT])
   );
   conf.attribute_set(
     root,
     'toc_1',
     '__toc__notices__content',
-    _.difference(conf.properties, ['start-indent'])
+    _.difference(conf.properties, [FoProperty.START_INDENT])
   );
   conf.attribute_set(
     root,
     'toc_1',
     '__toc__topic__content__booklist',
-    _.difference(conf.properties, ['start-indent'])
+    _.difference(conf.properties, [FoProperty.START_INDENT])
   );
 }

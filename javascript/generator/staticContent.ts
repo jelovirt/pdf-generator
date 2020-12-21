@@ -493,8 +493,8 @@ function generateInsert(
   });
   header.forEach((field) => {
     switch (field) {
-      case 'copyright':
-        break;
+      // case 'copyright':
+      //   break;
       case 'title':
         SubElement(block, xsl('apply-templates'), {
           select: '/',

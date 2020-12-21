@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_fk3_mtg_wnb">
+  <title>Heading 1</title>
+  <topic id="xxx">
+    <title>Heading 2</title>
+    <body>
+      <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox
+        jumps over the lazy dog. The quick brown fox jumps over the lazy dog.</p>
+      <note id="table_wmm_dzv_wnb"> The quick brown fox jumps over the lazy dog. </note>
+      <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox
+        jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy
+        dog.</p>
+      <ol id="ol_ymm_dzv_wnb">
+        <li>The quick brown fox jumps over the lazy dog.<ol id="ol_zmm_dzv_wnb">
+            <li>The quick brown fox jumps over the lazy dog.<ol id="ol_anm_dzv_wnb">
+                <li>The quick brown fox jumps over the lazy dog.<ol id="ol_bnm_dzv_wnb">
+                    <li>The quick brown fox jumps over the lazy dog.</li>
+                  </ol></li>
+              </ol></li>
+          </ol></li>
+      </ol>
+      <ul id="ul_cnm_dzv_wnb">
+        <li>The quick brown fox jumps over the lazy dog.<ul id="ul_dnm_dzv_wnb">
+            <li>The quick brown fox jumps over the lazy dog.<ul id="ul_enm_dzv_wnb">
+                <li>The quick brown fox jumps over the lazy dog.<ul id="ul_fnm_dzv_wnb">
+                    <li>The quick brown fox jumps over the lazy dog.</li>
+                  </ul></li>
+              </ul></li>
+          </ul></li>
+      </ul>
+      <dl id="table_gnm_dzv_wnb">
+        <dlentry>
+          <dt>Pangram</dt>
+          <dd>The quick brown fox jumps over the lazy dog.</dd>
+        </dlentry>
+        <dlentry>
+          <dt>XXX</dt>
+          <dd>The quick brown fox jumps over the lazy dog.</dd>
+        </dlentry>
+      </dl>
+      <p>The quick brown <xref href="#topic_fk3_mtg_wnb">fox jumps</xref> over the lazy dog. The quick <xref
+          scope="external" href="https://example.com/">brown fox</xref> jumps over the lazy dog.</p>
+      <p>The quick <tm tmtype="tm">brown fox</tm> jumps over the <tm tmtype="reg">lazy dog</tm>. The quick <tm
+          tmtype="tm">brown fox</tm> jumps over the <tm tmtype="reg">lazy dog</tm>.</p>
+      <section>
+        <title>Section title</title>
+        <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox
+          jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy
+          dog.</p>
+      </section>
+
+      <example>
+        <title>Example title</title>
+        <p>Example content</p>
+      </example>
+      <p></p>
+      
+    </body>
+    <topic id="d3">
+      <title>Heading 3</title>
+      <body>
+        <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox
+          jumps over the lazy dog. The quick brown fox jumps over the lazy dog.</p>
+        
+      </body>
+      <topic id="d4">
+        <title>Heading 4</title>
+        <body>
+          <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox
+            jumps over the lazy dog. The quick brown fox jumps over the lazy dog.</p>
+          <pre>The quick brown fox jumps over the lazy dog.</pre>
+          <codeblock>(defun factorial (n)
+(if (&lt;= n 1)
+  1
+  (* n (factorial (- n 1)))))
+</codeblock>
+          <table id="table_hnm_dzv_wnb">
+            <title>Table caption</title>
+            <tgroup cols="2">
+              <colspec colnum="1" colname="col1"/>
+              <colspec colnum="2" colname="col2"/>
+              <tbody>
+                <row>
+                  <entry>Dog</entry>
+                  <entry>lazy</entry>
+                </row>
+                <row>
+                  <entry>Fox</entry>
+                  <entry>quick, brown</entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+          <fig>
+            <title>Figure caption</title>
+            <image href="http://localhost:1234/figure.a9a0fbd6.png" id="image_inm_dzv_wnb"/>
+          </fig>
+        </body>
+      </topic>
+    </topic>
+  </topic>
+</topic>

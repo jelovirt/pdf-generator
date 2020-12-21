@@ -20,7 +20,7 @@ export default function PdfPageController() {
   window.store = model;
 
   const view = PdfPageView();
-  $('main').html(view.$element);
+  $('main#content').html(view.$element);
 
   WizardController(model, [
     [
