@@ -2,7 +2,13 @@ import { Field, useFormikContext } from 'formik';
 import React, { ChangeEvent } from 'react';
 import { Values } from '../app/Model';
 import StylePreview from './StylePreview';
-import { Property, Style, StyleName, styles } from '../lib/styles';
+import {
+  convertBorder,
+  Property,
+  Style,
+  StyleName,
+  styles,
+} from '../lib/styles';
 import { nextValue } from './common';
 
 const propertySelections = {
@@ -94,101 +100,6 @@ const propertySelections = {
     { value: 'Verdana', label: 'Verdana' },
     { value: 'Webdings', label: 'Webdings' },
   ],
-};
-
-const convertBorder = (border: string = 'none') => {
-  switch (border) {
-    case 'none':
-      return {
-        'border-before-style': 'none',
-        'border-before-width': '1pt',
-        'border-before-color': 'black',
-        'border-end-style': 'none',
-        'border-end-width': '1pt',
-        'border-end-color': 'black',
-        'border-after-style': 'none',
-        'border-after-width': '1pt',
-        'border-after-color': 'black',
-        'border-start-style': 'none',
-        'border-start-width': '1pt',
-        'border-start-color': 'black',
-      };
-    case 'all':
-      return {
-        'border-before-style': 'solid',
-        'border-before-width': '1pt',
-        'border-before-color': 'black',
-        'border-end-style': 'solid',
-        'border-end-width': '1pt',
-        'border-end-color': 'black',
-        'border-after-style': 'solid',
-        'border-after-width': '1pt',
-        'border-after-color': 'black',
-        'border-start-style': 'solid',
-        'border-start-width': '1pt',
-        'border-start-color': 'black',
-      };
-    case 'top':
-      return {
-        'border-before-style': 'solid',
-        'border-before-width': '1pt',
-        'border-before-color': 'black',
-        'border-end-style': 'none',
-        'border-end-width': '1pt',
-        'border-end-color': 'black',
-        'border-after-style': 'none',
-        'border-after-width': '1pt',
-        'border-after-color': 'black',
-        'border-start-style': 'none',
-        'border-start-width': '1pt',
-        'border-start-color': 'black',
-      };
-    case 'bottom':
-      return {
-        'border-before-style': 'none',
-        'border-before-width': '1pt',
-        'border-before-color': 'black',
-        'border-end-style': 'none',
-        'border-end-width': '1pt',
-        'border-end-color': 'black',
-        'border-after-style': 'solid',
-        'border-after-width': '1pt',
-        'border-after-color': 'black',
-        'border-start-style': 'none',
-        'border-start-width': '1pt',
-        'border-start-color': 'black',
-      };
-    case 'topbot':
-      return {
-        'border-before-style': 'solid',
-        'border-before-width': '1pt',
-        'border-before-color': 'black',
-        'border-end-style': 'none',
-        'border-end-width': '1pt',
-        'border-end-color': 'black',
-        'border-after-style': 'solid',
-        'border-after-width': '1pt',
-        'border-after-color': 'black',
-        'border-start-style': 'none',
-        'border-start-width': '1pt',
-        'border-start-color': 'black',
-      };
-    case 'sides':
-      return {
-        'border-before-style': 'none',
-        'border-before-width': '1pt',
-        'border-before-color': 'black',
-        'border-end-style': 'solid',
-        'border-end-width': '1pt',
-        'border-end-color': 'black',
-        'border-after-style': 'none',
-        'border-after-width': '1pt',
-        'border-after-color': 'black',
-        'border-start-style': 'solid',
-        'border-start-width': '1pt',
-        'border-start-color': 'black',
-      };
-  }
 };
 
 const reducer = (prevState: Values) => ({
