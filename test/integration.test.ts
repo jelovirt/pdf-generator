@@ -4,8 +4,8 @@ import child_process from 'child_process';
 // import { https } from 'follow-redirects';
 import JSZip from 'jszip';
 import { unzip } from './utils';
-import { getInitStore, OtVersion } from '../javascript/app/Model';
-import Generator from '../javascript/generator/index';
+import { getInitStore, OtVersion } from '../src/generator/Model';
+import Generator from '../src/generator/index';
 
 const exists = promisify(fs.exists);
 const readFile = promisify(fs.readFile);
