@@ -366,6 +366,8 @@ export default class Generator {
     }
     if (stylesheet === 'commons' || !stylesheet) {
       Commons.generate_custom(root, this);
+    }
+    if (stylesheet === 'topic' || !stylesheet) {
       Topic.generate_custom(root, this);
     }
     if (stylesheet === 'links' || !stylesheet) {
@@ -446,7 +448,6 @@ export default class Generator {
 
     if (stylesheet === 'commons-attr' || !stylesheet) {
       Commons.generate_custom_attr(root, this);
-      Topic.generate_custom_attr(root, this);
     }
     if (stylesheet === 'tables-attr' || !stylesheet) {
       Tables.generate_custom_attr(root, this);

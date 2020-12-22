@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="xxx">
+  <title>Heading 2</title>
+  <body>
+    <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox
+      jumps over the lazy dog. The quick brown fox jumps over the lazy dog.</p>
+    <note id="table_wmm_dzv_wnb"> The quick brown fox jumps over the lazy dog. </note>
+    <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox
+      jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy
+      dog.</p>
+    <ol id="ol_ymm_dzv_wnb">
+      <li>The quick brown fox jumps over the lazy dog.<ol id="ol_zmm_dzv_wnb">
+          <li>The quick brown fox jumps over the lazy dog.<ol id="ol_anm_dzv_wnb">
+              <li>The quick brown fox jumps over the lazy dog.<ol id="ol_bnm_dzv_wnb">
+                  <li>The quick brown fox jumps over the lazy dog.</li>
+                </ol></li>
+            </ol></li>
+        </ol></li>
+    </ol>
+    <ul id="ul_cnm_dzv_wnb">
+      <li>The quick brown fox jumps over the lazy dog.<ul id="ul_dnm_dzv_wnb">
+          <li>The quick brown fox jumps over the lazy dog.<ul id="ul_enm_dzv_wnb">
+              <li>The quick brown fox jumps over the lazy dog.<ul id="ul_fnm_dzv_wnb">
+                  <li>The quick brown fox jumps over the lazy dog.</li>
+                </ul></li>
+            </ul></li>
+        </ul></li>
+    </ul>
+    <dl id="table_gnm_dzv_wnb">
+      <dlentry>
+        <dt>Pangram</dt>
+        <dd>The quick brown fox jumps over the lazy dog.</dd>
+      </dlentry>
+      <dlentry>
+        <dt>XXX</dt>
+        <dd>The quick brown fox jumps over the lazy dog.</dd>
+      </dlentry>
+    </dl>
+    <p>The quick brown <xref href="#topic_fk3_mtg_wnb">fox jumps</xref> over the lazy dog. The quick <xref
+        scope="external" href="https://example.com/">brown fox</xref> jumps over the lazy dog.</p>
+    <p>The quick <tm tmtype="tm">brown fox</tm> jumps over the <tm tmtype="reg">lazy dog</tm>. The quick <tm
+        tmtype="tm">brown fox</tm> jumps over the <tm tmtype="reg">lazy dog</tm>.</p>
+    <section>
+      <title>Section title</title>
+      <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox
+        jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy
+        dog.</p>
+    </section>
+
+    <example>
+      <title>Example title</title>
+      <p>Example content</p>
+    </example>
+    <p></p>
+
+  </body>
+</topic>

@@ -91,14 +91,9 @@ export function generate_custom(root: Element, conf: Generator) {
   });
   SubElement(root, xsl('variable'), {
     name: 'e:number-levels',
-    select:
-      '(' +
-      _(number_levels)
-        .map((l) => {
-          return l.toString().toLowerCase() + '()';
-        })
-        .join(', ') +
-      ')',
+    select: `(${number_levels
+      .map((l) => `${l.toString().toLowerCase()}()`)
+      .join(', ')})`,
   });
   copy_xml(root, get_title_raw);
 

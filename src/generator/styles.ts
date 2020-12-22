@@ -485,7 +485,7 @@ export const styles: StyleConfiguration = {
     'padding-left': { default: '0pt', inherit: undefined },
     'line-height': { default: undefined, inherit: 'body' },
     // custom
-    'title-numbering': { default: false, inherit: undefined },
+    'title-numbering': { default: true, inherit: undefined },
   },
   topic_topic_topic: {
     ...base,
@@ -501,7 +501,7 @@ export const styles: StyleConfiguration = {
     'start-indent': { default: '0pt', inherit: undefined },
     'line-height': { default: undefined, inherit: 'body' },
     // custom
-    'title-numbering': { default: false, inherit: undefined },
+    'title-numbering': { default: true, inherit: undefined },
   },
   topic_topic_topic_topic: {
     ...base,
@@ -514,10 +514,10 @@ export const styles: StyleConfiguration = {
     'space-before': { default: '12pt', inherit: undefined },
     'space-after': { default: '0pt', inherit: undefined },
     'text-align': { default: 'start', inherit: undefined },
-    'start-indent': { default: undefined, inherit: 'body' },
+    'start-indent': { default: '0pt', inherit: 'body' },
     'line-height': { default: undefined, inherit: 'body' },
     // custom
-    'title-numbering': { default: false, inherit: undefined },
+    'title-numbering': { default: true, inherit: undefined },
   },
   section: {
     ...base,

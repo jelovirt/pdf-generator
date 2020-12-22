@@ -2,5 +2,11 @@
 <!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN" "map.dtd">
 <map>
   <title>Map</title>
-  <topicref href="topic.dita"/>
+  <topicref href="topic.dita">
+    <topicref href="topic_topic.dita">
+      <topicref href="topic_topic_topic.dita">
+        <topicref href="topic_topic_topic_topic.dita"/>
+      </topicref>
+    </topicref>
+  </topicref>
 </map>

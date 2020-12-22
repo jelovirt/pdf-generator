@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="d4">
+  <title>Heading 4</title>
+  <body>
+    <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox
+      jumps over the lazy dog. The quick brown fox jumps over the lazy dog.</p>
+    <pre>The quick brown fox jumps over the lazy dog.</pre>
+    <codeblock>(defun factorial (n)
+(if (&lt;= n 1)
+  1
+  (* n (factorial (- n 1)))))
+</codeblock>
+    <table id="table_hnm_dzv_wnb">
+      <title>Table caption</title>
+      <tgroup cols="2">
+        <colspec colnum="1" colname="col1"/>
+        <colspec colnum="2" colname="col2"/>
+        <tbody>
+          <row>
+            <entry>Dog</entry>
+            <entry>lazy</entry>
+          </row>
+          <row>
+            <entry>Fox</entry>
+            <entry>quick, brown</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+    <fig>
+      <title>Figure caption</title>
+      <image href="http://localhost:1234/figure.a9a0fbd6.png" id="image_inm_dzv_wnb"/>
+    </fig>
+  </body>
+</topic>

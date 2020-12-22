@@ -85,6 +85,11 @@ export default function generate(conf: Generator) {
   }
   if (conf.ot_version.version === '3.5' || conf.ot_version.version === '3.6') {
     fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/topic-attr.xsl');
+  }
+  if (conf.override_shell) {
+    fs.push(`plugin:${conf.plugin_name}:cfg/fo/attrs/topic-attr.xsl`);
+  }
+  if (conf.ot_version.version === '3.5' || conf.ot_version.version === '3.6') {
     if (conf.formatter === 'ah') {
       fs.push('plugin:org.dita.pdf2.axf:xsl/fo/topic_axf.xsl');
     }
@@ -108,6 +113,7 @@ export default function generate(conf: Generator) {
   }
   fs.push('plugin:org.dita.pdf2:xsl/fo/commons.xsl');
   if (conf.override_shell) {
+    fs.push(`plugin:${conf.plugin_name}:xsl/fo/topic.xsl`);
     fs.push(`plugin:${conf.plugin_name}:xsl/fo/commons.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/toc-attr.xsl');
