@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Element, SubElement } from './elementtree';
 import { copy_xml, xsl } from './utils';
 import Generator from './index';
-import { FoProperty } from './styles';
+import { FoProperty, StyleName } from './styles';
 
 export function generate_custom(root: Element, conf: Generator) {
   const chapter_page_number_raw = `
@@ -172,7 +172,7 @@ export function generate_custom_attr(root: Element, conf: Generator) {
     }).text = conf.force_page_count;
   }
   // font family
-  const foRootAttrSet = conf.attribute_set(root, 'body', '__fo__root', [
+  const foRootAttrSet = conf.attribute_set(root, StyleName.BODY, '__fo__root', [
     FoProperty.FONT_FAMILY,
     FoProperty.COLOR,
     FoProperty.TEXT_ALIGN,
@@ -184,14 +184,14 @@ export function generate_custom_attr(root: Element, conf: Generator) {
   // link
   const link_attr_sets = ['common.link'];
   link_attr_sets.forEach((n) => {
-    conf.attribute_set(root, 'link', n);
+    conf.attribute_set(root, StyleName.LINK, n);
   });
   // normal block
   const spacing_attr_sets = ['common.block'];
   spacing_attr_sets.forEach((n) => {
     conf.attribute_set(
       root,
-      'body',
+      StyleName.BODY,
       n,
       _.difference(conf.properties, [FoProperty.START_INDENT])
     );

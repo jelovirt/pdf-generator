@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { styles, Property, Style, StyleName, FoProperty } from './styles';
+import { FoProperty, Property, Style, StyleName, styles } from './styles';
 
 export type OtVersion = '3.6' | '3.5' | '3.0' | '2.5';
 
@@ -197,7 +197,7 @@ export function getInitValues(): Values {
     cover_image_chooser: '',
     page_size: '210mm 297mm',
     orientation: 'portrait',
-    style_selector: 'body',
+    style_selector: StyleName.BODY,
   };
 }
 

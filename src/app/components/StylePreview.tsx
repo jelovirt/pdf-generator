@@ -1,7 +1,9 @@
-import React, { ReactNode } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import { Length, Values } from '../../generator/Model';
 import { Property, StyleName } from '../../generator/styles';
+// @ts-ignore
 import hand from '../../../public/images/hand.gif';
+// @ts-ignore
 import figure from '../../../public/images/figure.png';
 
 const factor = 0.9;
@@ -203,7 +205,7 @@ function previewSpaceHandler(
       return res;
       // FIXME
       // wrapper styling
-      // if (field === 'start-indent' && type === 'body') {
+      // if (field === 'start-indent' && type === StyleName.BODY) {
       //   $element.find('.wrapper > *').css('left', `-${v}`);
       // }
     });
@@ -249,7 +251,7 @@ export default function StylePreview(props: { values: Values }) {
       marginLeft: `calc(${props.values.page.inside} * ${factor * 0.5})`,
     };
   };
-  const wrapperStyle = (...styleName: StyleName[]) => ({
+  const wrapperStyle = (...styleName: StyleName[]): CSSProperties => ({
     borderLeftWidth: '2px',
     borderLeftStyle: 'solid',
     borderLeftColor: styleName.includes(props.values.style_selector)
@@ -258,15 +260,19 @@ export default function StylePreview(props: { values: Values }) {
     paddingLeft: `calc(${props.values.page.inside} * ${factor * 0.5} - 2px)`,
   });
 
-  const olLabelStyle = {
+  const olLabelStyle: CSSProperties = {
     display: 'inline-block',
     marginRight: '0.5em',
     float: 'left',
   };
 
-  const ulLabelStyle = { width: '1em', display: 'inline-block', float: 'left' };
+  const ulLabelStyle: CSSProperties = {
+    width: '1em',
+    display: 'inline-block',
+    float: 'left',
+  };
 
-  const borderStyle = { border: 'solid 1px black' };
+  const borderStyle: CSSProperties = { border: 'solid 1px black' };
 
   const Block = (props: { type: StyleName; children?: ReactNode }) => {
     return (
@@ -284,21 +290,21 @@ export default function StylePreview(props: { values: Values }) {
     <div className="example-block col-md-7" id="example-style">
       <div className="example-block-page" style={pageStyle()}>
         <div className="example-page-content" style={contentStyle()}>
-          <Block type="topic">
+          <Block type={StyleName.TOPIC}>
             {styles['topic']['title-numbering'] && <span>1 </span>}
             Heading 1
           </Block>
-          <Block type="topic_topic">
+          <Block type={StyleName.TOPIC_TOPIC}>
             {styles['topic_topic']['title-numbering'] && <span>1.1 </span>}
             Heading 2
           </Block>
-          <Block type="body">
+          <Block type={StyleName.BODY}>
             The quick brown fox jumps over the lazy dog. The quick brown fox
             jumps over the lazy dog. The quick brown fox jumps over the lazy
             dog. The quick brown fox jumps over the lazy dog.
           </Block>
-          <div style={wrapperStyle('note')}>
-            <table style={getStyle('note')}>
+          <div style={wrapperStyle(StyleName.NOTE)}>
+            <table style={getStyle(StyleName.NOTE)}>
               <tbody>
                 <tr>
                   {styles['note']['icon'] && (
@@ -308,7 +314,7 @@ export default function StylePreview(props: { values: Values }) {
                   )}
                   <td>
                     <strong
-                    // style={getStyle('note-label')}
+                    // style={getStyle(StyleName.NOTE-LABEL)}
                     >
                       Note:
                     </strong>{' '}
@@ -318,14 +324,17 @@ export default function StylePreview(props: { values: Values }) {
               </tbody>
             </table>
           </div>
-          <Block type="body">
+          <Block type={StyleName.BODY}>
             The quick brown fox jumps over the lazy dog. The quick brown fox
             jumps over the lazy dog. The quick brown fox jumps over the lazy
             dog. The quick brown fox jumps over the lazy dog. The quick brown
             fox jumps over the lazy dog.
           </Block>
-          <div style={wrapperStyle('ol')}>
-            <ol style={getStyle('ol')} className="example-page-content-ol">
+          <div style={wrapperStyle(StyleName.OL)}>
+            <ol
+              style={getStyle(StyleName.OL)}
+              className="example-page-content-ol"
+            >
               <li>
                 <span style={olLabelStyle}>
                   {styles['ol']['ol-before-1']}
@@ -380,8 +389,11 @@ export default function StylePreview(props: { values: Values }) {
               </li>
             </ol>
           </div>
-          <div style={wrapperStyle('ul')}>
-            <ul style={getStyle('ul')} className="example-page-content-ul">
+          <div style={wrapperStyle(StyleName.UL)}>
+            <ul
+              style={getStyle(StyleName.UL)}
+              className="example-page-content-ul"
+            >
               <li>
                 <span style={ulLabelStyle}>{styles['ul']['ul-1']}</span>
                 The quick brown fox jumps over the lazy dog.
@@ -408,9 +420,9 @@ export default function StylePreview(props: { values: Values }) {
               </li>
             </ul>
           </div>
-          <div style={wrapperStyle('dl')}>
+          <div style={wrapperStyle(StyleName.DL)}>
             {styles['dl']['dl-type'] === 'html' && (
-              <dl style={getStyle('dl')}>
+              <dl style={getStyle(StyleName.DL)}>
                 <dt>
                   <strong>Pangram</strong>
                 </dt>
@@ -422,7 +434,7 @@ export default function StylePreview(props: { values: Values }) {
               </dl>
             )}
             {styles['dl']['dl-type'] === 'table' && (
-              <table style={{ ...getStyle('dl'), width: '100%' }}>
+              <table style={{ ...getStyle(StyleName.DL), width: '100%' }}>
                 <colgroup>
                   <col style={{ width: '50%' }} />
                   <col style={{ width: '50%' }} />
@@ -444,7 +456,10 @@ export default function StylePreview(props: { values: Values }) {
               </table>
             )}
             {styles['dl']['dl-type'] === 'list' && (
-              <ul style={getStyle('dl')} className="example-page-content-ul">
+              <ul
+                style={getStyle(StyleName.DL)}
+                className="example-page-content-ul"
+              >
                 <li>
                   <span style={ulLabelStyle}>{styles['ul']['ul-1']}</span>
                   <strong>Pangram</strong>
@@ -462,16 +477,16 @@ export default function StylePreview(props: { values: Values }) {
               </ul>
             )}
           </div>
-          <div style={wrapperStyle('body', 'link')}>
-            <div style={getStyle('body')}>
-              The quick brown <Inline type="link">fox jumps</Inline>{' '}
+          <div style={wrapperStyle(StyleName.BODY, StyleName.LINK)}>
+            <div style={getStyle(StyleName.BODY)}>
+              The quick brown <Inline type={StyleName.LINK}>fox jumps</Inline>{' '}
               {styles['link']['link-page-number'] && (
                 <>
                   <span>on page 42</span>{' '}
                 </>
               )}
               over the lazy dog. The quick{' '}
-              <Inline type="link">brown fox</Inline>{' '}
+              <Inline type={StyleName.LINK}>brown fox</Inline>{' '}
               {styles['link']['link-url'] && (
                 <>
                   <span>at www.example.com</span>{' '}
@@ -480,80 +495,82 @@ export default function StylePreview(props: { values: Values }) {
               jumps over the lazy dog.
             </div>
           </div>
-          <div style={wrapperStyle('body', 'tm')}>
-            <div style={getStyle('body')}>
+          <div style={wrapperStyle(StyleName.BODY, StyleName.TM)}>
+            <div style={getStyle(StyleName.BODY)}>
               The{' '}
-              <Inline type="tm">
+              <Inline type={StyleName.TM}>
                 quick brown fox
                 {(styles['tm']['symbol-scope'] === 'always' ||
                   styles['tm']['symbol-scope'] === 'chapter') && <span>™</span>}
               </Inline>{' '}
               jumps over the{' '}
-              <Inline type="tm">
+              <Inline type={StyleName.TM}>
                 lazy dog
                 {(styles['tm']['symbol-scope'] === 'always' ||
                   styles['tm']['symbol-scope'] === 'chapter') && <span>®</span>}
               </Inline>
               . The{' '}
-              <Inline type="tm">
+              <Inline type={StyleName.TM}>
                 quick brown fox
                 {styles['tm']['symbol-scope'] === 'always' && <span>™</span>}
               </Inline>{' '}
               jumps over the{' '}
-              <Inline type="tm">
+              <Inline type={StyleName.TM}>
                 lazy dog
                 {styles['tm']['symbol-scope'] === 'always' && <span>®</span>}
               </Inline>
               .
             </div>
           </div>
-          <Block type="section">Section title</Block>
-          <Block type="body">
+          <Block type={StyleName.SECTION}>Section title</Block>
+          <Block type={StyleName.BODY}>
             The quick brown fox jumps over the lazy dog. The quick brown fox
             jumps over the lazy dog. The quick brown fox jumps over the lazy
             dog. The quick brown fox jumps over the lazy dog. The quick brown
             fox jumps over the lazy dog.
           </Block>
-          <Block type="example">
-            {/*<div style={wrapperStyle('example_title')}>*/}
+          <Block type={StyleName.EXAMPLE}>
+            {/*<div style={wrapperStyle(StyleName.EXAMPLE_TITLE)}>*/}
             <div
-              style={getStyle('example_title', 'example')}
+              style={getStyle(StyleName.EXAMPLE_TITLE, StyleName.EXAMPLE)}
               // style={{ marginLeft: '0pt', marginRight: '0pt' }}
             >
               Example title
             </div>
             {/*</div>*/}
-            <div style={getStyle('body', 'example')}>Example content</div>
+            <div style={getStyle(StyleName.BODY, StyleName.EXAMPLE)}>
+              Example content
+            </div>
           </Block>
-          <Block type="topic_topic_topic">
+          <Block type={StyleName.TOPIC_TOPIC_TOPIC}>
             {styles['topic_topic_topic']['title-numbering'] && (
               <span>1.1.1 </span>
             )}
             Heading 3
           </Block>
-          <Block type="body">
+          <Block type={StyleName.BODY}>
             The quick brown fox jumps over the lazy dog. The quick brown fox
             jumps over the lazy dog. The quick brown fox jumps over the lazy
             dog. The quick brown fox jumps over the lazy dog.
           </Block>
-          <Block type="topic_topic_topic_topic">
+          <Block type={StyleName.TOPIC_TOPIC_TOPIC_TOPIC}>
             {styles['topic_topic_topic_topic']['title-numbering'] && (
               <span>1.1.1.1 </span>
             )}
             Heading 4
           </Block>
-          <Block type="body">
+          <Block type={StyleName.BODY}>
             The quick brown fox jumps over the lazy dog. The quick brown fox
             jumps over the lazy dog. The quick brown fox jumps over the lazy
             dog. The quick brown fox jumps over the lazy dog.
           </Block>
-          <div style={wrapperStyle('pre')}>
-            <pre style={getStyle('pre')}>
+          <div style={wrapperStyle(StyleName.PRE)}>
+            <pre style={getStyle(StyleName.PRE)}>
               The quick brown fox jumps over the lazy dog.
             </pre>
           </div>
-          <div style={wrapperStyle('codeblock')}>
-            <pre style={getStyle('codeblock')}>
+          <div style={wrapperStyle(StyleName.CODEBLOCK)}>
+            <pre style={getStyle(StyleName.CODEBLOCK)}>
               {styles['codeblock']['line-numbering'] && <span>1 </span>}
               (defun factorial (n){'\n'}
               {styles['codeblock']['line-numbering'] && <span>2 </span>}
@@ -565,9 +582,9 @@ export default function StylePreview(props: { values: Values }) {
               (* n (factorial (- n 1))))){'\n'}
             </pre>
           </div>
-          <div style={wrapperStyle('table')}>
+          <div style={wrapperStyle(StyleName.TABLE)}>
             {styles['table']['caption-position'] === 'before' && (
-              <div style={getStyle('body')}>
+              <div style={getStyle(StyleName.BODY)}>
                 <strong>
                   Table{' '}
                   {styles['table']['caption-number'] === 'document' && (
@@ -580,36 +597,36 @@ export default function StylePreview(props: { values: Values }) {
                 </strong>
               </div>
             )}
-            <table style={getStyle('table')}>
+            <table style={getStyle(StyleName.TABLE)}>
               <tbody>
                 <tr
-                // style={getStyle('tr')}
+                // style={getStyle(StyleName.TR)}
                 >
                   <td
                     style={borderStyle}
-                    // style={getStyle('td')}
+                    // style={getStyle(StyleName.TD)}
                   >
                     Dog
                   </td>
                   <td
                     style={borderStyle}
-                    // style={getStyle('td')}
+                    // style={getStyle(StyleName.TD)}
                   >
                     lazy
                   </td>
                 </tr>
                 <tr
-                // style={getStyle('tr')}
+                // style={getStyle(StyleName.TR)}
                 >
                   <td
                     style={borderStyle}
-                    // style={getStyle('td')}
+                    // style={getStyle(StyleName.TD)}
                   >
                     Fox
                   </td>
                   <td
                     style={borderStyle}
-                    // style={getStyle('td')}
+                    // style={getStyle(StyleName.TD)}
                   >
                     quick, brown
                   </td>
@@ -617,7 +634,7 @@ export default function StylePreview(props: { values: Values }) {
               </tbody>
             </table>
             {styles['table']['caption-position'] === 'after' && (
-              <div style={getStyle('body')}>
+              <div style={getStyle(StyleName.BODY)}>
                 <strong>
                   Table{' '}
                   {styles['table']['caption-number'] === 'document' && (
@@ -631,9 +648,9 @@ export default function StylePreview(props: { values: Values }) {
               </div>
             )}
           </div>
-          <div style={wrapperStyle('fig')}>
+          <div style={wrapperStyle(StyleName.FIG)}>
             {styles['fig']['caption-position'] === 'before' && (
-              <div style={getStyle('body')}>
+              <div style={getStyle(StyleName.BODY)}>
                 <strong>
                   Figure{' '}
                   {styles['fig']['caption-number'] === 'document' && (
@@ -646,11 +663,11 @@ export default function StylePreview(props: { values: Values }) {
                 </strong>
               </div>
             )}
-            <div style={getStyle('fig')}>
+            <div style={getStyle(StyleName.FIG)}>
               <img src={figure} style={{ height: '30px' }} />
             </div>
             {styles['fig']['caption-position'] === 'after' && (
-              <div style={getStyle('body')}>
+              <div style={getStyle(StyleName.BODY)}>
                 <strong>
                   Figure{' '}
                   {styles['fig']['caption-number'] === 'document' && (
