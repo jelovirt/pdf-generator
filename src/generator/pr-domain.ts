@@ -3,6 +3,7 @@
 import { Element } from './elementtree';
 import { xsl, copy_xml, value } from './utils';
 import Generator from './index';
+import { StyleName } from './styles';
 
 export function generate_custom(root: Element, conf: Generator) {
   if (conf.style.codeblock['line-numbering']) {
@@ -22,7 +23,7 @@ export function generate_custom_attr(root: Element, conf: Generator) {
   // const pre_attr = ET.SubElement(root, xsl('attribute-set'), {
   //   name: 'codeblock',
   // });
-  conf.attribute_set(root, 'codeblock', 'codeblock');
+  conf.attribute_set(root, StyleName.CODEBLOCK, 'codeblock');
   // _.forEach(conf.style.codeblock, (v, k) => {
   //   ET.SubElement(pre_attr, xsl('attribute'), { name: k }).text = value(k, v);
   // });

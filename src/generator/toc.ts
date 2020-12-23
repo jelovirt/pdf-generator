@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { Comment, Element, SubElement } from './elementtree';
 import { xsl, copy_xml } from './utils';
 import Generator from './index';
-import { FoProperty } from './styles';
+import { FoProperty, StyleName } from './styles';
 
 export function generate_custom(root: Element, conf: Generator) {
   const tocRaw = `
@@ -142,28 +142,28 @@ export function generate_custom_attr(root: Element, conf: Generator) {
 
   conf.attribute_set(
     root,
-    'toc_1',
+    StyleName.TOC_1,
     '__toc__topic__content',
     _.difference(conf.properties, [FoProperty.START_INDENT])
   );
   //conf.attribute_set(root, 'toc_1', '__toc__topic__content_1', _.difference(conf.properties, ["start-indent"]), '__toc__topic__content')
   conf.attribute_set(
     root,
-    'toc_2',
+    StyleName.TOC_2,
     '__toc__topic__content_2',
     _.difference(conf.properties, [FoProperty.START_INDENT]),
     '__toc__topic__content'
   );
   conf.attribute_set(
     root,
-    'toc_3',
+    StyleName.TOC_3,
     '__toc__topic__content_3',
     _.difference(conf.properties, [FoProperty.START_INDENT]),
     '__toc__topic__content'
   );
   conf.attribute_set(
     root,
-    'toc_4',
+    StyleName.TOC_4,
     '__toc__topic__content_4',
     _.difference(conf.properties, [FoProperty.START_INDENT]),
     '__toc__topic__content'
@@ -171,37 +171,37 @@ export function generate_custom_attr(root: Element, conf: Generator) {
 
   conf.attribute_set(
     root,
-    'toc_1',
+    StyleName.TOC_1,
     '__toc__chapter__content',
     _.difference(conf.properties, [FoProperty.START_INDENT])
   );
   conf.attribute_set(
     root,
-    'toc_1',
+    StyleName.TOC_1,
     '__toc__appendix__content',
     _.difference(conf.properties, [FoProperty.START_INDENT])
   );
   conf.attribute_set(
     root,
-    'toc_1',
+    StyleName.TOC_1,
     '__toc__part__content',
     _.difference(conf.properties, [FoProperty.START_INDENT])
   );
   conf.attribute_set(
     root,
-    'toc_1',
+    StyleName.TOC_1,
     '__toc__preface__content',
     _.difference(conf.properties, [FoProperty.START_INDENT])
   );
   conf.attribute_set(
     root,
-    'toc_1',
+    StyleName.TOC_1,
     '__toc__notices__content',
     _.difference(conf.properties, [FoProperty.START_INDENT])
   );
   conf.attribute_set(
     root,
-    'toc_1',
+    StyleName.TOC_1,
     '__toc__topic__content__booklist',
     _.difference(conf.properties, [FoProperty.START_INDENT])
   );

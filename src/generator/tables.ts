@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { Comment, Element, SubElement } from './elementtree';
 import { xsl, copy_xml } from './utils';
 import Generator from './index';
+import { StyleName } from './styles';
 
 export function generate_custom(root: Element, conf: Generator) {
   // empty table footer
@@ -222,7 +223,7 @@ export function generate_custom(root: Element, conf: Generator) {
 export function generate_custom_attr(root: Element, conf: Generator) {
   // dl
   if (_.has(conf.style.dl, 'dl-type')) {
-    conf.attribute_set(root, 'dl', 'e:dl');
+    conf.attribute_set(root, StyleName.DL, 'e:dl');
     const dt_attr = SubElement(root, xsl('attribute-set'), {
       name: 'e:dlentry.dt__content',
     });
@@ -257,7 +258,7 @@ export function generate_custom_attr(root: Element, conf: Generator) {
     }).text = 'italic';
   }
   // table
-  conf.attribute_set(root, 'table', 'table.tgroup');
+  conf.attribute_set(root, StyleName.TABLE, 'table.tgroup');
   const thead_row_entry_attr = SubElement(root, xsl('attribute-set'), {
     name: 'thead.row.entry',
   });
