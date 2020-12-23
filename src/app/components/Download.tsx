@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFormikContext } from 'formik';
-import { Values } from '../../generator/Model';
+import { Values } from './common';
 
 export default function Download() {
   const { values } = useFormikContext<Values>();

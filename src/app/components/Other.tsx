@@ -1,7 +1,8 @@
 import { Field, useFormikContext } from 'formik';
 import React from 'react';
 import OtherPreview from './OtherPreview';
-import { Formatter, Values } from '../../generator/Model';
+import { Values } from './common';
+import { Formatter } from '../../generator/Model';
 
 export default function Other() {
   const { values } = useFormikContext<Values>();

@@ -1,6 +1,5 @@
 import { Field, useFormikContext } from 'formik';
 import React, { ChangeEvent } from 'react';
-import { Values } from '../../generator/Model';
 import StylePreview from './StylePreview';
 import {
   convertBorder,
@@ -11,7 +10,7 @@ import {
   StyleName,
   styles,
 } from '../../generator/styles';
-import { nextValue } from './common';
+import { nextValue, Values } from './common';
 
 const propertySelections = {
   color: [

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { Length } from '../../generator/Model';
 
 export default function PagePreview(props: {
@@ -42,7 +42,7 @@ export const PreviewPage = (props: {
     paddingBottom: `calc(${props.bottom} * ${factor})`,
     paddingLeft: `calc(${flip ? props.outside : props.inside} * ${factor})`,
   });
-  const contentStyle = {
+  const contentStyle: CSSProperties = {
     height: '100%',
     width: '100%',
     textAlign: 'center',

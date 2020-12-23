@@ -11,7 +11,7 @@ import Cover from './Cover';
 import Other from './Other';
 import Metadata from './Metadata';
 import Download from './Download';
-import { getInitValues, toModel, Values } from '../../generator/Model';
+import { getInitValues, toModel, Values } from './common';
 import Generator from '../../generator';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';

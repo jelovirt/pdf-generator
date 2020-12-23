@@ -1,8 +1,7 @@
 import React from 'react';
 import { Field, useFormikContext } from 'formik';
 import PagePreview from './PagePreview';
-import { Values } from '../../generator/Model';
-import { nextValue } from './common';
+import { nextValue, PageSizes, Values } from './common';
 
 export default function Page() {
   const { setFieldValue, values } = useFormikContext<Values>();
@@ -53,15 +52,15 @@ export default function Page() {
               title="Page size"
               required
             >
-              <option value="297mm 420mm">A3</option>
-              <option value="210mm 297mm">A4</option>
-              <option value="148mm 210mm">A5</option>
-              <option value="184.1mm 266.7mm">Executive</option>
-              <option value="182mm 257mm">JIS B5</option>
-              <option value="431.8mm 279.4mm">Tabloid</option>
-              <option value="8.5in 14in">US Legal</option>
-              <option value="8.5in 11in">US Letter</option>
-              <option value="210mm 280mm">PA4</option>
+              <option value={PageSizes.A3}>A3</option>
+              <option value={PageSizes.A4}>A4</option>
+              <option value={PageSizes.A5}>A5</option>
+              <option value={PageSizes.EXECUTIVE}>Executive</option>
+              <option value={PageSizes.JIS_B5}>JIS B5</option>
+              <option value={PageSizes.TABLOID}>Tabloid</option>
+              <option value={PageSizes.US_LEGAL}>US Legal</option>
+              <option value={PageSizes.US_LETTER}>US Letter</option>
+              <option value={PageSizes.PA4}>PA4</option>
             </Field>
           </p>
         </fieldset>

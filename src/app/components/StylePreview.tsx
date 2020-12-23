@@ -1,5 +1,6 @@
 import React, { CSSProperties, ReactNode } from 'react';
-import { Length, Values } from '../../generator/Model';
+import { Values } from './common';
+import { Length } from '../../generator/Model';
 import { Property, StyleName } from '../../generator/styles';
 // @ts-ignore
 import hand from '../../../public/images/hand.gif';

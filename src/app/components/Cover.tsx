@@ -1,6 +1,6 @@
 import { Field, useFormikContext } from 'formik';
 import React from 'react';
-import { Values } from '../../generator/Model';
+import { Values } from './common';
 
 export default function Cover() {
   const { values } = useFormikContext<Values>();

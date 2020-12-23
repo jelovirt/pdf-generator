@@ -1,7 +1,7 @@
 import { Field, useFormikContext } from 'formik';
 import React from 'react';
 import LayoutPreview from './LayoutPreview';
-import { Values } from '../../generator/Model';
+import { Values } from './common';
 
 export default function Layout() {
   const { values } = useFormikContext<Values>();
