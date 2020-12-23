@@ -2,6 +2,7 @@ import Generator from '.';
 import { Comment, Element, SubElement } from './elementtree';
 import { copy_xml, xsl } from './utils';
 import _ from 'lodash';
+import { StyleName } from './styles';
 
 export function generate_custom(root: Element, conf: Generator) {
   const note_raw = `
@@ -225,12 +226,12 @@ export function generate_custom_attr(root: Element, conf: Generator) {
     }
   });
   // example
-  conf.attribute_set(root, 'example', 'example');
-  conf.attribute_set(root, 'example_title', 'example.title');
+  conf.attribute_set(root, StyleName.EXAMPLE, 'example');
+  conf.attribute_set(root, StyleName.EXAMPLE_TITLE, 'example.title');
   // tm
-  conf.attribute_set(root, 'tm', 'tm');
+  conf.attribute_set(root, StyleName.TM, 'tm');
   // note
-  conf.attribute_set(root, 'note', 'note__table');
+  conf.attribute_set(root, StyleName.NOTE, 'note__table');
   // if (!conf.style.note.icon) {
   //   const note_text = SubElement(root, xsl('attribute-set'), {
   //     name: 'notetextcolumn',
@@ -239,7 +240,7 @@ export function generate_custom_attr(root: Element, conf: Generator) {
   //     '1';
   // }
   // pre
-  conf.attribute_set(root, 'pre', 'pre');
+  conf.attribute_set(root, StyleName.PRE, 'pre');
   // fig
-  conf.attribute_set(root, 'fig', 'fig');
+  conf.attribute_set(root, StyleName.FIG, 'fig');
 }
