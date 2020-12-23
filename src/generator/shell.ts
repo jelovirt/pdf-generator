@@ -1,6 +1,7 @@
 import { xsl } from './utils';
 import { Comment, Element, ElementTree, SubElement } from './elementtree';
 import Generator from './index';
+import { Formatter } from './Model';
 
 export default function generate(conf: Generator) {
   const root = Element(xsl('stylesheet'), {
@@ -28,7 +29,7 @@ export default function generate(conf: Generator) {
     fs.push(`plugin:${conf.plugin_name}:cfg/fo/attrs/basic-settings.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/layout-masters-attr.xsl');
-  if (conf.formatter === 'xep') {
+  if (conf.formatter === Formatter.XEP) {
     fs.push(
       'plugin:org.dita.pdf2.xep:cfg/fo/attrs/layout-masters-attr_xep.xsl'
     );
@@ -57,30 +58,30 @@ export default function generate(conf: Generator) {
     fs.push(`plugin:${conf.plugin_name}:xsl/fo/lists.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/tables-attr.xsl');
-  if (conf.formatter === 'ah') {
+  if (conf.formatter === Formatter.AH) {
     fs.push('plugin:org.dita.pdf2.axf:cfg/fo/attrs/tables-attr_axf.xsl');
   }
-  if (conf.formatter === 'fop') {
+  if (conf.formatter === Formatter.FOP) {
     fs.push('plugin:org.dita.pdf2.fop:cfg/fo/attrs/tables-attr_fop.xsl');
   }
   if (conf.override_shell) {
     fs.push(`plugin:${conf.plugin_name}:cfg/fo/attrs/tables-attr.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:xsl/fo/tables.xsl');
-  if (conf.formatter === 'fop') {
+  if (conf.formatter === Formatter.FOP) {
     fs.push('plugin:org.dita.pdf2.fop:xsl/fo/tables_fop.xsl');
   }
   if (conf.override_shell) {
     fs.push(`plugin:${conf.plugin_name}:xsl/fo/tables.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:xsl/fo/root-processing.xsl');
-  if (conf.formatter === 'ah') {
+  if (conf.formatter === Formatter.AH) {
     fs.push('plugin:org.dita.pdf2.axf:xsl/fo/root-processing_axf.xsl');
   }
-  if (conf.formatter === 'fop') {
+  if (conf.formatter === Formatter.FOP) {
     fs.push('plugin:org.dita.pdf2.fop:xsl/fo/root-processing_fop.xsl');
   }
-  if (conf.formatter === 'xep') {
+  if (conf.formatter === Formatter.XEP) {
     fs.push('plugin:org.dita.pdf2.xep:xsl/fo/root-processing_xep.xsl');
   }
   if (conf.ot_version.version === '3.5' || conf.ot_version.version === '3.6') {
@@ -90,22 +91,22 @@ export default function generate(conf: Generator) {
     fs.push(`plugin:${conf.plugin_name}:cfg/fo/attrs/topic-attr.xsl`);
   }
   if (conf.ot_version.version === '3.5' || conf.ot_version.version === '3.6') {
-    if (conf.formatter === 'ah') {
+    if (conf.formatter === Formatter.AH) {
       fs.push('plugin:org.dita.pdf2.axf:xsl/fo/topic_axf.xsl');
     }
-    if (conf.formatter === 'fop') {
+    if (conf.formatter === Formatter.FOP) {
       fs.push('plugin:org.dita.pdf2.fop:xsl/fo/topic_fop.xsl');
     }
-    if (conf.formatter === 'xep') {
+    if (conf.formatter === Formatter.XEP) {
       fs.push('plugin:org.dita.pdf2.xep:xsl/fo/topic_xep.xsl');
     }
     fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/concept-attr.xsl');
   }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/commons-attr.xsl');
-  if (conf.formatter === 'fop') {
+  if (conf.formatter === Formatter.FOP) {
     fs.push('plugin:org.dita.pdf2.fop:cfg/fo/attrs/commons-attr_fop.xsl');
   }
-  if (conf.formatter === 'xep') {
+  if (conf.formatter === Formatter.XEP) {
     fs.push('plugin:org.dita.pdf2.xep:cfg/fo/attrs/commons-attr_xep.xsl');
   }
   if (conf.override_shell) {
@@ -117,10 +118,10 @@ export default function generate(conf: Generator) {
     fs.push(`plugin:${conf.plugin_name}:xsl/fo/commons.xsl`);
   }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/toc-attr.xsl');
-  if (conf.formatter === 'ah') {
+  if (conf.formatter === Formatter.AH) {
     fs.push('plugin:org.dita.pdf2.axf:cfg/fo/attrs/toc-attr_axf.xsl');
   }
-  if (conf.formatter === 'fop') {
+  if (conf.formatter === Formatter.FOP) {
     if (
       conf.ot_version.version !== '3.5' &&
       conf.ot_version.version !== '3.6'
@@ -137,10 +138,10 @@ export default function generate(conf: Generator) {
   }
   fs.push('plugin:org.dita.pdf2:xsl/fo/bookmarks.xsl');
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/index-attr.xsl');
-  if (conf.formatter === 'ah') {
+  if (conf.formatter === Formatter.AH) {
     fs.push('plugin:org.dita.pdf2.axf:cfg/fo/attrs/index-attr_axf.xsl');
   }
-  if (conf.formatter === 'xep') {
+  if (conf.formatter === Formatter.XEP) {
     if (
       conf.ot_version.version === '3.5' ||
       conf.ot_version.version === '3.6'
@@ -149,13 +150,13 @@ export default function generate(conf: Generator) {
     }
   }
   fs.push('plugin:org.dita.pdf2:xsl/fo/index.xsl');
-  if (conf.formatter === 'ah') {
+  if (conf.formatter === Formatter.AH) {
     fs.push('plugin:org.dita.pdf2.axf:xsl/fo/index_axf.xsl');
   }
-  if (conf.formatter === 'fop') {
+  if (conf.formatter === Formatter.FOP) {
     fs.push('plugin:org.dita.pdf2.fop:xsl/fo/index_fop.xsl');
   }
-  if (conf.formatter === 'xep') {
+  if (conf.formatter === Formatter.XEP) {
     fs.push('plugin:org.dita.pdf2.xep:xsl/fo/index_xep.xsl');
   }
   fs.push('plugin:org.dita.pdf2:cfg/fo/attrs/front-matter-attr.xsl');
@@ -221,7 +222,7 @@ export default function generate(conf: Generator) {
   fs.push('plugin:org.dita.pdf2:xsl/fo/learning-elements.xsl');
 
   fs.push('plugin:org.dita.pdf2:xsl/fo/flagging.xsl');
-  if (conf.formatter === 'fop') {
+  if (conf.formatter === Formatter.FOP) {
     if (
       conf.ot_version.version !== '3.5' &&
       conf.ot_version.version !== '3.6'

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field } from 'formik';
+import { Formatter } from '../../generator/Model';
 
 export default function Environment() {
   return (
@@ -44,9 +45,9 @@ export default function Environment() {
             title="XSL formatter"
             required
           >
-            <option value="fop">FOP</option>
-            <option value="ah">AntennaHouse Formatter</option>
-            <option value="xep">RenderX XEP</option>
+            <option value={Formatter.FOP}>FOP</option>
+            <option value={Formatter.AH}>AntennaHouse Formatter</option>
+            <option value={Formatter.XEP}>RenderX XEP</option>
           </Field>
         </p>
         <p className="instruction">

@@ -1,7 +1,7 @@
 import { Field, useFormikContext } from 'formik';
 import React from 'react';
 import OtherPreview from './OtherPreview';
-import { Values } from '../../generator/Model';
+import { Formatter, Values } from '../../generator/Model';
 
 export default function Other() {
   const { values } = useFormikContext<Values>();
@@ -62,9 +62,9 @@ export default function Other() {
           </p>
         </fieldset>
         <fieldset
-          className={values.formatter !== 'ah' ? 'disabled' : undefined}
+          className={values.formatter !== Formatter.AH ? 'disabled' : undefined}
         >
-          {values.formatter !== 'ah' && (
+          {values.formatter !== Formatter.AH && (
             <p className="not-available">
               Not available for FOP and RenderX XEP
             </p>
@@ -76,7 +76,7 @@ export default function Other() {
               name="table_continued"
               id="table_continued"
               title="Mark continued table"
-              disabled={values.formatter !== 'ah'}
+              disabled={values.formatter !== Formatter.AH}
             />
           </p>
           <p className="instruction">
