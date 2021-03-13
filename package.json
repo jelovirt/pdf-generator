@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "parcel build public/index.html",
-    "compile": "xslt3 -xsl:src/generator/links.xsl -export:build/generator/links.sef.json -nogo",
+    "compile": "./compile.sh",
     "start": "parcel public/index.html",
     "fmt": "prettier --write .",
     "test": "jest src/**/*.test.ts",

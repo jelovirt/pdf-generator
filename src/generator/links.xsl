@@ -82,6 +82,7 @@
         </axsl:function>
       </xsl:if>
 
+      <!-- Attributes -->
       <axsl:attribute-set name="link__shortdesc">
         <xsl:call-template name="attribute-set">
           <xsl:with-param name="style" select="$style => map:get('body')"/>
@@ -89,6 +90,7 @@
         </xsl:call-template>
         <axsl:attribute name="start-indent">from-parent(start-indent) + 15pt</axsl:attribute>
       </axsl:attribute-set>
+
     </axsl:stylesheet>
   </xsl:template>
 
