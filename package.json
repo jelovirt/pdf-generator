@@ -5,6 +5,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "parcel build public/index.html",
+    "compile": "xslt3 -xsl:src/generator/links.xsl -export:build/generator/links.sef.json -nogo",
     "start": "parcel public/index.html",
     "fmt": "prettier --write .",
     "test": "jest src/**/*.test.ts",
@@ -20,7 +21,8 @@
     "react": "^17.0.1",
     "react-dnd": "^11.1.3",
     "react-dnd-html5-backend": "^11.1.3",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "saxon-js": "^2.1.0"
   },
   "devDependencies": {
     "@types/elementtree": "^0.1.0",
@@ -35,13 +37,14 @@
     "babel-preset-env": "^1.7.0",
     "bootstrap-sass": "~> 3.4.1",
     "follow-redirects": "^1.13.1",
-    "node-forge": ">=0.10.0",
     "jest": "^26.6.3",
+    "node-forge": ">=0.10.0",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.1.2",
     "sass": "^1.28.0",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.5"
+    "typescript": "^4.0.5",
+    "xslt3": "^2.1.0"
   }
 }
