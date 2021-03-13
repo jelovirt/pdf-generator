@@ -6,14 +6,16 @@
                 xmlns:array="http://www.w3.org/2005/xpath-functions/array"
                 exclude-result-prefixes="axsl map array">
 
+  <xsl:import href="utils.xsl"/>
+
   <xsl:namespace-alias stylesheet-prefix="axsl" result-prefix="xsl"/>
 
   <xsl:output indent="yes"/>
 
+  <xsl:variable name="style" select=". => map:get('conf') => map:get('style')" as="map(*)"/>
+
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
-      <xsl:variable name="style" select=". => map:get('conf') => map:get('style')" as="map(*)"/>
-      <xsl:variable name="link" select="$style => map:get('ol')" as="map(*)"/>
       <xsl:if test="exists($style('ol')) or exists($style('ul'))">
         <xsl:comment>list</xsl:comment>
 
@@ -69,8 +71,11 @@
           </fo:list-item>
         </axsl:template>
       </xsl:if>
+    </axsl:stylesheet>
+  </xsl:template>
 
-      <!-- Attributes -->
+  <xsl:template match=".[. instance of map(*)]" mode="attr">
+    <axsl:stylesheet version="2.0">
       <axsl:attribute-set name="ol">
         <axsl:attribute name="provisional-distance-between-starts">
           <axsl:call-template name="e:list-label-length"/>
@@ -102,7 +107,6 @@
         </axsl:variable>
         <axsl:sequence select="max($labels)"/>
       </axsl:template>
-
     </axsl:stylesheet>
   </xsl:template>
 
