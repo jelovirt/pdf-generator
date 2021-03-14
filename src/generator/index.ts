@@ -1,5 +1,7 @@
 import JSZip from 'jszip';
 import _ from 'lodash';
+import SaxonJS from 'saxon-js';
+import { Options as SaxonJsOptions } from 'saxon-js';
 import { FoProperty, Property, Style, StyleName, styles } from './styles';
 import shell from './shell';
 import vars from './vars';
@@ -115,6 +117,7 @@ export default class Generator {
   page_number;
   options: Options;
   transtype;
+
   // title_numbering;
 
   constructor(conf: Model) {
@@ -341,6 +344,68 @@ export default class Generator {
   /**
    * Generate plugin custom XSLT file.
    */
+  generate_custom_xslt(stylesheet: TemplateName) {
+    //   if (stylesheet === 'front-matter' || !stylesheet) {
+    //     FrontMatter.generate_custom(root, this);
+    //   }
+    //   if (stylesheet === 'tables' || !stylesheet) {
+    //     Tables.generate_custom(root, this);
+    //   }
+    //   if (stylesheet === 'toc' || !stylesheet) {
+    //     Toc.generate_custom(root, this);
+    //   }
+    //   if (stylesheet === 'commons' || !stylesheet) {
+    //     Commons.generate_custom(root, this);
+    //   }
+    //   if (stylesheet === 'topic' || !stylesheet) {
+    //     Topic.generate_custom(root, this);
+    //   }
+    // if (stylesheet === 'links' || !stylesheet) {
+    //   // Links.generate_custom(root, this);
+    // }
+    // if (stylesheet === 'lists' || !stylesheet) {
+    // Lists.generate_custom(root, this);
+    const options: SaxonJsOptions = {
+      stylesheetInternal: require(`../../build/generator/${stylesheet}.sef.json`),
+      // stylesheetParams: { payload: { hello: 'world' } },
+      destination: 'serialized',
+      sourceType: 'json',
+      sourceText: JSON.stringify(this.conf),
+    };
+    // SaxonJS.transform(options, 'async')
+    //   .then((output: any) => {
+    //     // response.status(200).send(output.principalResult);
+    //     console.log(output.principalResult);
+    //   })
+    //   .catch((error) => {
+    //     throw error;
+    //   });
+    const output = SaxonJS.transform(options);
+    return output.principalResult;
+    // }
+    // if (stylesheet === 'static-content' || !stylesheet) {
+    //   StaticContent.generate_custom(root, this);
+    // }
+    // if (stylesheet === 'layout-masters' || !stylesheet) {
+    //   LayoutMasters.generate_custom(root, this);
+    // }
+    // if (stylesheet === 'pr-domain' || !stylesheet) {
+    //   PrDomain.generate_custom(root, this);
+    // }
+    // if (!stylesheet) {
+    //   if (!this.override_shell && this.toc_maximum_level) {
+    //     root.append(Comment('TOC'));
+    //     SubElement(root, xsl('variable'), {
+    //       name: 'tocMaximumLevel',
+    //     }).text = this.toc_maximum_level.toString();
+    //   }
+    // }
+    // return '';
+  }
+
+  /**
+   * Generate plugin custom XSLT file.
+   */
   generate_custom(stylesheet: TemplateName) {
     const root = Element(xsl('stylesheet'), {
       //"xmlns:xsl": "http://www.w3.org/1999/XSL/Transform",
@@ -532,7 +597,26 @@ export default class Generator {
         this.run_generation(
           zip,
           () => {
-            return this.generate_custom(s);
+            // if (s === 'lists') {
+            //   const options: SaxonJsOptions = {
+            //     stylesheetInternal: require('../../build/generator/lists.sef.json'),
+            //     // stylesheetParams: { payload: { hello: 'world' } },
+            //     destination: 'serialized',
+            //     sourceType: 'json',
+            //     sourceText: JSON.stringify(this.conf),
+            //   };
+            //   // SaxonJS.transform(options, 'async')
+            //   //   .then((output: any) => {
+            //   //     // response.status(200).send(output.principalResult);
+            //   //     console.log(output.principalResult);
+            //   //   })
+            //   //   .catch((error) => {
+            //   //     throw error;
+            //   //   });
+            //   const output = SaxonJS.transform(options);
+            //   return output.principalResult;
+            // }
+            return this.generate_custom_xslt(s);
           },
           `${this.plugin_name}/xsl/fo/${s}.xsl`
         );
