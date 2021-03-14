@@ -61,16 +61,16 @@ type TemplateName =
   | 'topic';
 type AttrTemplateName =
   | 'basic-settings'
-  | 'front-matter-attr'
-  | 'tables-attr'
-  | 'toc-attr'
-  | 'commons-attr'
-  | 'links-attr'
-  | 'lists-attr'
-  | 'static-content-attr'
-  | 'layout-masters-attr'
-  | 'pr-domain-attr'
-  | 'topic-attr';
+  | 'front-matter'
+  | 'tables'
+  | 'toc'
+  | 'commons'
+  | 'links'
+  | 'lists'
+  | 'static-content'
+  | 'layout-masters'
+  | 'pr-domain'
+  | 'topic';
 
 export default class Generator {
   conf: Model;
@@ -345,62 +345,29 @@ export default class Generator {
    * Generate plugin custom XSLT file.
    */
   generate_custom_xslt(stylesheet: TemplateName) {
-    //   if (stylesheet === 'front-matter' || !stylesheet) {
-    //     FrontMatter.generate_custom(root, this);
-    //   }
-    //   if (stylesheet === 'tables' || !stylesheet) {
-    //     Tables.generate_custom(root, this);
-    //   }
-    //   if (stylesheet === 'toc' || !stylesheet) {
-    //     Toc.generate_custom(root, this);
-    //   }
-    //   if (stylesheet === 'commons' || !stylesheet) {
-    //     Commons.generate_custom(root, this);
-    //   }
-    //   if (stylesheet === 'topic' || !stylesheet) {
-    //     Topic.generate_custom(root, this);
-    //   }
-    // if (stylesheet === 'links' || !stylesheet) {
-    //   // Links.generate_custom(root, this);
-    // }
-    // if (stylesheet === 'lists' || !stylesheet) {
-    // Lists.generate_custom(root, this);
     const options: SaxonJsOptions = {
       stylesheetInternal: require(`../../build/generator/${stylesheet}.sef.json`),
-      // stylesheetParams: { payload: { hello: 'world' } },
       destination: 'serialized',
       sourceType: 'json',
       sourceText: JSON.stringify(this.conf),
     };
-    // SaxonJS.transform(options, 'async')
-    //   .then((output: any) => {
-    //     // response.status(200).send(output.principalResult);
-    //     console.log(output.principalResult);
-    //   })
-    //   .catch((error) => {
-    //     throw error;
-    //   });
     const output = SaxonJS.transform(options);
     return output.principalResult;
-    // }
-    // if (stylesheet === 'static-content' || !stylesheet) {
-    //   StaticContent.generate_custom(root, this);
-    // }
-    // if (stylesheet === 'layout-masters' || !stylesheet) {
-    //   LayoutMasters.generate_custom(root, this);
-    // }
-    // if (stylesheet === 'pr-domain' || !stylesheet) {
-    //   PrDomain.generate_custom(root, this);
-    // }
-    // if (!stylesheet) {
-    //   if (!this.override_shell && this.toc_maximum_level) {
-    //     root.append(Comment('TOC'));
-    //     SubElement(root, xsl('variable'), {
-    //       name: 'tocMaximumLevel',
-    //     }).text = this.toc_maximum_level.toString();
-    //   }
-    // }
-    // return '';
+  }
+
+  /**
+   * Generate plugin custom XSLT file.
+   */
+  generate_custom_attr_xslt(stylesheet: AttrTemplateName) {
+    const options: SaxonJsOptions = {
+      stylesheetInternal: require(`../../build/generator/${stylesheet}.sef.json`),
+      destination: 'serialized',
+      sourceType: 'json',
+      initialMode: 'attr',
+      sourceText: JSON.stringify(this.conf),
+    };
+    const output = SaxonJS.transform(options);
+    return output.principalResult;
   }
 
   /**
@@ -511,36 +478,36 @@ export default class Generator {
         'xs ditaarch opentopic e dita-ot opentopic-func',
     });
 
-    if (stylesheet === 'commons-attr' || !stylesheet) {
-      Commons.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'tables-attr' || !stylesheet) {
-      Tables.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'layout-masters-attr' || !stylesheet) {
-      LayoutMasters.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'toc-attr' || !stylesheet) {
-      Toc.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'basic-settings' || !stylesheet) {
-      BasicSettings.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'links-attr' || !stylesheet) {
-      Links.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'lists-attr' || !stylesheet) {
-      Lists.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'pr-domain-attr' || !stylesheet) {
-      PrDomain.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'static-content-attr' || !stylesheet) {
-      StaticContent.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'topic-attr' || !stylesheet) {
-      Topic.generate_custom_attr(root, this);
-    }
+    // if (stylesheet === 'commons-attr' || !stylesheet) {
+    //   Commons.generate_custom_attr(root, this);
+    // }
+    // if (stylesheet === 'tables-attr' || !stylesheet) {
+    //   Tables.generate_custom_attr(root, this);
+    // }
+    // if (stylesheet === 'layout-masters-attr' || !stylesheet) {
+    //   LayoutMasters.generate_custom_attr(root, this);
+    // }
+    // if (stylesheet === 'toc-attr' || !stylesheet) {
+    //   Toc.generate_custom_attr(root, this);
+    // }
+    // if (stylesheet === 'basic-settings' || !stylesheet) {
+    //   BasicSettings.generate_custom_attr(root, this);
+    // }
+    // if (stylesheet === 'links-attr' || !stylesheet) {
+    //   Links.generate_custom_attr(root, this);
+    // }
+    // if (stylesheet === 'lists-attr' || !stylesheet) {
+    //   Lists.generate_custom_attr(root, this);
+    // }
+    // if (stylesheet === 'pr-domain-attr' || !stylesheet) {
+    //   PrDomain.generate_custom_attr(root, this);
+    // }
+    // if (stylesheet === 'static-content-attr' || !stylesheet) {
+    //   StaticContent.generate_custom_attr(root, this);
+    // }
+    // if (stylesheet === 'topic-attr' || !stylesheet) {
+    //   Topic.generate_custom_attr(root, this);
+    // }
 
     // ditagen.generator.indent(root)
     // ditagen.generator.set_prefixes(root, get_ns())
@@ -640,23 +607,23 @@ export default class Generator {
     // custom XSLT attribute sets
     if (this.override_shell) {
       const files: AttrTemplateName[] = [
-        'front-matter-attr',
-        'commons-attr',
-        'layout-masters-attr',
-        'static-content-attr',
-        'tables-attr',
-        'toc-attr',
+        'front-matter',
+        'commons',
+        'layout-masters',
+        'static-content',
+        'tables',
+        'toc',
         'basic-settings',
-        'links-attr',
-        'lists-attr',
-        'pr-domain-attr',
-        'topic-attr',
+        'links',
+        'lists',
+        'pr-domain',
+        'topic',
       ];
       files.forEach((s) => {
         this.run_generation(
           zip,
           () => {
-            return this.generate_custom_attr(s);
+            return this.generate_custom_attr_xslt(s);
           },
           `${this.plugin_name}/cfg/fo/attrs/${s}.xsl`
         );

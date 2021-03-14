@@ -3,6 +3,7 @@ declare module 'saxon-js' {
     stylesheetInternal: any;
     destination: string;
     stylesheetParams?: { payload: { [key: string]: string } };
+    initialMode?: string;
     sourceType: 'json' | 'xml';
     sourceText: string;
   }
