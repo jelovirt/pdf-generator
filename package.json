@@ -4,7 +4,7 @@
   "homepage": "https://github.com/jelovirt/pdf-generator",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "parcel build public/index.html",
+    "build": "npm run compile && parcel build public/index.html",
     "compile": "./compile.sh",
     "start": "parcel public/index.html",
     "fmt": "prettier --write .",

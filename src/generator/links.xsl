@@ -12,11 +12,11 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:variable name="style" select=". => map:get('conf') => map:get('style')" as="map(*)"/>
+  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>
 
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
-      <xsl:variable name="link" select="$style => map:get('link')" as="map(*)"/>
+      <xsl:variable name="link" select="$style('link')" as="map(*)"/>
       <xsl:if test="$link('link-url')">
         <xsl:comment>Link</xsl:comment>
         <axsl:template match="*[contains(@class,' topic/xref ')]" name="topic.xref">

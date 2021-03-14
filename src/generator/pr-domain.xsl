@@ -12,10 +12,10 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:variable name="style" select=". => map:get('conf') => map:get('style')" as="map(*)"/>
+  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>
 
   <xsl:template match=".[. instance of map(*)]">
-    <xsl:variable name="codeblock" select="$style => map:get('codeblock')" as="map(*)"/>
+    <xsl:variable name="codeblock" select="$style('codeblock')" as="map(*)"/>
     <axsl:stylesheet version="2.0">
       <xsl:if test="$codeblock('line-numbering')">
         <axsl:template match="node()" mode="codeblock.generate-line-number" as="xs:boolean">
