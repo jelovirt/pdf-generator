@@ -1,4 +1,5 @@
-declare module '../../lib/SaxonJS2.rt' {
+declare module 'saxon-js' {
+  // export {Options, Result} from './saxon-js'
   export interface Options {
     stylesheetInternal: any;
     destination: string;

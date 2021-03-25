@@ -1,7 +1,6 @@
 import JSZip from 'jszip';
 import _ from 'lodash';
-import SaxonJS from '../../lib/SaxonJS2.rt';
-// import { Options as SaxonJsOptions } from '../../lib/SaxonJS2.rt';
+import { SaxonJS, Options as SaxonJsOptions } from '../types/saxon-js';
 import { FoProperty, Property, Style, StyleName, styles } from './styles';
 import shell from './shell';
 import vars from './vars';
@@ -25,12 +24,6 @@ import Tables from '../../build/generator/tables.sef.json';
 import Toc from '../../build/generator/toc.sef.json';
 import Topic from '../../build/generator/topic.sef.json';
 import { Model } from './Model';
-
-declare global {
-  interface Window {
-    SaxonJS: typeof SaxonJS;
-  }
-}
 
 // require('../../lib/SaxonJS2.rt');
 
@@ -98,10 +91,12 @@ export default class Generator {
   page_number;
   options: Options;
   transtype;
+  SaxonJS: SaxonJS;
 
   // title_numbering;
 
-  constructor(conf: Model) {
+  constructor(conf: Model, SaxonJS: SaxonJS) {
+    this.SaxonJS = SaxonJS;
     this.conf = conf;
     //validate
     if (!conf.ot_version) {
@@ -327,7 +322,7 @@ export default class Generator {
    * Generate plugin custom XSLT file.
    */
   generate_custom_xslt(stylesheet: any) {
-    const options = {
+    const options: SaxonJsOptions = {
       // stylesheetInternal: require(`../../build/generator/${stylesheet}.sef.json`),
       stylesheetInternal: stylesheet,
       destination: 'serialized',
@@ -340,7 +335,7 @@ export default class Generator {
       //   SaxonJS,
       //   transform: SaxonJS.transform,
       // });
-      const output = window.SaxonJS.transform(options);
+      const output = this.SaxonJS.transform(options);
       return (output as any).principalResult;
     } catch (e) {
       console.log(e);
@@ -352,7 +347,7 @@ export default class Generator {
    * Generate plugin custom XSLT file.
    */
   generate_custom_attr_xslt(stylesheet: any) {
-    const options = {
+    const options: SaxonJsOptions = {
       stylesheetInternal: stylesheet,
       destination: 'serialized',
       sourceType: 'json',
@@ -366,7 +361,7 @@ export default class Generator {
       //   SaxonJS,
       //   transform: SaxonJS.transform,
       // });
-      const output = window.SaxonJS.transform(options);
+      const output = this.SaxonJS.transform(options);
       return (output as any).principalResult;
     } catch (e) {
       console.log(e);
@@ -454,7 +449,13 @@ export default class Generator {
     custom_xslt(PrDomain, 'pr-domain');
     custom_xslt(StaticContent, 'static-content');
     custom_xslt(Topic, 'topic');
-    custom_xslt(LayoutMasters, 'layout-masters');
+    this.run_generation(
+      zip,
+      () => {
+        return this.generate_custom_xslt(LayoutMasters);
+      },
+      `${this.plugin_name}/cfg/fo/layout-masters.xsl`
+    );
 
     // custom XSLT attribute sets
     const attr_xslt = (stylesheet: any, name: string) => {
@@ -466,18 +467,18 @@ export default class Generator {
         `${this.plugin_name}/cfg/fo/attrs/${name}.xsl`
       );
     };
-    attr_xslt(FrontMatter, 'front-matter');
-    attr_xslt(Commons, 'commons');
-    attr_xslt(LayoutMasters, 'layout-masters');
-    attr_xslt(StaticContent, 'static-content');
-    attr_xslt(Tables, 'tables');
-    attr_xslt(Toc, 'toc');
-    attr_xslt(Tables, 'tables');
+    attr_xslt(FrontMatter, 'front-matter-attr');
+    attr_xslt(Commons, 'commons-attr');
+    attr_xslt(LayoutMasters, 'layout-masters-attr');
+    attr_xslt(StaticContent, 'static-content-attr');
+    attr_xslt(Tables, 'tables-attr');
+    attr_xslt(Toc, 'toc-attr');
+    attr_xslt(Tables, 'tables-attr');
     attr_xslt(BasicSettings, 'basic-settings');
-    attr_xslt(Links, 'links');
-    attr_xslt(Lists, 'lists');
-    attr_xslt(PrDomain, 'pr-domain');
-    attr_xslt(Topic, 'topic');
+    attr_xslt(Links, 'links-attr');
+    attr_xslt(Lists, 'lists-attr');
+    attr_xslt(PrDomain, 'pr-domain-attr');
+    attr_xslt(Topic, 'topic-attr');
 
     // shell XSLT
     if (this.override_shell) {

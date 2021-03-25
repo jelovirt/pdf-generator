@@ -1,9 +1,11 @@
 import { getInitStore } from './Model';
 import Generator from './index';
 import JSZip from 'jszip';
+// @ts-ignore
+import SaxonJS from 'saxon-js';
 
 describe('Generator', () => {
-  const generator = new Generator({ ...getInitStore(), id: 'x' });
+  const generator = new Generator({ ...getInitStore(), id: 'x' }, SaxonJS);
   it('should generate ZIP', async () => {
     const zip = new JSZip();
     generator.generate_plugin(zip);

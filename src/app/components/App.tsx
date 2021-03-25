@@ -15,11 +15,18 @@ import { getInitValues, toModel, Values } from './common';
 import Generator from '../../generator';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { SaxonJS } from '../../types/saxon-js';
+
+declare global {
+  interface Window {
+    SaxonJS: SaxonJS;
+  }
+}
 
 const onSubmit = (values: Values, actions: FormikHelpers<Values>) => {
   actions.setSubmitting(false);
   const model = toModel(values);
-  const generator = new Generator(model);
+  const generator = new Generator(model, window.SaxonJS);
   const zip = new JSZip();
   generator.generate_plugin(zip);
   zip
