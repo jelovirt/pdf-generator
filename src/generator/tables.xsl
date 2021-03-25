@@ -16,6 +16,7 @@
 
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <xsl:variable name="table" select="$style('table')" as="map(*)"/>
       <!-- caption numbering -->
       <xsl:variable name="tableCaptionNumber" select="$table('caption-number')"/>
@@ -204,6 +205,7 @@
 
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <!-- dl -->
       <xsl:if test="$style('dl')('dl-type')">
         <axsl:attribute-set name="e:dl">

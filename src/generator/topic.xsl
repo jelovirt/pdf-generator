@@ -16,6 +16,7 @@
 
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <xsl:comment>title numbering</xsl:comment>
       <axsl:variable name="e:number-levels">
         <xsl:attribute name="select">
@@ -152,6 +153,7 @@
 
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <!-- titles -->
       <axsl:attribute-set name="topic">
         <xsl:call-template name="attribute-set">

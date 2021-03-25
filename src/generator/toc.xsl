@@ -16,6 +16,7 @@
 
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <axsl:template match="*[contains(@class, ' bookmap/appendix ')]" mode="tocText">
         <axsl:param name="tocItemContent"/>
         <axsl:param name="currentNode"/>
@@ -94,6 +95,7 @@
 
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <axsl:attribute-set name="__toc__indent">
         <axsl:attribute name="start-indent">
           <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>

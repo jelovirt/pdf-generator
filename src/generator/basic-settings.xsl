@@ -15,12 +15,12 @@
   <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>
 
   <xsl:template match=".[. instance of map(*)]">
-    <axsl:stylesheet version="2.0">
-    </axsl:stylesheet>
+    <xsl:message terminate="yes">Not supported</xsl:message>
   </xsl:template>
 
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <axsl:param name="pdfFormatter" select="'{.('formatter')}'"/>
       <axsl:param name="tocMaximumLevel" select="'{.('toc_maximum_level')}'"/>
       <!-- page size -->

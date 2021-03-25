@@ -16,6 +16,7 @@
 
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <xsl:if test="exists($style('ol')) or exists($style('ul'))">
         <xsl:comment>list</xsl:comment>
 
@@ -76,6 +77,7 @@
 
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <axsl:attribute-set name="ol">
         <axsl:attribute name="provisional-distance-between-starts">
           <axsl:call-template name="e:list-label-length"/>

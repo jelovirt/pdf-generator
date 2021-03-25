@@ -16,6 +16,7 @@
 
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <xsl:if test=".('blank_pages')">
         <axsl:variable name="blank-pages" select="true()"/>
 
@@ -140,6 +141,7 @@
 
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <!-- page column count -->
       <xsl:if test="exists(.('body_column_count'))">
         <xsl:variable name="root" select="."/>

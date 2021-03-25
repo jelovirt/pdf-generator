@@ -268,4 +268,11 @@
     </xsl:for-each>
   </xsl:template>
 
+  <xsl:template name="generate-namespace-node">
+    <xsl:variable name="dummy" as="element()">
+      <xsl:element name="e:dummy" namespace="{. ? plugin_name}"/>
+    </xsl:variable>
+    <xsl:copy-of select="$dummy/namespace::e"/>
+  </xsl:template>
+
 </xsl:stylesheet>

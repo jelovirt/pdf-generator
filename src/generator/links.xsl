@@ -16,6 +16,7 @@
 
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <xsl:variable name="link" select="$style('link')" as="map(*)"/>
       <xsl:if test="$link('link-url')">
         <xsl:comment>Link</xsl:comment>
@@ -89,6 +90,7 @@
 
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <axsl:attribute-set name="link__shortdesc">
         <xsl:call-template name="attribute-set">
           <xsl:with-param name="style" select="$style => map:get('body')"/>

@@ -16,6 +16,7 @@
 
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
       <xsl:if test="exists(.('cover_image_metadata')) or exists(.('cover_image_topic'))">
         <axsl:template name="createFrontCoverContents">
           <!-- set the title -->
@@ -75,6 +76,7 @@
 
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
+      <xsl:call-template name="generate-namespace-node"/>
     </axsl:stylesheet>
   </xsl:template>
 

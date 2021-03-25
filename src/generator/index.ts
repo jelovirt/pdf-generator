@@ -437,7 +437,6 @@ export default class Generator {
 
     // custom XSLT
     const custom_xslt = (stylesheet: any, name: string) => {
-      console.log('custom_xslt', name);
       this.run_generation(
         zip,
         () => {
@@ -459,7 +458,6 @@ export default class Generator {
 
     // custom XSLT attribute sets
     const attr_xslt = (stylesheet: any, name: string) => {
-      console.log('attr_xslt', name);
       this.run_generation(
         zip,
         () => {
