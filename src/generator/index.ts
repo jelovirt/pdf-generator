@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 import _ from 'lodash';
-import SaxonJS from 'saxon-js';
-import { Options as SaxonJsOptions } from 'saxon-js';
+import SaxonJS from '../../lib/SaxonJS2.rt';
+// import { Options as SaxonJsOptions } from '../../lib/SaxonJS2.rt';
 import { FoProperty, Property, Style, StyleName, styles } from './styles';
 import shell from './shell';
 import vars from './vars';
@@ -11,22 +11,28 @@ import {
   Element,
   SubElement,
   register_namespace,
-  Comment,
   ElementTree,
 } from './elementtree';
-import * as BasicSettings from './basic-settings';
-import * as Commons from './commons';
-import * as FrontMatter from './front-matter';
-// @ts-ignore
-import * as LayoutMasters from './layoutMasters';
-import * as Links from './links';
-import * as Lists from './lists';
-import * as PrDomain from './pr-domain';
-import * as StaticContent from './staticContent';
-import * as Tables from './tables';
-import * as Toc from './toc';
-import * as Topic from './topic';
+import BasicSettings from '../../build/generator/basic-settings.sef.json';
+import Commons from '../../build/generator/commons.sef.json';
+import FrontMatter from '../../build/generator/front-matter.sef.json';
+import LayoutMasters from '../../build/generator/layout-masters.sef.json';
+import Links from '../../build/generator/links.sef.json';
+import Lists from '../../build/generator/lists.sef.json';
+import PrDomain from '../../build/generator/pr-domain.sef.json';
+import StaticContent from '../../build/generator/static-content.sef.json';
+import Tables from '../../build/generator/tables.sef.json';
+import Toc from '../../build/generator/toc.sef.json';
+import Topic from '../../build/generator/topic.sef.json';
 import { Model } from './Model';
+
+declare global {
+  interface Window {
+    SaxonJS: typeof SaxonJS;
+  }
+}
+
+// require('../../lib/SaxonJS2.rt');
 
 type Language =
   | 'de'
@@ -46,31 +52,6 @@ type Language =
 type Options = {
   blank_pages: boolean;
 };
-
-type TemplateName =
-  | 'layout-masters'
-  | 'front-matter'
-  | 'tables'
-  | 'toc'
-  | 'commons'
-  | 'links'
-  | 'lists'
-  | 'static-content'
-  | 'layout-masters'
-  | 'pr-domain'
-  | 'topic';
-type AttrTemplateName =
-  | 'basic-settings'
-  | 'front-matter'
-  | 'tables'
-  | 'toc'
-  | 'commons'
-  | 'links'
-  | 'lists'
-  | 'static-content'
-  | 'layout-masters'
-  | 'pr-domain'
-  | 'topic';
 
 export default class Generator {
   conf: Model;
@@ -209,17 +190,6 @@ export default class Generator {
     return undefined;
   }
 
-  //    function get_ns():
-  //        return {
-  //            "xsl": "http://www.w3.org/1999/XSL/Transform",
-  //            "fo": "http://www.w3.org/1999/XSL/Format",
-  //            "xs": "http://www.w3.org/2001/XMLSchema",
-  //            "e": plugin_name,
-  //            "ditaarch": "http://dita.oasis-open.org/architecture/2005/",
-  //            "opentopic": "http://www.idiominc.com/opentopic",
-  //            "opentopic-func": "http://www.idiominc.com/opentopic/exsl/function"
-  //            }
-
   /**
    * Generate plugin integrator Ant file.
    */
@@ -341,96 +311,67 @@ export default class Generator {
     return d.write({ indent: 2 });
   }
 
+  // /**
+  //  * Remove `default` field added to JSON. I have no idea why bundling with Parcel adds these.
+  //  */
+  // cleanStylesheet(stylesheet: any): any {
+  //   if (stylesheet.default) {
+  //     const copy = { ...stylesheet };
+  //     delete copy.default;
+  //     return copy;
+  //   }
+  //   return stylesheet;
+  // }
+
   /**
    * Generate plugin custom XSLT file.
    */
-  generate_custom_xslt(stylesheet: TemplateName) {
-    const options: SaxonJsOptions = {
-      stylesheetInternal: require(`../../build/generator/${stylesheet}.sef.json`),
+  generate_custom_xslt(stylesheet: any) {
+    const options = {
+      // stylesheetInternal: require(`../../build/generator/${stylesheet}.sef.json`),
+      stylesheetInternal: stylesheet,
       destination: 'serialized',
       sourceType: 'json',
       sourceText: JSON.stringify(this.conf),
     };
-    const output = SaxonJS.transform(options);
-    return output.principalResult;
+    try {
+      // console.log(SaxonJS);
+      // console.log({
+      //   SaxonJS,
+      //   transform: SaxonJS.transform,
+      // });
+      const output = window.SaxonJS.transform(options);
+      return (output as any).principalResult;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
   }
 
   /**
    * Generate plugin custom XSLT file.
    */
-  generate_custom_attr_xslt(stylesheet: AttrTemplateName) {
-    const options: SaxonJsOptions = {
-      stylesheetInternal: require(`../../build/generator/${stylesheet}.sef.json`),
+  generate_custom_attr_xslt(stylesheet: any) {
+    const options = {
+      stylesheetInternal: stylesheet,
       destination: 'serialized',
       sourceType: 'json',
       initialMode: 'attr',
       sourceText: JSON.stringify(this.conf),
     };
-    const output = SaxonJS.transform(options);
-    return output.principalResult;
-  }
-
-  /**
-   * Generate plugin custom XSLT file.
-   */
-  generate_custom(stylesheet: TemplateName) {
-    const root = Element(xsl('stylesheet'), {
-      //"xmlns:xsl": "http://www.w3.org/1999/XSL/Transform",
-      'xmlns:fo': 'http://www.w3.org/1999/XSL/Format',
-      'xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
-      'xmlns:e': this.plugin_name,
-      'xmlns:dita-ot': 'http://dita-ot.sourceforge.net/ns/201007/dita-ot',
-      'xmlns:ditaarch': 'http://dita.oasis-open.org/architecture/2005/',
-      'xmlns:opentopic': 'http://www.idiominc.com/opentopic',
-      'xmlns:opentopic-func': 'http://www.idiominc.com/opentopic/exsl/function',
-      version: '2.0',
-      'exclude-result-prefixes': 'ditaarch opentopic e dita-ot opentopic-func',
-    });
-
-    if (stylesheet === 'front-matter' || !stylesheet) {
-      FrontMatter.generate_custom(root, this);
+    // console.log(stylesheet.Σ);
+    // console.log(stylesheet.default.Σ);
+    try {
+      // console.log({
+      //   SaxonJS,
+      //   transform: SaxonJS.transform,
+      // });
+      const output = window.SaxonJS.transform(options);
+      return (output as any).principalResult;
+    } catch (e) {
+      console.log(e);
+      throw e;
     }
-    if (stylesheet === 'tables' || !stylesheet) {
-      Tables.generate_custom(root, this);
-    }
-    if (stylesheet === 'toc' || !stylesheet) {
-      Toc.generate_custom(root, this);
-    }
-    if (stylesheet === 'commons' || !stylesheet) {
-      Commons.generate_custom(root, this);
-    }
-    if (stylesheet === 'topic' || !stylesheet) {
-      Topic.generate_custom(root, this);
-    }
-    if (stylesheet === 'links' || !stylesheet) {
-      Links.generate_custom(root, this);
-    }
-    if (stylesheet === 'lists' || !stylesheet) {
-      Lists.generate_custom(root, this);
-    }
-    if (stylesheet === 'static-content' || !stylesheet) {
-      StaticContent.generate_custom(root, this);
-    }
-    if (stylesheet === 'layout-masters' || !stylesheet) {
-      LayoutMasters.generate_custom(root, this);
-    }
-    if (stylesheet === 'pr-domain' || !stylesheet) {
-      PrDomain.generate_custom(root, this);
-    }
-    if (!stylesheet) {
-      if (!this.override_shell && this.toc_maximum_level) {
-        root.append(Comment('TOC'));
-        SubElement(root, xsl('variable'), {
-          name: 'tocMaximumLevel',
-        }).text = this.toc_maximum_level.toString();
-      }
-    }
-
-    // ditagen.generator.indent(root)
-    // ditagen.generator.set_prefixes(root, get_ns())
-
-    const d = new ElementTree(root);
-    return d.write({ indent: 2 });
   }
 
   /**
@@ -460,59 +401,6 @@ export default class Generator {
       }
     });
     return attrSet;
-  }
-
-  /**
-   * Generate plugin custom XSLT file.
-   */
-  generate_custom_attr(stylesheet: AttrTemplateName) {
-    const root = Element(xsl('stylesheet'), {
-      'xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
-      'xmlns:e': this.plugin_name,
-      'xmlns:dita-ot': 'http://dita-ot.sourceforge.net/ns/201007/dita-ot',
-      'xmlns:ditaarch': 'http://dita.oasis-open.org/architecture/2005/',
-      'xmlns:opentopic': 'http://www.idiominc.com/opentopic',
-      'xmlns:opentopic-func': 'http://www.idiominc.com/opentopic/exsl/function',
-      version: '2.0',
-      'exclude-result-prefixes':
-        'xs ditaarch opentopic e dita-ot opentopic-func',
-    });
-
-    // if (stylesheet === 'commons-attr' || !stylesheet) {
-    //   Commons.generate_custom_attr(root, this);
-    // }
-    // if (stylesheet === 'tables-attr' || !stylesheet) {
-    //   Tables.generate_custom_attr(root, this);
-    // }
-    // if (stylesheet === 'layout-masters-attr' || !stylesheet) {
-    //   LayoutMasters.generate_custom_attr(root, this);
-    // }
-    // if (stylesheet === 'toc-attr' || !stylesheet) {
-    //   Toc.generate_custom_attr(root, this);
-    // }
-    // if (stylesheet === 'basic-settings' || !stylesheet) {
-    //   BasicSettings.generate_custom_attr(root, this);
-    // }
-    // if (stylesheet === 'links-attr' || !stylesheet) {
-    //   Links.generate_custom_attr(root, this);
-    // }
-    // if (stylesheet === 'lists-attr' || !stylesheet) {
-    //   Lists.generate_custom_attr(root, this);
-    // }
-    // if (stylesheet === 'pr-domain-attr' || !stylesheet) {
-    //   PrDomain.generate_custom_attr(root, this);
-    // }
-    // if (stylesheet === 'static-content-attr' || !stylesheet) {
-    //   StaticContent.generate_custom_attr(root, this);
-    // }
-    // if (stylesheet === 'topic-attr' || !stylesheet) {
-    //   Topic.generate_custom_attr(root, this);
-    // }
-
-    // ditagen.generator.indent(root)
-    // ditagen.generator.set_prefixes(root, get_ns())
-    const d = new ElementTree(root);
-    return d.write({ indent: 2 });
   }
 
   /**
@@ -548,93 +436,51 @@ export default class Generator {
     );
 
     // custom XSLT
-    if (this.override_shell) {
-      const files: TemplateName[] = [
-        'front-matter',
-        'commons',
-        'tables',
-        'toc',
-        'links',
-        'lists',
-        'pr-domain',
-        'static-content',
-        'topic',
-      ];
-      files.forEach((s) => {
-        this.run_generation(
-          zip,
-          () => {
-            // if (s === 'lists') {
-            //   const options: SaxonJsOptions = {
-            //     stylesheetInternal: require('../../build/generator/lists.sef.json'),
-            //     // stylesheetParams: { payload: { hello: 'world' } },
-            //     destination: 'serialized',
-            //     sourceType: 'json',
-            //     sourceText: JSON.stringify(this.conf),
-            //   };
-            //   // SaxonJS.transform(options, 'async')
-            //   //   .then((output: any) => {
-            //   //     // response.status(200).send(output.principalResult);
-            //   //     console.log(output.principalResult);
-            //   //   })
-            //   //   .catch((error) => {
-            //   //     throw error;
-            //   //   });
-            //   const output = SaxonJS.transform(options);
-            //   return output.principalResult;
-            // }
-            return this.generate_custom_xslt(s);
-          },
-          `${this.plugin_name}/xsl/fo/${s}.xsl`
-        );
-      });
-      ['layout-masters' as TemplateName].forEach((s) => {
-        this.run_generation(
-          zip,
-          () => {
-            return this.generate_custom(s);
-          },
-          `${this.plugin_name}/cfg/fo/${s}.xsl`
-        );
-      });
-    } else {
+    const custom_xslt = (stylesheet: any, name: string) => {
+      console.log('custom_xslt', name);
       this.run_generation(
         zip,
-        this.generate_custom,
-        `${this.plugin_name}/cfg/fo/xsl/custom.xsl`
+        () => {
+          return this.generate_custom_xslt(stylesheet);
+        },
+        `${this.plugin_name}/xsl/fo/${name}.xsl`
       );
-    }
+    };
+    custom_xslt(FrontMatter, 'front-matter');
+    custom_xslt(Commons, 'commons');
+    custom_xslt(Tables, 'tables');
+    custom_xslt(Toc, 'toc');
+    custom_xslt(Links, 'links');
+    custom_xslt(Lists, 'lists');
+    custom_xslt(PrDomain, 'pr-domain');
+    custom_xslt(StaticContent, 'static-content');
+    custom_xslt(Topic, 'topic');
+    custom_xslt(LayoutMasters, 'layout-masters');
+
     // custom XSLT attribute sets
-    if (this.override_shell) {
-      const files: AttrTemplateName[] = [
-        'front-matter',
-        'commons',
-        'layout-masters',
-        'static-content',
-        'tables',
-        'toc',
-        'basic-settings',
-        'links',
-        'lists',
-        'pr-domain',
-        'topic',
-      ];
-      files.forEach((s) => {
-        this.run_generation(
-          zip,
-          () => {
-            return this.generate_custom_attr_xslt(s);
-          },
-          `${this.plugin_name}/cfg/fo/attrs/${s}.xsl`
-        );
-      });
-    } else {
+    const attr_xslt = (stylesheet: any, name: string) => {
+      console.log('attr_xslt', name);
       this.run_generation(
         zip,
-        this.generate_custom_attr,
-        `${this.plugin_name}/cfg/fo/attrs/custom.xsl`
+        () => {
+          return this.generate_custom_attr_xslt(stylesheet);
+        },
+        `${this.plugin_name}/cfg/fo/attrs/${name}.xsl`
       );
-    }
+    };
+    attr_xslt(FrontMatter, 'front-matter');
+    attr_xslt(Commons, 'commons');
+    attr_xslt(LayoutMasters, 'layout-masters');
+    attr_xslt(StaticContent, 'static-content');
+    attr_xslt(Tables, 'tables');
+    attr_xslt(Toc, 'toc');
+    attr_xslt(Tables, 'tables');
+    attr_xslt(BasicSettings, 'basic-settings');
+    attr_xslt(Links, 'links');
+    attr_xslt(Lists, 'lists');
+    attr_xslt(PrDomain, 'pr-domain');
+    attr_xslt(Topic, 'topic');
+
     // shell XSLT
     if (this.override_shell) {
       this.run_generation(

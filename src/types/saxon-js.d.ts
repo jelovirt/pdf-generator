@@ -1,4 +1,4 @@
-declare module 'saxon-js' {
+declare module '../../lib/SaxonJS2.rt' {
   export interface Options {
     stylesheetInternal: any;
     destination: string;
@@ -10,6 +10,11 @@ declare module 'saxon-js' {
   export interface Result {
     principalResult: string;
   }
+  export async function transform(options: Options, type?: 'sync'): Result;
+  export async function transform(
+    options: Options,
+    type: 'async'
+  ): Promise<Result>;
   export default class SaxonJS {
     static async transform(options: Options, type?: 'sync'): Result;
     static async transform(options: Options, type: 'async'): Promise<Result>;

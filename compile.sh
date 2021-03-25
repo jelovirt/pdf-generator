@@ -1,5 +1,6 @@
 #!/bin/bash
 
+rm build/generator/*
 for f in src/generator/*.xsl; do
   file=${f##*/}
   base=${file%%.*}
