@@ -21,30 +21,30 @@
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <axsl:param name="pdfFormatter" select="'{.('formatter')}'"/>
-      <axsl:param name="tocMaximumLevel" select="'{.('toc_maximum_level')}'"/>
+      <axsl:param name="pdfFormatter" select="'{. ?formatter}'"/>
+      <axsl:param name="tocMaximumLevel" select="{. ?toc_maximum_level}"/>
       <!-- page size -->
       <axsl:variable name="page-width">
-        <xsl:value-of select=".('page')('width')"/>
+        <xsl:value-of select=". ?page ?width"/>
       </axsl:variable>
       <axsl:variable name="page-height">
-        <xsl:value-of select=".('page')('height')"/>
+        <xsl:value-of select=". ?page ?height"/>
       </axsl:variable>
       <!-- mirror pages -->
       <xsl:if test=".('mirror_page_margins')">
         <axsl:variable name="mirror-page-margins" select="true()"/>
       </xsl:if>
       <!-- page margins -->
-      <xsl:variable name="page" select=".('page')"/>
+      <xsl:variable name="page" select=". ?page"/>
       <xsl:for-each select="('top', 'outside', 'bottom', 'inside')">
         <axsl:variable name="page-margin-{.}">
           <xsl:value-of select="$page(.)"/>
         </axsl:variable>
       </xsl:for-each>
       <!-- font size -->
-      <xsl:if test="exists($style('body')('font-size'))">
+      <xsl:if test="exists($style ?body ?font-size)">
         <axsl:variable name="default-font-size">
-          <xsl:value-of select="$style('body')('font-size')"/>
+          <xsl:value-of select="$style ?body ?font-size"/>
         </axsl:variable>
       </xsl:if>
       <!-- line height -->
