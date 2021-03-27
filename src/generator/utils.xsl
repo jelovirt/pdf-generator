@@ -270,9 +270,25 @@
 
   <xsl:template name="generate-namespace-node">
     <xsl:variable name="dummy" as="element()">
-      <xsl:element name="e:dummy" namespace="{. ? plugin_name}"/>
+      <dummy>
+        <xsl:attribute name="xs:dummy" namespace="http://www.w3.org/2001/XMLSchema"/>
+        <xsl:attribute name="e:dummy" namespace="{if (exists(. ?plugin_name[normalize-space()])) then (. ?plugin_name) else (. ?id)}"/>
+        <xsl:attribute name="dita-ot:dummy" namespace="http://dita-ot.sourceforge.net/ns/201007/dita-ot"/>
+        <xsl:attribute name="ditaarch:dummy" namespace="http://dita.oasis-open.org/architecture/2005/"/>
+        <xsl:attribute name="opentopic:dummy" namespace="http://www.idiominc.com/opentopic"/>
+        <xsl:attribute name="opentopic-func:dummy" namespace="http://www.idiominc.com/opentopic/exsl/function"/>
+      </dummy>
     </xsl:variable>
-    <xsl:copy-of select="$dummy/namespace::e"/>
+    <xsl:variable name="namespaces" select="
+      $dummy/namespace::xs,
+      $dummy/namespace::e,
+      $dummy/namespace::dita-ot,
+      $dummy/namespace::ditaarch,
+      $dummy/namespace::opentopic,
+      $dummy/namespace::opentopic-func
+    "/>
+    <xsl:copy-of select="$namespaces"/>
+    <xsl:attribute name="exclude-result-prefixes">xs e dita-ot ditaarch opentopic opentopic-func</xsl:attribute>
   </xsl:template>
 
 </xsl:stylesheet>
