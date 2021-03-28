@@ -38,7 +38,7 @@ export type Model = {
   };
   style: Record<StyleName, Record<Property, string>>;
   formatter: Formatter;
-  override_shell: boolean;
+  // override_shell: boolean;
   mirror_page_margins: boolean;
   body_column_count: number;
   blank_pages: boolean;
@@ -111,7 +111,7 @@ export function getInitStore(): Model {
     },
     style: getInitStyle(),
     formatter: Formatter.FOP,
-    override_shell: true,
+    // override_shell: true,
     mirror_page_margins: false,
     blank_pages: false,
     body_column_count: 1,

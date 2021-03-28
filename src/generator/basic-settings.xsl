@@ -12,7 +12,7 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>
+  <xsl:variable name="style" select=". ?style" as="map(*)"/>
 
   <xsl:template match=".[. instance of map(*)]">
     <xsl:message terminate="yes">Not supported</xsl:message>
@@ -24,16 +24,18 @@
       <axsl:param name="pdfFormatter" select="'{. ?formatter}'"/>
       <axsl:param name="tocMaximumLevel" select="{. ?toc_maximum_level}"/>
       <!-- page size -->
-      <axsl:variable name="page-width">
-        <xsl:value-of select=". ?page ?width"/>
-      </axsl:variable>
-      <axsl:variable name="page-height">
-        <xsl:value-of select=". ?page ?height"/>
-      </axsl:variable>
-      <!-- mirror pages -->
-      <xsl:if test=".('mirror_page_margins')">
-        <axsl:variable name="mirror-page-margins" select="true()"/>
+      <xsl:if test="exists(. ?page ?width)">
+        <axsl:variable name="page-width">
+          <xsl:value-of select=". ?page ?width"/>
+        </axsl:variable>
       </xsl:if>
+      <xsl:if test="exists(. ?page ?height)">
+        <axsl:variable name="page-height">
+          <xsl:value-of select=". ?page ?height"/>
+        </axsl:variable>
+      </xsl:if>
+      <!-- mirror pages -->
+      <axsl:variable name="mirror-page-margins" select="{. ?mirror_page_margins}()"/>
       <!-- page margins -->
       <xsl:variable name="page" select=". ?page"/>
       <xsl:for-each select="('top', 'outside', 'bottom', 'inside')">
@@ -48,15 +50,15 @@
         </axsl:variable>
       </xsl:if>
       <!-- line height -->
-      <xsl:if test="exists($style('body')('line-height'))">
+      <xsl:if test="exists($style ?body ?line-height)">
         <axsl:variable name="default-line-height">
-          <xsl:value-of select="$style('body')('line-height')"/>
+          <xsl:value-of select="$style ?body ?line-height"/>
         </axsl:variable>
       </xsl:if>
       <!-- body indent -->
-      <xsl:if test="exists($style('body')('start-indent'))">
+      <xsl:if test="exists($style ?body ?start-indent)">
         <axsl:variable name="side-col-width">
-          <xsl:value-of select="$style('body')('start-indent')"/>
+          <xsl:value-of select="$style ?body ?start-indent"/>
         </axsl:variable>
       </xsl:if>
     </axsl:stylesheet>

@@ -81,7 +81,7 @@ export default class Generator {
   mirror_page_margins;
   table_continued;
   formatter;
-  override_shell;
+  // override_shell;
   // cover_image;
   // cover_image_name;
   cover_image_metadata;
@@ -141,7 +141,7 @@ export default class Generator {
     //__dita_gen.link_pagenumber = __config["link_pagenumber"]
     this.table_continued = conf.table_continued;
     this.formatter = conf.formatter;
-    this.override_shell = conf.override_shell;
+    // this.override_shell = conf.override_shell;
     //if ("cover_image" in self.request.arguments() && type(self.request.POST["cover_image"]) != unicode) {
     //  __dita_gen.cover_image = self.request.get("cover_image")
     //  __dita_gen.cover_image_name = self.request.POST["cover_image"].filename
@@ -203,12 +203,12 @@ export default class Generator {
       name: 'pdf2.i18n.skip',
       value: 'true',
     });
-    if (this.override_shell) {
-      SubElement(init, 'property', {
-        name: 'args.xsl.pdf',
-        location: `\${dita.plugin.${this.plugin_name}.dir}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`,
-      });
-    }
+    // if (this.override_shell) {
+    SubElement(init, 'property', {
+      name: 'args.xsl.pdf',
+      location: `\${dita.plugin.${this.plugin_name}.dir}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`,
+    });
+    // }
     if (this.chapter_layout) {
       SubElement(init, 'property', {
         name: 'args.chapter.layout',
@@ -282,29 +282,29 @@ export default class Generator {
     return d.write({ indent: 2 });
   }
 
-  /**
-   * Generate plugin configuration file.
-   */
-  generate_catalog() {
-    const root = Element(catalog('catalog'), {
-      prefer: 'system',
-    });
-    if (!this.override_shell) {
-      SubElement(root, catalog('uri'), {
-        name: 'cfg:fo/attrs/custom.xsl',
-        uri: 'fo/attrs/custom.xsl',
-      });
-      SubElement(root, catalog('uri'), {
-        name: 'cfg:fo/xsl/custom.xsl',
-        uri: 'fo/xsl/custom.xsl',
-      });
-    }
-    //ditagen.generator.indent(root)
-    //ditagen.generator.set_prefixes(root, {"": "urn:oasis:names:tc:entity:xmlns:xml:catalog"})
-    const d = new ElementTree(root);
-    register_namespace('', 'urn:oasis:names:tc:entity:xmlns:xml:catalog');
-    return d.write({ indent: 2 });
-  }
+  // /**
+  //  * Generate plugin configuration file.
+  //  */
+  // generate_catalog() {
+  //   const root = Element(catalog('catalog'), {
+  //     prefer: 'system',
+  //   });
+  //   // if (!this.override_shell) {
+  //   //   SubElement(root, catalog('uri'), {
+  //   //     name: 'cfg:fo/attrs/custom.xsl',
+  //   //     uri: 'fo/attrs/custom.xsl',
+  //   //   });
+  //   //   SubElement(root, catalog('uri'), {
+  //   //     name: 'cfg:fo/xsl/custom.xsl',
+  //   //     uri: 'fo/xsl/custom.xsl',
+  //   //   });
+  //   // }
+  //   //ditagen.generator.indent(root)
+  //   //ditagen.generator.set_prefixes(root, {"": "urn:oasis:names:tc:entity:xmlns:xml:catalog"})
+  //   const d = new ElementTree(root);
+  //   register_namespace('', 'urn:oasis:names:tc:entity:xmlns:xml:catalog');
+  //   return d.write({ indent: 2 });
+  // }
 
   // /**
   //  * Remove `default` field added to JSON. I have no idea why bundling with Parcel adds these.
@@ -424,11 +424,11 @@ export default class Generator {
       `${this.plugin_name}/plugin.xml`
     );
     // catalog
-    this.run_generation(
-      zip,
-      this.generate_catalog,
-      `${this.plugin_name}/cfg/catalog.xml`
-    );
+    // this.run_generation(
+    //   zip,
+    //   this.generate_catalog,
+    //   `${this.plugin_name}/cfg/catalog.xml`
+    // );
 
     // custom XSLT
     const custom_xslt = (stylesheet: any, name: string) => {
@@ -481,13 +481,13 @@ export default class Generator {
     attr_xslt(Topic, 'topic-attr');
 
     // shell XSLT
-    if (this.override_shell) {
-      this.run_generation(
-        zip,
-        shell,
-        `${this.plugin_name}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`
-      );
-    }
+    // if (this.override_shell) {
+    this.run_generation(
+      zip,
+      shell,
+      `${this.plugin_name}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`
+    );
+    // }
     this.variable_languages.forEach((lang) => {
       this.run_generation(
         zip,
