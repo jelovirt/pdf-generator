@@ -2,10 +2,9 @@ import JSZip from 'jszip';
 import _ from 'lodash';
 import { SaxonJS, Options as SaxonJsOptions } from '../types/saxon-js';
 import { FoProperty, Property, Style, StyleName, styles } from './styles';
-import shell from './shell';
 import vars from './vars';
 import { Version } from './version';
-import { catalog, value, xsl } from './utils';
+import { value, xsl } from './utils';
 import {
   Element,
   SubElement,
@@ -23,6 +22,7 @@ import StaticContent from '../../build/generator/static-content.sef.json';
 import Tables from '../../build/generator/tables.sef.json';
 import Toc from '../../build/generator/toc.sef.json';
 import Topic from '../../build/generator/topic.sef.json';
+import Shell from '../../build/generator/shell.sef.json';
 import { Model } from './Model';
 
 // require('../../lib/SaxonJS2.rt');
@@ -484,10 +484,12 @@ export default class Generator {
     // if (this.override_shell) {
     this.run_generation(
       zip,
-      shell,
+      () => {
+        return this.generate_custom_xslt(Shell);
+      },
       `${this.plugin_name}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`
     );
-    // }
+    // TODO
     this.variable_languages.forEach((lang) => {
       this.run_generation(
         zip,
