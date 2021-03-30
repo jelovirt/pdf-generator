@@ -17,9 +17,9 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:variable name="table" select="$style('table')" as="map(*)"/>
+      <xsl:variable name="table" select="$style ?table" as="map(*)?"/>
       <!-- caption numbering -->
-      <xsl:variable name="tableCaptionNumber" select="$table('caption-number')"/>
+      <xsl:variable name="tableCaptionNumber" select="$table ?caption-number"/>
       <xsl:choose>
         <!--
         <xsl:when test="$tableCaptionNumber = 'topic'">
@@ -44,7 +44,7 @@
         </xsl:when>
       </xsl:choose>
       <!-- caption position -->
-      <xsl:if test="$table('caption-position') = 'after'">
+      <xsl:if test="$table ?caption-position = 'after'">
         <axsl:template match="*[contains(@class, ' topic/table ')]">
           <axsl:variable name="scale">
             <axsl:call-template name="getTableScale"/>
@@ -131,7 +131,7 @@
           </axsl:template>
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:variable name="dlStyle" select="$style('dl')('dl-type')"/>
+      <xsl:variable name="dlStyle" select="$style ?dl ?dl-type"/>
       <xsl:choose>
         <xsl:when test="$dlStyle = 'list'">
           <axsl:template match="*[contains(@class, ' topic/dl ')]">
