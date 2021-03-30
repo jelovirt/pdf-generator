@@ -25,6 +25,7 @@ public class StylesheetGeneratorTask extends Task {
     private File template;
     private XMLUtils xmlUtils;
     private URIResolver resolver;
+    private File dstDir;
 
     @Override
     public void init() {
@@ -43,56 +44,55 @@ public class StylesheetGeneratorTask extends Task {
                 return new StreamSource(resourceAsStream, abs.toString());
             }
         };
-    }
-
-    @Override
-    public void execute() throws BuildException {
-        xmlUtils = getProject().getReference(ANT_REFERENCE_XML_UTILS);
-        if (xmlUtils == null) {
-            xmlUtils = new XMLUtils();
-            xmlUtils.setLogger(new DITAOTAntLogger(getProject()));
-        }
-
         final File tempDir = new File(getProject().getProperty(ANT_TEMP_DIR));
-        final File dstDir;
         try {
             dstDir = Files.createTempDirectory(tempDir.toPath(), "org.elovirta.pdf").toFile();
         } catch (IOException e) {
             throw new BuildException("Failed to generate stylesheet directory", e);
         }
-        custom_xslt("front-matter");
-//        custom_xslt("commons");
-        custom_xslt("tables");
-        custom_xslt("toc");
-        custom_xslt("links");
-        custom_xslt("lists");
-        custom_xslt("pr-domain");
-        custom_xslt("static-content");
-        custom_xslt("topic");
-//        custom_xslt(LayoutMasters, `${this.plugin_name}/cfg/fo/layout-masters.xsl`);
-//        attr_xslt(FrontMatter, 'front-matter-attr');
-//        attr_xslt(Commons, 'commons-attr');
-//        attr_xslt(LayoutMasters, 'layout-masters-attr');
-//        attr_xslt(StaticContent, 'static-content-attr');
-//        attr_xslt(Tables, 'tables-attr');
-//        attr_xslt(Toc, 'toc-attr');
-//        attr_xslt(Tables, 'tables-attr');
-//        attr_xslt(BasicSettings, 'basic-settings');
-//        attr_xslt(Links, 'links-attr');
-//        attr_xslt(Lists, 'lists-attr');
-//        attr_xslt(PrDomain, 'pr-domain-attr');
-//        attr_xslt(Topic, 'topic-attr');
-//        custom_xslt(Shell,`${this.plugin_name}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`);
+        xmlUtils = getProject().getReference(ANT_REFERENCE_XML_UTILS);
+        if (xmlUtils == null) {
+            xmlUtils = new XMLUtils();
+            xmlUtils.setLogger(new DITAOTAntLogger(getProject()));
+        }
     }
 
-    private void custom_xslt(final String name) throws BuildException {
-        getProject().log("Generating " + name + ".xsl", Project.MSG_INFO);
+    @Override
+    public void execute() throws BuildException {
+        custom_xslt("front-matter.xsl", "xsl/fo/front-matter.xsl", null);
+        custom_xslt("commons.xsl", "xsl/fo/commons.xsl", null);
+        custom_xslt("tables.xsl", "xsl/fo/tables.xsl", null);
+        custom_xslt("toc.xsl", "xsl/fo/toc.xsl", null);
+        custom_xslt("links.xsl", "xsl/fo/links.xsl", null);
+        custom_xslt("lists.xsl", "xsl/fo/lists.xsl", null);
+        custom_xslt("pr-domain.xsl", "xsl/fo/pr-domain.xsl", null);
+        custom_xslt("static-content.xsl", "xsl/fo/static-content.xsl", null);
+        custom_xslt("topic.xsl", "xsl/fo/topic.xsl", null);
+        custom_xslt("layout-masters.xsl", "cfg/fo/layout-masters.xsl", null);
+        final QName attrMode = QName.fromClarkName("{}attr");
+        custom_xslt("front-matter.xsl", "cfg/fo/front-matter-attr.xsl", attrMode);
+        custom_xslt("commons.xsl", "cfg/fo/commons-attr.xsl", attrMode);
+        custom_xslt("layout-masters.xsl", "cfg/fo/layout-masters-attr.xsl", attrMode);
+        custom_xslt("static-content.xsl", "cfg/fo/static-content-attr.xsl", attrMode);
+        custom_xslt("tables.xsl", "cfg/fo/tables-attr.xsl", attrMode);
+        custom_xslt("toc.xsl", "cfg/fo/toc-attr.xsl", attrMode);
+        custom_xslt("tables.xsl", "cfg/fo/tables-attr.xsl", attrMode);
+        custom_xslt("basic-settings.xsl", "cfg/fo/basic-settings.xsl", attrMode);
+        custom_xslt("links.xsl", "cfg/fo/links-attr.xsl", attrMode);
+        custom_xslt("lists.xsl", "cfg/fo/lists-attr.xsl", attrMode);
+        custom_xslt("pr-domain.xsl", "cfg/fo/pr-domain-attr.xsl", attrMode);
+        custom_xslt("topic.xsl", "cfg/fo/topic-attr.xsl", attrMode);
+//        custom_xslt("shell.xsl", "xsl/fo/topic2fo_shell_${this.formatter}.xsl");
+    }
+
+    private void custom_xslt(final String name, final String dst, final QName mode) throws BuildException {
+        getProject().log("Generating " + name, Project.MSG_INFO);
         try {
             final Processor processor = xmlUtils.getProcessor();
 //            final XPathContext conversionContext = processor.getUnderlyingConfiguration().getConversionContext();
             final XsltCompiler compiler = processor.newXsltCompiler();
             compiler.setURIResolver(resolver);
-            final String stylesheetUri = String.format("classpath:/%s.xsl", name);
+            final String stylesheetUri = String.format("classpath:/%s", name);
             final XsltExecutable executable = compiler.compile(resolver.resolve(stylesheetUri, null));
             final Xslt30Transformer transformer = executable.load30();
 //            System.out.println("done loading stylesheet");
@@ -134,11 +134,14 @@ public class StylesheetGeneratorTask extends Task {
 //            final NodeInfo result = (NodeInfo) handler.getResult();
 //            final XdmNode xdmNode = processor.newDocumentBuilder().build(result);
             transformer.setGlobalContextItem(xdmItem);
+            transformer.setInitialMode(QName.fromClarkName("{}attr"));
 //            System.out.println("set global context item: " + xdmNode);
 //            System.out.println("size " + xdmItem.size());
 //            final Source source = processor.newDocumentBuilder().wrap(xdmItem).asSource();
-            transformer.applyTemplates(xdmItem, processor.newSerializer(System.out));
-            System.out.println("done");
+            final File dstFile = new File(dstDir.toURI().resolve(dst));
+            final Serializer destination = processor.newSerializer(dstFile);
+            transformer.applyTemplates(xdmItem, destination);
+//            System.out.println("done");
         } catch (Exception e) {
             e.printStackTrace();
             throw new BuildException(String.format("Failed to generate stylesheet %s.xsl", name), e);

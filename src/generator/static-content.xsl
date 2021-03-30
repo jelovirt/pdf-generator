@@ -471,22 +471,22 @@
       </xsl:if>
 
       <xsl:call-template name="generateInsert">
-        <xsl:with-param name="header" select=".('header')('odd')"/>
+        <xsl:with-param name="header" select=". ?header ?odd"/>
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
       <xsl:call-template name="generateInsert">
-        <xsl:with-param name="header" select=".('header')('even')"/>
+        <xsl:with-param name="header" select=". ?header ?even"/>
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'even'"/>
       </xsl:call-template>
       <xsl:call-template name="generateInsert">
-        <xsl:with-param name="header" select=".('footer')('odd')"/>
+        <xsl:with-param name="header" select=". ?footer ?odd"/>
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
       <xsl:call-template name="generateInsert">
-        <xsl:with-param name="header" select=".('footer')('even')"/>
+        <xsl:with-param name="header" select=". ?footer ?even"/>
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'even'"/>
       </xsl:call-template>

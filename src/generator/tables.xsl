@@ -207,10 +207,10 @@
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <!-- dl -->
-      <xsl:if test="$style('dl')('dl-type')">
+      <xsl:if test="$style ?dl ?dl-type">
         <axsl:attribute-set name="e:dl">
           <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select="$style('dl')"/>
+            <xsl:with-param name="style" select="$style ?dl"/>
           </xsl:call-template>
         </axsl:attribute-set>
         <axsl:attribute-set name="e:dlentry.dt__content">
@@ -218,13 +218,13 @@
           <axsl:attribute name="keep-with-next">always</axsl:attribute>
         </axsl:attribute-set>
         <axsl:attribute-set name="e:dlentry.dd__content">
-          <xsl:if test="$style('dl')('dl-type') = 'html'">
+          <xsl:if test="$style ?dl ?dl-type = 'html'">
             <axsl:attribute name="start-indent">from-parent(start-indent) + 5mm</axsl:attribute>
           </xsl:if>
         </axsl:attribute-set>
       </xsl:if>
       <!-- table continued -->
-      <xsl:if test=".('table_continued')">
+      <xsl:if test=". ?table_continued">
         <axsl:attribute-set name="e:tfoot.row.entry.continued">
           <axsl:attribute name="border-right-style">hidden</axsl:attribute>
           <axsl:attribute name="border-left-style">hidden</axsl:attribute>
@@ -233,11 +233,13 @@
         </axsl:attribute-set>
       </xsl:if>
       <!-- table -->
-      <axsl:attribute-set name="table.tgroup">
-        <xsl:call-template name="attribute-set">
-          <xsl:with-param name="style" select="$style('table')"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
+      <xsl:if test="exists($style ?table)">
+        <axsl:attribute-set name="table.tgroup">
+          <xsl:call-template name="attribute-set">
+            <xsl:with-param name="style" select="$style ?table"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+      </xsl:if>
       <axsl:attribute-set name="thead.row.entry">
         <axsl:attribute name="background-color">inherit</axsl:attribute>
       </axsl:attribute-set>

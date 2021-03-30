@@ -24,25 +24,34 @@
       <axsl:param name="pdfFormatter" select="'{. ?formatter}'"/>
       <axsl:param name="tocMaximumLevel" select="{. ?toc_maximum_level}"/>
       <!-- page size -->
+
       <xsl:if test="exists(. ?page ?width)">
-        <axsl:variable name="page-width">
-          <xsl:value-of select=". ?page ?width"/>
-        </axsl:variable>
+        <xsl:if test="exists(. ?page ?width)">
+          <axsl:variable name="page-width">
+            <xsl:value-of select=". ?page ?width"/>
+          </axsl:variable>
+        </xsl:if>
       </xsl:if>
       <xsl:if test="exists(. ?page ?height)">
-        <axsl:variable name="page-height">
-          <xsl:value-of select=". ?page ?height"/>
-        </axsl:variable>
+        <xsl:if test="exists(. ?page ?height)">
+          <axsl:variable name="page-height">
+            <xsl:value-of select=". ?page ?height"/>
+          </axsl:variable>
+        </xsl:if>
       </xsl:if>
       <!-- mirror pages -->
-      <axsl:variable name="mirror-page-margins" select="{. ?mirror_page_margins}()"/>
+      <xsl:if test="exists(. ?mirror_page_margins)">
+        <axsl:variable name="mirror-page-margins" select="{. ?mirror_page_margins}()"/>
+      </xsl:if>
       <!-- page margins -->
-      <xsl:variable name="page" select=". ?page"/>
-      <xsl:for-each select="('top', 'outside', 'bottom', 'inside')">
-        <axsl:variable name="page-margin-{.}">
-          <xsl:value-of select="$page(.)"/>
-        </axsl:variable>
-      </xsl:for-each>
+      <xsl:if test="exists(. ?page)">
+        <xsl:variable name="page" select=". ?page"/>
+        <xsl:for-each select="('top', 'outside', 'bottom', 'inside')">
+          <axsl:variable name="page-margin-{.}">
+            <xsl:value-of select="$page(.)"/>
+          </axsl:variable>
+        </xsl:for-each>
+      </xsl:if>
       <!-- font size -->
       <xsl:if test="exists($style ?body ?font-size)">
         <axsl:variable name="default-font-size">

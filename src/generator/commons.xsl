@@ -31,7 +31,7 @@
           <axsl:text>–</axsl:text>
         </axsl:if>
       </axsl:template>
-      <xsl:if test="exists($style('topic')('title-numbering')) and $style('topic')('title-numbering')">
+      <xsl:if test="exists($style ?topic ?title-numbering) and $style ?topic ?title-numbering">
         <axsl:template name="insertChapterFirstpageStaticContent">
           <axsl:param name="type"/>
           <fo:block>
