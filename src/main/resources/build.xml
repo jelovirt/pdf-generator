@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  
+
+  <target name="com.elovirta.pdf.generate" if="template">
+    <taskdef classname="com.elovirta.pdf.ant.StylesheetGeneratorTask" name="generate-stylesheet"/>
+    <generate-stylesheet template="${template}" property="temp.transformation.file"/>
+  </target>
+
 </project>

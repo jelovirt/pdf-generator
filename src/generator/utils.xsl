@@ -10,6 +10,9 @@
 
   <xsl:output indent="yes"/>
 
+  <xsl:param name="version" select=". ?ot_version ?version"/>
+  <xsl:param name="formatter" select=". ?formatter"/>
+
   <xsl:variable name="allProperties" select="
     'absolute-position',
     'active-state',
@@ -270,9 +273,20 @@
 
   <xsl:template name="generate-namespace-node">
     <xsl:variable name="dummy" as="element()">
+      <xsl:variable name="ns">
+        <xsl:choose>
+          <xsl:when test="exists(. ?plugin_name[normalize-space()])">
+            <xsl:value-of select=". ?plugin_name"/>
+          </xsl:when>
+          <xsl:when test="exists(. ?id[normalize-space()])">
+            <xsl:value-of select=". ?id"/>
+          </xsl:when>
+          <xsl:otherwise>com.elovirta.pdf.generated</xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
       <dummy>
         <xsl:attribute name="xs:dummy" namespace="http://www.w3.org/2001/XMLSchema"/>
-        <xsl:attribute name="e:dummy" namespace="{if (exists(. ?plugin_name[normalize-space()])) then (. ?plugin_name) else (. ?id)}"/>
+        <xsl:attribute name="e:dummy" namespace="{$ns}"/>
         <xsl:attribute name="dita-ot:dummy" namespace="http://dita-ot.sourceforge.net/ns/201007/dita-ot"/>
         <xsl:attribute name="ditaarch:dummy" namespace="http://dita.oasis-open.org/architecture/2005/"/>
         <xsl:attribute name="opentopic:dummy" namespace="http://www.idiominc.com/opentopic"/>

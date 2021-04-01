@@ -22,7 +22,9 @@
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <axsl:param name="pdfFormatter" select="'{. ?formatter}'"/>
-      <axsl:param name="tocMaximumLevel" select="{. ?toc_maximum_level}"/>
+      <xsl:if test="exists(. ?toc_maximum_level)">
+        <axsl:param name="tocMaximumLevel" select="{. ?toc_maximum_level}"/>
+      </xsl:if>
       <!-- page size -->
 
       <xsl:if test="exists(. ?page ?width)">

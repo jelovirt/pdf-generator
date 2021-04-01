@@ -63,23 +63,37 @@
         <axsl:for-each select="$currentNode">
           <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>
           <axsl:choose>
-            <axsl:when test="$level eq 1">
+            <xsl:if test="exists($style ?toc_1)">
+              <axsl:when test="$level eq 1">
+                <fo:block axsl:use-attribute-sets="__toc__topic__content">
+                  <axsl:copy-of select="$tocItemContent"/>
+                </fo:block>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="exists($style ?toc_2)">
+              <axsl:when test="$level eq 2">
+                <fo:block axsl:use-attribute-sets="__toc__topic__content_2">
+                  <axsl:copy-of select="$tocItemContent"/>
+                </fo:block>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="exists($style ?toc_3)">
+              <axsl:when test="$level eq 3">
+                <fo:block axsl:use-attribute-sets="__toc__topic__content_3">
+                  <axsl:copy-of select="$tocItemContent"/>
+                </fo:block>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="exists($style ?toc_4)">
+              <axsl:when test="$level eq 4">
+                <fo:block axsl:use-attribute-sets="__toc__topic__content_4">
+                  <axsl:copy-of select="$tocItemContent"/>
+                </fo:block>
+              </axsl:when>
+            </xsl:if>
+            <!-- Workaround for xsl:choose must contain at least one xsl:when -->
+            <axsl:when test="true()">
               <fo:block axsl:use-attribute-sets="__toc__topic__content">
-                <axsl:copy-of select="$tocItemContent"/>
-              </fo:block>
-            </axsl:when>
-            <axsl:when test="$level eq 2">
-              <fo:block axsl:use-attribute-sets="__toc__topic__content_2">
-                <axsl:copy-of select="$tocItemContent"/>
-              </fo:block>
-            </axsl:when>
-            <axsl:when test="$level eq 3">
-              <fo:block axsl:use-attribute-sets="__toc__topic__content_3">
-                <axsl:copy-of select="$tocItemContent"/>
-              </fo:block>
-            </axsl:when>
-            <axsl:when test="$level eq 4">
-              <fo:block axsl:use-attribute-sets="__toc__topic__content_4">
                 <axsl:copy-of select="$tocItemContent"/>
               </fo:block>
             </axsl:when>

@@ -6,6 +6,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.dita.dost.log.DITAOTAntLogger;
+import org.dita.dost.util.Configuration;
 import org.dita.dost.util.XMLUtils;
 
 import javax.xml.transform.Source;
@@ -17,7 +18,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Files;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
+import static java.util.Collections.singletonMap;
+import static org.dita.dost.util.Configuration.configuration;
 import static org.dita.dost.util.Constants.ANT_REFERENCE_XML_UTILS;
 import static org.dita.dost.util.Constants.ANT_TEMP_DIR;
 
@@ -26,6 +32,7 @@ public class StylesheetGeneratorTask extends Task {
     private XMLUtils xmlUtils;
     private URIResolver resolver;
     private File dstDir;
+    private String property;
 
     @Override
     public void init() {
@@ -70,22 +77,23 @@ public class StylesheetGeneratorTask extends Task {
         custom_xslt("topic.xsl", "xsl/fo/topic.xsl", null);
         custom_xslt("layout-masters.xsl", "cfg/fo/layout-masters.xsl", null);
         final QName attrMode = QName.fromClarkName("{}attr");
-        custom_xslt("front-matter.xsl", "cfg/fo/front-matter-attr.xsl", attrMode);
-        custom_xslt("commons.xsl", "cfg/fo/commons-attr.xsl", attrMode);
-        custom_xslt("layout-masters.xsl", "cfg/fo/layout-masters-attr.xsl", attrMode);
-        custom_xslt("static-content.xsl", "cfg/fo/static-content-attr.xsl", attrMode);
-        custom_xslt("tables.xsl", "cfg/fo/tables-attr.xsl", attrMode);
-        custom_xslt("toc.xsl", "cfg/fo/toc-attr.xsl", attrMode);
-        custom_xslt("tables.xsl", "cfg/fo/tables-attr.xsl", attrMode);
-        custom_xslt("basic-settings.xsl", "cfg/fo/basic-settings.xsl", attrMode);
-        custom_xslt("links.xsl", "cfg/fo/links-attr.xsl", attrMode);
-        custom_xslt("lists.xsl", "cfg/fo/lists-attr.xsl", attrMode);
-        custom_xslt("pr-domain.xsl", "cfg/fo/pr-domain-attr.xsl", attrMode);
-        custom_xslt("topic.xsl", "cfg/fo/topic-attr.xsl", attrMode);
-//        custom_xslt("shell.xsl", "xsl/fo/topic2fo_shell_${this.formatter}.xsl");
+        custom_xslt("front-matter.xsl", "cfg/fo/attrs/front-matter-attr.xsl", attrMode);
+        custom_xslt("commons.xsl", "cfg/fo/attrs/commons-attr.xsl", attrMode);
+        custom_xslt("layout-masters.xsl", "cfg/fo/attrs/layout-masters-attr.xsl", attrMode);
+        custom_xslt("static-content.xsl", "cfg/fo/attrs/static-content-attr.xsl", attrMode);
+        custom_xslt("tables.xsl", "cfg/fo/attrs/tables-attr.xsl", attrMode);
+        custom_xslt("toc.xsl", "cfg/fo/attrs/toc-attr.xsl", attrMode);
+        custom_xslt("tables.xsl", "cfg/fo/attrs/tables-attr.xsl", attrMode);
+        custom_xslt("basic-settings.xsl", "cfg/fo/attrs/basic-settings.xsl", attrMode);
+        custom_xslt("links.xsl", "cfg/fo/attrs/links-attr.xsl", attrMode);
+        custom_xslt("lists.xsl", "cfg/fo/attrs/lists-attr.xsl", attrMode);
+        custom_xslt("pr-domain.xsl", "cfg/fo/attrs/pr-domain-attr.xsl", attrMode);
+        custom_xslt("topic.xsl", "cfg/fo/attrs/topic-attr.xsl", attrMode);
+        final File shell = custom_xslt("shell.xsl", "xsl/fo/topic2fo_shell.xsl", null);
+        getProject().setProperty(property, shell.getAbsolutePath());
     }
 
-    private void custom_xslt(final String name, final String dst, final QName mode) throws BuildException {
+    private File custom_xslt(final String name, final String dst, final QName mode) throws BuildException {
         getProject().log("Generating " + name, Project.MSG_INFO);
         try {
             final Processor processor = xmlUtils.getProcessor();
@@ -95,6 +103,7 @@ public class StylesheetGeneratorTask extends Task {
             final String stylesheetUri = String.format("classpath:/%s", name);
             final XsltExecutable executable = compiler.compile(resolver.resolve(stylesheetUri, null));
             final Xslt30Transformer transformer = executable.load30();
+            transformer.setStylesheetParameters(getParameters());
 //            System.out.println("done loading stylesheet");
 //            transformer.setInitialMode(new QName(""));
 
@@ -134,7 +143,9 @@ public class StylesheetGeneratorTask extends Task {
 //            final NodeInfo result = (NodeInfo) handler.getResult();
 //            final XdmNode xdmNode = processor.newDocumentBuilder().build(result);
             transformer.setGlobalContextItem(xdmItem);
-            transformer.setInitialMode(QName.fromClarkName("{}attr"));
+            if (mode != null) {
+                transformer.setInitialMode(mode);
+            }
 //            System.out.println("set global context item: " + xdmNode);
 //            System.out.println("size " + xdmItem.size());
 //            final Source source = processor.newDocumentBuilder().wrap(xdmItem).asSource();
@@ -142,13 +153,29 @@ public class StylesheetGeneratorTask extends Task {
             final Serializer destination = processor.newSerializer(dstFile);
             transformer.applyTemplates(xdmItem, destination);
 //            System.out.println("done");
+            return dstFile;
         } catch (Exception e) {
             e.printStackTrace();
             throw new BuildException(String.format("Failed to generate stylesheet %s.xsl", name), e);
         }
     }
 
+    private Map<QName, XdmAtomicValue> getParameters() {
+        final Map<QName, XdmAtomicValue> parameters = new HashMap<>();
+        parameters.put(QName.fromClarkName("{}version"), new XdmAtomicValue(configuration.get("otrelease")));
+        String formatter = getProject().getProperty("pdf.formatter");
+        if (formatter == null) {
+            formatter = "fop";
+        }
+        parameters.put(QName.fromClarkName("{}formatter"), new XdmAtomicValue(formatter));
+        return parameters;
+    }
+
     public void setTemplate(final File template) {
         this.template = template;
+    }
+
+    public void setProperty(final String property) {
+        this.property = property;
     }
 }

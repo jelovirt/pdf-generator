@@ -27,12 +27,12 @@
           <axsl:variable name="destination" select="opentopic-func:getDestinationId(@href)"/>
           <axsl:variable name="element" select="key('key_anchor',$destination)[1]"/>
           <axsl:variable name="referenceTitle">
-            <axsl:xapply-templates select="." mode="insertReferenceTitle">
+            <axsl:apply-templates select="." mode="insertReferenceTitle">
               <axsl:with-param name="href" select="@href"/>
               <axsl:with-param name="titlePrefix" select="''"/>
               <axsl:with-param name="destination" select="$destination"/>
               <axsl:with-param name="element" select="$element"/>
-            </axsl:xapply-templates>
+            </axsl:apply-templates>
           </axsl:variable>
           <fo:basic-link axsl:use-attribute-sets="xref">
             <axsl:call-template name="buildBasicLinkDestination">
@@ -55,7 +55,7 @@
                 <axsl:choose>
                   <axsl:when test="exists(*[not(contains(@class,' topic/desc '))] | text()) and
                             exists(processing-instruction('ditaot')[. = 'usertext'])">
-                    <axsl:xapply-templates select="*[not(contains(@class,' topic/desc '))] | text()"/>
+                    <axsl:apply-templates select="*[not(contains(@class,' topic/desc '))] | text()"/>
                   </axsl:when>
                   <axsl:otherwise>
                     <axsl:value-of select="e:format-link-url(@href)"/>
