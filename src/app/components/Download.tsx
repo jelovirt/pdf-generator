@@ -1,9 +1,27 @@
 import React from 'react';
-import { useFormikContext } from 'formik';
-import { Values } from './common';
+import { FormikHelpers, useFormikContext } from 'formik';
+import { toModel, Values } from './common';
+import Generator from '../../generator';
+import JSZip from 'jszip';
+import FileSaver from 'file-saver';
 
 export default function Download() {
   const { values } = useFormikContext<Values>();
+
+  const onSubmitTemplate = () => {
+    const model = toModel(values) as any;
+    delete model.id;
+    delete model.plugin_name;
+    delete model.plugin_version;
+    delete model.transtype;
+    delete model.page_size;
+
+    const blob = new Blob([JSON.stringify(model, null, 2)], {
+      type: 'application/json;charset=utf-8',
+    });
+    FileSaver.saveAs(blob, 'template.json');
+  };
+
   return (
     <div className="form col-md-12">
       <p>
@@ -13,7 +31,16 @@ export default function Download() {
           type="submit"
           title="Generate plug-in file"
         >
-          Generate
+          Generate plug-in
+        </button>{' '}
+        <button
+          id="generate"
+          className="btn btn-primary"
+          type="button"
+          title="Generate template file"
+          onClick={() => onSubmitTemplate()}
+        >
+          Generate template
         </button>
       </p>
       <p>
