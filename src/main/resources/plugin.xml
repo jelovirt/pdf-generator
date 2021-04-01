@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="com.elovirta.pdf">
+  <feature extension="dita.conductor.lib.import" file="lib/pdf-generator.jar"/>
+  <feature extension="ant.import" file="build.xml"/>
+  <transtype name="pdf">
+    <param name="template" desc="TODO" type="file"/>
+  </transtype>
+  <feature extension="depend.org.dita.pdf2.init.pre" value="com.elovirta.pdf.generate"/>
+</plugin>
