@@ -22,3 +22,18 @@ sourceSets {
         }
     }
 }
+
+task dist(type: Zip, dependsOn: [jar]) {
+    into("lib") {
+        from ("build/libs") {
+            include "*.jar"
+        }
+    }
+    into("") {
+        from ("src/main/resources") {
+            include "build.xml"
+            include "plugin.xml"
+        }
+    }
+    archiveFileName = "com.elovirta.pdf.zip"
+}
