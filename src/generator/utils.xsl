@@ -10,7 +10,7 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:param name="version" select=". ?ot_version ?version"/>
+  <xsl:param name="version" select=". ?ot_version"/>
   <xsl:param name="formatter" select=". ?formatter"/>
 
   <xsl:variable name="allProperties" select="
