@@ -110,15 +110,18 @@ public class StylesheetGeneratorTask extends Task {
             final Serializer destination = processor.newSerializer(dstFile);
             transformer.applyTemplates(xdmItem, destination);
             return dstFile;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BuildException(String.format("Failed to generate stylesheet %s.xsl", name), e);
+        } catch (SaxonApiException | TransformerException e) {
+            throw new BuildException(String.format("Failed to generate stylesheet %s", name), e);
         }
     }
 
-    private XdmItem parseTemplate() throws SaxonApiException {
-        final XPathCompiler compiler = xmlUtils.getProcessor().newXPathCompiler();
-        return compiler.evaluateSingle("json-doc(.)", new XdmAtomicValue(template.toURI()));
+    private XdmItem parseTemplate() {
+        try {
+            final XPathCompiler compiler = xmlUtils.getProcessor().newXPathCompiler();
+            return compiler.evaluateSingle("json-doc(.)", new XdmAtomicValue(template.toURI()));
+        } catch (SaxonApiException e) {
+            throw new BuildException(String.format("Failed to parse template %s", template), e);
+        }
     }
 
     private Map<QName, XdmAtomicValue> getParameters() {

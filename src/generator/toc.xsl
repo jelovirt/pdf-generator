@@ -114,17 +114,30 @@
         <axsl:attribute name="start-indent">
           <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>
           <axsl:choose>
-            <axsl:when test="$level eq 1">
-              <axsl:value-of select="concat('{$style ?toc_1 ?start-indent} + ', $toc.text-indent)"/>
-            </axsl:when>
-            <axsl:when test="$level eq 2">
-              <axsl:value-of select="concat('{$style ?toc_2 ?start-indent} + ', $toc.text-indent)"/>
-            </axsl:when>
-            <axsl:when test="$level eq 3">
-              <axsl:value-of select="concat('{$style ?toc_3 ?start-indent} + ', $toc.text-indent)"/>
-            </axsl:when>
-            <axsl:when test="$level eq 4">
-              <axsl:value-of select="concat('{$style ?toc_4 ?start-indent} + ', $toc.text-indent)"/>
+            <xsl:if test="exists($style ?toc_1 ?start-indent)">
+              <axsl:when test="$level eq 1">
+                <axsl:value-of select="concat('{$style ?toc_1 ?start-indent} + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="exists($style ?toc_2 ?start-indent)">
+              <axsl:when test="$level eq 2">
+                <axsl:value-of select="concat('{$style ?toc_2 ?start-indent} + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="exists($style ?toc_3 ?start-indent)">
+              <axsl:when test="$level eq 3">
+                <axsl:value-of select="concat('{$style ?toc_3 ?start-indent} + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="exists($style ?toc_4 ?start-indent)">
+              <axsl:when test="$level eq 4">
+                <axsl:value-of select="concat('{$style ?toc_4 ?start-indent} + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <!-- Workaround for xsl:choose must contain at least one xsl:when -->
+            <axsl:when test="true()">
+              <axsl:value-of
+                  select="concat($side-col-width, ' + (', string($level - 1), ' * ', $toc.toc-indent, ') + ', $toc.text-indent)"/>
             </axsl:when>
           </axsl:choose>
         </axsl:attribute>
