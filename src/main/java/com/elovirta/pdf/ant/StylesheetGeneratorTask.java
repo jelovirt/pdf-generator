@@ -51,7 +51,7 @@ public class StylesheetGeneratorTask extends Task {
         resolver = new ClasspathResolver();
         final File tempDir = new File(getProject().getProperty(ANT_TEMP_DIR));
         try {
-            dstDir = Files.createTempDirectory(tempDir.toPath(), "org.elovirta.pdf").toFile();
+            dstDir = Files.createTempDirectory(tempDir.toPath(), "org.elovirta.pdf-").toFile();
         } catch (IOException e) {
             throw new BuildException("Failed to generate stylesheet directory", e);
         }
@@ -92,7 +92,8 @@ public class StylesheetGeneratorTask extends Task {
     }
 
     private File generate(final String name, final String dst, final QName mode) throws BuildException {
-        getProject().log("Generating " + name, Project.MSG_INFO);
+        final File dstFile = new File(dstDir.toURI().resolve(dst));
+        getProject().log(this, "Generating " + dstFile, Project.MSG_INFO);
         try {
             final Processor processor = xmlUtils.getProcessor();
             final XsltCompiler compiler = processor.newXsltCompiler();
@@ -106,7 +107,6 @@ public class StylesheetGeneratorTask extends Task {
             if (mode != null) {
                 transformer.setInitialMode(mode);
             }
-            final File dstFile = new File(dstDir.toURI().resolve(dst));
             final Serializer destination = processor.newSerializer(dstFile);
             transformer.applyTemplates(xdmItem, destination);
             return dstFile;

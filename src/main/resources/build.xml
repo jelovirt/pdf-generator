@@ -2,8 +2,11 @@
 <project>
 
   <target name="com.elovirta.pdf.generate" if="template">
-    <taskdef classname="com.elovirta.pdf.ant.StylesheetGeneratorTask" name="generate-stylesheet"/>
-    <generate-stylesheet template="${template}" property="temp.transformation.file"/>
+    <taskdef classname="com.elovirta.pdf.ant.StylesheetGeneratorTask"
+             name="generate-stylesheet"/>
+    <generate-stylesheet template="${template}"
+                         property="temp.transformation.file"
+                         taskname="template"/>
   </target>
 
 </project>
