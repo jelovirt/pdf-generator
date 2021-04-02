@@ -1,21 +1,16 @@
 import React from 'react';
 import { FormikHelpers, useFormikContext } from 'formik';
-import { toModel, Values } from './common';
+import { toPluginModel, toTemplateModel, Values } from './common';
 import Generator from '../../generator';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
+import { Model } from '../../generator/Model';
 
 export default function Download() {
   const { values } = useFormikContext<Values>();
 
   const onSubmitTemplate = () => {
-    const model = toModel(values) as any;
-    delete model.id;
-    delete model.plugin_name;
-    delete model.plugin_version;
-    delete model.transtype;
-    delete model.page_size;
-
+    const model = toTemplateModel(values);
     const blob = new Blob([JSON.stringify(model, null, 2)], {
       type: 'application/json;charset=utf-8',
     });

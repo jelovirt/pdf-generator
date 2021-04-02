@@ -11,7 +11,7 @@ import Cover from './Cover';
 import Other from './Other';
 import Metadata from './Metadata';
 import Download from './Download';
-import { getInitValues, toModel, Values } from './common';
+import { getInitValues, toPluginModel, Values } from './common';
 import Generator from '../../generator';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -25,7 +25,7 @@ declare global {
 
 const onSubmit = (values: Values, actions: FormikHelpers<Values>) => {
   actions.setSubmitting(false);
-  const model = toModel(values);
+  const model = toPluginModel(values);
   const generator = new Generator(model, window.SaxonJS);
   const zip = new JSZip();
   generator.generate_plugin(zip);

@@ -22,7 +22,6 @@ describe('Generator', () => {
         'x/integrator.xml',
         'x/plugin.xml',
         'x/cfg/',
-        'x/cfg/catalog.xml',
         'x/xsl/',
         'x/xsl/fo/',
         'x/xsl/fo/front-matter.xsl',
