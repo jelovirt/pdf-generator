@@ -161,35 +161,35 @@
       <xsl:call-template name="generate-namespace-node"/>
       <!-- titles -->
       <xsl:if test="exists($style ?topic)">
-        <axsl:attribute-set name="topic">
+        <axsl:attribute-set name="topic.title">
           <xsl:call-template name="attribute-set">
             <xsl:with-param name="style" select="$style ?topic"/>
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>
       <xsl:if test="exists($style ?topic_topic)">
-        <axsl:attribute-set name="topic.topic">
+        <axsl:attribute-set name="topic.topic.title">
           <xsl:call-template name="attribute-set">
             <xsl:with-param name="style" select="$style ?topic_topic"/>
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>
       <xsl:if test="exists($style ?topic_topic_topic)">
-        <axsl:attribute-set name="topic.topic.topic">
+        <axsl:attribute-set name="topic.topic.topic.title">
           <xsl:call-template name="attribute-set">
             <xsl:with-param name="style" select="$style ?topic_topic_topic"/>
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>
       <xsl:if test="exists($style ?topic_topic_topic_topic)">
-        <axsl:attribute-set name="topic.topic.topic.topic">
+        <axsl:attribute-set name="topic.topic.topic.topic.title">
           <xsl:call-template name="attribute-set">
             <xsl:with-param name="style" select="$style ?topic_topic_topic_topic"/>
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>
       <xsl:if test="exists($style ?section)">
-        <axsl:attribute-set name="section">
+        <axsl:attribute-set name="section.title">
           <xsl:call-template name="attribute-set">
             <xsl:with-param name="style" select="$style ?section"/>
           </xsl:call-template>
