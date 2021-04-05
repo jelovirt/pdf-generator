@@ -533,6 +533,36 @@
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
+      <xsl:if test="exists($style ?header)">
+        <axsl:attribute-set name="odd__header">
+          <xsl:call-template name="attribute-set">
+            <xsl:with-param name="style" select="$style ?header"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+      </xsl:if>
+      <xsl:if test="exists($style ?header) and . ?mirror_page_margins">
+        <axsl:attribute-set name="even__header">
+          <xsl:call-template name="attribute-set">
+            <xsl:with-param name="style" select="$style ?header"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+      </xsl:if>
+
+      <xsl:if test="exists($style ?footer)">
+        <axsl:attribute-set name="odd__footer">
+          <xsl:call-template name="attribute-set">
+            <xsl:with-param name="style" select="$style ?footer"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+      </xsl:if>
+      <xsl:if test="exists($style ?footer) and . ?mirror_page_margins">
+        <axsl:attribute-set name="even__footer">
+          <xsl:call-template name="attribute-set">
+            <xsl:with-param name="style" select="$style ?footer"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+      </xsl:if>
+
       <xsl:if test=". ?blank_pages">
         <axsl:attribute-set name="blank_page">
           <axsl:attribute name="position">absolute</axsl:attribute>
