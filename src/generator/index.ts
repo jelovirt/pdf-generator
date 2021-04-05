@@ -23,7 +23,7 @@ import Tables from '../../build/generator/tables.sef.json';
 import Toc from '../../build/generator/toc.sef.json';
 import Topic from '../../build/generator/topic.sef.json';
 import Shell from '../../build/generator/shell.sef.json';
-import { Model } from './Model';
+import { PluginModel } from './Model';
 
 // require('../../lib/SaxonJS2.rt');
 
@@ -47,7 +47,7 @@ type Options = {
 };
 
 export default class Generator {
-  conf: Model;
+  conf: PluginModel;
   properties: FoProperty[] = Object.values(FoProperty);
   variable_languages: Language[] = [
     'de',
@@ -95,7 +95,7 @@ export default class Generator {
 
   // title_numbering;
 
-  constructor(conf: Model, SaxonJS: SaxonJS) {
+  constructor(conf: PluginModel, SaxonJS: SaxonJS) {
     this.SaxonJS = SaxonJS;
     this.conf = conf;
     //validate

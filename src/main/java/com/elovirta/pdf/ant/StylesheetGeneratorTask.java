@@ -19,16 +19,16 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.util.Collections.emptyMap;
+import static java.util.Collections.singletonMap;
 import static org.dita.dost.util.Configuration.configuration;
 import static org.dita.dost.util.Constants.ANT_REFERENCE_XML_UTILS;
-import static org.dita.dost.util.Constants.ANT_TEMP_DIR;
 
 public class StylesheetGeneratorTask extends Task {
     private File template;
+    private File dstDir;
     private XMLUtils xmlUtils;
     private URIResolver resolver;
-    private File dstDir;
-    private String property;
 
     private class ClasspathResolver implements URIResolver {
         @Override
@@ -49,12 +49,6 @@ public class StylesheetGeneratorTask extends Task {
     @Override
     public void init() {
         resolver = new ClasspathResolver();
-        final File tempDir = new File(getProject().getProperty(ANT_TEMP_DIR));
-        try {
-            dstDir = Files.createTempDirectory(tempDir.toPath(), "org.elovirta.pdf-").toFile();
-        } catch (IOException e) {
-            throw new BuildException("Failed to generate stylesheet directory", e);
-        }
         xmlUtils = getProject().getReference(ANT_REFERENCE_XML_UTILS);
         if (xmlUtils == null) {
             xmlUtils = new XMLUtils();
@@ -64,6 +58,14 @@ public class StylesheetGeneratorTask extends Task {
 
     @Override
     public void execute() throws BuildException {
+        if (!dstDir.exists()) {
+            try {
+                dstDir = Files.createDirectories(dstDir.toPath()).toFile();
+            } catch (IOException e) {
+                throw new BuildException("Failed to generate stylesheet directory", e);
+            }
+        }
+
         generate("front-matter.xsl", "xsl/fo/front-matter.xsl", null);
         generate("commons.xsl", "xsl/fo/commons.xsl", null);
         generate("tables.xsl", "xsl/fo/tables.xsl", null);
@@ -88,12 +90,20 @@ public class StylesheetGeneratorTask extends Task {
         generate("pr-domain.xsl", "cfg/fo/attrs/pr-domain-attr.xsl", attrMode);
         generate("topic.xsl", "cfg/fo/attrs/topic-attr.xsl", attrMode);
         final File shell = generate("shell.xsl", "xsl/fo/topic2fo_shell.xsl", null);
-        getProject().setProperty(property, shell.getAbsolutePath());
+//        getProject().setProperty(property, shell.getAbsolutePath());
+        for (String lang : new String[] {"de", "en", "es", "fi", "fr", "he", "it", "ja", "nl", "ro", "ru", "sl", "sv", "zh-CN"}) {
+            generate("vars.xsl", String.format("cfg/common/vars/%s.xml", lang), null,
+                    singletonMap(QName.fromClarkName("{}lang"), new XdmAtomicValue(lang)));
+        }
     }
 
     private File generate(final String name, final String dst, final QName mode) throws BuildException {
+        return generate(name, dst, mode, emptyMap());
+    }
+
+    private File generate(final String name, final String dst, final QName mode, final Map<QName, XdmAtomicValue> params) throws BuildException {
         final File dstFile = new File(dstDir.toURI().resolve(dst));
-        getProject().log(this, "Generating " + dstFile, Project.MSG_INFO);
+        getProject().log(this, "Generating " + dstFile.toURI(), Project.MSG_INFO);
         try {
             final Processor processor = xmlUtils.getProcessor();
             final XsltCompiler compiler = processor.newXsltCompiler();
@@ -101,7 +111,9 @@ public class StylesheetGeneratorTask extends Task {
             final String stylesheetUri = String.format("classpath:/%s", name);
             final XsltExecutable executable = compiler.compile(resolver.resolve(stylesheetUri, null));
             final Xslt30Transformer transformer = executable.load30();
-            transformer.setStylesheetParameters(getParameters());
+            final Map<QName, XdmAtomicValue> parameters = getParameters();
+            parameters.putAll(params);
+            transformer.setStylesheetParameters(parameters);
             final XdmItem xdmItem = parseTemplate();
             transformer.setGlobalContextItem(xdmItem);
             if (mode != null) {
@@ -139,7 +151,7 @@ public class StylesheetGeneratorTask extends Task {
         this.template = template;
     }
 
-    public void setProperty(final String property) {
-        this.property = property;
+    public void setTodir(final File dstDir) {
+        this.dstDir = dstDir;
     }
 }

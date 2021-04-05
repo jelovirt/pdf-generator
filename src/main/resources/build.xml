@@ -4,9 +4,18 @@
   <target name="com.elovirta.pdf.generate" if="template">
     <taskdef classname="com.elovirta.pdf.ant.StylesheetGeneratorTask"
              name="generate-stylesheet"/>
+    <local name="com.elovirta.pdf.temp.dir"/>
+    <tempfile property="com.elovirta.pdf.temp.dir"
+              prefix="com.elovirta.pdf-"
+              destDir="${dita.temp.dir}"/>
     <generate-stylesheet template="${template}"
-                         property="temp.transformation.file"
+                         todir="${com.elovirta.pdf.temp.dir}"
                          taskname="template"/>
+    <property name="temp.transformation.file"
+              location="${com.elovirta.pdf.temp.dir}/xsl/fo/topic2fo_shell.xsl"/>
+    <property name="customization.dir"
+              location="${com.elovirta.pdf.temp.dir}/cfg"/>
+    <property name="pdf2.i18n.skip" value="true"/>
   </target>
 
 </project>

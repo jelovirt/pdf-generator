@@ -29,203 +29,203 @@ type Language =
   | 'sv'
   | 'zh_CN';
 
-const langs: Record<Language, { [key: string]: string }> = {
-  de: {
-    blank_page:
-      '<variable id="blank_page">Diese Seite wurde absichtlich leer gelassen</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure:
-      "<variable id='Figure'>Abbildung: <param ref-name='title'/></variable>",
-    Table: "<variable id='Table'>Tabelle: <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>Anhang:&#xA0;</variable>",
-  },
-  en: {
-    blank_page:
-      '<variable id="blank_page">This page intentionally left blank</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure:
-      "<variable id='Figure'>Figure: <param ref-name='title'/></variable>",
-    Table: "<variable id='Table'>Table: <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>Appendix:&#xA0;</variable>",
-  },
-  es: {
-    blank_page:
-      '<variable id="blank_page">Esta página ha sido expresamente dejada en blanco</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure:
-      "<variable id='Figure'>Figura: <param ref-name='title'/></variable>",
-    Table: "<variable id='Table'>Tabla: <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>Ap&#xe9;ndice:&#xA0;</variable>",
-  },
-  fi: {
-    blank_page:
-      '<variable id="blank_page">Tämä sivu on tarkoituksellisesti jätetty tyhjäksi</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure: "<variable id='Figure'>Kuva. <param ref-name='title'/></variable>",
-    Table: "<variable id='Table'>Taulu. <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>Liite </variable>",
-  },
-  fr: {
-    blank_page:
-      '<variable id="blank_page">Cette page a été volontairement laissée vide</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure:
-      "<variable id='Figure'>Illustration: <param ref-name='title'/></variable>",
-    Table: "<variable id='Table'>Table: <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>Annexe&#xA0;:&#xA0;</variable>",
-  },
-  he: {
-    blank_page:
-      '<variable id="blank_page">This page intentionally left blank</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure:
-      "<variable id='Figure'>&#x5d0;&#x5d9;&#x5d5;&#x5e8;. <param ref-name='title'/></variable>",
-    Table:
-      "<variable id='Table'>&#x5d8;&#x5d1;&#x5dc;&#x5d4;. <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>&#x5e0;&#x5e1;&#x5e4;&#x5d7; </variable>",
-  },
-  it: {
-    blank_page:
-      '<variable id="blank_page">Questa pagina è stata lasciata intenzionalmente vuota</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure:
-      "<variable id='Figure'> Figura: <param ref-name='title'/></variable>",
-    Table: "<variable id='Table'>Tabella: <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>Appendice:&#xA0;</variable>",
-  },
-  ja: {
-    blank_page:
-      '<variable id="blank_page">このページは計画的にブランクを残ている</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure:
-      "<variable id='Figure'>&#x56f3; : <param ref-name='title'/></variable>",
-    Table:
-      "<variable id='Table'>&#x8868; : <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>&#x4ed8;&#x9332; : </variable>",
-  },
-  nl: {
-    blank_page:
-      '<variable id="blank_page">Deze bladzijde werd met opzet blanco gelaten</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure:
-      "<variable id='Figure'>Figuur: <param ref-name='title'/></variable>",
-    Table: "<variable id='Table'>Tabel: <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>Bijlage:&#xA0;</variable>",
-  },
-  ro: {
-    blank_page:
-      '<variable id="blank_page">Aceasta pagina a fost lasata libera in mod intentionat</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure: "<variable id='Figure'>Fig. <param ref-name='title'/></variable>",
-    Table: "<variable id='Table'>Tabel. <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>Anexa </variable>",
-  },
-  ru: {
-    blank_page:
-      '<variable id="blank_page">Эта страница нарочно оставлена пустой</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure:
-      "<variable id='Figure'>&#x420;&#x438;&#x441;&#x443;&#x43d;&#x43e;&#x43a;. <param ref-name='title'/></variable>",
-    Table:
-      "<variable id='Table'>&#x422;&#x430;&#x431;&#x43b;&#x438;&#x446;&#x430;. <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>&#x41f;&#x440;&#x438;&#x43b;&#x43e;&#x436;&#x435;&#x43d;&#x438;&#x435; </variable>",
-  },
-  sl: {
-    blank_page:
-      '<variable id="blank_page">Tale stran je zanalačš pučšena prazna</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure: "<variable id='Figure'>Slika: <param ref-name='title'/></variable>",
-    Table: "<variable id='Table'>Tabela: <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>Kazalo dodatka:&#xA0;</variable>",
-  },
-  sv: {
-    blank_page:
-      '<variable id="blank_page">Denna sida har avsiktligen lämnats blank</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure: "<variable id='Figure'>Figur. <param ref-name='title'/></variable>",
-    Table: "<variable id='Table'>Tabell. <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>Appendix </variable>",
-  },
-  zh_CN: {
-    blank_page: '<variable id="blank_page">這頁故意地被留下空白</variable>',
-    '#table-continued':
-      "<variable id='#table-continued'>Table continued&#x2026;</variable>",
-    Figure:
-      "<variable id='Figure'>&#x56fe;: <param ref-name='title'/></variable>",
-    Table:
-      "<variable id='Table'>&#x8868;: <param ref-name='title'/></variable>",
-    //"Chapter with number": "<variable id='Chapter with number'></variable>",
-    'Table of Contents Chapter':
-      "<variable id='Table of Contents Chapter'></variable>",
-    'Table of Contents Appendix':
-      "<variable id='Table of Contents Appendix'>&#x9644;&#x5f55;:&#xA0;</variable>",
-  },
-};
+// const langs: Record<Language, { [key: string]: string }> = {
+//   de: {
+//     blank_page:
+//       '<variable id="blank_page">Diese Seite wurde absichtlich leer gelassen</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure:
+//       "<variable id='Figure'>Abbildung: <param ref-name='title'/></variable>",
+//     Table: "<variable id='Table'>Tabelle: <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>Anhang:&#xA0;</variable>",
+//   },
+//   en: {
+//     blank_page:
+//       '<variable id="blank_page">This page intentionally left blank</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure:
+//       "<variable id='Figure'>Figure: <param ref-name='title'/></variable>",
+//     Table: "<variable id='Table'>Table: <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>Appendix:&#xA0;</variable>",
+//   },
+//   es: {
+//     blank_page:
+//       '<variable id="blank_page">Esta página ha sido expresamente dejada en blanco</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure:
+//       "<variable id='Figure'>Figura: <param ref-name='title'/></variable>",
+//     Table: "<variable id='Table'>Tabla: <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>Ap&#xe9;ndice:&#xA0;</variable>",
+//   },
+//   fi: {
+//     blank_page:
+//       '<variable id="blank_page">Tämä sivu on tarkoituksellisesti jätetty tyhjäksi</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure: "<variable id='Figure'>Kuva. <param ref-name='title'/></variable>",
+//     Table: "<variable id='Table'>Taulu. <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>Liite </variable>",
+//   },
+//   fr: {
+//     blank_page:
+//       '<variable id="blank_page">Cette page a été volontairement laissée vide</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure:
+//       "<variable id='Figure'>Illustration: <param ref-name='title'/></variable>",
+//     Table: "<variable id='Table'>Table: <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>Annexe&#xA0;:&#xA0;</variable>",
+//   },
+//   he: {
+//     blank_page:
+//       '<variable id="blank_page">This page intentionally left blank</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure:
+//       "<variable id='Figure'>&#x5d0;&#x5d9;&#x5d5;&#x5e8;. <param ref-name='title'/></variable>",
+//     Table:
+//       "<variable id='Table'>&#x5d8;&#x5d1;&#x5dc;&#x5d4;. <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>&#x5e0;&#x5e1;&#x5e4;&#x5d7; </variable>",
+//   },
+//   it: {
+//     blank_page:
+//       '<variable id="blank_page">Questa pagina è stata lasciata intenzionalmente vuota</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure:
+//       "<variable id='Figure'> Figura: <param ref-name='title'/></variable>",
+//     Table: "<variable id='Table'>Tabella: <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>Appendice:&#xA0;</variable>",
+//   },
+//   ja: {
+//     blank_page:
+//       '<variable id="blank_page">このページは計画的にブランクを残ている</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure:
+//       "<variable id='Figure'>&#x56f3; : <param ref-name='title'/></variable>",
+//     Table:
+//       "<variable id='Table'>&#x8868; : <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>&#x4ed8;&#x9332; : </variable>",
+//   },
+//   nl: {
+//     blank_page:
+//       '<variable id="blank_page">Deze bladzijde werd met opzet blanco gelaten</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure:
+//       "<variable id='Figure'>Figuur: <param ref-name='title'/></variable>",
+//     Table: "<variable id='Table'>Tabel: <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>Bijlage:&#xA0;</variable>",
+//   },
+//   ro: {
+//     blank_page:
+//       '<variable id="blank_page">Aceasta pagina a fost lasata libera in mod intentionat</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure: "<variable id='Figure'>Fig. <param ref-name='title'/></variable>",
+//     Table: "<variable id='Table'>Tabel. <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>Anexa </variable>",
+//   },
+//   ru: {
+//     blank_page:
+//       '<variable id="blank_page">Эта страница нарочно оставлена пустой</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure:
+//       "<variable id='Figure'>&#x420;&#x438;&#x441;&#x443;&#x43d;&#x43e;&#x43a;. <param ref-name='title'/></variable>",
+//     Table:
+//       "<variable id='Table'>&#x422;&#x430;&#x431;&#x43b;&#x438;&#x446;&#x430;. <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>&#x41f;&#x440;&#x438;&#x43b;&#x43e;&#x436;&#x435;&#x43d;&#x438;&#x435; </variable>",
+//   },
+//   sl: {
+//     blank_page:
+//       '<variable id="blank_page">Tale stran je zanalačš pučšena prazna</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure: "<variable id='Figure'>Slika: <param ref-name='title'/></variable>",
+//     Table: "<variable id='Table'>Tabela: <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>Kazalo dodatka:&#xA0;</variable>",
+//   },
+//   sv: {
+//     blank_page:
+//       '<variable id="blank_page">Denna sida har avsiktligen lämnats blank</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure: "<variable id='Figure'>Figur. <param ref-name='title'/></variable>",
+//     Table: "<variable id='Table'>Tabell. <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>Appendix </variable>",
+//   },
+//   zh_CN: {
+//     blank_page: '<variable id="blank_page">這頁故意地被留下空白</variable>',
+//     '#table-continued':
+//       "<variable id='#table-continued'>Table continued&#x2026;</variable>",
+//     Figure:
+//       "<variable id='Figure'>&#x56fe;: <param ref-name='title'/></variable>",
+//     Table:
+//       "<variable id='Table'>&#x8868;: <param ref-name='title'/></variable>",
+//     //"Chapter with number": "<variable id='Chapter with number'></variable>",
+//     'Table of Contents Chapter':
+//       "<variable id='Table of Contents Chapter'></variable>",
+//     'Table of Contents Appendix':
+//       "<variable id='Table of Contents Appendix'>&#x9644;&#x5f55;:&#xA0;</variable>",
+//   },
+// };
 
 export default function generate_vars(lang: Language, options: Generator) {
   const root = Element('vars', {
@@ -276,9 +276,9 @@ export default function generate_vars(lang: Language, options: Generator) {
   //   }).text = `Customization/OpenTopic/common/artwork/${options.cover_image_name}"`;
   // }
   // blank page
-  if (!!options.options.blank_pages) {
-    root.append(parse(langs[lang]['blank_page']).getroot());
-  }
+  // if (!!options.options.blank_pages) {
+  //   root.append(parse(langs[lang]['blank_page']).getroot());
+  // }
   // static content
   const headers = [
     'Body first header',

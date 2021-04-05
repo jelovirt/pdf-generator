@@ -85,6 +85,46 @@
               select="if (contains($h, '/') and substring-after($h, '/') = '') then substring($h, 0, string-length($h)) else $h"/>
         </axsl:function>
       </xsl:if>
+<!--      <xsl:if test="$link ?link-page-number">-->
+<!--        <axsl:template name="insertPageNumberCitation">-->
+<!--          <axsl:param name="isTitleEmpty" as="xs:boolean" select="false()"/>-->
+<!--          <axsl:param name="destination" as="xs:string"/>-->
+<!--          <axsl:param name="element" as="element()?"/>-->
+<!--          <axsl:choose>-->
+<!--            <axsl:when test="not($element) or ($destination = '')"/>-->
+<!--&lt;!&ndash;            <axsl:when test="$isTitleEmpty">&ndash;&gt;-->
+<!--            <axsl:otherwise>-->
+<!--              <fo:inline>-->
+<!--                <axsl:call-template name="getVariable">-->
+<!--                  <axsl:with-param name="id" select="'Page'"/>-->
+<!--                  <axsl:with-param name="params">-->
+<!--                    <pagenum>-->
+<!--                      <fo:inline>-->
+<!--                        <fo:page-number-citation ref-id="{$destination}"/>-->
+<!--                      </fo:inline>-->
+<!--                    </pagenum>-->
+<!--                  </axsl:with-param>-->
+<!--                </axsl:call-template>-->
+<!--              </fo:inline>-->
+<!--            </axsl:otherwise>-->
+<!--&lt;!&ndash;            </axsl:when>&ndash;&gt;-->
+<!--&lt;!&ndash;            <axsl:otherwise>&ndash;&gt;-->
+<!--&lt;!&ndash;              <fo:inline>&ndash;&gt;-->
+<!--&lt;!&ndash;                <axsl:call-template name="getVariable">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <axsl:with-param name="id" select="'On the page'"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <axsl:with-param name="params">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <pagenum>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <fo:inline>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <fo:page-number-citation ref-id="{$destination}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                      </fo:inline>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </pagenum>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </axsl:with-param>&ndash;&gt;-->
+<!--&lt;!&ndash;                </axsl:call-template>&ndash;&gt;-->
+<!--&lt;!&ndash;              </fo:inline>&ndash;&gt;-->
+<!--&lt;!&ndash;            </axsl:otherwise>&ndash;&gt;-->
+<!--          </axsl:choose>-->
+<!--        </axsl:template>-->
+<!--      </xsl:if>-->
     </axsl:stylesheet>
   </xsl:template>
 

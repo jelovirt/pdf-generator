@@ -5,5 +5,7 @@
   <transtype name="pdf">
     <param name="template" desc="TODO" type="file"/>
   </transtype>
-  <feature extension="depend.org.dita.pdf2.init.pre" value="com.elovirta.pdf.generate"/>
+  <!--<feature extension="depend.org.dita.pdf2.init.pre" value="com.elovirta.pdf.generate"/>-->
+  <!-- XXX: This is a hack because we don't have an extension point in PDF2 that is early enough. -->
+  <feature extension="depend.preprocess.post" value="com.elovirta.pdf.generate"/>
 </plugin>

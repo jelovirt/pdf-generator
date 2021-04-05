@@ -17,7 +17,7 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="exists(.('options')) and .('options')('blank_pages')">
+      <xsl:if test=". ?blank_pages">
         <axsl:template name="insertBodyStaticContents">
           <axsl:call-template name="insertBodyFootnoteSeparator"/>
           <axsl:call-template name="insertBodyOddFooter"/>
@@ -533,7 +533,7 @@
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="exists(.('options')) and .('options')('blank_pages')">
+      <xsl:if test=". ?blank_pages">
         <axsl:attribute-set name="blank_page">
           <axsl:attribute name="position">absolute</axsl:attribute>
           <axsl:attribute name="top">100mm</axsl:attribute>

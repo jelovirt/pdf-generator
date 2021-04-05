@@ -17,7 +17,7 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test=".('blank_pages')">
+      <xsl:if test=". ?blank_pages">
         <axsl:variable name="blank-pages" select="true()"/>
 
         <axsl:template match="/" mode="create-page-masters">

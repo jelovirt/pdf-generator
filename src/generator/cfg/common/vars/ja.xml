@@ -1,0 +1,9 @@
+<vars xmlns="http://www.idiominc.com/opentopic/vars">
+  <variable id="blank_page">このページは計画的にブランクを残ている</variable>
+  <variable id="#table-continued">Table continued…</variable>
+  <variable id="Figure">図 : <param ref-name="title"/></variable>
+  <variable id="Table">表 : <param ref-name="title"/></variable>
+  <variable id="Chapter with number"></variable>
+  <variable id="Table of Contents Chapter"></variable>
+  <variable id="Table of Contents Appendix">付録 : </variable>
+</vars>
