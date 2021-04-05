@@ -17,7 +17,7 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="exists(.('cover_image_metadata')) or exists(.('cover_image_topic'))">
+      <xsl:if test="exists(. ?cover_image_metadata) or exists(. ?cover_image_topic)">
         <axsl:template name="createFrontCoverContents">
           <!-- set the title -->
           <fo:block axsl:use-attribute-sets="__frontmatter__title">
@@ -48,7 +48,7 @@
           </fo:block>
         </axsl:template>
         <xsl:choose>
-          <xsl:when test="exists(.('cover_image_metadata'))">
+          <xsl:when test="exists(. ?cover_image_metadata)">
             <axsl:template name="e:cover-image">
               <axsl:for-each
                   select="($map//*[contains(@class, ' topic/data ')][@name = '{.('cover_image_metadata')}']/*[contains(@class, ' topic/image ')])[1]">
@@ -61,10 +61,10 @@
               </axsl:for-each>
             </axsl:template>
           </xsl:when>
-          <xsl:when test=".('cover_image_topic')">
+          <xsl:when test=". ?cover_image_topic">
             <axsl:template name="e:cover-image">
               <axsl:for-each
-                  select="($map//*[contains(@class, ' map/topicref ')][@outputclass = '{.('cover_image_topic')}'])[1]">
+                  select="($map//*[contains(@class, ' map/topicref ')][@outputclass = '{. ?cover_image_topic}'])[1]">
                 <axsl:apply-templates select="key('id', @id)/*[contains(@class, ' topic/body ')]/node()"/>
               </axsl:for-each>
             </axsl:template>

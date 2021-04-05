@@ -17,7 +17,7 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:comment>title numbering</xsl:comment>
+<!--      <xsl:comment>title numbering</xsl:comment>-->
       <axsl:variable name="e:number-levels">
         <xsl:attribute name="select">
           <xsl:text>(</xsl:text>
@@ -26,7 +26,7 @@
             $style ?topic_topic ?title-numbering,
             $style ?topic_topic_topic ?title-numbering,
             $style ?topic_topic_topic_topic ?title-numbering
-            )" separator=", "/>
+            ) ! concat(., '()')" separator=", "/>
           <xsl:text>)</xsl:text>
         </xsl:attribute>
       </axsl:variable>
@@ -79,7 +79,7 @@
       </axsl:template>
       <!-- note -->
       <xsl:if test="not($style ?note_icon)">
-        <xsl:comment>note</xsl:comment>
+<!--        <xsl:comment>note</xsl:comment>-->
         <axsl:template match="*[contains(@class,' topic/note ')]" mode="setNoteImagePath"/>
       </xsl:if>
       <!-- fig -->
@@ -116,7 +116,7 @@
       </xsl:if>
       <!-- tm -->
       <xsl:if test="$style ?fig ?symbol-scope != 'always'">
-        <xsl:comment>tm</xsl:comment>
+<!--        <xsl:comment>tm</xsl:comment>-->
         <xsl:choose>
           <xsl:when test="$style ?fig ?symbol-scope = 'chapter'">
             <axsl:function name="e:tm-value" as="xs:string">
