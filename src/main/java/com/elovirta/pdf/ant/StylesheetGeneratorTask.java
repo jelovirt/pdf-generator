@@ -7,14 +7,10 @@ import org.apache.tools.ant.Task;
 import org.dita.dost.log.DITAOTAntLogger;
 import org.dita.dost.util.XMLUtils;
 
-import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.URIResolver;
-import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,26 +21,15 @@ import static org.dita.dost.util.Configuration.configuration;
 import static org.dita.dost.util.Constants.ANT_REFERENCE_XML_UTILS;
 
 public class StylesheetGeneratorTask extends Task {
+    private static final QName LANG = QName.fromClarkName("{}lang");
+    private static final QName ATTR = QName.fromClarkName("{}attr");
+    private static final QName VERSION = QName.fromClarkName("{}version");
+    private static final QName FORMATTER = QName.fromClarkName("{}formatter");
+
     private File template;
     private File dstDir;
     private XMLUtils xmlUtils;
     private URIResolver resolver;
-
-    private class ClasspathResolver implements URIResolver {
-        @Override
-        public Source resolve(String href, String base) throws TransformerException {
-            URI abs = URI.create(href);
-            if (!abs.isAbsolute()) {
-                abs = URI.create(base).resolve(href);
-            }
-            if (!abs.getScheme().equals("classpath")) {
-                throw new IllegalArgumentException(String.format("Only classpath URI scheme supported: %s", abs));
-            }
-            final String path = abs.getPath().startsWith("/") ? abs.getPath().substring(1) : abs.getPath();
-            final InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(path);
-            return new StreamSource(resourceAsStream, abs.toString());
-        }
-    }
 
     @Override
     public void init() {
@@ -76,24 +61,22 @@ public class StylesheetGeneratorTask extends Task {
         generate("static-content.xsl", "xsl/fo/static-content.xsl", null);
         generate("topic.xsl", "xsl/fo/topic.xsl", null);
         generate("layout-masters.xsl", "cfg/fo/layout-masters.xsl", null);
-        final QName attrMode = QName.fromClarkName("{}attr");
-        generate("front-matter.xsl", "cfg/fo/attrs/front-matter-attr.xsl", attrMode);
-        generate("commons.xsl", "cfg/fo/attrs/commons-attr.xsl", attrMode);
-        generate("layout-masters.xsl", "cfg/fo/attrs/layout-masters-attr.xsl", attrMode);
-        generate("static-content.xsl", "cfg/fo/attrs/static-content-attr.xsl", attrMode);
-        generate("tables.xsl", "cfg/fo/attrs/tables-attr.xsl", attrMode);
-        generate("toc.xsl", "cfg/fo/attrs/toc-attr.xsl", attrMode);
-        generate("tables.xsl", "cfg/fo/attrs/tables-attr.xsl", attrMode);
-        generate("basic-settings.xsl", "cfg/fo/attrs/basic-settings.xsl", attrMode);
-        generate("links.xsl", "cfg/fo/attrs/links-attr.xsl", attrMode);
-        generate("lists.xsl", "cfg/fo/attrs/lists-attr.xsl", attrMode);
-        generate("pr-domain.xsl", "cfg/fo/attrs/pr-domain-attr.xsl", attrMode);
-        generate("topic.xsl", "cfg/fo/attrs/topic-attr.xsl", attrMode);
+        generate("front-matter.xsl", "cfg/fo/attrs/front-matter-attr.xsl", ATTR);
+        generate("commons.xsl", "cfg/fo/attrs/commons-attr.xsl", ATTR);
+        generate("layout-masters.xsl", "cfg/fo/attrs/layout-masters-attr.xsl", ATTR);
+        generate("static-content.xsl", "cfg/fo/attrs/static-content-attr.xsl", ATTR);
+        generate("tables.xsl", "cfg/fo/attrs/tables-attr.xsl", ATTR);
+        generate("toc.xsl", "cfg/fo/attrs/toc-attr.xsl", ATTR);
+        generate("tables.xsl", "cfg/fo/attrs/tables-attr.xsl", ATTR);
+        generate("basic-settings.xsl", "cfg/fo/attrs/basic-settings.xsl", ATTR);
+        generate("links.xsl", "cfg/fo/attrs/links-attr.xsl", ATTR);
+        generate("lists.xsl", "cfg/fo/attrs/lists-attr.xsl", ATTR);
+        generate("pr-domain.xsl", "cfg/fo/attrs/pr-domain-attr.xsl", ATTR);
+        generate("topic.xsl", "cfg/fo/attrs/topic-attr.xsl", ATTR);
         final File shell = generate("shell.xsl", "xsl/fo/topic2fo_shell.xsl", null);
-//        getProject().setProperty(property, shell.getAbsolutePath());
-        for (String lang : new String[] {"de", "en", "es", "fi", "fr", "he", "it", "ja", "nl", "ro", "ru", "sl", "sv", "zh-CN"}) {
+        for (String lang : new String[]{"de", "en", "es", "fi", "fr", "he", "it", "ja", "nl", "ro", "ru", "sl", "sv", "zh-CN"}) {
             generate("vars.xsl", String.format("cfg/common/vars/%s.xml", lang), null,
-                    singletonMap(QName.fromClarkName("{}lang"), new XdmAtomicValue(lang)));
+                    singletonMap(LANG, new XdmAtomicValue(lang)));
         }
     }
 
@@ -138,12 +121,12 @@ public class StylesheetGeneratorTask extends Task {
 
     private Map<QName, XdmAtomicValue> getParameters() {
         final Map<QName, XdmAtomicValue> parameters = new HashMap<>();
-        parameters.put(QName.fromClarkName("{}version"), new XdmAtomicValue(configuration.get("otrelease")));
+        parameters.put(VERSION, new XdmAtomicValue(configuration.get("otrelease")));
         String formatter = getProject().getProperty("pdf.formatter");
         if (formatter == null) {
             formatter = "fop";
         }
-        parameters.put(QName.fromClarkName("{}formatter"), new XdmAtomicValue(formatter));
+        parameters.put(FORMATTER, new XdmAtomicValue(formatter));
         return parameters;
     }
 
