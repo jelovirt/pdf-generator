@@ -1,7 +1,7 @@
 export interface Options {
   stylesheetInternal: any;
   destination: string;
-  stylesheetParams?: { payload: { [key: string]: string } };
+  stylesheetParams?: { [key: string]: string };
   initialMode?: string;
   sourceType: 'json' | 'xml';
   sourceText: string;

@@ -62,7 +62,7 @@ describe('Generator', () => {
         'x/cfg/common/vars/ro.xml',
         'x/cfg/common/vars/ru.xml',
         'x/cfg/common/vars/sv.xml',
-        'x/cfg/common/vars/zh_CN.xml',
+        'x/cfg/common/vars/zh-CN.xml',
       ])
     );
   });

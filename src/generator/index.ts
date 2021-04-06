@@ -2,7 +2,7 @@ import JSZip from 'jszip';
 import _ from 'lodash';
 import { SaxonJS, Options as SaxonJsOptions } from '../types/saxon-js';
 import { FoProperty, Property, Style, StyleName, styles } from './styles';
-import vars from './vars';
+// import vars from './vars';
 import { Version } from './version';
 import { value, xsl } from './utils';
 import {
@@ -23,6 +23,7 @@ import Tables from '../../build/generator/tables.sef.json';
 import Toc from '../../build/generator/toc.sef.json';
 import Topic from '../../build/generator/topic.sef.json';
 import Shell from '../../build/generator/shell.sef.json';
+import Vars from '../../build/generator/vars.sef.json';
 import { PluginModel } from './Model';
 
 // require('../../lib/SaxonJS2.rt');
@@ -40,7 +41,7 @@ type Language =
   | 'ro'
   | 'ru'
   | 'sv'
-  | 'zh_CN';
+  | 'zh-CN';
 
 type Options = {
   blank_pages: boolean;
@@ -62,7 +63,7 @@ export default class Generator {
     'ro',
     'ru',
     'sv',
-    'zh_CN',
+    'zh-CN',
   ];
   ot_version;
   plugin_name;
@@ -323,18 +324,12 @@ export default class Generator {
    */
   generate_custom_xslt(stylesheet: any) {
     const options: SaxonJsOptions = {
-      // stylesheetInternal: require(`../../build/generator/${stylesheet}.sef.json`),
       stylesheetInternal: stylesheet,
       destination: 'serialized',
       sourceType: 'json',
       sourceText: JSON.stringify(this.conf),
     };
     try {
-      // console.log(SaxonJS);
-      // console.log({
-      //   SaxonJS,
-      //   transform: SaxonJS.transform,
-      // });
       const output = this.SaxonJS.transform(options);
       return (output as any).principalResult;
     } catch (e) {
@@ -354,13 +349,26 @@ export default class Generator {
       initialMode: 'attr',
       sourceText: JSON.stringify(this.conf),
     };
-    // console.log(stylesheet.Σ);
-    // console.log(stylesheet.default.Σ);
     try {
-      // console.log({
-      //   SaxonJS,
-      //   transform: SaxonJS.transform,
-      // });
+      const output = this.SaxonJS.transform(options);
+      return (output as any).principalResult;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+
+  generate_vars_xslt(lang: Language) {
+    const options: SaxonJsOptions = {
+      stylesheetInternal: Vars,
+      destination: 'serialized',
+      sourceType: 'json',
+      sourceText: JSON.stringify(this.conf),
+      stylesheetParams: {
+        lang: lang,
+      },
+    };
+    try {
       const output = this.SaxonJS.transform(options);
       return (output as any).principalResult;
     } catch (e) {
@@ -494,7 +502,7 @@ export default class Generator {
       this.run_generation(
         zip,
         () => {
-          return vars(lang, this);
+          return this.generate_vars_xslt(lang);
         },
         `${this.plugin_name}/cfg/common/vars/${lang}.xml`
       );
