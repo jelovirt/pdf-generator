@@ -6,6 +6,7 @@ import {
   Length,
   Model,
   OtVersion,
+  PluginModel,
 } from '../../generator/Model';
 import { Field } from 'formik';
 import React from 'react';
@@ -53,9 +54,9 @@ export type Values = {
   page_size: PageSizes;
   orientation: 'portrait' | 'landscape';
   style_selector: StyleName;
-} & Model;
+} & PluginModel;
 
-export function toModel(values: Values): Model {
+export function toPluginModel(values: Values): PluginModel {
   const pageDimensions = values.page_size.split(' ');
   if (values.orientation === 'landscape') {
     pageDimensions.reverse();
@@ -69,6 +70,32 @@ export function toModel(values: Values): Model {
     },
   };
   return model;
+}
+
+export function toTemplateModel(values: Values): Model {
+  const pageDimensions = values.page_size.split(' ');
+  if (values.orientation === 'landscape') {
+    pageDimensions.reverse();
+  }
+  const model: any = {
+    ...values,
+    page: {
+      ...values.page,
+      height: pageDimensions[1],
+      width: pageDimensions[0],
+    },
+  };
+  delete model.id;
+  delete model.formatter;
+  delete model.plugin_name;
+  delete model.plugin_version;
+  delete model.transtype;
+  delete model.page_size;
+  delete model.orientation;
+  delete model.style_selector;
+  delete model.cover_image_chooser;
+  delete model.ot_version;
+  return model as Model;
 }
 
 export function getInitValues(): Values {

@@ -276,9 +276,9 @@ export default function generate_vars(lang: Language, options: Generator) {
   //   }).text = `Customization/OpenTopic/common/artwork/${options.cover_image_name}"`;
   // }
   // blank page
-  if (!!options.options.blank_pages) {
-    root.append(parse(langs[lang]['blank_page']).getroot());
-  }
+  // if (!!options.options.blank_pages) {
+  //   root.append(parse(langs[lang]['blank_page']).getroot());
+  // }
   // static content
   const headers = [
     'Body first header',

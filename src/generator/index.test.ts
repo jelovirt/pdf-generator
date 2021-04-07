@@ -1,9 +1,11 @@
 import { getInitStore } from './Model';
 import Generator from './index';
 import JSZip from 'jszip';
+// @ts-ignore
+import SaxonJS from 'saxon-js';
 
 describe('Generator', () => {
-  const generator = new Generator({ ...getInitStore(), id: 'x' });
+  const generator = new Generator({ ...getInitStore(), id: 'x' }, SaxonJS);
   it('should generate ZIP', async () => {
     const zip = new JSZip();
     generator.generate_plugin(zip);
@@ -20,7 +22,6 @@ describe('Generator', () => {
         'x/integrator.xml',
         'x/plugin.xml',
         'x/cfg/',
-        'x/cfg/catalog.xml',
         'x/xsl/',
         'x/xsl/fo/',
         'x/xsl/fo/front-matter.xsl',
@@ -61,7 +62,7 @@ describe('Generator', () => {
         'x/cfg/common/vars/ro.xml',
         'x/cfg/common/vars/ru.xml',
         'x/cfg/common/vars/sv.xml',
-        'x/cfg/common/vars/zh_CN.xml',
+        'x/cfg/common/vars/zh-CN.xml',
       ])
     );
   });

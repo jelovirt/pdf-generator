@@ -109,7 +109,7 @@ const reducer = (prevState: Values) => ({
     ...prevState.style,
     [prevState.style_selector]: {
       ...prevState.style[prevState.style_selector],
-      ...convertBorder(prevState.style[prevState.style_selector].border),
+      ...convertBorder(prevState.style[prevState.style_selector].border_list),
     },
   },
 });
@@ -125,7 +125,7 @@ export default function Styles() {
 
   React.useEffect(() => {
     setValues(reducer, false);
-  }, [values.style[values.style_selector].border]);
+  }, [values.style[values.style_selector].border_list]);
 
   const handleListChange = (field: Property) => (e: ChangeEvent) => {
     const value = (e.currentTarget as HTMLSelectElement).value;
@@ -803,13 +803,13 @@ export default function Styles() {
             </tr>
             <tr className="style-selector-block">
               <td colSpan={2}>
-                <label htmlFor="border" className="inline">
+                <label htmlFor="border_list" className="inline">
                   Border
                 </label>
                 :{' '}
                 <Field
                   component="select"
-                  name={`style.${values.style_selector}.border`}
+                  name={`style.${values.style_selector}.border_list`}
                 >
                   <option value="none">no border</option>
                   <option value="all">all</option>

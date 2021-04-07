@@ -4,7 +4,8 @@
   "homepage": "https://github.com/jelovirt/pdf-generator",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "parcel build public/index.html",
+    "build": "npm run compile && parcel build public/index.html",
+    "compile": "./compile.sh",
     "start": "parcel public/index.html",
     "fmt": "prettier --write .",
     "test": "jest src/**/*.test.ts",
@@ -35,13 +36,15 @@
     "babel-preset-env": "^1.7.0",
     "bootstrap-sass": "~> 3.4.1",
     "follow-redirects": "^1.13.1",
-    "node-forge": ">=0.10.0",
     "jest": "^26.6.3",
-    "parcel-bundler": "^1.12.4",
+    "node-forge": ">=0.10.0",
+    "parcel-bundler": "^1.12.5",
     "prettier": "^2.1.2",
     "sass": "^1.28.0",
+    "saxon-js": "^2.1.0",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.5"
+    "typescript": "^4.0.5",
+    "xslt3": "^2.1.0"
   }
 }

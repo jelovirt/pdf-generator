@@ -1,0 +1,9 @@
+<vars xmlns="http://www.idiominc.com/opentopic/vars">
+  <variable id="blank_page">Denna sida har avsiktligen lämnats blank</variable>
+  <variable id="#table-continued">Table continued&#x2026;</variable>
+  <variable id="Figure">Figur. <param ref-name="title"/></variable>
+  <variable id="Table">Tabell. <param ref-name="title"/></variable>
+  <variable id="Chapter with number"></variable>
+  <variable id="Table of Contents Chapter"></variable>
+  <variable id="Table of Contents Appendix">Appendix </variable>
+</vars>

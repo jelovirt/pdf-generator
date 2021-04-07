@@ -1,0 +1,9 @@
+<vars xmlns="http://www.idiominc.com/opentopic/vars">
+  <variable id="blank_page">Tämä sivu on tarkoituksellisesti jätetty tyhjäksi</variable>
+  <variable id="#table-continued">Table continued&#x2026;</variable>
+  <variable id="Figure">Kuva. <param ref-name="title"/></variable>
+  <variable id="Table">Taulu. <param ref-name="title"/></variable>
+  <variable id="Chapter with number"></variable>
+  <variable id="Table of Contents Chapter"></variable>
+  <variable id="Table of Contents Appendix">Liite </variable>
+</vars>

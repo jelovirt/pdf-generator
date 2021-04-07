@@ -1,0 +1,9 @@
+<vars xmlns="http://www.idiominc.com/opentopic/vars">
+  <variable id="blank_page">Deze bladzijde werd met opzet blanco gelaten</variable>
+  <variable id="#table-continued">Table continued&#x2026;</variable>
+  <variable id="Figure">Figuur: <param ref-name="title"/></variable>
+  <variable id="Table">Tabel: <param ref-name="title"/></variable>
+  <variable id="Chapter with number"></variable>
+  <variable id="Table of Contents Chapter"></variable>
+  <variable id="Table of Contents Appendix">Bijlage:&#xA0;</variable>
+</vars>

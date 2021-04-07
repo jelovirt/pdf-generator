@@ -43,3 +43,7 @@ public/fonts
 dist
 out.zip
 temp
+build
+
+# Ignore Gradle project-specific cache directory
+.gradle

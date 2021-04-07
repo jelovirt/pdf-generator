@@ -1,0 +1,9 @@
+<vars xmlns="http://www.idiominc.com/opentopic/vars">
+  <variable id="blank_page">這頁故意地被留下空白</variable>
+  <variable id="#table-continued">Table continued…</variable>
+  <variable id="Figure">图: <param ref-name="title"/></variable>
+  <variable id="Table">表: <param ref-name="title"/></variable>
+  <variable id="Chapter with number"></variable>
+  <variable id="Table of Contents Chapter"></variable>
+  <variable id="Table of Contents Appendix">附录: </variable>
+</vars>

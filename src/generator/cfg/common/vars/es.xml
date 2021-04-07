@@ -1,0 +1,9 @@
+<vars xmlns="http://www.idiominc.com/opentopic/vars">
+  <variable id="blank_page">Esta página ha sido expresamente dejada en blanco</variable>
+  <variable id="#table-continued">Table continued&#x2026;</variable>
+  <variable id="Figure">Figura: <param ref-name="title"/></variable>
+  <variable id="Table">Tabla: <param ref-name="title"/></variable>
+  <variable id="Chapter with number"></variable>
+  <variable id="Table of Contents Chapter"></variable>
+  <variable id="Table of Contents Appendix">Ap&#xe9;ndice:&#xA0;</variable>
+</vars>

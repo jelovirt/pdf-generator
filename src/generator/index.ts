@@ -1,30 +1,29 @@
 import JSZip from 'jszip';
 import _ from 'lodash';
-import { FoProperty, Property, Style, StyleName, styles } from './styles';
-import shell from './shell';
-import vars from './vars';
+import { SaxonJS, Options as SaxonJsOptions } from '../types/saxon-js';
+import { FoProperty, Property, StyleName, styles } from './styles';
 import { Version } from './version';
-import { catalog, value, xsl } from './utils';
+import { value, xsl } from './utils';
 import {
   Element,
   SubElement,
   register_namespace,
-  Comment,
   ElementTree,
 } from './elementtree';
-import * as BasicSettings from './basic-settings';
-import * as Commons from './commons';
-import * as FrontMatter from './front-matter';
-// @ts-ignore
-import * as LayoutMasters from './layoutMasters';
-import * as Links from './links';
-import * as Lists from './lists';
-import * as PrDomain from './pr-domain';
-import * as StaticContent from './staticContent';
-import * as Tables from './tables';
-import * as Toc from './toc';
-import * as Topic from './topic';
-import { Model } from './Model';
+import BasicSettings from '../../build/generator/basic-settings.sef.json';
+import Commons from '../../build/generator/commons.sef.json';
+import FrontMatter from '../../build/generator/front-matter.sef.json';
+import LayoutMasters from '../../build/generator/layout-masters.sef.json';
+import Links from '../../build/generator/links.sef.json';
+import Lists from '../../build/generator/lists.sef.json';
+import PrDomain from '../../build/generator/pr-domain.sef.json';
+import StaticContent from '../../build/generator/static-content.sef.json';
+import Tables from '../../build/generator/tables.sef.json';
+import Toc from '../../build/generator/toc.sef.json';
+import Topic from '../../build/generator/topic.sef.json';
+import Shell from '../../build/generator/shell.sef.json';
+import Vars from '../../build/generator/vars.sef.json';
+import { PluginModel } from './Model';
 
 type Language =
   | 'de'
@@ -39,39 +38,14 @@ type Language =
   | 'ro'
   | 'ru'
   | 'sv'
-  | 'zh_CN';
+  | 'zh-CN';
 
 type Options = {
   blank_pages: boolean;
 };
 
-type TemplateName =
-  | 'layout-masters'
-  | 'front-matter'
-  | 'tables'
-  | 'toc'
-  | 'commons'
-  | 'links'
-  | 'lists'
-  | 'static-content'
-  | 'layout-masters'
-  | 'pr-domain'
-  | 'topic';
-type AttrTemplateName =
-  | 'basic-settings'
-  | 'front-matter-attr'
-  | 'tables-attr'
-  | 'toc-attr'
-  | 'commons-attr'
-  | 'links-attr'
-  | 'lists-attr'
-  | 'static-content-attr'
-  | 'layout-masters-attr'
-  | 'pr-domain-attr'
-  | 'topic-attr';
-
 export default class Generator {
-  conf: Model;
+  conf: PluginModel;
   properties: FoProperty[] = Object.values(FoProperty);
   variable_languages: Language[] = [
     'de',
@@ -86,7 +60,7 @@ export default class Generator {
     'ro',
     'ru',
     'sv',
-    'zh_CN',
+    'zh-CN',
   ];
   ot_version;
   plugin_name;
@@ -105,9 +79,6 @@ export default class Generator {
   mirror_page_margins;
   table_continued;
   formatter;
-  override_shell;
-  // cover_image;
-  // cover_image_name;
   cover_image_metadata;
   cover_image_topic;
   header;
@@ -115,11 +86,13 @@ export default class Generator {
   page_number;
   options: Options;
   transtype;
+  SaxonJS: SaxonJS;
+
   // title_numbering;
 
-  constructor(conf: Model) {
+  constructor(conf: PluginModel, SaxonJS: SaxonJS) {
+    this.SaxonJS = SaxonJS;
     this.conf = conf;
-    //validate
     if (!conf.ot_version) {
       throw new Error('version missing');
     }
@@ -155,18 +128,8 @@ export default class Generator {
       this.column_gap = conf.column_gap;
     }
     this.mirror_page_margins = conf.mirror_page_margins;
-    //__dita_gen.dl = __config["dl"]
-    // this.title_numbering = conf.title_numbering;
-    //__dita_gen.table_numbering = __config["table_numbering"]
-    //__dita_gen.figure_numbering = __config["figure_numbering"]
-    //__dita_gen.link_pagenumber = __config["link_pagenumber"]
     this.table_continued = conf.table_continued;
     this.formatter = conf.formatter;
-    this.override_shell = conf.override_shell;
-    //if ("cover_image" in self.request.arguments() && type(self.request.POST["cover_image"]) != unicode) {
-    //  __dita_gen.cover_image = self.request.get("cover_image")
-    //  __dita_gen.cover_image_name = self.request.POST["cover_image"].filename
-    //}
     if (conf.cover_image_metadata) {
       this.cover_image_metadata = conf.cover_image_metadata;
     }
@@ -206,17 +169,6 @@ export default class Generator {
     return undefined;
   }
 
-  //    function get_ns():
-  //        return {
-  //            "xsl": "http://www.w3.org/1999/XSL/Transform",
-  //            "fo": "http://www.w3.org/1999/XSL/Format",
-  //            "xs": "http://www.w3.org/2001/XMLSchema",
-  //            "e": plugin_name,
-  //            "ditaarch": "http://dita.oasis-open.org/architecture/2005/",
-  //            "opentopic": "http://www.idiominc.com/opentopic",
-  //            "opentopic-func": "http://www.idiominc.com/opentopic/exsl/function"
-  //            }
-
   /**
    * Generate plugin integrator Ant file.
    */
@@ -235,12 +187,10 @@ export default class Generator {
       name: 'pdf2.i18n.skip',
       value: 'true',
     });
-    if (this.override_shell) {
-      SubElement(init, 'property', {
-        name: 'args.xsl.pdf',
-        location: `\${dita.plugin.${this.plugin_name}.dir}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`,
-      });
-    }
+    SubElement(init, 'property', {
+      name: 'args.xsl.pdf',
+      location: `\${dita.plugin.${this.plugin_name}.dir}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`,
+    });
     if (this.chapter_layout) {
       SubElement(init, 'property', {
         name: 'args.chapter.layout',
@@ -269,7 +219,6 @@ export default class Generator {
       name: `dita2${this.transtype}`,
       depends: `dita2${this.transtype}.init, dita2pdf2`,
     });
-    //ditagen.generator.indent(root)
     const d = new ElementTree(root);
     return d.write({ indent: 2 });
   }
@@ -309,96 +258,66 @@ export default class Generator {
       extension: 'dita.transtype.print',
       value: this.transtype ?? undefined,
     });
-    //ditagen.generator.indent(root)
     const d = new ElementTree(root);
-    return d.write({ indent: 2 });
-  }
-
-  /**
-   * Generate plugin configuration file.
-   */
-  generate_catalog() {
-    const root = Element(catalog('catalog'), {
-      prefer: 'system',
-    });
-    if (!this.override_shell) {
-      SubElement(root, catalog('uri'), {
-        name: 'cfg:fo/attrs/custom.xsl',
-        uri: 'fo/attrs/custom.xsl',
-      });
-      SubElement(root, catalog('uri'), {
-        name: 'cfg:fo/xsl/custom.xsl',
-        uri: 'fo/xsl/custom.xsl',
-      });
-    }
-    //ditagen.generator.indent(root)
-    //ditagen.generator.set_prefixes(root, {"": "urn:oasis:names:tc:entity:xmlns:xml:catalog"})
-    const d = new ElementTree(root);
-    register_namespace('', 'urn:oasis:names:tc:entity:xmlns:xml:catalog');
     return d.write({ indent: 2 });
   }
 
   /**
    * Generate plugin custom XSLT file.
    */
-  generate_custom(stylesheet: TemplateName) {
-    const root = Element(xsl('stylesheet'), {
-      //"xmlns:xsl": "http://www.w3.org/1999/XSL/Transform",
-      'xmlns:fo': 'http://www.w3.org/1999/XSL/Format',
-      'xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
-      'xmlns:e': this.plugin_name,
-      'xmlns:dita-ot': 'http://dita-ot.sourceforge.net/ns/201007/dita-ot',
-      'xmlns:ditaarch': 'http://dita.oasis-open.org/architecture/2005/',
-      'xmlns:opentopic': 'http://www.idiominc.com/opentopic',
-      'xmlns:opentopic-func': 'http://www.idiominc.com/opentopic/exsl/function',
-      version: '2.0',
-      'exclude-result-prefixes': 'ditaarch opentopic e dita-ot opentopic-func',
-    });
+  generate_custom_xslt(stylesheet: any) {
+    const options: SaxonJsOptions = {
+      stylesheetInternal: stylesheet,
+      destination: 'serialized',
+      sourceType: 'json',
+      sourceText: JSON.stringify(this.conf),
+    };
+    try {
+      const output = this.SaxonJS.transform(options);
+      return (output as any).principalResult;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
 
-    if (stylesheet === 'front-matter' || !stylesheet) {
-      FrontMatter.generate_custom(root, this);
+  /**
+   * Generate plugin custom XSLT file.
+   */
+  generate_custom_attr_xslt(stylesheet: any) {
+    const options: SaxonJsOptions = {
+      stylesheetInternal: stylesheet,
+      destination: 'serialized',
+      sourceType: 'json',
+      initialMode: 'attr',
+      sourceText: JSON.stringify(this.conf),
+    };
+    try {
+      const output = this.SaxonJS.transform(options);
+      return (output as any).principalResult;
+    } catch (e) {
+      console.log(e);
+      throw e;
     }
-    if (stylesheet === 'tables' || !stylesheet) {
-      Tables.generate_custom(root, this);
-    }
-    if (stylesheet === 'toc' || !stylesheet) {
-      Toc.generate_custom(root, this);
-    }
-    if (stylesheet === 'commons' || !stylesheet) {
-      Commons.generate_custom(root, this);
-    }
-    if (stylesheet === 'topic' || !stylesheet) {
-      Topic.generate_custom(root, this);
-    }
-    if (stylesheet === 'links' || !stylesheet) {
-      Links.generate_custom(root, this);
-    }
-    if (stylesheet === 'lists' || !stylesheet) {
-      Lists.generate_custom(root, this);
-    }
-    if (stylesheet === 'static-content' || !stylesheet) {
-      StaticContent.generate_custom(root, this);
-    }
-    if (stylesheet === 'layout-masters' || !stylesheet) {
-      LayoutMasters.generate_custom(root, this);
-    }
-    if (stylesheet === 'pr-domain' || !stylesheet) {
-      PrDomain.generate_custom(root, this);
-    }
-    if (!stylesheet) {
-      if (!this.override_shell && this.toc_maximum_level) {
-        root.append(Comment('TOC'));
-        SubElement(root, xsl('variable'), {
-          name: 'tocMaximumLevel',
-        }).text = this.toc_maximum_level.toString();
-      }
-    }
+  }
 
-    // ditagen.generator.indent(root)
-    // ditagen.generator.set_prefixes(root, get_ns())
-
-    const d = new ElementTree(root);
-    return d.write({ indent: 2 });
+  generate_vars_xslt(lang: Language) {
+    const options: SaxonJsOptions = {
+      stylesheetInternal: Vars,
+      destination: 'serialized',
+      sourceType: 'json',
+      sourceText: JSON.stringify(this.conf),
+      stylesheetParams: {
+        lang: lang,
+      },
+    };
+    try {
+      const output = this.SaxonJS.transform(options);
+      return (output as any).principalResult;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
   }
 
   /**
@@ -417,7 +336,6 @@ export default class Generator {
       attrs['use-attribute-sets'] = uses;
     }
     const attrSet = SubElement(root, xsl('attribute-set'), attrs);
-    //: Record<StyleName, Record<Property, Style>>;
 
     _.forEach(this.style[style], (v, p) => {
       const property = p as FoProperty;
@@ -428,59 +346,6 @@ export default class Generator {
       }
     });
     return attrSet;
-  }
-
-  /**
-   * Generate plugin custom XSLT file.
-   */
-  generate_custom_attr(stylesheet: AttrTemplateName) {
-    const root = Element(xsl('stylesheet'), {
-      'xmlns:xs': 'http://www.w3.org/2001/XMLSchema',
-      'xmlns:e': this.plugin_name,
-      'xmlns:dita-ot': 'http://dita-ot.sourceforge.net/ns/201007/dita-ot',
-      'xmlns:ditaarch': 'http://dita.oasis-open.org/architecture/2005/',
-      'xmlns:opentopic': 'http://www.idiominc.com/opentopic',
-      'xmlns:opentopic-func': 'http://www.idiominc.com/opentopic/exsl/function',
-      version: '2.0',
-      'exclude-result-prefixes':
-        'xs ditaarch opentopic e dita-ot opentopic-func',
-    });
-
-    if (stylesheet === 'commons-attr' || !stylesheet) {
-      Commons.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'tables-attr' || !stylesheet) {
-      Tables.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'layout-masters-attr' || !stylesheet) {
-      LayoutMasters.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'toc-attr' || !stylesheet) {
-      Toc.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'basic-settings' || !stylesheet) {
-      BasicSettings.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'links-attr' || !stylesheet) {
-      Links.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'lists-attr' || !stylesheet) {
-      Lists.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'pr-domain-attr' || !stylesheet) {
-      PrDomain.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'static-content-attr' || !stylesheet) {
-      StaticContent.generate_custom_attr(root, this);
-    }
-    if (stylesheet === 'topic-attr' || !stylesheet) {
-      Topic.generate_custom_attr(root, this);
-    }
-
-    // ditagen.generator.indent(root)
-    // ditagen.generator.set_prefixes(root, get_ns())
-    const d = new ElementTree(root);
-    return d.write({ indent: 2 });
   }
 
   /**
@@ -495,7 +360,6 @@ export default class Generator {
   }
 
   generate_plugin(zip: JSZip) {
-    // const zip = new JSZip();
     // integrator
     this.run_generation(
       zip,
@@ -508,105 +372,73 @@ export default class Generator {
       this.generate_plugin_file,
       `${this.plugin_name}/plugin.xml`
     );
-    // catalog
-    this.run_generation(
-      zip,
-      this.generate_catalog,
-      `${this.plugin_name}/cfg/catalog.xml`
-    );
 
     // custom XSLT
-    if (this.override_shell) {
-      const files: TemplateName[] = [
-        'front-matter',
-        'commons',
-        'tables',
-        'toc',
-        'links',
-        'lists',
-        'pr-domain',
-        'static-content',
-        'topic',
-      ];
-      files.forEach((s) => {
-        this.run_generation(
-          zip,
-          () => {
-            return this.generate_custom(s);
-          },
-          `${this.plugin_name}/xsl/fo/${s}.xsl`
-        );
-      });
-      ['layout-masters' as TemplateName].forEach((s) => {
-        this.run_generation(
-          zip,
-          () => {
-            return this.generate_custom(s);
-          },
-          `${this.plugin_name}/cfg/fo/${s}.xsl`
-        );
-      });
-    } else {
+    const custom_xslt = (stylesheet: any, name: string) => {
       this.run_generation(
         zip,
-        this.generate_custom,
-        `${this.plugin_name}/cfg/fo/xsl/custom.xsl`
+        () => {
+          return this.generate_custom_xslt(stylesheet);
+        },
+        `${this.plugin_name}/xsl/fo/${name}.xsl`
       );
-    }
+    };
+    custom_xslt(FrontMatter, 'front-matter');
+    custom_xslt(Commons, 'commons');
+    custom_xslt(Tables, 'tables');
+    custom_xslt(Toc, 'toc');
+    custom_xslt(Links, 'links');
+    custom_xslt(Lists, 'lists');
+    custom_xslt(PrDomain, 'pr-domain');
+    custom_xslt(StaticContent, 'static-content');
+    custom_xslt(Topic, 'topic');
+    this.run_generation(
+      zip,
+      () => {
+        return this.generate_custom_xslt(LayoutMasters);
+      },
+      `${this.plugin_name}/cfg/fo/layout-masters.xsl`
+    );
+
     // custom XSLT attribute sets
-    if (this.override_shell) {
-      const files: AttrTemplateName[] = [
-        'front-matter-attr',
-        'commons-attr',
-        'layout-masters-attr',
-        'static-content-attr',
-        'tables-attr',
-        'toc-attr',
-        'basic-settings',
-        'links-attr',
-        'lists-attr',
-        'pr-domain-attr',
-        'topic-attr',
-      ];
-      files.forEach((s) => {
-        this.run_generation(
-          zip,
-          () => {
-            return this.generate_custom_attr(s);
-          },
-          `${this.plugin_name}/cfg/fo/attrs/${s}.xsl`
-        );
-      });
-    } else {
+    const attr_xslt = (stylesheet: any, name: string) => {
       this.run_generation(
         zip,
-        this.generate_custom_attr,
-        `${this.plugin_name}/cfg/fo/attrs/custom.xsl`
+        () => {
+          return this.generate_custom_attr_xslt(stylesheet);
+        },
+        `${this.plugin_name}/cfg/fo/attrs/${name}.xsl`
       );
-    }
+    };
+    attr_xslt(FrontMatter, 'front-matter-attr');
+    attr_xslt(Commons, 'commons-attr');
+    attr_xslt(LayoutMasters, 'layout-masters-attr');
+    attr_xslt(StaticContent, 'static-content-attr');
+    attr_xslt(Tables, 'tables-attr');
+    attr_xslt(Toc, 'toc-attr');
+    attr_xslt(Tables, 'tables-attr');
+    attr_xslt(BasicSettings, 'basic-settings');
+    attr_xslt(Links, 'links-attr');
+    attr_xslt(Lists, 'lists-attr');
+    attr_xslt(PrDomain, 'pr-domain-attr');
+    attr_xslt(Topic, 'topic-attr');
+
     // shell XSLT
-    if (this.override_shell) {
-      this.run_generation(
-        zip,
-        shell,
-        `${this.plugin_name}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`
-      );
-    }
+    this.run_generation(
+      zip,
+      () => {
+        return this.generate_custom_xslt(Shell);
+      },
+      `${this.plugin_name}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`
+    );
     this.variable_languages.forEach((lang) => {
       this.run_generation(
         zip,
         () => {
-          return vars(lang, this);
+          return this.generate_vars_xslt(lang);
         },
         `${this.plugin_name}/cfg/common/vars/${lang}.xml`
       );
     });
-    //if (this.cover_image) {
-    //  store_file(zip, this.cover_image, `${this.plugin_name}/cfg/common/artwork/${this.cover_image_name}`)
-    //}
-    // return zip.generateAsync({
-    //   type: 'blob',
-    //   platform: 'UNIX',
-    // });
   }
 }

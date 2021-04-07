@@ -16,7 +16,7 @@ export enum FoProperty {
   BASELINE_SHIFT = 'baseline-shift',
   BLANK_OR_NOT_BLANK = 'blank-or-not-blank',
   BLOCK_PROGRESSION_DIMENSION = 'block-progression-dimension',
-  BORDER = 'border',
+  // BORDER = 'border',
   BORDER_AFTER_COLOR = 'border-after-color',
   BORDER_AFTER_PRECEDENCE = 'border-after-precedence',
   BORDER_AFTER_STYLE = 'border-after-style',
@@ -276,6 +276,7 @@ export enum CustomProperty {
   LINE_HEIGHT_LIST = 'line-height-list',
   COLOR_LIST = 'color-list',
   BACKGROUND_COLOR_LIST = 'background-color-list',
+  BORDER_LIST = 'border_list',
 }
 
 export type Property = FoProperty | CustomProperty;
@@ -423,7 +424,7 @@ const base: Partial<Record<Property, Style>> = {
   'padding-bottom': { default: '0pt', inherit: undefined },
   'padding-left': { default: '0pt', inherit: undefined },
   'end-indent': { default: '0pt', inherit: undefined },
-  border: { default: 'none', inherit: undefined },
+  border_list: { default: 'none', inherit: undefined },
   ...Object.fromEntries(
     Object.entries(convertBorder('none')!).map(([name, value]) => [
       name,
