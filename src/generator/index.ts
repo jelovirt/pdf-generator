@@ -1,8 +1,7 @@
 import JSZip from 'jszip';
 import _ from 'lodash';
 import { SaxonJS, Options as SaxonJsOptions } from '../types/saxon-js';
-import { FoProperty, Property, Style, StyleName, styles } from './styles';
-// import vars from './vars';
+import { FoProperty, Property, StyleName, styles } from './styles';
 import { Version } from './version';
 import { value, xsl } from './utils';
 import {
@@ -25,8 +24,6 @@ import Topic from '../../build/generator/topic.sef.json';
 import Shell from '../../build/generator/shell.sef.json';
 import Vars from '../../build/generator/vars.sef.json';
 import { PluginModel } from './Model';
-
-// require('../../lib/SaxonJS2.rt');
 
 type Language =
   | 'de'
@@ -82,9 +79,6 @@ export default class Generator {
   mirror_page_margins;
   table_continued;
   formatter;
-  // override_shell;
-  // cover_image;
-  // cover_image_name;
   cover_image_metadata;
   cover_image_topic;
   header;
@@ -99,7 +93,6 @@ export default class Generator {
   constructor(conf: PluginModel, SaxonJS: SaxonJS) {
     this.SaxonJS = SaxonJS;
     this.conf = conf;
-    //validate
     if (!conf.ot_version) {
       throw new Error('version missing');
     }
@@ -135,18 +128,8 @@ export default class Generator {
       this.column_gap = conf.column_gap;
     }
     this.mirror_page_margins = conf.mirror_page_margins;
-    //__dita_gen.dl = __config["dl"]
-    // this.title_numbering = conf.title_numbering;
-    //__dita_gen.table_numbering = __config["table_numbering"]
-    //__dita_gen.figure_numbering = __config["figure_numbering"]
-    //__dita_gen.link_pagenumber = __config["link_pagenumber"]
     this.table_continued = conf.table_continued;
     this.formatter = conf.formatter;
-    // this.override_shell = conf.override_shell;
-    //if ("cover_image" in self.request.arguments() && type(self.request.POST["cover_image"]) != unicode) {
-    //  __dita_gen.cover_image = self.request.get("cover_image")
-    //  __dita_gen.cover_image_name = self.request.POST["cover_image"].filename
-    //}
     if (conf.cover_image_metadata) {
       this.cover_image_metadata = conf.cover_image_metadata;
     }
@@ -204,12 +187,10 @@ export default class Generator {
       name: 'pdf2.i18n.skip',
       value: 'true',
     });
-    // if (this.override_shell) {
     SubElement(init, 'property', {
       name: 'args.xsl.pdf',
       location: `\${dita.plugin.${this.plugin_name}.dir}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`,
     });
-    // }
     if (this.chapter_layout) {
       SubElement(init, 'property', {
         name: 'args.chapter.layout',
@@ -238,7 +219,6 @@ export default class Generator {
       name: `dita2${this.transtype}`,
       depends: `dita2${this.transtype}.init, dita2pdf2`,
     });
-    //ditagen.generator.indent(root)
     const d = new ElementTree(root);
     return d.write({ indent: 2 });
   }
@@ -278,46 +258,9 @@ export default class Generator {
       extension: 'dita.transtype.print',
       value: this.transtype ?? undefined,
     });
-    //ditagen.generator.indent(root)
     const d = new ElementTree(root);
     return d.write({ indent: 2 });
   }
-
-  // /**
-  //  * Generate plugin configuration file.
-  //  */
-  // generate_catalog() {
-  //   const root = Element(catalog('catalog'), {
-  //     prefer: 'system',
-  //   });
-  //   // if (!this.override_shell) {
-  //   //   SubElement(root, catalog('uri'), {
-  //   //     name: 'cfg:fo/attrs/custom.xsl',
-  //   //     uri: 'fo/attrs/custom.xsl',
-  //   //   });
-  //   //   SubElement(root, catalog('uri'), {
-  //   //     name: 'cfg:fo/xsl/custom.xsl',
-  //   //     uri: 'fo/xsl/custom.xsl',
-  //   //   });
-  //   // }
-  //   //ditagen.generator.indent(root)
-  //   //ditagen.generator.set_prefixes(root, {"": "urn:oasis:names:tc:entity:xmlns:xml:catalog"})
-  //   const d = new ElementTree(root);
-  //   register_namespace('', 'urn:oasis:names:tc:entity:xmlns:xml:catalog');
-  //   return d.write({ indent: 2 });
-  // }
-
-  // /**
-  //  * Remove `default` field added to JSON. I have no idea why bundling with Parcel adds these.
-  //  */
-  // cleanStylesheet(stylesheet: any): any {
-  //   if (stylesheet.default) {
-  //     const copy = { ...stylesheet };
-  //     delete copy.default;
-  //     return copy;
-  //   }
-  //   return stylesheet;
-  // }
 
   /**
    * Generate plugin custom XSLT file.
@@ -393,7 +336,6 @@ export default class Generator {
       attrs['use-attribute-sets'] = uses;
     }
     const attrSet = SubElement(root, xsl('attribute-set'), attrs);
-    //: Record<StyleName, Record<Property, Style>>;
 
     _.forEach(this.style[style], (v, p) => {
       const property = p as FoProperty;
@@ -418,7 +360,6 @@ export default class Generator {
   }
 
   generate_plugin(zip: JSZip) {
-    // const zip = new JSZip();
     // integrator
     this.run_generation(
       zip,
@@ -431,12 +372,6 @@ export default class Generator {
       this.generate_plugin_file,
       `${this.plugin_name}/plugin.xml`
     );
-    // catalog
-    // this.run_generation(
-    //   zip,
-    //   this.generate_catalog,
-    //   `${this.plugin_name}/cfg/catalog.xml`
-    // );
 
     // custom XSLT
     const custom_xslt = (stylesheet: any, name: string) => {
@@ -489,7 +424,6 @@ export default class Generator {
     attr_xslt(Topic, 'topic-attr');
 
     // shell XSLT
-    // if (this.override_shell) {
     this.run_generation(
       zip,
       () => {
@@ -497,7 +431,6 @@ export default class Generator {
       },
       `${this.plugin_name}/xsl/fo/topic2fo_shell_${this.formatter}.xsl`
     );
-    // TODO
     this.variable_languages.forEach((lang) => {
       this.run_generation(
         zip,
@@ -507,12 +440,5 @@ export default class Generator {
         `${this.plugin_name}/cfg/common/vars/${lang}.xml`
       );
     });
-    //if (this.cover_image) {
-    //  store_file(zip, this.cover_image, `${this.plugin_name}/cfg/common/artwork/${this.cover_image_name}`)
-    //}
-    // return zip.generateAsync({
-    //   type: 'blob',
-    //   platform: 'UNIX',
-    // });
   }
 }

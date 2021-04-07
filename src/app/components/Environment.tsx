@@ -59,16 +59,6 @@ export default function Environment() {
           DITA-OT and XSL formatter.
         </p>
       </fieldset>
-      {/*<fieldset>*/}
-      {/*  <p>*/}
-      {/*    <label htmlFor="override_shell">Override shell</label>*/}
-      {/*    <Field id="override_shell" name="override_shell" type="checkbox" />*/}
-      {/*  </p>*/}
-      {/*  <p className="instruction">*/}
-      {/*    Override XSLT shell stylesheet. Advanced generation option which will*/}
-      {/*    make further developing the generated plug-in easier.*/}
-      {/*  </p>*/}
-      {/*</fieldset>*/}
     </div>
   );
 }
