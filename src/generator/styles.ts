@@ -292,6 +292,8 @@ export type Style =
     };
 
 export enum StyleName {
+  HEADER = 'header',
+  FOOTER = 'footer',
   BODY = 'body',
   TOPIC = 'topic',
   TOPIC_TOPIC = 'topic_topic',
