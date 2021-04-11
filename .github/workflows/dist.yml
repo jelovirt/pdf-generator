@@ -2,8 +2,7 @@ name: Distribution
 
 on:
   push:
-    branches:
-      - master
+    tags:
 
 jobs:
   java:
@@ -18,3 +17,9 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew dist
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/distributions/com.elovirta.pdf.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
