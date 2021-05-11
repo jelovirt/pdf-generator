@@ -17,7 +17,7 @@
     "formik": "^2.2.5",
     "jquery": "^3.5.1",
     "jszip": "^3.5.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "react": "^17.0.1",
     "react-dnd": "^11.1.3",
     "react-dnd-html5-backend": "^11.1.3",
