@@ -533,32 +533,32 @@
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="exists($style ?header)">
+      <xsl:if test="exists(. ?header ?odd)">
         <axsl:attribute-set name="odd__header">
           <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select="$style ?header"/>
+            <xsl:with-param name="style" select=". ?header ?odd"/>
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>
-      <xsl:if test="exists($style ?header) and . ?mirror_page_margins">
+      <xsl:if test="exists(. ?header ?even) and . ?mirror_page_margins">
         <axsl:attribute-set name="even__header">
           <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select="$style ?header"/>
+            <xsl:with-param name="style" select=". ?header ?even"/>
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>
 
-      <xsl:if test="exists($style ?footer)">
+      <xsl:if test="exists(. ?footer ?odd)">
         <axsl:attribute-set name="odd__footer">
           <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select="$style ?footer"/>
+            <xsl:with-param name="style" select=". ?footer ?odd"/>
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>
-      <xsl:if test="exists($style ?footer) and . ?mirror_page_margins">
+      <xsl:if test="exists(. ?footer ?even) and . ?mirror_page_margins">
         <axsl:attribute-set name="even__footer">
           <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select="$style ?footer"/>
+            <xsl:with-param name="style" select=". ?footer ?even"/>
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>
