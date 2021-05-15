@@ -278,11 +278,22 @@
         }
       }
     },
+
     "odd_type": {
-      "type": "array",
-      "minItems": 0,
-      "items": {
-        "type": "string"
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block_style_type"
+        }
+      ],
+      "properties": {
+        "content": {
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "header_type": {

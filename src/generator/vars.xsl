@@ -250,7 +250,9 @@
     <xsl:param name="args" as="map(*)"/>
     <xsl:param name="var_names" as="item()*"/>
     <xsl:for-each select="$var_names">
-      <xsl:variable name="vars" select="if (contains(., 'even')) then ($args ?even) else ($args ?odd)"/>
+      <xsl:variable name="vars" select="if (contains(., 'even'))
+                                        then ($args ?even ?content)
+                                        else ($args ?odd ?content)"/>
       <variable id="{.}">
         <xsl:for-each select="$vars">
           <xsl:if test="position() ne 1"> | </xsl:if>
