@@ -51,6 +51,7 @@ public class StylesheetGeneratorTask extends Task {
             }
         }
 
+        getProject().log(this, "Reading " + template.toURI(), Project.MSG_INFO);
         generate("front-matter.xsl", "xsl/fo/front-matter.xsl", null);
         generate("commons.xsl", "xsl/fo/commons.xsl", null);
         generate("tables.xsl", "xsl/fo/tables.xsl", null);
