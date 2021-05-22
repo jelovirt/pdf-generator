@@ -1,5 +1,6 @@
 package com.elovirta.pdf.ant;
 
+import com.google.common.annotations.VisibleForTesting;
 import net.sf.saxon.s9api.*;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -9,11 +10,12 @@ import org.dita.dost.util.XMLUtils;
 
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.URIResolver;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
@@ -30,6 +32,10 @@ public class StylesheetGeneratorTask extends Task {
     private File dstDir;
     private XMLUtils xmlUtils;
     private URIResolver resolver;
+    private Processor processor;
+    private XsltCompiler compiler;
+    private XPathCompiler xpathCompiler;
+    private XdmItem xdmItem;
 
     @Override
     public void init() {
@@ -39,6 +45,10 @@ public class StylesheetGeneratorTask extends Task {
             xmlUtils = new XMLUtils();
             xmlUtils.setLogger(new DITAOTAntLogger(getProject()));
         }
+        processor = xmlUtils.getProcessor();
+        compiler = processor.newXsltCompiler();
+        compiler.setURIResolver(resolver);
+        xpathCompiler = processor.newXPathCompiler();
     }
 
     @Override
@@ -51,7 +61,7 @@ public class StylesheetGeneratorTask extends Task {
             }
         }
 
-        getProject().log(this, "Reading " + template.toURI(), Project.MSG_INFO);
+        xdmItem = parseTemplate();
         generate("front-matter.xsl", "xsl/fo/front-matter.xsl", null);
         generate("commons.xsl", "xsl/fo/commons.xsl", null);
         generate("tables.xsl", "xsl/fo/tables.xsl", null);
@@ -87,35 +97,48 @@ public class StylesheetGeneratorTask extends Task {
 
     private File generate(final String name, final String dst, final QName mode, final Map<QName, XdmAtomicValue> params) throws BuildException {
         final File dstFile = new File(dstDir.toURI().resolve(dst));
-        getProject().log(this, "Generating " + dstFile.toURI(), Project.MSG_INFO);
+        getProject().log(this, String.format("Generating %s", dstFile.toURI()), Project.MSG_INFO);
         try {
-            final Processor processor = xmlUtils.getProcessor();
-            final XsltCompiler compiler = processor.newXsltCompiler();
-            compiler.setURIResolver(resolver);
             final String stylesheetUri = String.format("classpath:/%s", name);
             final XsltExecutable executable = compiler.compile(resolver.resolve(stylesheetUri, null));
             final Xslt30Transformer transformer = executable.load30();
             final Map<QName, XdmAtomicValue> parameters = getParameters();
             parameters.putAll(params);
             transformer.setStylesheetParameters(parameters);
-            final XdmItem xdmItem = parseTemplate();
             transformer.setGlobalContextItem(xdmItem);
             if (mode != null) {
                 transformer.setInitialMode(mode);
             }
             final Serializer destination = processor.newSerializer(dstFile);
+            destination.setOutputProperty(Serializer.Property.METHOD, "xml");
             transformer.applyTemplates(xdmItem, destination);
+            destination.close();
             return dstFile;
         } catch (SaxonApiException | TransformerException e) {
             throw new BuildException(String.format("Failed to generate stylesheet %s", name), e);
         }
     }
 
-    private XdmItem parseTemplate() {
+    @VisibleForTesting
+    XdmItem parseTemplate() {
         try {
-            final XPathCompiler compiler = xmlUtils.getProcessor().newXPathCompiler();
-            return compiler.evaluateSingle("json-doc(.)", new XdmAtomicValue(template.toURI()));
-        } catch (SaxonApiException e) {
+            getProject().log(this, String.format("Reading %s", template.toURI()), Project.MSG_INFO);
+            final XdmItem theme = xpathCompiler.evaluateSingle("json-doc(.)", new XdmAtomicValue(template.toURI()));
+            final InputStream baseInput = getClass().getClassLoader().getResourceAsStream("default.json");
+            final String baseText = new BufferedReader(new InputStreamReader(baseInput, StandardCharsets.UTF_8))
+                    .lines()
+                    .collect(Collectors.joining("\n"));
+            final XdmItem base = xpathCompiler.evaluateSingle("parse-json(.)", new XdmAtomicValue(baseText));
+
+            final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/merge.xsl", null));
+            final Xslt30Transformer transformer = executable.load30();
+            final Map<QName, XdmItem> parameters = singletonMap(
+                    QName.fromClarkName("{}theme"), theme
+            );
+            transformer.setStylesheetParameters(parameters);
+            transformer.setGlobalContextItem(base);
+            return transformer.applyTemplates(base).itemAt(0);
+        } catch (TransformerException | SaxonApiException e) {
             throw new BuildException(String.format("Failed to parse template %s", template), e);
         }
     }
