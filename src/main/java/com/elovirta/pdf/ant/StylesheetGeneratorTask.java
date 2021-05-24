@@ -10,12 +10,11 @@ import org.dita.dost.util.XMLUtils;
 
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.URIResolver;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
@@ -124,20 +123,15 @@ public class StylesheetGeneratorTask extends Task {
         try {
             getProject().log(this, String.format("Reading %s", template.toURI()), Project.MSG_INFO);
             final XdmItem theme = xpathCompiler.evaluateSingle("json-doc(.)", new XdmAtomicValue(template.toURI()));
-            final InputStream baseInput = getClass().getClassLoader().getResourceAsStream("default.json");
-            final String baseText = new BufferedReader(new InputStreamReader(baseInput, StandardCharsets.UTF_8))
-                    .lines()
-                    .collect(Collectors.joining("\n"));
-            final XdmItem base = xpathCompiler.evaluateSingle("parse-json(.)", new XdmAtomicValue(baseText));
 
             final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/merge.xsl", null));
             final Xslt30Transformer transformer = executable.load30();
             final Map<QName, XdmItem> parameters = singletonMap(
-                    QName.fromClarkName("{}theme"), theme
+                    QName.fromClarkName("{}base-url"), new XdmAtomicValue(template.toURI())
             );
             transformer.setStylesheetParameters(parameters);
-            transformer.setGlobalContextItem(base);
-            return transformer.applyTemplates(base).itemAt(0);
+            transformer.setGlobalContextItem(theme);
+            return transformer.applyTemplates(theme).itemAt(0);
         } catch (TransformerException | SaxonApiException e) {
             throw new BuildException(String.format("Failed to parse template %s", template), e);
         }

@@ -5,12 +5,27 @@
 
   <xsl:output method="json"/>
 
-  <xsl:param name="theme" as="item()*"/>
+  <xsl:param name="base-url"/>
 
   <xsl:template match=".[. instance of map(*)]">
-    <xsl:variable name="merged" select="x:merge(., $theme)"/>
-    <xsl:sequence select="$merged"/>$>
+    <xsl:sequence select="x:extends(., $base-url)"/>
   </xsl:template>
+  
+  <xsl:function name="x:extends" as="item()*">
+    <xsl:param name="base" as="item()*"/>
+    <xsl:param name="url"/>
+    <xsl:message select="$url"/>
+    <xsl:choose>
+      <xsl:when test="map:contains($base, 'extends')">
+        <xsl:variable name="extends-url" select="resolve-uri($base ?extends, $url)"/>
+        <xsl:variable name="extends" select="x:extends(json-doc($extends-url), $extends-url)"/>
+        <xsl:sequence select="x:merge($extends, $base)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="$base"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 
   <xsl:function name="x:merge" as="item()*">
     <xsl:param name="base" as="item()*"/>

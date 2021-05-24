@@ -3,6 +3,9 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "extends": {
+      "type": "string"
+    },
     "page": {
       "$ref": "#/definitions/page_type"
     },

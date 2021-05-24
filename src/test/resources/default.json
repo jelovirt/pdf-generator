@@ -9,9 +9,7 @@
   },
   "header": {
     "odd": {
-      "content": [
-        "title"
-      ],
+      "content": "{title}",
       "padding-before": "0pt",
       "padding-end": "0pt",
       "padding-after": "0pt",
@@ -43,9 +41,7 @@
       "background-color": "transparent"
     },
     "even": {
-      "content": [
-        "title"
-      ],
+      "content": "{title}",
       "padding-before": "0pt",
       "padding-end": "0pt",
       "padding-after": "0pt",
@@ -79,9 +75,7 @@
   },
   "footer": {
     "odd": {
-      "content": [
-        "folio"
-      ],
+      "content": "{folio}",
       "padding-before": "0pt",
       "padding-end": "0pt",
       "padding-after": "0pt",
@@ -113,9 +107,7 @@
       "background-color": "transparent"
     },
     "even": {
-      "content": [
-        "folio"
-      ],
+      "content": "{folio}",
       "padding-before": "0pt",
       "padding-end": "0pt",
       "padding-after": "0pt",
