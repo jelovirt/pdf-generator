@@ -93,7 +93,7 @@
     },
     "colour_type": {
       "type": "string",
-      "pattern": "^(#[a-eA-E0-9]{6}|#[a-eA-E0-9]{3}|rgb\\(\\d+,\\d+,\\d+\\)|rgb\\(\\d+%,\\d+%,\\d+%\\)|transparent|aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|white|yellow|inherit)$"
+      "pattern": "^(#[a-eA-E0-9]{6}|#[a-eA-E0-9]{3}|rgb\\(\\d+,\\d+,\\d+\\)|rgb\\(\\d+%,\\d+%,\\d+%\\)|transparent|aqua|black|blue|cyan|fuchsia|gray|green|lime|maroon|navy|olive|orange|pink|purple|red|silver|teal|white|yellow|inherit)$"
     },
     "font-weight_type": {
       "type": "string",
@@ -281,7 +281,6 @@
         }
       }
     },
-
     "odd_type": {
       "type": "object",
       "allOf": [
@@ -291,10 +290,18 @@
       ],
       "properties": {
         "content": {
-          "type": "array",
+          "type": ["array", "string"],
           "minItems": 0,
           "items": {
-            "type": "string"
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
           }
         }
       }

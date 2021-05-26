@@ -50,7 +50,9 @@ export default function Header() {
                 <td>
                   <TagContainer
                     fields={values.header.odd.content}
-                    setFields={(fields) => setFieldValue('header.odd', fields)}
+                    setFields={(fields) =>
+                      setFieldValue('header.odd.content', fields)
+                    }
                   />
                 </td>
               </tr>
@@ -74,7 +76,9 @@ export default function Header() {
                 <td>
                   <TagContainer
                     fields={values.footer.odd.content}
-                    setFields={(fields) => setFieldValue('footer.odd', fields)}
+                    setFields={(fields) =>
+                      setFieldValue('footer.odd.content', fields)
+                    }
                   />
                 </td>
               </tr>
