@@ -260,6 +260,7 @@
     <xsl:variable name="content" select="$args ?content"/>
     <xsl:for-each select="$var_names">
       <variable id="{.}">
+        <xsl:attribute name="xml:space">preserve</xsl:attribute>
         <xsl:choose>
           <xsl:when test="$content instance of array(*)">
             <xsl:for-each select="1 to array:size($content)">
