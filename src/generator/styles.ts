@@ -433,6 +433,21 @@ const base: Partial<Record<Property, Style>> = {
   ),
 };
 
+export const headerFooterStyles: Partial<Record<FoProperty, Style>> = {
+  ...base,
+  'font-family': { default: 'Times New Roman', inherit: undefined },
+  'font-size': { default: '10pt', inherit: undefined },
+  color: { default: 'black', inherit: undefined },
+  'font-weight': { default: 'normal', inherit: undefined },
+  'font-style': { default: 'normal', inherit: undefined },
+  'text-decoration': { default: 'none', inherit: undefined },
+  'space-before': { default: '6pt', inherit: undefined },
+  'space-after': { default: '6pt', inherit: undefined },
+  'text-align': { default: 'start', inherit: undefined },
+  'start-indent': { default: startIndent + 'pt', inherit: undefined },
+  'line-height': { default: '1.2', inherit: undefined },
+};
+
 export const styles: StyleConfiguration = {
   // block
   body: {

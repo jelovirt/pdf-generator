@@ -1,5 +1,9 @@
 apply plugin: 'java'
 
+test {
+    useJUnitPlatform()
+}
+
 repositories {
     mavenCentral()
     jcenter()
@@ -11,7 +15,9 @@ targetCompatibility = 1.8
 dependencies {
     implementation group: "org.dita-ot", name: "dost", version: "[3.4,)"
     implementation group: 'net.sf.saxon', name: 'Saxon-HE', version: '9.9.1-7'
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testImplementation 'org.skyscreamer:jsonassert:1.5.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 }
 
 sourceSets {
@@ -19,6 +25,7 @@ sourceSets {
         resources {
             srcDirs= ["src/generator"]
             include "**/*.xsl"
+            include "**/*.json"
         }
     }
 }

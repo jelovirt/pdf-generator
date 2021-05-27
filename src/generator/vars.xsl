@@ -175,41 +175,49 @@
       <xsl:if test=". ?blank_pages">
         <xsl:copy-of select="$vars/variable[@id = 'blank_page']"/>
       </xsl:if>
-      <xsl:variable name="headers" select="(
-        'Body first header',
-        'Body odd header',
-        'Body even header',
-        'Preface odd header',
-        'Preface even header',
-        'Preface first header',
-        'Toc odd header',
-        'Toc even header',
-        'Index odd header',
-        'Index even header',
-        'Glossary odd header',
-        'Glossary even header'
-      )"/>
-      <xsl:variable name="footers" select="(
-      'Body odd footer',
-      'Body even footer',
-      'Body first footer',
-      'Preface odd footer',
-      'Preface even footer',
-      'Preface first footer',
-      'Toc odd footer',
-      'Toc even footer',
-      'Index odd footer',
-      'Index even footer',
-      'Glossary odd footer',
-      'Glossary even footer'
-      )"/>
       <xsl:call-template name="variables">
-        <xsl:with-param name="args" select=". ?header"/>
-        <xsl:with-param name="var_names" select="$headers"/>
+        <xsl:with-param name="args" select=". ?header ?odd"/>
+        <xsl:with-param name="var_names" select="(
+          'Body first header',
+          'Body odd header',
+          'Preface first header',
+          'Preface odd header',
+          'Toc odd header',
+          'Index odd header',
+          'Glossary odd header'
+          )"/>
       </xsl:call-template>
       <xsl:call-template name="variables">
-        <xsl:with-param name="args" select=". ?footer"/>
-        <xsl:with-param name="var_names" select="$footers"/>
+        <xsl:with-param name="args" select=". ?header ?even"/>
+        <xsl:with-param name="var_names" select="(
+          'Body even header',
+          'Preface even header',
+          'Toc even header',
+          'Index even header',
+          'Glossary even header'
+          )"/>
+      </xsl:call-template>
+      <xsl:call-template name="variables">
+        <xsl:with-param name="args" select=". ?footer ?odd"/>
+        <xsl:with-param name="var_names" select="(
+          'Body odd footer',
+          'Body first footer',
+          'Preface first footer',
+          'Preface odd footer',
+          'Toc odd footer',
+          'Index odd footer',
+          'Glossary odd footer'
+          )"/>
+      </xsl:call-template>
+      <xsl:call-template name="variables">
+        <xsl:with-param name="args" select=". ?footer ?even"/>
+        <xsl:with-param name="var_names" select="(
+          'Body even footer',
+          'Preface even footer',
+          'Toc even footer',
+          'Index even footer',
+          'Glossary even footer'
+          )"/>
       </xsl:call-template>
       <xsl:for-each select="1 to 4">
         <xsl:variable name="level" select="."/>
@@ -249,12 +257,20 @@
   <xsl:template name="variables">
     <xsl:param name="args" as="map(*)"/>
     <xsl:param name="var_names" as="item()*"/>
+    <xsl:variable name="content" select="$args ?content" as="array(*)"/>
     <xsl:for-each select="$var_names">
-      <xsl:variable name="vars" select="if (contains(., 'even')) then ($args ?even) else ($args ?odd)"/>
       <variable id="{.}">
-        <xsl:for-each select="$vars">
-          <xsl:if test="position() ne 1"> | </xsl:if>
-          <param ref-name="{.}"/>
+        <xsl:attribute name="xml:space">preserve</xsl:attribute>
+        <xsl:for-each select="1 to array:size($content)">
+          <xsl:variable name="item" select="$content(.)"/>
+          <xsl:choose>
+            <xsl:when test="$item ?kind = 'field'">
+              <param ref-name="{$item ?value}"/>
+            </xsl:when>
+            <xsl:when test="$item ?kind = 'text'">
+              <xsl:value-of select="$item ?value"/>
+            </xsl:when>
+          </xsl:choose>
         </xsl:for-each>
       </variable>
     </xsl:for-each>

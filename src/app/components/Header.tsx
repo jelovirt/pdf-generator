@@ -40,7 +40,7 @@ export default function Header() {
                 {values.mirror_page_margins && (
                   <td className="even">
                     <TagContainer
-                      fields={values.header.even}
+                      fields={values.header.even.content}
                       setFields={(fields) =>
                         setFieldValue('header.even', fields)
                       }
@@ -49,8 +49,10 @@ export default function Header() {
                 )}
                 <td>
                   <TagContainer
-                    fields={values.header.odd}
-                    setFields={(fields) => setFieldValue('header.odd', fields)}
+                    fields={values.header.odd.content}
+                    setFields={(fields) =>
+                      setFieldValue('header.odd.content', fields)
+                    }
                   />
                 </td>
               </tr>
@@ -64,7 +66,7 @@ export default function Header() {
                 {values.mirror_page_margins && (
                   <td className="even">
                     <TagContainer
-                      fields={values.footer.even}
+                      fields={values.footer.even.content}
                       setFields={(fields) =>
                         setFieldValue('footer.even', fields)
                       }
@@ -73,8 +75,10 @@ export default function Header() {
                 )}
                 <td>
                   <TagContainer
-                    fields={values.footer.odd}
-                    setFields={(fields) => setFieldValue('footer.odd', fields)}
+                    fields={values.footer.odd.content}
+                    setFields={(fields) =>
+                      setFieldValue('footer.odd.content', fields)
+                    }
                   />
                 </td>
               </tr>

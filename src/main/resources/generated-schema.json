@@ -1,0 +1,553 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "extends": {
+      "type": "string"
+    },
+    "page": {
+      "$ref": "#/definitions/page_type"
+    },
+    "header": {
+      "$ref": "#/definitions/header_type"
+    },
+    "footer": {
+      "$ref": "#/definitions/header_type"
+    },
+    "style": {
+      "$ref": "#/definitions/style_type"
+    },
+    "mirror_page_margins": {
+      "type": "boolean"
+    },
+    "blank_pages": {
+      "type": "boolean"
+    },
+    "body_column_count": {
+      "type": "integer"
+    },
+    "index_column_count": {
+      "type": "integer"
+    },
+    "column_gap": {
+      "$ref": "#/definitions/length_type"
+    },
+    "force_page_count": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "even",
+        "odd"
+      ]
+    },
+    "chapter_layout": {
+      "type": "string",
+      "enum": [
+        "MINITOC",
+        "BASIC"
+      ]
+    },
+    "cover_image_metadata": {
+      "type": "string"
+    },
+    "cover_image_topic": {
+      "type": "string"
+    },
+    "bookmark_style": {
+      "type": "string",
+      "enum": [
+        "COLLAPSED",
+        "EXPANDED"
+      ]
+    },
+    "toc_maximum_level": {
+      "type": "integer"
+    },
+    "task_label": {
+      "type": "boolean"
+    },
+    "include_related_links": {
+      "type": "string",
+      "enum": [
+        "none",
+        "all",
+        "nofamily"
+      ]
+    },
+    "table_continued": {
+      "type": "boolean"
+    },
+    "page_number": {
+      "type": "string",
+      "enum": [
+        "page",
+        "chapter-page"
+      ]
+    }
+  },
+  "definitions": {
+    "length_type": {
+      "type": "string",
+      "pattern": "^-?\\d+(\\.\\d+)?(cm|mm|in|pt|pc|px|em)?$"
+    },
+    "colour_type": {
+      "type": "string",
+      "pattern": "^(#[a-eA-E0-9]{6}|#[a-eA-E0-9]{3}|rgb\\(\\d+,\\d+,\\d+\\)|rgb\\(\\d+%,\\d+%,\\d+%\\)|transparent|aqua|black|blue|cyan|fuchsia|gray|green|lime|maroon|navy|olive|orange|pink|purple|red|silver|teal|white|yellow|inherit)$"
+    },
+    "font-weight_type": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "bold",
+        "bolder",
+        "lighter",
+        "100",
+        "200",
+        "300",
+        "400",
+        "500",
+        "600",
+        "700",
+        "800",
+        "900",
+        "inherit"
+      ]
+    },
+    "border_style_type": {
+      "type": "string",
+      "enum": [
+        "none",
+        "hidden",
+        "dotted",
+        "dashed",
+        "solid",
+        "double",
+        "groove",
+        "ridge",
+        "inset",
+        "outset",
+        "inherit"
+      ]
+    },
+    "block_style_type": {
+      "type": "object",
+      "properties": {
+        "background-color": {
+          "$ref": "#/definitions/colour_type"
+        },
+        "padding-before": {
+          "$ref": "#/definitions/length_type"
+        },
+        "padding-end": {
+          "$ref": "#/definitions/length_type"
+        },
+        "padding-after": {
+          "$ref": "#/definitions/length_type"
+        },
+        "padding-start": {
+          "$ref": "#/definitions/length_type"
+        },
+        "end-indent": {
+          "$ref": "#/definitions/length_type"
+        },
+        "border-before-style": {
+          "$ref": "#/definitions/border_style_type"
+        },
+        "border-before-width": {
+          "$ref": "#/definitions/length_type"
+        },
+        "border-before-color": {
+          "$ref": "#/definitions/colour_type"
+        },
+        "border-end-style": {
+          "$ref": "#/definitions/border_style_type"
+        },
+        "border-end-width": {
+          "$ref": "#/definitions/length_type"
+        },
+        "border-end-color": {
+          "$ref": "#/definitions/colour_type"
+        },
+        "border-after-style": {
+          "$ref": "#/definitions/border_style_type"
+        },
+        "border-after-width": {
+          "$ref": "#/definitions/length_type"
+        },
+        "border-after-color": {
+          "$ref": "#/definitions/colour_type"
+        },
+        "border-start-style": {
+          "$ref": "#/definitions/border_style_type"
+        },
+        "border-start-width": {
+          "$ref": "#/definitions/length_type"
+        },
+        "border-start-color": {
+          "$ref": "#/definitions/colour_type"
+        },
+        "font-family": {
+          "type": "string"
+        },
+        "font-size": {
+          "$ref": "#/definitions/length_type"
+        },
+        "color": {
+          "$ref": "#/definitions/colour_type"
+        },
+        "font-weight": {
+          "$ref": "#/definitions/font-weight_type"
+        },
+        "font-style": {
+          "type": "string"
+        },
+        "text-decoration": {
+          "type": "string"
+        },
+        "text-align": {
+          "type": "string"
+        },
+        "start-indent": {
+          "$ref": "#/definitions/length_type"
+        },
+        "line-height": {
+          "$ref": "#/definitions/length_type"
+        },
+        "space-before": {
+          "$ref": "#/definitions/length_type"
+        },
+        "space-after": {
+          "$ref": "#/definitions/length_type"
+        }
+      }
+    },
+    "inline_style_type": {
+      "type": "object",
+      "properties": {
+        "font-family": {
+          "type": "string"
+        },
+        "font-size": {
+          "$ref": "#/definitions/length_type"
+        },
+        "color": {
+          "$ref": "#/definitions/colour_type"
+        },
+        "background-color": {
+          "$ref": "#/definitions/colour_type"
+        },
+        "font-weight": {
+          "$ref": "#/definitions/font-weight_type"
+        },
+        "font-style": {
+          "type": "string",
+          "enum": [
+            "normal",
+            "italic",
+            "oblique",
+            "backslant",
+            "inherit"
+          ]
+        },
+        "text-decoration": {
+          "type": "string"
+        },
+        "line-height": {
+          "$ref": "#/definitions/length_type"
+        }
+      }
+    },
+    "page_type": {
+      "type": "object",
+      "properties": {
+        "height": {
+          "$ref": "#/definitions/length_type"
+        },
+        "width": {
+          "$ref": "#/definitions/length_type"
+        },
+        "top": {
+          "$ref": "#/definitions/length_type"
+        },
+        "outside": {
+          "$ref": "#/definitions/length_type"
+        },
+        "bottom": {
+          "$ref": "#/definitions/length_type"
+        },
+        "inside": {
+          "$ref": "#/definitions/length_type"
+        }
+      }
+    },
+    "odd_type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block_style_type"
+        }
+      ],
+      "properties": {
+        "content": {
+          "type": ["array", "string"],
+          "minItems": 0,
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "header_type": {
+      "type": "object",
+      "properties": {
+        "odd": {
+          "$ref": "#/definitions/odd_type"
+        },
+        "even": {
+          "$ref": "#/definitions/odd_type"
+        }
+      }
+    },
+    "body_type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block_style_type"
+        }
+      ],
+      "properties": {
+      }
+    },
+    "topic_type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block_style_type"
+        }
+      ],
+      "properties": {
+        "title-numbering": {
+          "type": "boolean"
+        }
+      }
+    },
+    "dl_type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block_style_type"
+        }
+      ],
+      "properties": {
+        "dl-type": {
+          "type": "string",
+          "enum": [
+            "html",
+            "table",
+            "list"
+          ]
+        }
+      }
+    },
+    "ol_type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block_style_type"
+        }
+      ],
+      "properties": {
+        "ol-1": {
+          "type": "string"
+        },
+        "ol-2": {
+          "type": "string"
+        },
+        "ol-3": {
+          "type": "string"
+        },
+        "ol-4": {
+          "type": "string"
+        },
+        "ol-after-1": {
+          "type": "string"
+        },
+        "ol-after-2": {
+          "type": "string"
+        },
+        "ol-after-3": {
+          "type": "string"
+        },
+        "ol-after-4": {
+          "type": "string"
+        }
+      }
+    },
+    "ul_type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block_style_type"
+        }
+      ],
+      "properties": {
+        "ul-1": {
+          "type": "string"
+        },
+        "ul-2": {
+          "type": "string"
+        },
+        "ul-3": {
+          "type": "string"
+        },
+        "ul-4": {
+          "type": "string"
+        }
+      }
+    },
+    "table_type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block_style_type"
+        }
+      ],
+      "properties": {
+        "caption-number": {
+          "type": "string",
+          "enum": [
+            "chapter",
+            "document",
+            "none"
+          ]
+        },
+        "caption-position": {
+          "type": "string",
+          "enum": [
+            "after",
+            "before"
+          ]
+        }
+      }
+    },
+    "toc_1_type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block_style_type"
+        }
+      ],
+      "properties": {
+        "prefix": {
+          "type": "boolean"
+        }
+      }
+    },
+    "link_type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/inline_style_type"
+        }
+      ],
+      "properties": {
+        "link-page-number": {
+          "type": "boolean"
+        }
+      }
+    },
+    "tm_type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/inline_style_type"
+        }
+      ],
+      "properties": {
+        "symbol-scope": {
+          "type": "string"
+        }
+      }
+    },
+    "style_type": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "$ref": "#/definitions/body_type"
+        },
+        "topic": {
+          "$ref": "#/definitions/topic_type"
+        },
+        "topic_topic": {
+          "$ref": "#/definitions/topic_type"
+        },
+        "topic_topic_topic": {
+          "$ref": "#/definitions/topic_type"
+        },
+        "topic_topic_topic_topic": {
+          "$ref": "#/definitions/topic_type"
+        },
+        "section": {
+          "$ref": "#/definitions/body_type"
+        },
+        "example": {
+          "$ref": "#/definitions/body_type"
+        },
+        "example_title": {
+          "$ref": "#/definitions/body_type"
+        },
+        "note": {
+          "$ref": "#/definitions/body_type"
+        },
+        "pre": {
+          "$ref": "#/definitions/body_type"
+        },
+        "codeblock": {
+          "$ref": "#/definitions/body_type"
+        },
+        "dl": {
+          "$ref": "#/definitions/dl_type"
+        },
+        "ol": {
+          "$ref": "#/definitions/ol_type"
+        },
+        "ul": {
+          "$ref": "#/definitions/ul_type"
+        },
+        "table": {
+          "$ref": "#/definitions/table_type"
+        },
+        "fig": {
+          "$ref": "#/definitions/table_type"
+        },
+        "toc_1": {
+          "$ref": "#/definitions/toc_1_type"
+        },
+        "toc_2": {
+          "$ref": "#/definitions/body_type"
+        },
+        "toc_3": {
+          "$ref": "#/definitions/body_type"
+        },
+        "toc_4": {
+          "$ref": "#/definitions/body_type"
+        },
+        "link": {
+          "$ref": "#/definitions/link_type"
+        },
+        "tm": {
+          "$ref": "#/definitions/tm_type"
+        }
+      }
+    }
+  }
+}
