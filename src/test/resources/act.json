@@ -10,7 +10,16 @@
   },
   "header": {
     "odd": {
-      "content": "Test: {header}",
+      "content": [
+        {
+          "kind": "text",
+          "value": "Test: "
+        },
+        {
+          "kind": "field",
+          "value": "header"
+        }
+      ],
       "background-color": "yellow",
       "background-image": "url(/Volumes/tmp/dita-ot-logo.svg)",
       "background-repeat": "no-repeat",
@@ -67,7 +76,12 @@
       "border-before-color": "black",
       "start-indent": "10pt",
       "border-start-color": "black",
-      "content": "{header}",
+      "content": [
+        {
+          "kind": "field",
+          "value": "header"
+        }
+      ],
       "border-before-width": "1pt",
       "border-start-width": "1pt",
       "padding-before": "0pt",
