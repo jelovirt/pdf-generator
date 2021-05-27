@@ -494,7 +494,7 @@
   </xsl:template>
 
   <xsl:template name="generateInsert">
-    <xsl:param name="header" as="item()?"/>
+    <xsl:param name="header" as="array(*)"/>
     <xsl:param name="flow"/>
     <xsl:param name="type"/>
 

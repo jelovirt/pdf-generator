@@ -257,35 +257,21 @@
   <xsl:template name="variables">
     <xsl:param name="args" as="map(*)"/>
     <xsl:param name="var_names" as="item()*"/>
-    <xsl:variable name="content" select="$args ?content"/>
+    <xsl:variable name="content" select="$args ?content" as="array(*)"/>
     <xsl:for-each select="$var_names">
       <variable id="{.}">
         <xsl:attribute name="xml:space">preserve</xsl:attribute>
-        <xsl:choose>
-          <xsl:when test="$content instance of array(*)">
-            <xsl:for-each select="1 to array:size($content)">
-              <xsl:variable name="item" select="$content(.)"/>
-              <xsl:choose>
-                <xsl:when test="$item ?kind = 'field'">
-                  <param ref-name="{$item ?value}"/>
-                </xsl:when>
-                <xsl:when test="$item ?kind = 'text'">
-                  <xsl:value-of select="$item ?value"/>
-                </xsl:when>
-              </xsl:choose>
-            </xsl:for-each>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:analyze-string select="$content" regex="\{{(.+?)\}}">
-              <xsl:matching-substring>
-                <param ref-name="{regex-group(1)}"/>
-              </xsl:matching-substring>
-              <xsl:non-matching-substring>
-                <xsl:value-of select="."/>
-              </xsl:non-matching-substring>
-            </xsl:analyze-string>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:for-each select="1 to array:size($content)">
+          <xsl:variable name="item" select="$content(.)"/>
+          <xsl:choose>
+            <xsl:when test="$item ?kind = 'field'">
+              <param ref-name="{$item ?value}"/>
+            </xsl:when>
+            <xsl:when test="$item ?kind = 'text'">
+              <xsl:value-of select="$item ?value"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:for-each>
       </variable>
     </xsl:for-each>
   </xsl:template>
