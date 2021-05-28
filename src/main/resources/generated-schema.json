@@ -4,34 +4,44 @@
   "additionalProperties": false,
   "properties": {
     "extends": {
-      "type": "string"
+      "type": "string",
+      "description": "Extend another theme. Value is a URI to the theme to be extended."
     },
     "page": {
-      "$ref": "#/definitions/page_type"
+      "$ref": "#/definitions/page_type",
+      "description": "Page configuration."
     },
     "header": {
-      "$ref": "#/definitions/header_type"
+      "$ref": "#/definitions/header_type",
+      "description": "Page header configuration."
     },
     "footer": {
-      "$ref": "#/definitions/header_type"
+      "$ref": "#/definitions/header_type",
+      "description": "Page footer configuration."
     },
     "style": {
-      "$ref": "#/definitions/style_type"
+      "$ref": "#/definitions/style_type",
+      "description": "Style configuration."
     },
     "mirror_page_margins": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Duplex pages with recto and verso pages."
     },
     "blank_pages": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Mark blank pages with 'This page intentionally left blank'."
     },
     "body_column_count": {
-      "type": "integer"
+      "type": "integer",
+      "description": "Column count on content pages."
     },
     "index_column_count": {
-      "type": "integer"
+      "type": "integer",
+      "description": "Column count on index pages."
     },
     "column_gap": {
-      "$ref": "#/definitions/length_type"
+      "$ref": "#/definitions/length_type",
+      "description": "Column gap on multi column pages."
     },
     "force_page_count": {
       "type": "string",
@@ -39,33 +49,43 @@
         "auto",
         "even",
         "odd"
-      ]
+      ],
+      "default": "auto",
+      "description": "Force chapter to end on even or odd pages."
     },
     "chapter_layout": {
       "type": "string",
       "enum": [
         "MINITOC",
         "BASIC"
-      ]
+      ],
+      "default": "MINITOC",
+      "description": "Generate TOC for section."
     },
     "cover_image_metadata": {
-      "type": "string"
+      "type": "string",
+      "description": "Name of metadata element to use as cover image."
     },
     "cover_image_topic": {
-      "type": "string"
+      "type": "string",
+      "description": "Outputclass for cover topic."
     },
     "bookmark_style": {
       "type": "string",
       "enum": [
         "COLLAPSED",
         "EXPANDED"
-      ]
+      ],
+      "default": "COLLAPSED",
+      "description": "Expand state of PDF bookmarks."
     },
     "toc_maximum_level": {
-      "type": "integer"
+      "type": "integer",
+      "description": "Maximum TOC depth."
     },
     "task_label": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Generate labels for task sections."
     },
     "include_related_links": {
       "type": "string",
@@ -73,17 +93,21 @@
         "none",
         "all",
         "nofamily"
-      ]
+      ],
+      "default": "nofamily",
+      "description": "Specifies which link types are used to generate related links."
     },
     "table_continued": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Generate 'Table continued' on page break within table."
     },
     "page_number": {
       "type": "string",
       "enum": [
         "page",
         "chapter-page"
-      ]
+      ],
+      "description": "Generate page numbers with chapter number."
     }
   },
   "definitions": {
