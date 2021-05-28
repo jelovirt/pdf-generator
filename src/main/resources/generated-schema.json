@@ -303,7 +303,8 @@
         "inside": {
           "$ref": "#/definitions/length_type"
         }
-      }
+      },
+      "description": "Page configuration."
     },
     "odd_type": {
       "type": "object",
@@ -339,7 +340,8 @@
         "even": {
           "$ref": "#/definitions/odd_type"
         }
-      }
+      },
+      "description": "Page header and footer configuration."
     },
     "body_type": {
       "type": "object",
@@ -360,7 +362,8 @@
       ],
       "properties": {
         "title-numbering": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Generate title numbering."
         }
       }
     },
@@ -378,7 +381,8 @@
             "html",
             "table",
             "list"
-          ]
+          ],
+          "description": "Definition list output style."
         }
       }
     },
@@ -452,14 +456,16 @@
             "chapter",
             "document",
             "none"
-          ]
+          ],
+          "description": "Number captions."
         },
         "caption-position": {
           "type": "string",
           "enum": [
             "after",
             "before"
-          ]
+          ],
+          "description": "Caption position."
         }
       }
     },
@@ -485,7 +491,8 @@
       ],
       "properties": {
         "link-page-number": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Generate page number to internal links."
         }
       }
     },
