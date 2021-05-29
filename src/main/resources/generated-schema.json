@@ -2,25 +2,42 @@
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "additionalProperties": false,
+  "default": "Theme template.",
   "properties": {
     "extends": {
       "type": "string",
       "description": "Extend another theme. Value is a URI to the theme to be extended."
     },
     "page": {
-      "$ref": "#/definitions/page_type",
+      "allOf": [
+        {
+          "$ref": "#/definitions/page_type"
+        }
+      ],
       "description": "Page configuration."
     },
     "header": {
-      "$ref": "#/definitions/header_type",
+      "allOf": [
+        {
+          "$ref": "#/definitions/header_type"
+        }
+      ],
       "description": "Page header configuration."
     },
     "footer": {
-      "$ref": "#/definitions/header_type",
+      "allOf": [
+        {
+          "$ref": "#/definitions/header_type"
+        }
+      ],
       "description": "Page footer configuration."
     },
     "style": {
-      "$ref": "#/definitions/style_type",
+      "allOf": [
+        {
+          "$ref": "#/definitions/style_type"
+        }
+      ],
       "description": "Style configuration."
     },
     "mirror_page_margins": {
@@ -44,7 +61,11 @@
       "default": 2
     },
     "column_gap": {
-      "$ref": "#/definitions/length_type",
+      "allOf": [
+        {
+          "$ref": "#/definitions/length_type"
+        }
+      ],
       "description": "Column gap on multi column pages."
     },
     "force_page_count": {
@@ -296,32 +317,56 @@
       "type": "object",
       "properties": {
         "height": {
-          "$ref": "#/definitions/length_type",
+          "allOf": [
+            {
+              "$ref": "#/definitions/length_type"
+            }
+          ],
           "description": "Page height.",
           "default": "11in"
         },
         "width": {
-          "$ref": "#/definitions/length_type",
+          "allOf": [
+            {
+              "$ref": "#/definitions/length_type"
+            }
+          ],
           "description": "Page width.",
           "default": "8.5in"
         },
         "top": {
-          "$ref": "#/definitions/length_type",
+          "allOf": [
+            {
+              "$ref": "#/definitions/length_type"
+            }
+          ],
           "description": "Page top margin.",
           "default": "20mm"
         },
         "outside": {
-          "$ref": "#/definitions/length_type",
+          "allOf": [
+            {
+              "$ref": "#/definitions/length_type"
+            }
+          ],
           "description": "Page outside margin.",
           "default": "20mm"
         },
         "bottom": {
-          "$ref": "#/definitions/length_type",
+          "allOf": [
+            {
+              "$ref": "#/definitions/length_type"
+            }
+          ],
           "description": "Page bottom margin.",
           "default": "20mm"
         },
         "inside": {
-          "$ref": "#/definitions/length_type",
+          "allOf": [
+            {
+              "$ref": "#/definitions/length_type"
+            }
+          ],
           "description": "Page inside margin.",
           "default": "20mm"
         }
@@ -426,11 +471,19 @@
       "type": "object",
       "properties": {
         "odd": {
-          "$ref": "#/definitions/odd_type",
+          "allOf": [
+            {
+              "$ref": "#/definitions/odd_type"
+            }
+          ],
           "description": "Header or footer on verso pages."
         },
         "even": {
-          "$ref": "#/definitions/odd_type",
+          "allOf": [
+            {
+              "$ref": "#/definitions/odd_type"
+            }
+          ],
           "description": "Header or footer on recto pages."
         }
       },
