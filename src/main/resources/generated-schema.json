@@ -375,7 +375,17 @@
         "height",
         "width"
       ],
-      "description": "Page configuration."
+      "description": "Page configuration.",
+      "examples": [
+        {
+          "height": "294mm",
+          "width": "210mm",
+          "top": "20mm",
+          "outside": "20mm",
+          "bottom": "20mm",
+          "insize": "30mm"
+        }
+      ]
     },
     "content_template_type": {
       "type": "string",
