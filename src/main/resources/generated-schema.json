@@ -286,59 +286,132 @@
       "type": "object",
       "properties": {
         "height": {
-          "$ref": "#/definitions/length_type"
+          "$ref": "#/definitions/length_type",
+          "description": "Page height."
         },
         "width": {
-          "$ref": "#/definitions/length_type"
+          "$ref": "#/definitions/length_type",
+          "description": "Page width."
         },
         "top": {
-          "$ref": "#/definitions/length_type"
+          "$ref": "#/definitions/length_type",
+          "description": "Page top margin."
         },
         "outside": {
-          "$ref": "#/definitions/length_type"
+          "$ref": "#/definitions/length_type",
+          "description": "Page outside margin."
         },
         "bottom": {
-          "$ref": "#/definitions/length_type"
+          "$ref": "#/definitions/length_type",
+          "description": "Page bottom margin."
         },
         "inside": {
-          "$ref": "#/definitions/length_type"
+          "$ref": "#/definitions/length_type",
+          "description": "Page inside margin."
         }
       },
       "description": "Page configuration."
+    },
+    "content_template_type": {
+      "type": "string",
+      "description": "Header or footer contents template.",
+      "examples": [
+        "{title} — {chapter}"
+      ]
+    },
+    "content_array_type": {
+      "type": "array",
+      "minItems": 0,
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": "field",
+              "description": "Type of content block."
+            },
+            "value": {
+              "type": "string",
+              "enum": [
+                "title",
+                "chapter",
+                "folio",
+                "folio-with-total"
+              ],
+              "description": "Field name."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": "text",
+              "description": "Type of content block."
+            },
+            "value": {
+              "type": "string",
+              "description": "Text content of block."
+            }
+          }
+        }
+      ],
+      "description": "Header or footer contents. This is the parsed form of contents template.",
+      "examples": [
+        [
+          {
+            "kind": "field",
+            "value": "title"
+          },
+          {
+            "kind": "text",
+            "value": " — "
+          },
+          {
+            "kind": "field",
+            "value": "chapter"
+          }
+        ]
+      ]
+    },
+    "content_type": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/content_template_type"
+            },
+            {
+              "$ref": "#/definitions/content_array_type"
+            }
+          ]
+        }
+      }
     },
     "odd_type": {
       "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/block_style_type"
+        },
+        {
+          "$ref": "#/definitions/content_type"
         }
-      ],
-      "properties": {
-        "content": {
-          "type": ["array", "string"],
-          "minItems": 0,
-          "items": {
-            "type": "object",
-            "properties": {
-              "kind": {
-                "type": "string"
-              },
-              "value": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      }
+      ]
     },
     "header_type": {
       "type": "object",
       "properties": {
         "odd": {
-          "$ref": "#/definitions/odd_type"
+          "$ref": "#/definitions/odd_type",
+          "description": "Header or footer on verso pages."
         },
         "even": {
-          "$ref": "#/definitions/odd_type"
+          "$ref": "#/definitions/odd_type",
+          "description": "Header or footer on recto pages."
         }
       },
       "description": "Page header and footer configuration."
