@@ -25,19 +25,23 @@
     },
     "mirror_page_margins": {
       "type": "boolean",
-      "description": "Duplex pages with recto and verso pages."
+      "description": "Duplex pages with recto and verso pages.",
+      "default": false
     },
     "blank_pages": {
       "type": "boolean",
-      "description": "Mark blank pages with 'This page intentionally left blank'."
+      "description": "Mark blank pages with 'This page intentionally left blank'.",
+      "default": false
     },
     "body_column_count": {
       "type": "integer",
-      "description": "Column count on content pages."
+      "description": "Column count on content pages.",
+      "default": 1
     },
     "index_column_count": {
       "type": "integer",
-      "description": "Column count on index pages."
+      "description": "Column count on index pages.",
+      "default": 2
     },
     "column_gap": {
       "$ref": "#/definitions/length_type",
@@ -64,11 +68,13 @@
     },
     "cover_image_metadata": {
       "type": "string",
-      "description": "Name of metadata element to use as cover image."
+      "description": "Name of metadata element to use as cover image.",
+      "default": null
     },
     "cover_image_topic": {
       "type": "string",
-      "description": "Outputclass for cover topic."
+      "description": "Outputclass for cover topic.",
+      "default": null
     },
     "bookmark_style": {
       "type": "string",
@@ -81,11 +87,13 @@
     },
     "toc_maximum_level": {
       "type": "integer",
-      "description": "Maximum TOC depth."
+      "description": "Maximum TOC depth.",
+      "default": 4
     },
     "task_label": {
       "type": "boolean",
-      "description": "Generate labels for task sections."
+      "description": "Generate labels for task sections.",
+      "default": false
     },
     "include_related_links": {
       "type": "string",
@@ -99,7 +107,8 @@
     },
     "table_continued": {
       "type": "boolean",
-      "description": "Generate 'Table continued' on page break within table."
+      "description": "Generate 'Table continued' on page break within table.",
+      "default": false
     },
     "page_number": {
       "type": "string",
@@ -107,7 +116,8 @@
         "page",
         "chapter-page"
       ],
-      "description": "Generate page numbers with chapter number."
+      "description": "Generate page numbers with chapter number.",
+      "default": "page"
     }
   },
   "definitions": {
@@ -287,29 +297,39 @@
       "properties": {
         "height": {
           "$ref": "#/definitions/length_type",
-          "description": "Page height."
+          "description": "Page height.",
+          "default": "11in"
         },
         "width": {
           "$ref": "#/definitions/length_type",
-          "description": "Page width."
+          "description": "Page width.",
+          "default": "8.5in"
         },
         "top": {
           "$ref": "#/definitions/length_type",
-          "description": "Page top margin."
+          "description": "Page top margin.",
+          "default": "20mm"
         },
         "outside": {
           "$ref": "#/definitions/length_type",
-          "description": "Page outside margin."
+          "description": "Page outside margin.",
+          "default": "20mm"
         },
         "bottom": {
           "$ref": "#/definitions/length_type",
-          "description": "Page bottom margin."
+          "description": "Page bottom margin.",
+          "default": "20mm"
         },
         "inside": {
           "$ref": "#/definitions/length_type",
-          "description": "Page inside margin."
+          "description": "Page inside margin.",
+          "default": "20mm"
         }
       },
+      "required": [
+        "height",
+        "width"
+      ],
       "description": "Page configuration."
     },
     "content_template_type": {
