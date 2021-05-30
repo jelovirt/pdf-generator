@@ -42,8 +42,17 @@ public class StylesheetGeneratorTaskTest {
 
         final XdmValue act = task.parseTemplate();
 
-
         assertEquals(readToString("act.json"), toString(act),
+                JSONCompareMode.STRICT);
+    }
+
+    @Test
+    public void getTemplate_normalize() throws URISyntaxException, TransformerException, SaxonApiException, JSONException {
+        task.setTemplate(new File(getClass().getClassLoader().getResource("authored.json").toURI()));
+
+        final XdmValue act = task.parseTemplate();
+
+        assertEquals(readToString("normalized.json"), toString(act),
                 JSONCompareMode.STRICT);
     }
 
