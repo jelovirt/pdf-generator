@@ -19,10 +19,10 @@
       <xsl:when test="map:contains($base, 'extends')">
         <xsl:variable name="extends-url" select="resolve-uri($base ?extends, $url)"/>
         <xsl:variable name="extends" select="x:extends(json-doc($extends-url), $extends-url)"/>
-        <xsl:sequence select="x:merge($extends, x:normalize($base))"/>
+        <xsl:sequence select="x:merge($extends, x:normalize($base, ()))"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:sequence select="x:normalize($base)"/>
+        <xsl:sequence select="x:normalize($base, ())"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
@@ -64,11 +64,14 @@
 
   <xsl:function name="x:normalize" as="item()*">
     <xsl:param name="base" as="item()*"/>
+    <xsl:param name="ancestors" as="item()*"/>
     <xsl:choose>
       <xsl:when test="$base instance of array(*)">
         <xsl:variable name="array" as="map(*)*">
           <xsl:for-each select="1 to array:size($base)">
-            <xsl:sequence select="x:normalize(array:get($base, .))"/>
+            <xsl:variable name="index" select="."/>
+            <xsl:variable name="value" select="array:get($base, $index)"/>
+            <xsl:sequence select="x:normalize($value, $ancestors)"/>
           </xsl:for-each>
         </xsl:variable>
         <xsl:sequence select="array{ $array }"/>
@@ -76,10 +79,12 @@
       <xsl:when test="$base instance of map(*)">
         <xsl:map>
           <xsl:for-each select="map:keys($base)">
+            <xsl:variable name="key" select="."/>
+            <xsl:variable name="value" select="map:get($base, $key)"/>
             <xsl:choose>
-              <xsl:when test=". = 'content' and not(map:get($base, .) instance of array(*))">
+              <xsl:when test="$key = 'content' and not($value instance of array(*))">
                 <xsl:variable name="tokens" as="item()*">
-                  <xsl:analyze-string select="map:get($base, .)" regex="\{{(.+?)\}}">
+                  <xsl:analyze-string select="$value" regex="\{{(.+?)\}}">
                     <xsl:matching-substring>
                       <xsl:sequence select="map{ 'kind': 'field', 'value': regex-group(1)}"/>
                     </xsl:matching-substring>
@@ -91,7 +96,7 @@
                 <xsl:map-entry key="'content'" select="array{ $tokens }"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:map-entry key="." select="x:normalize(map:get($base, .))"/>
+                <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key))"/>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:for-each>
