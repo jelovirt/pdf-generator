@@ -47,7 +47,7 @@
     },
     "blank_pages": {
       "type": "boolean",
-      "description": "Mark blank pages with 'This page intentionally left blank'.",
+      "description": "Mark blank pages with ",
       "default": false
     },
     "body_column_count": {
@@ -313,67 +313,117 @@
         }
       }
     },
+    "page_size_type": {
+      "type": "object",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "string",
+              "enum": [
+                "A3",
+                "A4",
+                "A5",
+                "Executive",
+                "JIS B5",
+                "Tabloid",
+                "Legal",
+                "Letter",
+                "PA4"
+              ],
+              "description": "Page size.",
+              "default": "Letter"
+            },
+            "orientation": {
+              "type": "string",
+              "enum": [
+                "portrait",
+                "letter"
+              ],
+              "description": "Page orientation.",
+              "default": "portrait"
+            }
+          },
+          "required": [
+            "size"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "height": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length_type"
+                }
+              ],
+              "description": "Page height.",
+              "default": "11in"
+            },
+            "width": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length_type"
+                }
+              ],
+              "description": "Page width.",
+              "default": "8.5in"
+            }
+          },
+          "required": [
+            "height",
+            "width"
+          ]
+        }
+      ]
+    },
     "page_type": {
       "type": "object",
-      "properties": {
-        "height": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/length_type"
-            }
-          ],
-          "description": "Page height.",
-          "default": "11in"
+      "allOf": [
+        {
+          "$ref": "#/definitions/page_size_type"
         },
-        "width": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/length_type"
+        {
+          "properties": {
+            "top": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length_type"
+                }
+              ],
+              "description": "Page top margin.",
+              "default": "20mm"
+            },
+            "outside": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length_type"
+                }
+              ],
+              "description": "Page outside margin.",
+              "default": "20mm"
+            },
+            "bottom": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length_type"
+                }
+              ],
+              "description": "Page bottom margin.",
+              "default": "20mm"
+            },
+            "inside": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length_type"
+                }
+              ],
+              "description": "Page inside margin.",
+              "default": "20mm"
             }
-          ],
-          "description": "Page width.",
-          "default": "8.5in"
-        },
-        "top": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/length_type"
-            }
-          ],
-          "description": "Page top margin.",
-          "default": "20mm"
-        },
-        "outside": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/length_type"
-            }
-          ],
-          "description": "Page outside margin.",
-          "default": "20mm"
-        },
-        "bottom": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/length_type"
-            }
-          ],
-          "description": "Page bottom margin.",
-          "default": "20mm"
-        },
-        "inside": {
-          "allOf": [
-            {
-              "$ref": "#/definitions/length_type"
-            }
-          ],
-          "description": "Page inside margin.",
-          "default": "20mm"
+          }
         }
-      },
-      "required": [
-        "height",
-        "width"
       ],
       "description": "Page configuration.",
       "examples": [
@@ -383,7 +433,7 @@
           "top": "20mm",
           "outside": "20mm",
           "bottom": "20mm",
-          "insize": "30mm"
+          "inside": "30mm"
         }
       ]
     },
@@ -403,7 +453,9 @@
           "properties": {
             "kind": {
               "type": "string",
-              "enum": "field",
+              "enum": [
+                "field"
+              ],
               "description": "Type of content block."
             },
             "value": {
@@ -423,7 +475,9 @@
           "properties": {
             "kind": {
               "type": "string",
-              "enum": "text",
+              "enum": [
+                "text"
+              ],
               "description": "Type of content block."
             },
             "value": {
@@ -467,13 +521,24 @@
       }
     },
     "odd_type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/block_style_type"
         },
         {
-          "$ref": "#/definitions/content_type"
+          "type": "object",
+          "properties": {
+            "content": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/content_template_type"
+                },
+                {
+                  "$ref": "#/definitions/content_array_type"
+                }
+              ]
+            }
+          }
         }
       ]
     },

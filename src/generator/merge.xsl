@@ -93,8 +93,29 @@
                     </xsl:non-matching-substring>
                   </xsl:analyze-string>
                 </xsl:variable>
-                <xsl:map-entry key="'content'" select="array{ $tokens }"/>
+                <xsl:map-entry key="$key" select="array{ $tokens }"/>
               </xsl:when>
+              <xsl:when test="$key = 'size' and $ancestors = ('page')">
+                <xsl:variable name="sizes" select="map:get($page-sizes, $value)" as="array(*)?"/>
+                <xsl:choose>
+                  <xsl:when test="exists($sizes)">
+                    <xsl:choose>
+                      <xsl:when test="$base ?orientation = 'landscape'">
+                        <xsl:map-entry key="'height'" select="array:get($sizes, 1)"/>
+                        <xsl:map-entry key="'width'" select="array:get($sizes, 2)"/>
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <xsl:map-entry key="'height'" select="array:get($sizes, 2)"/>
+                        <xsl:map-entry key="'width'" select="array:get($sizes, 1)"/>
+                      </xsl:otherwise>
+                    </xsl:choose>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:message terminate="yes" expand-text="yes">ERROR: Page size '{$value}' not supported.</xsl:message>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:when>
+              <xsl:when test="$key = 'orientation' and $ancestors = ('page')"/>
               <xsl:otherwise>
                 <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key))"/>
               </xsl:otherwise>
@@ -107,5 +128,18 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
+
+  <xsl:variable name="page-sizes" as="map(*)" select="map{
+    'A3': ['297mm', '420mm'],
+    'A4': ['210mm', '297mm'],
+    'A5': ['148mm', '210mm'],
+    'Executive': ['184.1mm', '266.7mm'],
+    'JIS B5': ['182mm', '257mm'],
+    'Tabloid': ['431.8mm', '279.4mm'],
+    'Legal': ['8.5in', '14in'],
+    'Letter': ['8.5in', '11in'],
+    'PA4': ['210mm', '280mm'] 
+    }"/>
+  
 
 </xsl:stylesheet>
