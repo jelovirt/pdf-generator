@@ -7,12 +7,12 @@ import org.apache.tools.ant.Project;
 import org.dita.dost.log.DITAOTAntLogger;
 import org.dita.dost.util.XMLUtils;
 import org.json.JSONException;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
-import javax.xml.transform.TransformerException;
 import java.io.*;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
@@ -37,22 +37,40 @@ public class StylesheetGeneratorTaskTest {
     }
 
     @Test
-    public void getTemplate() throws URISyntaxException, TransformerException, SaxonApiException, JSONException {
-        task.setTemplate(new File(getClass().getClassLoader().getResource("theme.json").toURI()));
+    public void getTemplate_normalizeImage() throws URISyntaxException, SaxonApiException, JSONException {
+        final URI src = getClass().getClassLoader().getResource("src/image.json").toURI();
+        task.setTemplate(new File(src));
 
         final XdmValue act = task.parseTemplate();
 
-        assertEquals(readToString("act.json"), toString(act),
+        final String image = src.resolve("image/logo.svg").toString();
+        final String exp = "{\"style\":{"
+                + "\"body\":{\"background-image\":\"url('" + image + "')\"},"
+                + "\"topic\":{\"background-image\":\"url('" + image + "')\"},"
+                + "\"topic.topic\":{\"background-image\":\"url('" + image + "')\"}"
+                + "}}";
+        assertEquals(exp, toString(act),
+                JSONCompareMode.STRICT);
+    }
+
+
+    @Test
+    public void getTemplate_normalize() throws URISyntaxException, SaxonApiException, JSONException {
+        task.setTemplate(new File(getClass().getClassLoader().getResource("src/authored.json").toURI()));
+
+        final XdmValue act = task.parseTemplate();
+
+        assertEquals(readToString("exp/authored.json"), toString(act),
                 JSONCompareMode.STRICT);
     }
 
     @Test
-    public void getTemplate_normalize() throws URISyntaxException, TransformerException, SaxonApiException, JSONException {
-        task.setTemplate(new File(getClass().getClassLoader().getResource("authored.json").toURI()));
+    public void getTemplate() throws URISyntaxException, SaxonApiException, JSONException {
+        task.setTemplate(new File(getClass().getClassLoader().getResource("src/theme.json").toURI()));
 
         final XdmValue act = task.parseTemplate();
 
-        assertEquals(readToString("normalized.json"), toString(act),
+        assertEquals(readToString("exp/theme.json"), toString(act),
                 JSONCompareMode.STRICT);
     }
 

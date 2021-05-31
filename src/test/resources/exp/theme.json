@@ -21,9 +21,6 @@
         }
       ],
       "background-color": "yellow",
-      "background-image": "url(/Volumes/tmp/dita-ot-logo.svg)",
-      "background-repeat": "no-repeat",
-      "background-position": "left center",
       "height": "44pt",
       "line-height": "1.2",
       "padding-after": "0pt",

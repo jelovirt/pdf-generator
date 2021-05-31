@@ -19,10 +19,10 @@
       <xsl:when test="map:contains($base, 'extends')">
         <xsl:variable name="extends-url" select="resolve-uri($base ?extends, $url)"/>
         <xsl:variable name="extends" select="x:extends(json-doc($extends-url), $extends-url)"/>
-        <xsl:sequence select="x:merge($extends, x:normalize($base, ()))"/>
+        <xsl:sequence select="x:merge($extends, x:normalize($base, (), $extends-url))"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:sequence select="x:normalize($base, ())"/>
+        <xsl:sequence select="x:normalize($base, (), $url)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
@@ -65,13 +65,14 @@
   <xsl:function name="x:normalize" as="item()*">
     <xsl:param name="base" as="item()*"/>
     <xsl:param name="ancestors" as="item()*"/>
+    <xsl:param name="url" as="item()"/>
     <xsl:choose>
       <xsl:when test="$base instance of array(*)">
         <xsl:variable name="array" as="map(*)*">
           <xsl:for-each select="1 to array:size($base)">
             <xsl:variable name="index" select="."/>
             <xsl:variable name="value" select="array:get($base, $index)"/>
-            <xsl:sequence select="x:normalize($value, $ancestors)"/>
+            <xsl:sequence select="x:normalize($value, $ancestors, $url)"/>
           </xsl:for-each>
         </xsl:variable>
         <xsl:sequence select="array{ $array }"/>
@@ -116,8 +117,27 @@
                 </xsl:choose>
               </xsl:when>
               <xsl:when test="$key = 'orientation' and $ancestors = ('page')"/>
+              <xsl:when test="$key = 'background-image'">
+                <xsl:variable name="image-url">
+                  <xsl:analyze-string select="$value" regex="url\([&quot;'](.+?)[&quot;']\)">
+                    <xsl:matching-substring>
+                      <xsl:value-of select="regex-group(1)"/>
+                    </xsl:matching-substring>
+                    <xsl:non-matching-substring>
+                      <xsl:value-of select="$value"/>
+                    </xsl:non-matching-substring>
+                  </xsl:analyze-string>
+                </xsl:variable>
+                <xsl:map-entry key="$key">
+                  <xsl:value-of>
+                    <xsl:text>url('</xsl:text>
+                    <xsl:value-of select="resolve-uri($image-url, $url)"/>
+                    <xsl:text>')</xsl:text>
+                  </xsl:value-of>
+                </xsl:map-entry>                    
+              </xsl:when>
               <xsl:otherwise>
-                <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key))"/>
+                <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:for-each>
