@@ -19,7 +19,33 @@
           "value": "header"
         }
       ],
-      "height": "44pt"
+      "height": "44pt",
+      "border-before-style": "solid",
+      "border-before-width": "1pt",
+      "border-before-color": "black",
+      "border-end-style": "solid",
+      "border-end-width": "1pt",
+      "border-end-color": "black",
+      "border-after-style": "solid",
+      "border-after-width": "1pt",
+      "border-after-color": "black",
+      "border-start-style": "solid",
+      "border-start-width": "1pt",
+      "border-start-color": "black"
+    },
+    "even": {
+      "border-before-style": "dashed",
+      "border-before-width": "0.5mm",
+      "border-before-color": "#FF0000",
+      "border-end-style": "dashed",
+      "border-end-width": "0.5mm",
+      "border-end-color": "#FF0000",
+      "border-after-style": "dashed",
+      "border-after-width": "0.5mm",
+      "border-after-color": "#FF0000",
+      "border-start-style": "dashed",
+      "border-start-width": "0.5mm",
+      "border-start-color": "#FF0000"
     }
   }
 }

@@ -136,6 +136,20 @@
                   </xsl:value-of>
                 </xsl:map-entry>                    
               </xsl:when>
+              <xsl:when test="$key = 'border'">
+                <xsl:variable name="tokens" select="x:parse-border($value)" as="map(*)"/>
+                <xsl:for-each select="('before', 'end', 'after', 'start')">
+                  <xsl:map-entry key="concat('border-', ., '-style')" select="$tokens ?style"/>
+                  <xsl:map-entry key="concat('border-', ., '-width')" select="$tokens ?width"/>
+                  <xsl:map-entry key="concat('border-', ., '-color')" select="$tokens ?color"/>                  
+                </xsl:for-each>
+              </xsl:when>
+              <xsl:when test="matches($key, '^border-(style|width|color)$')">
+                <xsl:variable name="type" select="substring-after($key, '-')"/>
+                <xsl:for-each select="('before', 'end', 'after', 'start')">
+                  <xsl:map-entry key="concat('border-', ., '-', $type)" select="$value"/>
+                </xsl:for-each>
+              </xsl:when>
               <xsl:otherwise>
                 <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:otherwise>
@@ -147,6 +161,25 @@
         <xsl:sequence select="$base"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+  
+  <xsl:function name="x:parse-border" as="map(*)">
+    <xsl:param name="value" as="item()"/>
+    <xsl:map>
+      <xsl:for-each select="tokenize(normalize-space($value), '\s+')">
+        <xsl:choose>
+          <xsl:when test="matches(., '^(none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset|inherit)$')">
+            <xsl:map-entry key="'style'" select="."/>
+          </xsl:when>
+          <xsl:when test="matches(., '(cm|mm|in|pt|pc|px|em)$')">
+            <xsl:map-entry key="'width'" select="."/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:map-entry key="'color'" select="."/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>                    
+    </xsl:map>
   </xsl:function>
 
   <xsl:variable name="page-sizes" as="map(*)" select="map{

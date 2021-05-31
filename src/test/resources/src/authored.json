@@ -9,7 +9,13 @@
   "header": {
     "odd": {
       "content": "Test: {header}",
-      "height": "44pt"
+      "height": "44pt",
+      "border": "solid 1pt black"
+    },
+    "even": {
+      "border-style": "dashed",
+      "border-width": "0.5mm",
+      "border-color": "#FF0000"
     }
   }
 }
