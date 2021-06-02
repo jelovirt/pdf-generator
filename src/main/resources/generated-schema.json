@@ -428,7 +428,7 @@
       "description": "Page configuration.",
       "examples": [
         {
-          "height": "294mm",
+          "height": "297mm",
           "width": "210mm",
           "top": "20mm",
           "outside": "20mm",
