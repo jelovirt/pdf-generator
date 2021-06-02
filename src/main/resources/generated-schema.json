@@ -2,36 +2,71 @@
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "additionalProperties": false,
+  "default": "Theme template.",
   "properties": {
     "extends": {
-      "type": "string"
+      "type": "string",
+      "description": "Extend another theme. Value is a URI to the theme to be extended."
     },
     "page": {
-      "$ref": "#/definitions/page_type"
+      "allOf": [
+        {
+          "$ref": "#/definitions/page_type"
+        }
+      ],
+      "description": "Page configuration."
     },
     "header": {
-      "$ref": "#/definitions/header_type"
+      "allOf": [
+        {
+          "$ref": "#/definitions/header_type"
+        }
+      ],
+      "description": "Page header configuration."
     },
     "footer": {
-      "$ref": "#/definitions/header_type"
+      "allOf": [
+        {
+          "$ref": "#/definitions/header_type"
+        }
+      ],
+      "description": "Page footer configuration."
     },
     "style": {
-      "$ref": "#/definitions/style_type"
+      "allOf": [
+        {
+          "$ref": "#/definitions/style_type"
+        }
+      ],
+      "description": "Style configuration."
     },
     "mirror_page_margins": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Duplex pages with recto and verso pages.",
+      "default": false
     },
     "blank_pages": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Mark blank pages with ",
+      "default": false
     },
     "body_column_count": {
-      "type": "integer"
+      "type": "integer",
+      "description": "Column count on content pages.",
+      "default": 1
     },
     "index_column_count": {
-      "type": "integer"
+      "type": "integer",
+      "description": "Column count on index pages.",
+      "default": 2
     },
     "column_gap": {
-      "$ref": "#/definitions/length_type"
+      "allOf": [
+        {
+          "$ref": "#/definitions/length_type"
+        }
+      ],
+      "description": "Column gap on multi column pages."
     },
     "force_page_count": {
       "type": "string",
@@ -39,33 +74,47 @@
         "auto",
         "even",
         "odd"
-      ]
+      ],
+      "default": "auto",
+      "description": "Force chapter to end on even or odd pages."
     },
     "chapter_layout": {
       "type": "string",
       "enum": [
         "MINITOC",
         "BASIC"
-      ]
+      ],
+      "default": "MINITOC",
+      "description": "Generate TOC for section."
     },
     "cover_image_metadata": {
-      "type": "string"
+      "type": "string",
+      "description": "Name of metadata element to use as cover image.",
+      "default": null
     },
     "cover_image_topic": {
-      "type": "string"
+      "type": "string",
+      "description": "Outputclass for cover topic.",
+      "default": null
     },
     "bookmark_style": {
       "type": "string",
       "enum": [
         "COLLAPSED",
         "EXPANDED"
-      ]
+      ],
+      "default": "COLLAPSED",
+      "description": "Expand state of PDF bookmarks."
     },
     "toc_maximum_level": {
-      "type": "integer"
+      "type": "integer",
+      "description": "Maximum TOC depth.",
+      "default": 4
     },
     "task_label": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Generate labels for task sections.",
+      "default": false
     },
     "include_related_links": {
       "type": "string",
@@ -73,17 +122,23 @@
         "none",
         "all",
         "nofamily"
-      ]
+      ],
+      "default": "nofamily",
+      "description": "Specifies which link types are used to generate related links."
     },
     "table_continued": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Generate 'Table continued' on page break within table.",
+      "default": false
     },
     "page_number": {
       "type": "string",
       "enum": [
         "page",
         "chapter-page"
-      ]
+      ],
+      "description": "Generate page numbers with chapter number.",
+      "default": "page"
     }
   },
   "definitions": {
@@ -258,64 +313,256 @@
         }
       }
     },
+    "page_size_type": {
+      "type": "object",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "string",
+              "enum": [
+                "A3",
+                "A4",
+                "A5",
+                "Executive",
+                "JIS B5",
+                "Tabloid",
+                "Legal",
+                "Letter",
+                "PA4"
+              ],
+              "description": "Page size.",
+              "default": "Letter"
+            },
+            "orientation": {
+              "type": "string",
+              "enum": [
+                "portrait",
+                "letter"
+              ],
+              "description": "Page orientation.",
+              "default": "portrait"
+            }
+          },
+          "required": [
+            "size"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "height": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length_type"
+                }
+              ],
+              "description": "Page height.",
+              "default": "11in"
+            },
+            "width": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length_type"
+                }
+              ],
+              "description": "Page width.",
+              "default": "8.5in"
+            }
+          },
+          "required": [
+            "height",
+            "width"
+          ]
+        }
+      ]
+    },
     "page_type": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/page_size_type"
+        },
+        {
+          "properties": {
+            "top": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length_type"
+                }
+              ],
+              "description": "Page top margin.",
+              "default": "20mm"
+            },
+            "outside": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length_type"
+                }
+              ],
+              "description": "Page outside margin.",
+              "default": "20mm"
+            },
+            "bottom": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length_type"
+                }
+              ],
+              "description": "Page bottom margin.",
+              "default": "20mm"
+            },
+            "inside": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length_type"
+                }
+              ],
+              "description": "Page inside margin.",
+              "default": "20mm"
+            }
+          }
+        }
+      ],
+      "description": "Page configuration.",
+      "examples": [
+        {
+          "height": "297mm",
+          "width": "210mm",
+          "top": "20mm",
+          "outside": "20mm",
+          "bottom": "20mm",
+          "inside": "30mm"
+        }
+      ]
+    },
+    "content_template_type": {
+      "type": "string",
+      "description": "Header or footer contents template.",
+      "examples": [
+        "{title} — {chapter}"
+      ]
+    },
+    "content_array_type": {
+      "type": "array",
+      "minItems": 0,
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "field"
+              ],
+              "description": "Type of content block."
+            },
+            "value": {
+              "type": "string",
+              "enum": [
+                "title",
+                "chapter",
+                "folio",
+                "folio-with-total"
+              ],
+              "description": "Field name."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "text"
+              ],
+              "description": "Type of content block."
+            },
+            "value": {
+              "type": "string",
+              "description": "Text content of block."
+            }
+          }
+        }
+      ],
+      "description": "Header or footer contents. This is the parsed form of contents template.",
+      "examples": [
+        [
+          {
+            "kind": "field",
+            "value": "title"
+          },
+          {
+            "kind": "text",
+            "value": " — "
+          },
+          {
+            "kind": "field",
+            "value": "chapter"
+          }
+        ]
+      ]
+    },
+    "content_type": {
+      "type": "object",
       "properties": {
-        "height": {
-          "$ref": "#/definitions/length_type"
-        },
-        "width": {
-          "$ref": "#/definitions/length_type"
-        },
-        "top": {
-          "$ref": "#/definitions/length_type"
-        },
-        "outside": {
-          "$ref": "#/definitions/length_type"
-        },
-        "bottom": {
-          "$ref": "#/definitions/length_type"
-        },
-        "inside": {
-          "$ref": "#/definitions/length_type"
+        "content": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/content_template_type"
+            },
+            {
+              "$ref": "#/definitions/content_array_type"
+            }
+          ]
         }
       }
     },
     "odd_type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/block_style_type"
-        }
-      ],
-      "properties": {
-        "content": {
-          "type": ["array", "string"],
-          "minItems": 0,
-          "items": {
-            "type": "object",
-            "properties": {
-              "kind": {
-                "type": "string"
-              },
-              "value": {
-                "type": "string"
-              }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "content": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/content_template_type"
+                },
+                {
+                  "$ref": "#/definitions/content_array_type"
+                }
+              ]
             }
           }
         }
-      }
+      ]
     },
     "header_type": {
       "type": "object",
       "properties": {
         "odd": {
-          "$ref": "#/definitions/odd_type"
+          "allOf": [
+            {
+              "$ref": "#/definitions/odd_type"
+            }
+          ],
+          "description": "Header or footer on verso pages."
         },
         "even": {
-          "$ref": "#/definitions/odd_type"
+          "allOf": [
+            {
+              "$ref": "#/definitions/odd_type"
+            }
+          ],
+          "description": "Header or footer on recto pages."
         }
-      }
+      },
+      "description": "Page header and footer configuration."
     },
     "body_type": {
       "type": "object",
@@ -336,7 +583,8 @@
       ],
       "properties": {
         "title-numbering": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Generate title numbering."
         }
       }
     },
@@ -354,7 +602,8 @@
             "html",
             "table",
             "list"
-          ]
+          ],
+          "description": "Definition list output style."
         }
       }
     },
@@ -428,14 +677,16 @@
             "chapter",
             "document",
             "none"
-          ]
+          ],
+          "description": "Number captions."
         },
         "caption-position": {
           "type": "string",
           "enum": [
             "after",
             "before"
-          ]
+          ],
+          "description": "Caption position."
         }
       }
     },
@@ -461,7 +712,8 @@
       ],
       "properties": {
         "link-page-number": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Generate page number to internal links."
         }
       }
     },

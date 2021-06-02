@@ -262,13 +262,15 @@
   "/>
   
   <xsl:template name="attribute-set">
-    <xsl:param name="style" as="map(*)"/>
+    <xsl:param name="style" as="map(*)?"/>
     <xsl:param name="properties" select="$allProperties"/>
-    <xsl:for-each select="$properties[exists($style(.))]">
-      <axsl:attribute name="{.}">
-        <xsl:value-of select="$style(.)"/>
-      </axsl:attribute>
-    </xsl:for-each>
+    <xsl:if test="exists($style)">
+      <xsl:for-each select="$properties[exists($style(.))]">
+        <axsl:attribute name="{.}">
+          <xsl:value-of select="$style(.)"/>
+        </axsl:attribute>
+      </xsl:for-each>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="generate-namespace-node">

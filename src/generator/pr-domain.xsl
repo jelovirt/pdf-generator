@@ -15,10 +15,10 @@
   <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>
 
   <xsl:template match=".[. instance of map(*)]">
-    <xsl:variable name="codeblock" select="$style('codeblock')" as="map(*)"/>
+    <xsl:variable name="codeblock" select="$style('codeblock')" as="map(*)?"/>
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="$codeblock('line-numbering')">
+      <xsl:if test="exists($codeblock) and $codeblock('line-numbering')">
         <axsl:template match="node()" mode="codeblock.generate-line-number" as="xs:boolean">
           <axsl:sequence select="true()"/>
         </axsl:template>

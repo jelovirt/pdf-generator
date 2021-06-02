@@ -17,8 +17,8 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:variable name="link" select="$style('link')" as="map(*)"/>
-      <xsl:if test="$link('link-url')">
+      <xsl:variable name="link" select="$style('link')" as="map(*)?"/>
+      <xsl:if test="exists($link) and $link('link-url')">
         <xsl:comment>Link</xsl:comment>
         <axsl:template match="*[contains(@class,' topic/xref ')]" name="topic.xref">
           <fo:inline>

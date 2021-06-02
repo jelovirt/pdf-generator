@@ -494,56 +494,57 @@
   </xsl:template>
 
   <xsl:template name="generateInsert">
-    <xsl:param name="header" as="array(*)"/>
+    <xsl:param name="header" as="array(*)?"/>
     <xsl:param name="flow"/>
     <xsl:param name="type"/>
-
-    <xsl:variable name="flowCase" select="concat(upper-case(substring($flow, 1, 1)), substring($flow, 2))"/>
-    <xsl:variable name="typeCase" select="concat(upper-case(substring($type, 1, 1)), substring($type, 2))"/>
-    <xsl:comment select="concat($flow, ' ', $type)"/>
-    <axsl:template name="insertBody{$typeCase}{$flowCase}">
-      <axsl:param name="flow-name" as="xs:string" select="'{$type}-body-{$flow}'"/>
-      <fo:static-content flow-name="{{$flow-name}}">
-        <fo:block axsl:use-attribute-sets="__body__{$type}__{$flow}">
-          <axsl:call-template name="getVariable">
-            <axsl:with-param name="id" select="'Body {$type} {$flow}'" as="xs:string"/>
-            <axsl:with-param name="params">
-              <!-- FIXME: only generate those params that are needed -->
-              <title>
-                <axsl:apply-templates select="/" mode="dita-ot:title-metadata"/>
-              </title>
-              <chapter>
-                <fo:retrieve-marker retrieve-class-name="current-header"/>
-              </chapter>
-              <folio>
-                <fo:page-number/>
-              </folio>
-              <folio-with-total>
-                <!-- FIXME -->
-                <fo:page-number/>
-                <xsl:text> (</xsl:text>
-                <fo:page-number-citation-last ref-id="{{$e:root-id}}"/>
-                <xsl:text>)</xsl:text>
-              </folio-with-total>
-              <!--
-              <heading>
-                <fo:inline>
-                  <xsl:attribute name="xsl:use-attribute-sets">__body__odd__footer__heading</xsl:attribute>
+    <xsl:if test="exists($header)">
+      <xsl:variable name="flowCase" select="concat(upper-case(substring($flow, 1, 1)), substring($flow, 2))"/>
+      <xsl:variable name="typeCase" select="concat(upper-case(substring($type, 1, 1)), substring($type, 2))"/>
+      <xsl:comment select="concat($flow, ' ', $type)"/>
+      <axsl:template name="insertBody{$typeCase}{$flowCase}">
+        <axsl:param name="flow-name" as="xs:string" select="'{$type}-body-{$flow}'"/>
+        <fo:static-content flow-name="{{$flow-name}}">
+          <fo:block axsl:use-attribute-sets="__body__{$type}__{$flow}">
+            <axsl:call-template name="getVariable">
+              <axsl:with-param name="id" select="'Body {$type} {$flow}'" as="xs:string"/>
+              <axsl:with-param name="params">
+                <!-- FIXME: only generate those params that are needed -->
+                <title>
+                  <axsl:apply-templates select="/" mode="dita-ot:title-metadata"/>
+                </title>
+                <chapter>
                   <fo:retrieve-marker retrieve-class-name="current-header"/>
-                </fo:inline>
-              </heading>
-              <pagenum>
-                <fo:inline>
-                  <xsl:attribute name="xsl:use-attribute-sets">__body__odd__footer__pagenum</xsl:attribute>
+                </chapter>
+                <folio>
                   <fo:page-number/>
-                </fo:inline>
-              </pagenum>
-              -->
-            </axsl:with-param>
-          </axsl:call-template>
-        </fo:block>
-      </fo:static-content>
-    </axsl:template>
+                </folio>
+                <folio-with-total>
+                  <!-- FIXME -->
+                  <fo:page-number/>
+                  <xsl:text> (</xsl:text>
+                  <fo:page-number-citation-last ref-id="{{$e:root-id}}"/>
+                  <xsl:text>)</xsl:text>
+                </folio-with-total>
+                <!--
+                <heading>
+                  <fo:inline>
+                    <xsl:attribute name="xsl:use-attribute-sets">__body__odd__footer__heading</xsl:attribute>
+                    <fo:retrieve-marker retrieve-class-name="current-header"/>
+                  </fo:inline>
+                </heading>
+                <pagenum>
+                  <fo:inline>
+                    <xsl:attribute name="xsl:use-attribute-sets">__body__odd__footer__pagenum</xsl:attribute>
+                    <fo:page-number/>
+                  </fo:inline>
+                </pagenum>
+                -->
+              </axsl:with-param>
+            </axsl:call-template>
+          </fo:block>
+        </fo:static-content>
+      </axsl:template>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template match=".[. instance of map(*)]" mode="attr">

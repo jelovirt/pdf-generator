@@ -1,0 +1,13 @@
+{
+  "style": {
+    "body": {
+      "background-image": "image/logo.svg"
+    },
+    "topic": {
+      "background-image": "url('image/logo.svg')"
+    },
+    "topic.topic": {
+      "background-image": "url(\"image/logo.svg\")"
+    }
+  }
+}
