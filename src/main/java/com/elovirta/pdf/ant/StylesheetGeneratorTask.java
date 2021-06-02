@@ -61,40 +61,48 @@ public class StylesheetGeneratorTask extends Task {
         }
 
         xdmItem = parseTemplate();
-        generate("front-matter.xsl", "xsl/fo/front-matter.xsl", null);
-        generate("commons.xsl", "xsl/fo/commons.xsl", null);
-        generate("tables.xsl", "xsl/fo/tables.xsl", null);
-        generate("toc.xsl", "xsl/fo/toc.xsl", null);
-        generate("links.xsl", "xsl/fo/links.xsl", null);
-        generate("lists.xsl", "xsl/fo/lists.xsl", null);
-        generate("pr-domain.xsl", "xsl/fo/pr-domain.xsl", null);
-        generate("static-content.xsl", "xsl/fo/static-content.xsl", null);
-        generate("topic.xsl", "xsl/fo/topic.xsl", null);
-        generate("layout-masters.xsl", "cfg/fo/layout-masters.xsl", null);
-        generate("front-matter.xsl", "cfg/fo/attrs/front-matter-attr.xsl", ATTR);
-        generate("commons.xsl", "cfg/fo/attrs/commons-attr.xsl", ATTR);
-        generate("layout-masters.xsl", "cfg/fo/attrs/layout-masters-attr.xsl", ATTR);
-        generate("static-content.xsl", "cfg/fo/attrs/static-content-attr.xsl", ATTR);
-        generate("tables.xsl", "cfg/fo/attrs/tables-attr.xsl", ATTR);
-        generate("toc.xsl", "cfg/fo/attrs/toc-attr.xsl", ATTR);
-        generate("tables.xsl", "cfg/fo/attrs/tables-attr.xsl", ATTR);
-        generate("basic-settings.xsl", "cfg/fo/attrs/basic-settings.xsl", ATTR);
-        generate("links.xsl", "cfg/fo/attrs/links-attr.xsl", ATTR);
-        generate("lists.xsl", "cfg/fo/attrs/lists-attr.xsl", ATTR);
-        generate("pr-domain.xsl", "cfg/fo/attrs/pr-domain-attr.xsl", ATTR);
-        generate("topic.xsl", "cfg/fo/attrs/topic-attr.xsl", ATTR);
-        final File shell = generate("shell.xsl", "xsl/fo/topic2fo_shell.xsl", null);
+        generate(xdmItem, "front-matter.xsl", "xsl/fo/front-matter.xsl", null);
+        generate(xdmItem, "commons.xsl", "xsl/fo/commons.xsl", null);
+        generate(xdmItem, "tables.xsl", "xsl/fo/tables.xsl", null);
+        generate(xdmItem, "toc.xsl", "xsl/fo/toc.xsl", null);
+        generate(xdmItem, "links.xsl", "xsl/fo/links.xsl", null);
+        generate(xdmItem, "lists.xsl", "xsl/fo/lists.xsl", null);
+        generate(xdmItem, "pr-domain.xsl", "xsl/fo/pr-domain.xsl", null);
+        generate(xdmItem, "static-content.xsl", "xsl/fo/static-content.xsl", null);
+        generate(xdmItem, "topic.xsl", "xsl/fo/topic.xsl", null);
+        generate(xdmItem, "layout-masters.xsl", "cfg/fo/layout-masters.xsl", null);
+        generate(xdmItem, "front-matter.xsl", "cfg/fo/attrs/front-matter-attr.xsl", ATTR);
+        generate(xdmItem, "commons.xsl", "cfg/fo/attrs/commons-attr.xsl", ATTR);
+        generate(xdmItem, "layout-masters.xsl", "cfg/fo/attrs/layout-masters-attr.xsl", ATTR);
+        generate(xdmItem, "static-content.xsl", "cfg/fo/attrs/static-content-attr.xsl", ATTR);
+        generate(xdmItem, "tables.xsl", "cfg/fo/attrs/tables-attr.xsl", ATTR);
+        generate(xdmItem, "toc.xsl", "cfg/fo/attrs/toc-attr.xsl", ATTR);
+        generate(xdmItem, "tables.xsl", "cfg/fo/attrs/tables-attr.xsl", ATTR);
+        generate(xdmItem, "basic-settings.xsl", "cfg/fo/attrs/basic-settings.xsl", ATTR);
+        generate(xdmItem, "links.xsl", "cfg/fo/attrs/links-attr.xsl", ATTR);
+        generate(xdmItem, "lists.xsl", "cfg/fo/attrs/lists-attr.xsl", ATTR);
+        generate(xdmItem, "pr-domain.xsl", "cfg/fo/attrs/pr-domain-attr.xsl", ATTR);
+        generate(xdmItem, "topic.xsl", "cfg/fo/attrs/topic-attr.xsl", ATTR);
+        final File shell = generate(xdmItem, "shell.xsl", "xsl/fo/topic2fo_shell.xsl", null);
         for (String lang : new String[]{"de", "en", "es", "fi", "fr", "he", "it", "ja", "nl", "ro", "ru", "sl", "sv", "zh-CN"}) {
-            generate("vars.xsl", String.format("cfg/common/vars/%s.xml", lang), null,
+            generate(xdmItem, "vars.xsl", String.format("cfg/common/vars/%s.xml", lang), null,
                     singletonMap(LANG, new XdmAtomicValue(lang)));
         }
     }
 
-    private File generate(final String name, final String dst, final QName mode) throws BuildException {
-        return generate(name, dst, mode, emptyMap());
+    private File generate(final XdmItem xdmItem,
+                          final String name,
+                          final String dst,
+                          final QName mode) throws BuildException {
+        return generate(xdmItem, name, dst, mode, emptyMap());
     }
 
-    private File generate(final String name, final String dst, final QName mode, final Map<QName, XdmAtomicValue> params) throws BuildException {
+    @VisibleForTesting
+    File generate(final XdmItem xdmItem,
+                  final String name,
+                  final String dst,
+                  final QName mode,
+                  final Map<QName, XdmAtomicValue> params) throws BuildException {
         final File dstFile = new File(dstDir.toURI().resolve(dst));
         getProject().log(this, String.format("Generating %s", dstFile.toURI()), Project.MSG_INFO);
         try {

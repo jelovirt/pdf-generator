@@ -1,33 +1,40 @@
 package com.elovirta.pdf.ant;
 
-import net.sf.saxon.s9api.SaxonApiException;
-import net.sf.saxon.s9api.Serializer;
-import net.sf.saxon.s9api.XdmValue;
+import net.sf.saxon.s9api.*;
 import org.apache.tools.ant.Project;
 import org.dita.dost.log.DITAOTAntLogger;
 import org.dita.dost.util.XMLUtils;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.emptyMap;
 import static org.dita.dost.util.Constants.ANT_REFERENCE_XML_UTILS;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 public class StylesheetGeneratorTaskTest {
 
     private XMLUtils xmlUtils;
     private StylesheetGeneratorTask task;
+    private XPathCompiler xpathCompiler;
 
     @BeforeEach
     public void setUp() {
         xmlUtils = new XMLUtils();
+        xpathCompiler = xmlUtils.getProcessor().newXPathCompiler();
         final Project project = new Project();
         xmlUtils.setLogger(new DITAOTAntLogger(project));
         project.addReference(ANT_REFERENCE_XML_UTILS, xmlUtils);
@@ -53,6 +60,75 @@ public class StylesheetGeneratorTaskTest {
                 JSONCompareMode.STRICT);
     }
 
+    @Test
+    public void getTemplate_empty() throws URISyntaxException, SaxonApiException, JSONException {
+        final URI src = getClass().getClassLoader().getResource("src/empty.json").toURI();
+        task.setTemplate(new File(src));
+
+        final XdmValue act = task.parseTemplate();
+
+        final String image = src.resolve("image/logo.svg").toString();
+        final String exp = "{\"style\":{}}";
+        assertEquals(exp, toString(act),
+                JSONCompareMode.STRICT);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "front-matter.xsl",
+            "commons.xsl",
+            "tables.xsl",
+            "toc.xsl",
+            "links.xsl",
+            "lists.xsl",
+            "pr-domain.xsl",
+            "static-content.xsl",
+            "topic.xsl",
+            "layout-masters.xsl",
+            "front-matter.xsl",
+            "commons.xsl",
+            "layout-masters.xsl",
+            "static-content.xsl",
+            "tables.xsl",
+            "toc.xsl",
+            "tables.xsl",
+            //"basic-settings.xsl",
+            "links.xsl",
+            "lists.xsl",
+            "pr-domain.xsl",
+            "topic.xsl",
+//            "shell.xsl",
+//            "vars.xsl"
+    })
+    public void generate_empty(final String stylesheet, final @TempDir Path tempDir) throws SaxonApiException {
+        task.setTodir(tempDir.toFile());
+        final XdmItem theme = xpathCompiler.evaluateSingle("parse-json(.)", new XdmAtomicValue("{\"style\":{}}"));
+
+        task.generate(theme, stylesheet, stylesheet, null, emptyMap());
+        task.generate(theme, stylesheet, stylesheet, QName.fromClarkName("{}attr"), emptyMap());
+
+        assertTrue(Files.exists(tempDir.resolve(stylesheet)));
+    }
+
+    public void generate_empty_shell(final @TempDir Path tempDir) throws SaxonApiException {
+        final String stylesheet = "shell.xsl";
+        task.setTodir(tempDir.toFile());
+        final XdmItem theme = xpathCompiler.evaluateSingle("parse-json(.)", new XdmAtomicValue("{\"style\":{}}"));
+
+        task.generate(theme, stylesheet, stylesheet, null, emptyMap());
+
+        assertTrue(Files.exists(tempDir.resolve(stylesheet)));
+    }
+
+    public void generate_empty_basicSettings(final @TempDir Path tempDir) throws SaxonApiException {
+        final String stylesheet = "basic-settings.xsl";
+        task.setTodir(tempDir.toFile());
+        final XdmItem theme = xpathCompiler.evaluateSingle("parse-json(.)", new XdmAtomicValue("{\"style\":{}}"));
+
+        task.generate(theme, stylesheet, stylesheet, QName.fromClarkName("{}attr"), emptyMap());
+
+        assertTrue(Files.exists(tempDir.resolve(stylesheet)));
+    }
 
     @Test
     public void getTemplate_normalize() throws URISyntaxException, SaxonApiException, JSONException {

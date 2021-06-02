@@ -79,6 +79,9 @@
       </xsl:when>
       <xsl:when test="$base instance of map(*)">
         <xsl:map>
+          <xsl:if test="empty($ancestors) and not(map:contains($base, 'style'))">
+            <xsl:map-entry key="'style'" select="map{}"/>
+          </xsl:if>
           <xsl:for-each select="map:keys($base)">
             <xsl:variable name="key" select="."/>
             <xsl:variable name="value" select="map:get($base, $key)"/>

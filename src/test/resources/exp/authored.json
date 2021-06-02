@@ -47,5 +47,6 @@
       "border-start-width": "0.5mm",
       "border-start-color": "#FF0000"
     }
-  }
+  },
+  "style": {}
 }

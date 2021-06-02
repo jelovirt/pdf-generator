@@ -223,12 +223,12 @@
         <xsl:variable name="level" select="."/>
         <variable id="Ordered List Number {$level}">
           <xsl:variable name="olBeforeField" select="concat('ol-before-', $level)"/>
-          <xsl:value-of select="if (exists($style('ol')($olBeforeField)))
+          <xsl:value-of select="if (map:contains($style, 'ol') and exists($style('ol')($olBeforeField)))
                                 then $style('ol')($olBeforeField)
                                 else ''"/><!--$default_style('ol')($olBeforeField)-->
           <param ref-name="number"/>
           <xsl:variable name="olAfterField" select="concat('ol-after-', $level)"/>
-          <xsl:value-of select="if (exists($style('ol')($olAfterField)))
+          <xsl:value-of select="if (map:contains($style, 'ol') and exists($style('ol')($olAfterField)))
                                 then $style('ol')($olAfterField)
                                 else '. '"/><!--$default_style('ol')($olAfterField)-->
         </variable>
@@ -237,7 +237,7 @@
         <xsl:variable name="level" select="."/>
         <xsl:variable name="olField" select="concat('ol-', $level)"/>
         <variable id="Ordered List Format {$level}">
-          <xsl:value-of select="if (exists($style('ol')($olField)))
+          <xsl:value-of select="if (map:contains($style, 'ol') and exists($style('ol')($olField)))
                                 then $style('ol')($olField)
                                 else '1'"/><!--$default_style('ol')($olField)-->
         </variable>
@@ -246,7 +246,7 @@
         <xsl:variable name="level" select="."/>
         <xsl:variable name="ulField" select="concat('ul-', $level)"/>
         <variable id="Unordered List bullet {$level}">
-          <xsl:value-of select="if (exists($style('ol')($ulField)))
+          <xsl:value-of select="if (map:contains($style, 'ol') and exists($style('ol')($ulField)))
                                 then $style('ol')($ulField)
                                 else '•'"/><!--$default_style('ol')($ulField)-->
         </variable>
@@ -255,25 +255,27 @@
   </xsl:template>
 
   <xsl:template name="variables">
-    <xsl:param name="args" as="map(*)"/>
+    <xsl:param name="args" as="map(*)?"/>
     <xsl:param name="var_names" as="item()*"/>
-    <xsl:variable name="content" select="$args ?content" as="array(*)"/>
-    <xsl:for-each select="$var_names">
-      <variable id="{.}">
-        <xsl:attribute name="xml:space">preserve</xsl:attribute>
-        <xsl:for-each select="1 to array:size($content)">
-          <xsl:variable name="item" select="$content(.)"/>
-          <xsl:choose>
-            <xsl:when test="$item ?kind = 'field'">
-              <param ref-name="{$item ?value}"/>
-            </xsl:when>
-            <xsl:when test="$item ?kind = 'text'">
-              <xsl:value-of select="$item ?value"/>
-            </xsl:when>
-          </xsl:choose>
-        </xsl:for-each>
-      </variable>
-    </xsl:for-each>
+    <xsl:variable name="content" select="$args ?content" as="array(*)?"/>
+    <xsl:if test="exists($content)">
+      <xsl:for-each select="$var_names">
+        <variable id="{.}">
+          <xsl:attribute name="xml:space">preserve</xsl:attribute>
+          <xsl:for-each select="1 to array:size($content)">
+            <xsl:variable name="item" select="$content(.)"/>
+            <xsl:choose>
+              <xsl:when test="$item ?kind = 'field'">
+                <param ref-name="{$item ?value}"/>
+              </xsl:when>
+              <xsl:when test="$item ?kind = 'text'">
+                <xsl:value-of select="$item ?value"/>
+              </xsl:when>
+            </xsl:choose>
+          </xsl:for-each>
+        </variable>
+      </xsl:for-each>
+    </xsl:if>
   </xsl:template>
 
 </xsl:stylesheet>
