@@ -48,7 +48,7 @@
       <!-- page margins -->
       <xsl:if test="exists(. ?page)">
         <xsl:variable name="page" select=". ?page"/>
-        <xsl:for-each select="('top', 'outside', 'bottom', 'inside')">
+        <xsl:for-each select="('top', 'outside', 'bottom', 'inside')[map:contains($page, .)]">
           <axsl:variable name="page-margin-{.}">
             <xsl:value-of select="$page(.)"/>
           </axsl:variable>
