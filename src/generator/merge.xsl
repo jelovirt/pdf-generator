@@ -14,7 +14,6 @@
   <xsl:function name="x:extends" as="item()*">
     <xsl:param name="base" as="item()*"/>
     <xsl:param name="url"/>
-    <xsl:message select="$url"/>
     <xsl:choose>
       <xsl:when test="map:contains($base, 'extends')">
         <xsl:variable name="extends-url" select="resolve-uri($base ?extends, $url)"/>
@@ -27,7 +26,7 @@
     </xsl:choose>
   </xsl:function>
 
-  <xsl:function name="x:merge" as="item()*">
+  <xsl:function name="x:merge" as="item()*" visibility="public">
     <xsl:param name="base" as="item()*"/>
     <xsl:param name="theme" as="item()*"/>
     <xsl:choose>
@@ -62,7 +61,7 @@
     </xsl:choose>
   </xsl:function>
 
-  <xsl:function name="x:normalize" as="item()*">
+  <xsl:function name="x:normalize" as="item()*" visibility="public">
     <xsl:param name="base" as="item()*"/>
     <xsl:param name="ancestors" as="item()*"/>
     <xsl:param name="url" as="item()"/>
