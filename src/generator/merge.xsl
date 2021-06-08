@@ -152,6 +152,13 @@
                   <xsl:map-entry key="concat('border-', ., '-', $type)" select="$value"/>
                 </xsl:for-each>
               </xsl:when>
+              <xsl:when test="$key = ('header', 'footer') and empty(($value ?odd, $value ?even))">
+                <xsl:map-entry key="$key" select="
+                  map {
+                    'odd': x:normalize($value, ($ancestors, $key, 'odd'), $url),
+                    'even': x:normalize($value, ($ancestors, $key, 'even'), $url)
+                  }"/>
+              </xsl:when>
               <xsl:otherwise>
                 <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:otherwise>
