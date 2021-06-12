@@ -156,8 +156,8 @@
                 <xsl:variable name="other" select="x:exclude($value, ('odd', 'even'))" as="map(*)"/>
                 <xsl:map-entry key="$key" select="
                   map {
-                    'odd': x:normalize(map:merge(($other, $value ?odd)), ($ancestors, $key, 'odd'), $url),
-                    'even': x:normalize(map:merge(($other, $value ?even)), ($ancestors, $key, 'even'), $url)
+                   'odd': x:normalize(map:merge(($value ?odd, $other)), ($ancestors, $key, 'odd'), $url),
+                   'even': x:normalize(map:merge(($value ?even, $other)), ($ancestors, $key, 'even'), $url)
                   }"/>
               </xsl:when>
               <xsl:when test="$key = ('header', 'footer') and empty(($value ?odd, $value ?even))">
