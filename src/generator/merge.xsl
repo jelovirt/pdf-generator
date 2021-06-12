@@ -254,9 +254,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-  
-  <xsl:variable name="default-variable-prefix" select="'brand-'"/>
-  
+    
   <xsl:function name="x:resolveVariables" as="item()">
     <xsl:param name="base" as="item()"/>
     <xsl:param name="keys" as="map(*)"/>
@@ -286,9 +284,6 @@
         <xsl:choose>
           <xsl:when test="map:contains($keys, $variable)">
             <xsl:sequence select="map:get($keys, $variable)"/>
-          </xsl:when>
-          <xsl:when test="map:contains($keys, concat($default-variable-prefix, $variable))">
-            <xsl:sequence select="map:get($keys, concat($default-variable-prefix, $variable))"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:message>[ERROR] No binding for variable <xsl:value-of select="$base"/> found</xsl:message>
