@@ -17,5 +17,14 @@
       "border-width": "0.5mm",
       "border-color": "#FF0000"
     }
+  },
+  "footer": {
+    "font-size": "10pt",
+    "odd": {
+      "content": "{header} – {title}"
+    },
+    "even": {
+      "content": "{title} – {header}"
+    }
   }
 }

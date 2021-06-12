@@ -152,6 +152,14 @@
                   <xsl:map-entry key="concat('border-', ., '-', $type)" select="$value"/>
                 </xsl:for-each>
               </xsl:when>
+              <xsl:when test="$key = ('header', 'footer') and exists(($value ?odd, $value ?even))">
+                <xsl:variable name="other" select="x:exclude($value, ('odd', 'even'))" as="map(*)"/>
+                <xsl:map-entry key="$key" select="
+                  map {
+                    'odd': x:normalize(map:merge(($other, $value ?odd)), ($ancestors, $key, 'odd'), $url),
+                    'even': x:normalize(map:merge(($other, $value ?even)), ($ancestors, $key, 'even'), $url)
+                  }"/>
+              </xsl:when>
               <xsl:when test="$key = ('header', 'footer') and empty(($value ?odd, $value ?even))">
                 <xsl:map-entry key="$key" select="
                   map {
@@ -170,6 +178,18 @@
         <xsl:sequence select="$base"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+  
+  <xsl:function name="x:exclude">
+    <xsl:param name="map" as="map(*)"/>
+    <xsl:param name="names" as="item()*"/>
+    <xsl:map>
+      <xsl:for-each select="map:keys($map)">
+        <xsl:if test="not(. = $names)">
+          <xsl:map-entry key="." select="map:get($map, .)"/>
+        </xsl:if>
+      </xsl:for-each>
+    </xsl:map>
   </xsl:function>
   
   <xsl:function name="x:parse-border" as="map(*)">
