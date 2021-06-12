@@ -136,16 +136,29 @@ public class StylesheetGeneratorTask extends Task {
     XdmItem parseTemplate() {
         getProject().log(this, String.format("Reading %s", template.toURI()), Project.MSG_INFO);
         final String name = template.getName().toLowerCase();
-        // XXX: Saxon's JSON functions don't use URIResolver, so have to parse manually
-        if (name.endsWith(".yml") || name.endsWith(".yaml")) {
-            try {
-                final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/merge.xsl", null));
-                return parseYamlTemplate(executable, parseYaml(template.toURI()), template.toURI());
-            } catch (SaxonApiException | TransformerException e) {
-                throw new BuildException(String.format("Failed to parse template %s", template), e);
+        try {
+            final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/merge.xsl", null));
+            final XdmItem merged;
+            // XXX: Saxon's JSON functions don't use URIResolver, so have to parse manually
+            if (name.endsWith(".yml") || name.endsWith(".yaml")) {
+                merged = parseYamlTemplate(executable, parseYaml(template.toURI()), template.toURI());
+            } else {
+                merged = parseJsonTemplate();
             }
-        } else {
-            return parseJsonTemplate();
+            return resolveVariables(executable, merged);
+        } catch (SaxonApiException | TransformerException e) {
+            throw new BuildException(String.format("Failed to parse template %s", template), e);
+        }
+    }
+
+    private XdmItem resolveVariables(final XsltExecutable executable, final XdmItem base) {
+        try {
+            final Xslt30Transformer transformer = executable.load30();
+            return transformer.callFunction(QName.fromClarkName("{x}resolve"), new XdmValue[]{
+                    base
+            }).itemAt(0);
+        } catch (SaxonApiException e) {
+            throw new BuildException("Failed to resolve variables", e);
         }
     }
 

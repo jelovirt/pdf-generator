@@ -1,4 +1,7 @@
 extends: default.json
+brand:
+  primary-color: red
+  secondary-color: blue
 page:
   height: 297mm
   width: 210mm
@@ -120,6 +123,10 @@ footer:
 style:
   body:
     font-family: Comic Sans MS
+  topic:
+    color: $brand-primary-color
+  topic_topic:
+    color: $secondary-color
 mirror_page_margins: false
 blank_pages: false
 body_column_count: 1
