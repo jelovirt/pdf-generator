@@ -13,3 +13,10 @@ header:
     border-style: dashed
     border-width: 0.5mm
     border-color: "#FF0000"
+footer:
+  font-size: "10pt"
+  odd:
+    content: "{header} – {title}"
+    font-size: "12pt"
+  even:
+    content: "{title} – {header}"

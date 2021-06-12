@@ -1,5 +1,9 @@
 {
   "extends": "default.json",
+  "brand": {
+    "primary-color": "red",
+    "secondary-color": "blue"
+  },
   "page": {
     "height": "297mm",
     "width": "210mm",
@@ -469,7 +473,7 @@
     "topic": {
       "padding-before": "0pt",
       "border-after-style": "none",
-      "color": "black",
+      "color": "red",
       "font-weight": "bold",
       "border-end-width": "1pt",
       "font-size": "18pt",
@@ -785,7 +789,7 @@
     "topic_topic": {
       "padding-before": "0pt",
       "border-after-style": "none",
-      "color": "black",
+      "color": "blue",
       "font-weight": "bold",
       "border-end-width": "1pt",
       "font-size": "14pt",

@@ -48,5 +48,41 @@
       "border-start-color": "#FF0000"
     }
   },
+  "footer": {
+    "odd": {
+      "content": [
+        {
+          "kind": "field",
+          "value": "header"
+        },
+        {
+          "kind": "text",
+          "value": " – "
+        },
+        {
+          "kind": "field",
+          "value": "title"
+        }
+      ],
+      "font-size": "12pt"
+    },
+    "even": {
+      "content": [
+        {
+          "kind": "field",
+          "value": "title"
+        },
+        {
+          "kind": "text",
+          "value": " – "
+        },
+        {
+          "kind": "field",
+          "value": "header"
+        }
+      ],
+      "font-size": "10pt"
+    }
+  },
   "style": {}
 }
