@@ -1,8 +1,7 @@
 {
   "extends": "default.json",
   "brand": {
-    "primary-color": "red",
-    "secondary-color": "blue"
+    "primary-color": "red"
   },
   "page": {
     "height": "297mm",
@@ -789,7 +788,7 @@
     "topic_topic": {
       "padding-before": "0pt",
       "border-after-style": "none",
-      "color": "blue",
+      "color": "black",
       "font-weight": "bold",
       "border-end-width": "1pt",
       "font-size": "14pt",
