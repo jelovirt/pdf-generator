@@ -90,26 +90,26 @@ footer:
         value: " — "
       - kind: field
         value: title
-    padding-before: 0pt
-    padding-end: 0pt
-    padding-after: 0pt
-    padding-start: 0pt
-    space-before: 0pt
+    padding-top: 0pt
+    padding-right: 0pt
+    padding-bottom: 0pt
+    padding-left: 0pt
+    space-top: 0pt
     space-after: 10pt
     start-indent: 10pt
     end-indent: 10pt
-    border-before-style: none
-    border-before-width: 1pt
-    border-before-color: black
-    border-end-style: none
-    border-end-width: 1pt
-    border-end-color: black
-    border-after-style: none
-    border-after-width: 1pt
-    border-after-color: black
-    border-start-style: none
-    border-start-width: 1pt
-    border-start-color: black
+    border-top-style: none
+    border-top-width: 1pt
+    border-top-color: black
+    border-right-style: none
+    border-right-width: 1pt
+    border-right-color: black
+    border-bottom-style: none
+    border-bottom-width: 1pt
+    border-bottom-color: black
+    border-left-style: none
+    border-left-width: 1pt
+    border-left-color: black
     font-family: Times New Roman
     font-size: 10pt
     line-height: '1.2'
