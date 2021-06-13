@@ -152,6 +152,25 @@
                   <xsl:map-entry key="concat('border-', ., '-', $type)" select="$value"/>
                 </xsl:for-each>
               </xsl:when>
+              <xsl:when test="matches($key, '^.+?-(top|right|bottom|left)(-.+?)?$')">
+                <xsl:variable name="name">
+                  <xsl:analyze-string select="$key" regex="^(.+?-)(top|right|bottom|left)(-.+?)?$">
+                    <xsl:matching-substring>
+                      <xsl:value-of>
+                        <xsl:value-of select="regex-group(1)"/>
+                        <xsl:choose>
+                          <xsl:when test="regex-group(2) = 'top'">before</xsl:when>
+                          <xsl:when test="regex-group(2) = 'right'">end</xsl:when>
+                          <xsl:when test="regex-group(2) = 'bottom'">after</xsl:when>
+                          <xsl:when test="regex-group(2) = 'left'">start</xsl:when>
+                        </xsl:choose>
+                        <xsl:value-of select="regex-group(3)"/>
+                      </xsl:value-of>
+                    </xsl:matching-substring>
+                  </xsl:analyze-string>
+                </xsl:variable>
+                <xsl:map-entry key="$name" select="$value"/>
+              </xsl:when>
               <xsl:when test="$key = ('header', 'footer') and exists(($value ?odd, $value ?even))">
                 <xsl:variable name="other" select="x:exclude($value, ('odd', 'even'))" as="map(*)"/>
                 <xsl:map-entry key="$key" select="
