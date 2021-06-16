@@ -150,6 +150,20 @@
                   <xsl:map-entry key="concat('border-', ., '-color')" select="$tokens ?color"/>                  
                 </xsl:for-each>
               </xsl:when>
+              <xsl:when test="matches($key, '^border-(top|right|bottom|left)$')">
+                <xsl:variable name="tokens" select="x:parse-border($value)" as="map(*)"/>
+                <xsl:variable name="direction">
+                  <xsl:choose>
+                    <xsl:when test="$key = 'border-top'">before</xsl:when>
+                    <xsl:when test="$key = 'border-right'">end</xsl:when>
+                    <xsl:when test="$key = 'border-bottom'">after</xsl:when>
+                    <xsl:when test="$key = 'border-left'">start</xsl:when>
+                  </xsl:choose>
+                </xsl:variable>
+                <xsl:map-entry key="concat('border-', $direction, '-style')" select="$tokens ?style"/>
+                <xsl:map-entry key="concat('border-', $direction, '-width')" select="$tokens ?width"/>
+                <xsl:map-entry key="concat('border-', $direction, '-color')" select="$tokens ?color"/>                  
+              </xsl:when>
               <xsl:when test="matches($key, '^border-(style|width|color)$')">
                 <xsl:variable name="type" select="substring-after($key, '-')"/>
                 <xsl:for-each select="('before', 'end', 'after', 'start')">
