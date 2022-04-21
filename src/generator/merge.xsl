@@ -85,6 +85,7 @@
             <xsl:variable name="key" select="."/>
             <xsl:variable name="value" select="map:get($base, $key)"/>
             <xsl:choose>
+              <!-- Parse content DSL into AST -->
               <xsl:when test="$key = 'content' and not($value instance of array(*))">
                 <xsl:variable name="tokens" as="item()*">
                   <xsl:analyze-string select="$value" regex="\{{(.+?)\}}">
@@ -98,6 +99,7 @@
                 </xsl:variable>
                 <xsl:map-entry key="$key" select="array{ $tokens }"/>
               </xsl:when>
+              <!-- Map page size and orientation into page dimensions -->
               <xsl:when test="$key = 'size' and $ancestors = ('page')">
                 <xsl:variable name="sizes" select="map:get($page-sizes, $value)" as="array(*)?"/>
                 <xsl:choose>
@@ -119,6 +121,7 @@
                 </xsl:choose>
               </xsl:when>
               <xsl:when test="$key = 'orientation' and $ancestors = ('page')"/>
+              <!-- Convert image reference to FO format -->
               <xsl:when test="$key = 'background-image'">
                 <xsl:variable name="image-url">
                   <xsl:analyze-string select="$value" regex="url\([&quot;'](.+?)[&quot;']\)">
@@ -138,6 +141,7 @@
                   </xsl:value-of>
                 </xsl:map-entry>                    
               </xsl:when>
+              <!-- Expand border shorthand -->
               <xsl:when test="$key = 'border'">
                 <xsl:variable name="tokens" select="x:parse-border($value)" as="map(*)"/>
                 <xsl:for-each select="('before', 'end', 'after', 'start')">
@@ -171,6 +175,7 @@
                 </xsl:variable>
                 <xsl:map-entry key="$name" select="$value"/>
               </xsl:when>
+              <!-- Group header and footer styles under odd and even -->
               <xsl:when test="$key = ('header', 'footer') and exists(($value ?odd, $value ?even))">
                 <xsl:variable name="other" select="x:exclude($value, ('odd', 'even'))" as="map(*)"/>
                 <xsl:map-entry key="$key" select="
