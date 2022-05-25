@@ -22,10 +22,10 @@
         <xsl:attribute name="select">
           <xsl:text>(</xsl:text>
           <xsl:value-of select="(
-            $style ?topic ?title-numbering,
-            $style ?topic_topic ?title-numbering,
-            $style ?topic_topic_topic ?title-numbering,
-            $style ?topic_topic_topic_topic ?title-numbering
+            boolean($style ?topic ?title-numbering),
+            boolean($style ?topic_topic ?title-numbering),
+            boolean($style ?topic_topic_topic ?title-numbering),
+            boolean($style ?topic_topic_topic_topic ?title-numbering)
             ) ! concat(., '()')" separator=", "/>
           <xsl:text>)</xsl:text>
         </xsl:attribute>
@@ -34,7 +34,8 @@
         <axsl:variable name="topic" select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]"/>
         <axsl:variable name="id" select="$topic/@id"/>
         <axsl:variable name="mapTopics" select="key('map-id', $id)"/>
-        <fo:inline>
+        <axsl:variable name="contents" as="node()*">
+<!--          <fo:inline>-->
           <axsl:for-each select="$mapTopics[1]">
             <axsl:variable name="depth" select="count(ancestor-or-self::*[contains(@class, ' map/topicref')])"/>
             <axsl:choose>
@@ -55,9 +56,13 @@
                              format="1.1"/>
               </axsl:when>
             </axsl:choose>
-            <axsl:value-of select="' '"/>
           </axsl:for-each>
-        </fo:inline>
+<!--          </fo:inline>-->
+        </axsl:variable>
+        <axsl:if test="exists($contents)">
+          <axsl:copy-of select="$contents"/>
+          <axsl:value-of select="' '"/>
+        </axsl:if>
         <axsl:apply-templates/>
       </axsl:template>
 
