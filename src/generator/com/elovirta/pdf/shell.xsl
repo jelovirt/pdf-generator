@@ -82,11 +82,11 @@
         </xsl:when>
       </xsl:choose>
 
-      <xsl:if test="$version = ('3.5', '3.6', '3.7')">
+      <xsl:if test="$version = ('3.5', '3.6', '3.7', '4.0')">
         <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/topic-attr.xsl"/>
       </xsl:if>
       <axsl:import href="{$plugin_name}cfg/fo/attrs/topic-attr.xsl"/>
-      <xsl:if test="$version = ('3.5', '3.6', '3.7')">
+      <xsl:if test="$version = ('3.5', '3.6', '3.7', '4.0')">
         <xsl:choose>
           <xsl:when test="$formatter = 'ah'">
             <axsl:import href="plugin:org.dita.pdf2.axf:xsl/fo/topic_axf.xsl"/>
@@ -119,7 +119,7 @@
         <xsl:when test="$formatter = 'ah'">
           <axsl:import href="plugin:org.dita.pdf2.axf:cfg/fo/attrs/toc-attr_axf.xsl"/>
         </xsl:when>
-        <xsl:when test="$formatter = 'fop' and not($version = ('3.5', '3.6', '3.7'))">
+        <xsl:when test="$formatter = 'fop' and not($version = ('3.5', '3.6', '3.7', '4.0'))">
           <axsl:import href="plugin:org.dita.pdf2.fop:cfg/fo/attrs/toc-attr_fop.xsl"/>
         </xsl:when>
       </xsl:choose>
@@ -134,7 +134,7 @@
         <xsl:when test="$formatter = 'ah'">
           <axsl:import href="plugin:org.dita.pdf2.axf:cfg/fo/attrs/index-attr_axf.xsl"/>
         </xsl:when>
-        <xsl:when test="$formatter = 'fop' and $version = ('3.5', '3.6', '3.7')">
+        <xsl:when test="$formatter = 'xep' and $version = ('3.5', '3.6', '3.7', '4.0')">
           <axsl:import href="plugin:org.dita.pdf2.xep:cfg/fo/attrs/index-attr_xep.xsl"/>
         </xsl:when>
       </xsl:choose>
@@ -190,7 +190,7 @@
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/xml-domain-attr.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/xml-domain.xsl"/>
-      <xsl:if test="$version = ('3.5', '3.6', '3.7')">
+      <xsl:if test="$version = ('3.5', '3.6', '3.7', '4.0')">
         <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/svg-domain-attr.xsl"/>
         <axsl:import href="plugin:org.dita.pdf2:xsl/fo/svg-domain.xsl"/>
 
@@ -213,7 +213,7 @@
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/learning-elements.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/flagging.xsl"/>
-      <xsl:if test="$formatter = 'fop' and not($version = ('3.5', '3.6', '3.7'))">
+      <xsl:if test="$formatter = 'fop' and not($version = ('3.5', '3.6', '3.7', '4.0'))">
         <axsl:import href="plugin:org.dita.pdf2.fop:xsl/fo/flagging_fop.xsl"/>
       </xsl:if>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/flagging-from-preprocess.xsl"/>

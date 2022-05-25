@@ -475,21 +475,25 @@
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:call-template name="generateInsert">
-        <xsl:with-param name="header" select=". ?header ?even ?content"/>
-        <xsl:with-param name="flow" select="'header'"/>
-        <xsl:with-param name="type" select="'even'"/>
-      </xsl:call-template>
+      <xsl:if test=". ?mirror_page_margins">
+        <xsl:call-template name="generateInsert">
+          <xsl:with-param name="header" select=". ?header ?even ?content"/>
+          <xsl:with-param name="flow" select="'header'"/>
+          <xsl:with-param name="type" select="'even'"/>
+        </xsl:call-template>
+      </xsl:if>
       <xsl:call-template name="generateInsert">
         <xsl:with-param name="header" select=". ?footer ?odd ?content"/>
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:call-template name="generateInsert">
-        <xsl:with-param name="header" select=". ?footer ?even ?content"/>
-        <xsl:with-param name="flow" select="'footer'"/>
-        <xsl:with-param name="type" select="'even'"/>
-      </xsl:call-template>
+      <xsl:if test=". ?mirror_page_margins">
+        <xsl:call-template name="generateInsert">
+          <xsl:with-param name="header" select=". ?footer ?even ?content"/>
+          <xsl:with-param name="flow" select="'footer'"/>
+          <xsl:with-param name="type" select="'even'"/>
+        </xsl:call-template>
+      </xsl:if>
     </axsl:stylesheet>
   </xsl:template>
 
@@ -504,6 +508,7 @@
       <axsl:template name="insertBody{$typeCase}{$flowCase}">
         <axsl:param name="flow-name" as="xs:string" select="'{$type}-body-{$flow}'"/>
         <fo:static-content flow-name="{{$flow-name}}">
+          <!--fo:block-container axsl:use-attribute-sets="__body-container__{$type}__{$flow}"-->
           <fo:block axsl:use-attribute-sets="__body__{$type}__{$flow}">
             <axsl:call-template name="getVariable">
               <axsl:with-param name="id" select="'Body {$type} {$flow}'" as="xs:string"/>
@@ -542,6 +547,7 @@
               </axsl:with-param>
             </axsl:call-template>
           </fo:block>
+          <!--/fo:block-container-->
         </fo:static-content>
       </axsl:template>
     </xsl:if>
@@ -550,34 +556,27 @@
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="exists(. ?header ?odd)">
-        <axsl:attribute-set name="odd__header">
-          <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select=". ?header ?odd"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-      </xsl:if>
-      <xsl:if test="exists(. ?header ?even) and . ?mirror_page_margins">
-        <axsl:attribute-set name="even__header">
-          <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select=". ?header ?even"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
+
+      <xsl:call-template name="generate-header-attribute-sets">
+        <xsl:with-param name="flow" select="'header'"/>
+        <xsl:with-param name="type" select="'odd'"/>
+      </xsl:call-template>
+      <xsl:if test=". ?mirror_page_margins">
+        <xsl:call-template name="generate-header-attribute-sets">
+          <xsl:with-param name="flow" select="'header'"/>
+          <xsl:with-param name="type" select="'even'"/>
+        </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test="exists(. ?footer ?odd)">
-        <axsl:attribute-set name="odd__footer">
-          <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select=". ?footer ?odd"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-      </xsl:if>
-      <xsl:if test="exists(. ?footer ?even) and . ?mirror_page_margins">
-        <axsl:attribute-set name="even__footer">
-          <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select=". ?footer ?even"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
+      <xsl:call-template name="generate-header-attribute-sets">
+        <xsl:with-param name="flow" select="'footer'"/>
+        <xsl:with-param name="type" select="'odd'"/>
+      </xsl:call-template>
+      <xsl:if test=". ?mirror_page_margins">
+        <xsl:call-template name="generate-header-attribute-sets">
+          <xsl:with-param name="flow" select="'footer'"/>
+          <xsl:with-param name="type" select="'even'"/>
+        </xsl:call-template>
       </xsl:if>
 
       <xsl:if test=". ?blank_pages">
@@ -588,6 +587,43 @@
         </axsl:attribute-set>
       </xsl:if>
     </axsl:stylesheet>
+  </xsl:template>
+
+  <xsl:variable name="viewport-area-properties" select="
+    'block-progression-dimension',
+    'height',
+    'space-before',
+    'space-before.conditionality',
+    'space-after',
+    'space-after.conditionality',
+    'start-indent',
+    'end-indent'
+  "/>
+  
+  <xsl:template name="generate-header-attribute-sets">
+    <xsl:param name="flow"/>
+    <xsl:param name="type"/>
+
+    <xsl:if test="map:contains(., $flow) and map:contains(.($flow), $type)">
+      <axsl:attribute-set name="{$type}__{$flow}">
+        <xsl:call-template name="attribute-set">
+          <xsl:with-param name="style" select=".($flow)($type)"/>
+          <!--xsl:with-param name="properties" select="$allProperties[not(. = $viewport-area-properties)]"/-->
+        </xsl:call-template>
+        <!--xsl:for-each select="$viewport-area-properties">
+          <axsl:attribute name="{.}" select="'auto'"/>
+        </xsl:for-each-->
+      </axsl:attribute-set>
+      <!--axsl:attribute-set name="container__{$type}__{$flow}">
+        <xsl:call-template name="attribute-set">
+          <xsl:with-param name="style" select=".($flow)($type)"/>
+          <!- -xsl:with-param name="properties" select="$viewport-area-properties"/- ->
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <xsl:for-each select="('body', 'toc', 'index', 'glossary')">
+        <axsl:attribute-set name="__{.}-container__{$type}__{$flow}" use-attribute-sets="container__{$type}__{$flow}"/>
+      </xsl:for-each-->
+    </xsl:if>
   </xsl:template>
 
 </xsl:stylesheet>
