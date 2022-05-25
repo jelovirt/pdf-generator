@@ -6,7 +6,7 @@ page:
   inside: 20mm
 header:
   odd:
-    content: 'Test: {header}'
+    content: 'Test: {chapter}'
     height: 44pt
     border: solid 1pt black
   even:
@@ -16,7 +16,7 @@ header:
 footer:
   font-size: "10pt"
   odd:
-    content: "{header} – {title}"
+    content: "{chapter} – {title}"
     font-size: "12pt"
   even:
-    content: "{title} – {header}"
+    content: "{title} – {chapter}"
