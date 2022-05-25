@@ -6,7 +6,6 @@ test {
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 sourceCompatibility = 1.8
@@ -24,7 +23,7 @@ dependencies {
 sourceSets {
     main {
         resources {
-            srcDirs= ["src/generator"]
+            srcDirs = ["src/generator"]
             include "**/*.xsl"
             include "**/*.json"
         }

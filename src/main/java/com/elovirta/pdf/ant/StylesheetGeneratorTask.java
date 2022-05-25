@@ -112,7 +112,7 @@ public class StylesheetGeneratorTask extends Task {
         final File dstFile = new File(dstDir.toURI().resolve(dst));
         getProject().log(this, String.format("Generating %s", dstFile.toURI()), Project.MSG_INFO);
         try {
-            final String stylesheetUri = String.format("classpath:/%s", name);
+            final String stylesheetUri = String.format("classpath:/com/elovirta/pdf/%s", name);
             final XsltExecutable executable = compiler.compile(resolver.resolve(stylesheetUri, null));
             final Xslt30Transformer transformer = executable.load30();
             final Map<QName, XdmAtomicValue> parameters = getParameters();
@@ -137,7 +137,7 @@ public class StylesheetGeneratorTask extends Task {
         getProject().log(this, String.format("Reading %s", template.toURI()), Project.MSG_INFO);
         final String name = template.getName().toLowerCase();
         try {
-            final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/merge.xsl", null));
+            final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/com/elovirta/pdf/merge.xsl", null));
             final XdmItem merged;
             // XXX: Saxon's JSON functions don't use URIResolver, so have to parse manually
             if (name.endsWith(".yml") || name.endsWith(".yaml")) {
@@ -165,7 +165,7 @@ public class StylesheetGeneratorTask extends Task {
     private XdmItem parseJsonTemplate() {
         try {
             final XdmItem theme = xpathCompiler.evaluateSingle("json-doc(.)", new XdmAtomicValue(template.toURI()));
-            final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/merge.xsl", null));
+            final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/com/elovirta/pdf/merge.xsl", null));
             final Xslt30Transformer transformer = executable.load30();
             final Map<QName, XdmItem> parameters = singletonMap(
                     QName.fromClarkName("{}base-url"), new XdmAtomicValue(template.toURI())
