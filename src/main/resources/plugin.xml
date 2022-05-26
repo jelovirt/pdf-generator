@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="com.elovirta.pdf">
+<plugin id="com.elovirta.pdf" version="${version}">
   <feature extension="dita.conductor.lib.import" file="lib/pdf-generator.jar"/>
   <feature extension="ant.import" file="build.xml"/>
   <transtype name="pdf">

@@ -1,5 +1,7 @@
 apply plugin: 'java'
 
+version = '0.5.0'
+
 test {
     useJUnitPlatform()
 }
@@ -51,6 +53,12 @@ task dist(type: Zip, dependsOn: [jar]) {
     into("") {
         from ("src/main/resources") {
             include "build.xml"
+        }
+        from ("src/main/resources") {
+            expand(
+                    id: project.name,
+                    version: project.version
+            )
             include "plugin.xml"
         }
     }
