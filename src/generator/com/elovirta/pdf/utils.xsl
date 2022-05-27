@@ -1,5 +1,6 @@
 <xsl:stylesheet version="3.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:axsl="http://www.w3.org/1999/XSL/Transform/alias"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:map="http://www.w3.org/2005/xpath-functions/map"
@@ -12,6 +13,8 @@
 
   <xsl:param name="version" select=". ?ot_version"/>
   <xsl:param name="formatter" select=". ?formatter"/>
+
+  <xsl:variable name="mirror_page_margins" select="boolean(. ?mirror_page_margins)" as="xs:boolean"/>
 
   <xsl:variable name="allProperties" select="
     'absolute-position',

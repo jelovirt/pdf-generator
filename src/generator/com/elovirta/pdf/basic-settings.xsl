@@ -42,8 +42,8 @@
         </xsl:if>
       </xsl:if>
       <!-- mirror pages -->
-      <xsl:if test="exists(. ?mirror_page_margins)">
-        <axsl:variable name="mirror-page-margins" select="{. ?mirror_page_margins}()"/>
+      <xsl:if test="exists($mirror_page_margins)">
+        <axsl:variable name="mirror-page-margins" select="{$mirror_page_margins}()"/>
       </xsl:if>
       <!-- page margins -->
       <xsl:if test="exists(. ?page)">

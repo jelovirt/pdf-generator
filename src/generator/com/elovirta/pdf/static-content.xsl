@@ -475,7 +475,7 @@
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test=". ?mirror_page_margins">
+      <xsl:if test="$mirror_page_margins">
         <xsl:call-template name="generateInsert">
           <xsl:with-param name="header" select=". ?header ?even ?content"/>
           <xsl:with-param name="flow" select="'header'"/>
@@ -487,7 +487,7 @@
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test=". ?mirror_page_margins">
+      <xsl:if test="$mirror_page_margins">
         <xsl:call-template name="generateInsert">
           <xsl:with-param name="header" select=". ?footer ?even ?content"/>
           <xsl:with-param name="flow" select="'footer'"/>
@@ -561,7 +561,7 @@
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test=". ?mirror_page_margins">
+      <xsl:if test="$mirror_page_margins">
         <xsl:call-template name="generate-header-attribute-sets">
           <xsl:with-param name="flow" select="'header'"/>
           <xsl:with-param name="type" select="'even'"/>
@@ -572,7 +572,7 @@
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test=". ?mirror_page_margins">
+      <xsl:if test="$mirror_page_margins">
         <xsl:call-template name="generate-header-attribute-sets">
           <xsl:with-param name="flow" select="'footer'"/>
           <xsl:with-param name="type" select="'even'"/>
