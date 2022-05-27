@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin id="com.elovirta.pdf" version="${version}">
-  <feature extension="dita.conductor.lib.import" file="lib/pdf-generator.jar"/>
+  <feature extension="dita.conductor.lib.import" file="lib/pdf-generator-${version}.jar"/>
   <feature extension="ant.import" file="build.xml"/>
   <transtype name="pdf">
     <param name="theme" desc="Theme configuration file." type="file"/>
