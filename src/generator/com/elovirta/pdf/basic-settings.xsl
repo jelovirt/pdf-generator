@@ -72,6 +72,11 @@
           <xsl:value-of select="$style ?body ?start-indent"/>
         </axsl:variable>
       </xsl:if>
+      <xsl:if test="exists(. ?chapter_layout)">
+        <axsl:variable name="antArgsChapterLayout">
+          <xsl:value-of select=". ?chapter_layout"/>
+        </axsl:variable>
+      </xsl:if>
     </axsl:stylesheet>
   </xsl:template>
 
