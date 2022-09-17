@@ -176,10 +176,12 @@
       <xsl:call-template name="extent">
         <xsl:with-param name="region" select=". ?header"/>
         <xsl:with-param name="name" select="'before'"/>
+        <xsl:with-param name="default" select=". ?page ?top"/>
       </xsl:call-template>
       <xsl:call-template name="extent">
         <xsl:with-param name="region" select=". ?footer"/>
         <xsl:with-param name="name" select="'after'"/>
+        <xsl:with-param name="default" select=". ?page ?bottom"/>
       </xsl:call-template>
     </axsl:stylesheet>
   </xsl:template>
@@ -187,23 +189,35 @@
   <xsl:template name="extent">
     <xsl:param name="region"/>
     <xsl:param name="name"/>
+    <xsl:param name="default"/>
 
-    <xsl:if test="exists($region ?odd('extent'))">
+    <xsl:variable name="value"
+                  select="if (exists($region ?odd('extent')))
+                          then $region ?odd('extent')
+                          else if (exists($default))
+                          then $default
+                          else ()"/>
+    <xsl:if test="exists($value)">
       <axsl:attribute-set name="region-{$name}">
         <axsl:attribute name="extent">
-          <xsl:value-of select="$region ?odd('extent')"/>
+          <xsl:value-of select="$value"/>
         </axsl:attribute>
       </axsl:attribute-set>
     </xsl:if>
     <xsl:for-each select="('odd', 'even')">
-      <xsl:if test="exists($region(.)('extent'))">
+      <xsl:variable name="value"
+                    select="if (exists($region(.)('extent')))
+                          then $region(.)('extent')
+                          else if (exists($default))
+                          then $default
+                          else ()"/>
+      <xsl:if test="exists($value)">
         <axsl:attribute-set name="region-{$name}.{.}">
           <axsl:attribute name="extent">
-            <xsl:value-of select="$region(.)('extent')"/>
+            <xsl:value-of select="$value"/>
           </axsl:attribute>
         </axsl:attribute-set>
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
-
 </xsl:stylesheet>
