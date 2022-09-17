@@ -10,9 +10,8 @@ header:
   odd:
     content: 'Right: {chapter}'
 #    text-align: end
-#    height: 44pt
     border: solid 1pt black
-    space-before: 10mm
+    display-align: after
   even:
     content: '{chapter}: Left'
     start-indent: 100pt

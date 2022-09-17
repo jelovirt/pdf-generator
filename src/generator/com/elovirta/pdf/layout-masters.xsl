@@ -173,12 +173,12 @@
         </xsl:if>
       </xsl:if>
       <!-- header and footer extent -->
-      <xsl:call-template name="extent">
+      <xsl:call-template name="region">
         <xsl:with-param name="region" select=". ?header"/>
         <xsl:with-param name="name" select="'before'"/>
         <xsl:with-param name="default" select=". ?page ?top"/>
       </xsl:call-template>
-      <xsl:call-template name="extent">
+      <xsl:call-template name="region">
         <xsl:with-param name="region" select=". ?footer"/>
         <xsl:with-param name="name" select="'after'"/>
         <xsl:with-param name="default" select=". ?page ?bottom"/>
@@ -186,7 +186,7 @@
     </axsl:stylesheet>
   </xsl:template>
 
-  <xsl:template name="extent">
+  <xsl:template name="region">
     <xsl:param name="region"/>
     <xsl:param name="name"/>
     <xsl:param name="default"/>
@@ -197,13 +197,11 @@
                           else if (exists($default))
                           then $default
                           else ()"/>
-    <xsl:if test="exists($value)">
-      <axsl:attribute-set name="region-{$name}">
-        <axsl:attribute name="extent">
-          <xsl:value-of select="$value"/>
-        </axsl:attribute>
-      </axsl:attribute-set>
-    </xsl:if>
+    <xsl:call-template name="region-attribute-set">
+      <xsl:with-param name="name" select="$name"/>
+      <xsl:with-param name="extent" select="$value"/>
+      <xsl:with-param name="display-align" select="$region('odd')('display-align')"/>
+    </xsl:call-template>
     <xsl:for-each select="('odd', 'even')">
       <xsl:variable name="value"
                     select="if (exists($region(.)('extent')))
@@ -211,13 +209,29 @@
                           else if (exists($default))
                           then $default
                           else ()"/>
-      <xsl:if test="exists($value)">
-        <axsl:attribute-set name="region-{$name}.{.}">
-          <axsl:attribute name="extent">
-            <xsl:value-of select="$value"/>
-          </axsl:attribute>
-        </axsl:attribute-set>
-      </xsl:if>
+      <xsl:call-template name="region-attribute-set">
+        <xsl:with-param name="name" select="concat($name,'.', .)"/>
+        <xsl:with-param name="extent" select="$value"/>
+        <xsl:with-param name="display-align" select="$region(.)('display-align')"/>
+      </xsl:call-template>
     </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template name="region-attribute-set">
+    <xsl:param name="name"/>
+    <xsl:param name="extent"/>
+    <xsl:param name="display-align"/>
+    <axsl:attribute-set name="region-{$name}">
+      <xsl:if test="exists($extent)">
+        <axsl:attribute name="extent">
+          <xsl:value-of select="$extent"/>
+        </axsl:attribute>
+      </xsl:if>
+      <xsl:if test="exists($display-align)">
+        <axsl:attribute name="display-align">
+          <xsl:value-of select="$display-align"/>
+        </axsl:attribute>
+      </xsl:if>
+    </axsl:attribute-set>
   </xsl:template>
 </xsl:stylesheet>
