@@ -172,7 +172,38 @@
           </xsl:for-each>
         </xsl:if>
       </xsl:if>
+      <!-- header and footer extent -->
+      <xsl:call-template name="extent">
+        <xsl:with-param name="region" select=". ?header"/>
+        <xsl:with-param name="name" select="'before'"/>
+      </xsl:call-template>
+      <xsl:call-template name="extent">
+        <xsl:with-param name="region" select=". ?footer"/>
+        <xsl:with-param name="name" select="'after'"/>
+      </xsl:call-template>
     </axsl:stylesheet>
+  </xsl:template>
+
+  <xsl:template name="extent">
+    <xsl:param name="region"/>
+    <xsl:param name="name"/>
+
+    <xsl:if test="exists($region ?odd('extent'))">
+      <axsl:attribute-set name="region-{$name}">
+        <axsl:attribute name="extent">
+          <xsl:value-of select="$region ?odd('extent')"/>
+        </axsl:attribute>
+      </axsl:attribute-set>
+    </xsl:if>
+    <xsl:for-each select="('odd', 'even')">
+      <xsl:if test="exists($region(.)('extent'))">
+        <axsl:attribute-set name="region-{$name}.{.}">
+          <axsl:attribute name="extent">
+            <xsl:value-of select="$region(.)('extent')"/>
+          </axsl:attribute>
+        </axsl:attribute-set>
+      </xsl:if>
+    </xsl:for-each>
   </xsl:template>
 
 </xsl:stylesheet>

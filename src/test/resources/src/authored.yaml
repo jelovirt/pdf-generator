@@ -1,22 +1,35 @@
 page:
   size: A4
-  top: 20mm
+  top: 30mm
   outside: 20mm
   bottom: 20mm
   inside: 20mm
+mirror_page_margins: true
 header:
+  extent: 20mm
   odd:
-    content: 'Test: {chapter}'
-    height: 44pt
+    content: 'Right: {chapter}'
+#    text-align: end
+#    height: 44pt
     border: solid 1pt black
+    space-before: 10mm
   even:
+    content: '{chapter}: Left'
+    start-indent: 100pt
+    end-indent: 100pt
     border-style: dashed
     border-width: 0.5mm
+    font-size: 24pt
     border-color: "#FF0000"
 footer:
   font-size: "10pt"
   odd:
-    content: "{chapter} – {title}"
+    content: "{chapter-number}: {chapter} – {title}"
     font-size: "12pt"
   even:
-    content: "{title} – {chapter}"
+    content: "{title} – {chapter-number}: {chapter}"
+style:
+  body:
+    start-indent: 0pt
+  topic:
+    background-color: pink
