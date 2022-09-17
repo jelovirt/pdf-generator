@@ -120,10 +120,10 @@
         </axsl:template>
       </xsl:if>
       <!-- tm -->
-      <xsl:if test="$style ?fig ?symbol-scope != 'always'">
+      <xsl:if test="$style ?tm ?symbol-scope != 'always'">
 <!--        <xsl:comment>tm</xsl:comment>-->
         <xsl:choose>
-          <xsl:when test="$style ?fig ?symbol-scope = 'chapter'">
+          <xsl:when test="$style ?tm ?symbol-scope = 'chapter'">
             <axsl:function name="e:tm-value" as="xs:string">
               <axsl:param name="node" as="element()"/>
               <axsl:value-of select="normalize-space($node)"/>
@@ -149,7 +149,7 @@
               </axsl:choose>
             </axsl:template>
           </xsl:when>
-          <xsl:when test="$style ?fig ?symbol-scope = 'never'">
+          <xsl:when test="$style ?tm ?symbol-scope = 'never'">
             <axsl:template match="*[contains(@class, ' topic/tm ')]">
               <fo:inline axsl:use-attribute-sets="tm">
                 <axsl:apply-templates/>
