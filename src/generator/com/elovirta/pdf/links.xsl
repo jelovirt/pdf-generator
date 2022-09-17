@@ -74,8 +74,9 @@
             </axsl:if>
           </axsl:if>
           <axsl:if test="@scope = 'external' and exists(processing-instruction('ditaot')[. = 'usertext'])">
-            <axsl:text>at</axsl:text>
+            <axsl:text> (</axsl:text>
             <axsl:value-of select="e:format-link-url(@href)"/>
+            <axsl:text>)</axsl:text>
           </axsl:if>
         </axsl:template>
         <axsl:function name="e:format-link-url">
