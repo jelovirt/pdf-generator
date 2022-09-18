@@ -113,32 +113,34 @@
           </fo:block>
         </axsl:template>
       </xsl:if>
-      <xsl:if test=". ?page_number = 'chapter-page'">
-        <axsl:template name="startPageNumbering">
-          <axsl:variable name="topicType" as="xs:string">
-            <axsl:call-template name="determineTopicType"/>
-          </axsl:variable>
-          <axsl:variable name="topicref" select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)"/>
-          <axsl:for-each select="$topicref[1]">
-            <axsl:choose>
-              <axsl:when test="$topicType = 'topicChapter'">
-                <axsl:attribute name="initial-page-number">1</axsl:attribute>
-                <fo:folio-prefix>
-                  <axsl:number format="1" count="*[contains(@class, ' bookmap/chapter ')]"/>
-                  <axsl:text>&#x2013;</axsl:text>
-                </fo:folio-prefix>
-              </axsl:when>
-              <axsl:when test="$topicType = ('topicAppendix', 'topicAppendices')">
-                <axsl:attribute name="initial-page-number">1</axsl:attribute>
-                <fo:folio-prefix>
-                  <axsl:number format="A" count="*[contains(@class, ' bookmap/appendix ')]"/>
-                  <axsl:text>&#x2013;</axsl:text>
-                </fo:folio-prefix>
-              </axsl:when>
-            </axsl:choose>
-          </axsl:for-each>
-          <!--xsl:comment>topicType: <axsl:value-of select="$topicType"/></axsl:comment-->
-        </axsl:template>
+      <xsl:if test=". ?formatter != 'fop'">
+        <xsl:if test=". ?page_number = 'chapter-page'">
+          <axsl:template name="startPageNumbering">
+            <axsl:variable name="topicType" as="xs:string">
+              <axsl:call-template name="determineTopicType"/>
+            </axsl:variable>
+            <axsl:variable name="topicref" select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)"/>
+            <axsl:for-each select="$topicref[1]">
+              <axsl:choose>
+                <axsl:when test="$topicType = 'topicChapter'">
+                  <axsl:attribute name="initial-page-number">1</axsl:attribute>
+                  <fo:folio-prefix>
+                    <axsl:number format="1" count="*[contains(@class, ' bookmap/chapter ')]"/>
+                    <axsl:text>&#x2013;</axsl:text>
+                  </fo:folio-prefix>
+                </axsl:when>
+                <axsl:when test="$topicType = ('topicAppendix', 'topicAppendices')">
+                  <axsl:attribute name="initial-page-number">1</axsl:attribute>
+                  <fo:folio-prefix>
+                    <axsl:number format="A" count="*[contains(@class, ' bookmap/appendix ')]"/>
+                    <axsl:text>&#x2013;</axsl:text>
+                  </fo:folio-prefix>
+                </axsl:when>
+              </axsl:choose>
+            </axsl:for-each>
+            <!--xsl:comment>topicType: <axsl:value-of select="$topicType"/></axsl:comment-->
+          </axsl:template>
+        </xsl:if>
       </xsl:if>
       <xsl:if test=". ?cover_image_topic">
         <axsl:template match="*[contains(@class, ' topic/topic ')][@outputclass = '{. ?cover_image_topic}']" priority="1000"/>
