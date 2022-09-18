@@ -748,6 +748,13 @@
         "topic_topic_topic_topic": {
           "$ref": "#/definitions/topic_type"
         },
+        "cover": {
+          "$ref": "#/definitions/body_type"
+        },
+        "section": {
+        "cover_title": {
+          "$ref": "#/definitions/body_type"
+        },
         "section": {
           "$ref": "#/definitions/body_type"
         },
