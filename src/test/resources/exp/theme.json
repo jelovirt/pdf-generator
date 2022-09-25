@@ -342,7 +342,7 @@
       "border-start-style": "none",
       "border-before-width": "1pt"
     },
-    "section": {
+    "section_title": {
       "padding-before": "0pt",
       "border-after-style": "none",
       "color": "black",

@@ -146,7 +146,7 @@
     "body": {
       "font-family": "Comic Sans MS"
     },
-    "topic": {
+    "h1": {
       "color": "$brand-primary-color"
     }
   },

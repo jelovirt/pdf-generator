@@ -27,5 +27,13 @@
     "even": {
       "content": "{title} – {chapter}"
     }
+  },
+  "style": {
+    "body": {
+      "start-indent": "0pt"
+    },
+    "h1": {
+      "background-color": "pink"
+    }
   }
 }

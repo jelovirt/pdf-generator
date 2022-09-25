@@ -122,7 +122,7 @@ footer:
 style:
   body:
     font-family: Comic Sans MS
-  topic:
+  h1:
     color: $brand-primary-color
 mirror_page_margins: false
 blank_pages: false

@@ -192,27 +192,27 @@
     <xsl:param name="default"/>
 
     <xsl:variable name="value"
-                  select="if (exists($region ?odd('extent')))
-                          then $region ?odd('extent')
+                  select="if (exists($region ?odd ?extent))
+                          then $region ?odd ?extent
                           else if (exists($default))
                           then $default
                           else ()"/>
     <xsl:call-template name="region-attribute-set">
       <xsl:with-param name="name" select="$name"/>
       <xsl:with-param name="extent" select="$value"/>
-      <xsl:with-param name="display-align" select="$region('odd')('display-align')"/>
+      <xsl:with-param name="display-align" select="$region ?odd ?display-align"/>
     </xsl:call-template>
     <xsl:for-each select="('odd', 'even')">
       <xsl:variable name="value"
-                    select="if (exists($region(.)('extent')))
-                          then $region(.)('extent')
+                    select="if (exists($region) and exists($region(.) ?extent))
+                          then $region(.) ?extent
                           else if (exists($default))
                           then $default
                           else ()"/>
       <xsl:call-template name="region-attribute-set">
         <xsl:with-param name="name" select="concat($name,'.', .)"/>
         <xsl:with-param name="extent" select="$value"/>
-        <xsl:with-param name="display-align" select="$region(.)('display-align')"/>
+        <xsl:with-param name="display-align" select="if (exists($region)) then $region(.) ?display-align else ()"/>
       </xsl:call-template>
     </xsl:for-each>
   </xsl:template>

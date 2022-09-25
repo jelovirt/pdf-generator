@@ -65,23 +65,6 @@ public class StylesheetGeneratorTaskTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "empty.json",
-            "empty.yaml"
-    })
-    public void getTemplate_empty(final String template) throws URISyntaxException, SaxonApiException, JSONException {
-        final URI src = getClass().getClassLoader().getResource("src/" + template).toURI();
-        task.setTemplate(new File(src));
-
-        final XdmValue act = task.parseTemplate();
-
-        final String image = src.resolve("image/logo.svg").toString();
-        final String exp = "{\"style\":{}}";
-        assertEquals(exp, toString(act),
-                JSONCompareMode.STRICT);
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {
             "front-matter.xsl",
             "commons.xsl",
             "tables.xsl",
@@ -140,28 +123,18 @@ public class StylesheetGeneratorTaskTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "authored.json",
-            "authored.yaml"
+            "authored.yaml",
+            "theme.json",
+            "theme.yaml",
+            "empty.json",
+            "empty.yaml"
     })
     public void getTemplate_normalize(final String template) throws URISyntaxException, SaxonApiException, JSONException {
         task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()));
 
         final XdmValue act = task.parseTemplate();
 
-        assertEquals(readToString("exp/authored.json"), toString(act),
-                JSONCompareMode.STRICT);
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {
-            "theme.json",
-            "theme.yaml"
-    })
-    public void getTemplate(final String template) throws URISyntaxException, SaxonApiException, JSONException {
-        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()));
-
-        final XdmValue act = task.parseTemplate();
-
-        assertEquals(readToString("exp/theme.json"), toString(act),
+        assertEquals(readToString("exp/" + template.substring(0, template.indexOf(".")) + ".json"), toString(act),
                 JSONCompareMode.STRICT);
     }
 

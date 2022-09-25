@@ -162,7 +162,7 @@ style:
     text-decoration: none
     color: black
     background-color: transparent
-  topic:
+  h1:
     background-color: transparent
     padding-before: 0pt
     padding-end: 0pt
@@ -193,7 +193,7 @@ style:
     start-indent: 0pt
     line-height: '1.2'
     title-numbering: true
-  topic_topic:
+  h2:
     background-color: transparent
     padding-before: 0pt
     padding-end: 0pt
@@ -224,7 +224,7 @@ style:
     start-indent: 0pt
     line-height: '1.2'
     title-numbering: true
-  topic_topic_topic:
+  h3:
     background-color: transparent
     padding-before: 0pt
     padding-end: 0pt
@@ -255,7 +255,7 @@ style:
     start-indent: 0pt
     line-height: '1.2'
     title-numbering: true
-  topic_topic_topic_topic:
+  h4:
     background-color: transparent
     padding-before: 0pt
     padding-end: 0pt
@@ -286,7 +286,7 @@ style:
     start-indent: 0pt
     line-height: '1.2'
     title-numbering: true
-  section:
+  section_title:
     background-color: transparent
     padding-before: 0pt
     padding-end: 0pt

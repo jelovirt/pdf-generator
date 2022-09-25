@@ -205,6 +205,19 @@
                     'even': x:normalize($value, ($ancestors, $key, 'even'), $url)
                   }"/>
               </xsl:when>
+              <!-- Rewrite h1-h4 to topic(_topic){0,3} -->
+              <xsl:when test="$key = 'h1'">
+                <xsl:map-entry key="'topic'" select="$value"/>
+              </xsl:when>
+              <xsl:when test="$key = 'h2'">
+                <xsl:map-entry key="'topic_topic'" select="$value"/>
+              </xsl:when>
+              <xsl:when test="$key = 'h3'">
+                <xsl:map-entry key="'topic_topic_topic'" select="$value"/>
+              </xsl:when>
+              <xsl:when test="$key = 'h4'">
+                <xsl:map-entry key="'topic_topic_topic_topic'" select="$value"/>
+              </xsl:when>
               <xsl:otherwise>
                 <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:otherwise>
