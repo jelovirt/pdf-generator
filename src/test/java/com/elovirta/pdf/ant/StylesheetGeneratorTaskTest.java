@@ -5,6 +5,7 @@ import org.apache.tools.ant.Project;
 import org.dita.dost.log.DITAOTAntLogger;
 import org.dita.dost.util.XMLUtils;
 import org.json.JSONException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -54,11 +55,16 @@ public class StylesheetGeneratorTaskTest {
         final XdmValue act = task.parseTemplate();
 
         final String image = src.resolve("image/logo.svg").toString();
-        final String exp = "{\"style\":{"
+        final String exp = "{"
+                + "\"style\":{"
                 + "\"body\":{\"background-image\":\"url('" + image + "')\"},"
                 + "\"topic\":{\"background-image\":\"url('" + image + "')\"},"
-                + "\"topic.topic\":{\"background-image\":\"url('" + image + "')\"}"
-                + "}}";
+                + "\"topic_topic\":{\"background-image\":\"url('" + image + "')\"}"
+                + "},"
+                + "\"style-body-background-image\":\"url('" + image + "')\","
+                + "\"style-topic-background-image\":\"url('" + image + "')\","
+                + "\"style-topic_topic-background-image\":\"url('" + image + "')\""
+                +"}";
         assertEquals(exp, toString(act),
                 JSONCompareMode.STRICT);
     }

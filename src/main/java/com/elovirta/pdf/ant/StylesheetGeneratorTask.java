@@ -188,13 +188,20 @@ public class StylesheetGeneratorTask extends Task {
                 final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
                         base, XdmEmptySequence.getInstance(), new XdmAtomicValue(extendsUri)
                 });
+                final XdmValue flattened = transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
+                        normalized
+                });
                 return transformer.callFunction(QName.fromClarkName("{x}merge"), new XdmValue[]{
-                        extendsRes.stream().asXdmValue(), normalized
+                        extendsRes.stream().asXdmValue(), flattened
                 }).itemAt(0);
             } else {
-                return transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
+                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
                         base, XdmEmptySequence.getInstance(), new XdmAtomicValue(url)
-                }).itemAt(0);
+                });
+                final XdmValue flattened = transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
+                        normalized
+                });
+                return flattened.itemAt(0);
             }
         } catch (SaxonApiException e) {
             throw new BuildException(String.format("Failed to parse template %s", template), e);
