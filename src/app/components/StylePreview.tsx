@@ -523,22 +523,21 @@ export default function StylePreview(props: { values: Values }) {
               .
             </div>
           </div>
-          <Block type={StyleName.SECTION}>Section title</Block>
-          <Block type={StyleName.BODY}>
-            The quick brown fox jumps over the lazy dog. The quick brown fox
-            jumps over the lazy dog. The quick brown fox jumps over the lazy
-            dog. The quick brown fox jumps over the lazy dog. The quick brown
-            fox jumps over the lazy dog.
+          <Block type={StyleName.SECTION}>
+            <div style={getStyle(StyleName.SECTION_TITLE, StyleName.SECTION)}>
+              Section title
+            </div>
+            <div style={getStyle(StyleName.BODY, StyleName.SECTION)}>
+              The quick brown fox jumps over the lazy dog. The quick brown fox
+              jumps over the lazy dog. The quick brown fox jumps over the lazy
+              dog. The quick brown fox jumps over the lazy dog. The quick brown
+              fox jumps over the lazy dog.
+            </div>
           </Block>
           <Block type={StyleName.EXAMPLE}>
-            {/*<div style={wrapperStyle(StyleName.EXAMPLE_TITLE)}>*/}
-            <div
-              style={getStyle(StyleName.EXAMPLE_TITLE, StyleName.EXAMPLE)}
-              // style={{ marginLeft: '0pt', marginRight: '0pt' }}
-            >
+            <div style={getStyle(StyleName.EXAMPLE_TITLE, StyleName.EXAMPLE)}>
               Example title
             </div>
-            {/*</div>*/}
             <div style={getStyle(StyleName.BODY, StyleName.EXAMPLE)}>
               Example content
             </div>

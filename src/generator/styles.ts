@@ -298,6 +298,7 @@ export enum StyleName {
   TOPIC_TOPIC_TOPIC = 'topic_topic_topic',
   TOPIC_TOPIC_TOPIC_TOPIC = 'topic_topic_topic_topic',
   SECTION = 'section',
+  SECTION_TITLE = 'section_title',
   PRE = 'pre',
   EXAMPLE = 'example',
   NOTE = 'note',
