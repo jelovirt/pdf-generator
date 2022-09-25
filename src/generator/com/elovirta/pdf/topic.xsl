@@ -193,10 +193,18 @@
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>
+      <!-- section -->
       <xsl:if test="exists($style ?section)">
-        <axsl:attribute-set name="section.title">
+        <axsl:attribute-set name="section">
           <xsl:call-template name="attribute-set">
             <xsl:with-param name="style" select="$style ?section"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+      </xsl:if>
+      <xsl:if test="exists($style ?section_title)">
+        <axsl:attribute-set name="section.title">
+          <xsl:call-template name="attribute-set">
+            <xsl:with-param name="style" select="$style ?section_title"/>
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>
