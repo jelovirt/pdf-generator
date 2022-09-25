@@ -264,6 +264,22 @@
     'z-index'
   "/>
   
+  <xsl:variable name="root" select="."/>
+
+  <xsl:template name="generate-attribute-set">
+    <xsl:param name="prefix" as="xs:string"/>
+    <xsl:param name="properties" select="$allProperties"/>
+    <xsl:for-each select="$properties">
+      <xsl:variable name="property" select="." as="xs:string"/>
+      <xsl:variable name="key" select="concat($prefix, '-', $property)" as="item()*"/>
+      <xsl:if test="map:contains($root, $key)">
+        <axsl:attribute name="{$property}">
+          <xsl:value-of select="$root($key)"/>
+        </axsl:attribute>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+
   <xsl:template name="attribute-set">
     <xsl:param name="style" as="map(*)?"/>
     <xsl:param name="properties" select="$allProperties"/>

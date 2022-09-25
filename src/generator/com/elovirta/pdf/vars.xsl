@@ -150,20 +150,20 @@
   <xsl:template match=".[. instance of map(*)]">
     <xsl:variable name="vars" select="$vars-all[@xml:lang = $lang]" as="element()"/>
     <vars>
-      <xsl:if test="$style ?link ?link-page-number">
+      <xsl:if test="$root ?style-link-link-page-number">
 <!--        <xsl:copy-of select="$vars/variable[@id = 'blank_page']"/>-->
         <variable id="On the page"/>
       </xsl:if>
       <xsl:if test=". ?table_continued">
         <xsl:copy-of select="$vars/variable[@id = '#table-continued']"/>
       </xsl:if>
-      <xsl:if test="$style ?table ?caption-number = 'none'">
+      <xsl:if test="$root ?style-table-caption-number = 'none'">
         <xsl:copy-of select="$vars/variable[@id = 'Table']"/>
       </xsl:if>
-      <xsl:if test="$style ?fig ?caption-number = 'none'">
+      <xsl:if test="$root ?style-fig-caption-number = 'none'">
         <xsl:copy-of select="$vars/variable[@id = 'Figure']"/>
       </xsl:if>
-      <xsl:if test="exists($style ?topic ?title-numbering) and not($style ?topic ?title-numbering)">
+      <xsl:if test="map:contains($root, 'style-topic-title-numbering') and not($root ?style-topic-title-numbering)">
         <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Chapter']"/>
         <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Appendix']"/>
       </xsl:if>

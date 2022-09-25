@@ -31,7 +31,7 @@
           <axsl:text>–</axsl:text>
         </axsl:if>
       </axsl:template>
-      <xsl:if test="exists($style ?topic ?title-numbering) and $style ?topic ?title-numbering">
+      <xsl:if test="exists($root ?style-topic-title-numbering) and $root ?style-topic-title-numbering">
         <axsl:template name="insertChapterFirstpageStaticContent">
           <axsl:param name="type"/>
           <fo:block>
@@ -162,22 +162,33 @@
       </xsl:if>
       <!-- font family -->
       <axsl:attribute-set name="__fo__root">
-        <xsl:call-template name="attribute-set">
-          <xsl:with-param name="style" select="$style('body')"/>
+<!--        <xsl:call-template name="attribute-set">-->
+<!--          <xsl:with-param name="style" select="$style('body')"/>-->
+<!--          <xsl:with-param name="properties" select="('font-family', 'color', 'text-align')"/>-->
+<!--        </xsl:call-template>-->
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-body'"/>
           <xsl:with-param name="properties" select="('font-family', 'color', 'text-align')"/>
         </xsl:call-template>
         <axsl:attribute name="id" select="$e:root-id"/>
       </axsl:attribute-set>
       <!-- link -->
       <axsl:attribute-set name="common.link">
-        <xsl:call-template name="attribute-set">
-          <xsl:with-param name="style" select="$style('link')"/>
+<!--        <xsl:call-template name="attribute-set">-->
+<!--          <xsl:with-param name="style" select="$style('link')"/>-->
+<!--        </xsl:call-template>-->
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-link'"/>
         </xsl:call-template>
       </axsl:attribute-set>
       <!-- normal block -->
       <axsl:attribute-set name="common.block">
-        <xsl:call-template name="attribute-set">
-          <xsl:with-param name="style" select="$style('body')"/>
+<!--        <xsl:call-template name="attribute-set">-->
+<!--          <xsl:with-param name="style" select="$style('body')"/>-->
+<!--          <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>-->
+<!--        </xsl:call-template>-->
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-body'"/>
           <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
         </xsl:call-template>
       </axsl:attribute-set>

@@ -27,17 +27,17 @@
       </xsl:if>
       <!-- page size -->
 
-      <xsl:if test="exists(. ?page ?width)">
-        <xsl:if test="exists(. ?page ?width)">
+      <xsl:if test="exists(. ?page-width)">
+        <xsl:if test="exists(. ?page-width)">
           <axsl:variable name="page-width">
-            <xsl:value-of select=". ?page ?width"/>
+            <xsl:value-of select=". ?page-width"/>
           </axsl:variable>
         </xsl:if>
       </xsl:if>
-      <xsl:if test="exists(. ?page ?height)">
-        <xsl:if test="exists(. ?page ?height)">
+      <xsl:if test="exists(. ?page-height)">
+        <xsl:if test="exists(. ?page-height)">
           <axsl:variable name="page-height">
-            <xsl:value-of select=". ?page ?height"/>
+            <xsl:value-of select=". ?page-height"/>
           </axsl:variable>
         </xsl:if>
       </xsl:if>
@@ -55,21 +55,21 @@
         </xsl:for-each>
       </xsl:if>
       <!-- font size -->
-      <xsl:if test="exists($style ?body ?font-size)">
+      <xsl:if test="exists(. ?style-body-font-size)">
         <axsl:variable name="default-font-size">
-          <xsl:value-of select="$style ?body ?font-size"/>
+          <xsl:value-of select=". ?style-body-font-size"/>
         </axsl:variable>
       </xsl:if>
       <!-- line height -->
-      <xsl:if test="exists($style ?body ?line-height)">
+      <xsl:if test="exists(. ?style-?body-line-height)">
         <axsl:variable name="default-line-height">
-          <xsl:value-of select="$style ?body ?line-height"/>
+          <xsl:value-of select=". ?style-body-line-height"/>
         </axsl:variable>
       </xsl:if>
       <!-- body indent -->
-      <xsl:if test="exists($style ?body ?start-indent)">
+      <xsl:if test="exists(. ?style-body-start-indent)">
         <axsl:variable name="side-col-width">
-          <xsl:value-of select="$style ?body ?start-indent"/>
+          <xsl:value-of select=". ?style-body-start-indent"/>
         </axsl:variable>
       </xsl:if>
       <axsl:variable name="antArgsChapterLayout">

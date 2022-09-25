@@ -18,7 +18,7 @@
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <xsl:variable name="link" select="$style('link')" as="map(*)?"/>
-      <xsl:if test="exists($link) and $link('link-url')">
+      <xsl:if test="$root ?style-link-link-url">
         <xsl:comment>Link</xsl:comment>
         <axsl:template match="*[contains(@class,' topic/xref ')]" name="topic.xref">
           <fo:inline>
@@ -133,8 +133,12 @@
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <axsl:attribute-set name="link__shortdesc">
-        <xsl:call-template name="attribute-set">
-          <xsl:with-param name="style" select="$style => map:get('body')"/>
+<!--        <xsl:call-template name="attribute-set">-->
+<!--          <xsl:with-param name="style" select="$style => map:get('body')"/>-->
+<!--          <xsl:with-param name="properties" select="'space-after'"/>-->
+<!--        </xsl:call-template>-->
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-body'"/>
           <xsl:with-param name="properties" select="'space-after'"/>
         </xsl:call-template>
         <axsl:attribute name="start-indent">from-parent(start-indent) + 15pt</axsl:attribute>

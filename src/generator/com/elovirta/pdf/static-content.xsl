@@ -520,6 +520,9 @@
                 <chapter>
                   <fo:retrieve-marker retrieve-class-name="current-header"/>
                 </chapter>
+                <chapter-number>
+                  <fo:retrieve-marker retrieve-class-name="current-topic-number"/>
+                </chapter-number>
                 <folio>
                   <fo:page-number/>
                 </folio>
@@ -606,9 +609,12 @@
 
     <xsl:if test="map:contains(., $flow) and map:contains(.($flow), $type)">
       <axsl:attribute-set name="{$type}__{$flow}">
-        <xsl:call-template name="attribute-set">
-          <xsl:with-param name="style" select=".($flow)($type)"/>
-          <!--xsl:with-param name="properties" select="$allProperties[not(. = $viewport-area-properties)]"/-->
+<!--        <xsl:call-template name="attribute-set">-->
+<!--          <xsl:with-param name="style" select=".($flow)($type)"/>-->
+<!--          &lt;!&ndash;xsl:with-param name="properties" select="$allProperties[not(. = $viewport-area-properties)]"/&ndash;&gt;-->
+<!--        </xsl:call-template>-->
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="concat($flow, '-', $type)"/>
         </xsl:call-template>
         <!--xsl:for-each select="$viewport-area-properties">
           <axsl:attribute name="{.}" select="'auto'"/>

@@ -77,17 +77,23 @@
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="exists(. ?style ?cover)">
+      <xsl:if test="exists(. ?style-cover)">
         <axsl:attribute-set name="__frontmatter">
-          <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select=". ?style ?cover"/>
+<!--          <xsl:call-template name="attribute-set">-->
+<!--            <xsl:with-param name="style" select=". ?style ?cover"/>-->
+<!--          </xsl:call-template>-->
+          <xsl:call-template name="generate-attribute-set">
+            <xsl:with-param name="prefix" select="'style-cover'"/>
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>
-      <xsl:if test="exists(. ?style ?cover_title)">
+      <xsl:if test="exists(. ?style-cover_title)">
         <axsl:attribute-set name="__frontmatter__title">
-          <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select=". ?style ?cover_title"/>
+<!--          <xsl:call-template name="attribute-set">-->
+<!--            <xsl:with-param name="style" select=". ?style ?cover_title"/>-->
+<!--          </xsl:call-template>-->
+          <xsl:call-template name="generate-attribute-set">
+            <xsl:with-param name="prefix" select="'style-cover_title'"/>
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>
