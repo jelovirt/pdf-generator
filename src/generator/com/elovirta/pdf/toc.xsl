@@ -108,6 +108,13 @@
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
+
+      <axsl:attribute-set name="__toc__header">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-topic'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+
       <axsl:attribute-set name="__toc__indent">
         <axsl:attribute name="start-indent">
           <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>
