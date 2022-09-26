@@ -15,7 +15,7 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="exists(. ?cover_image_metadata) or exists(. ?cover_image_topic)">
+      <xsl:if test="map:contains($root, 'cover_image_metadata') or map:contains($root, 'cover_image_topic')">
         <axsl:template name="createFrontCoverContents">
           <!-- set the title -->
           <fo:block axsl:use-attribute-sets="__frontmatter__title">
@@ -37,32 +37,25 @@
           </fo:block>
           <!-- set the subtitle -->
           <axsl:apply-templates select="$map//*[contains(@class,' bookmap/booktitlealt ')]"/>
-          <fo:block axsl:use-attribute-sets="__frontmatter__owner">
-            <axsl:apply-templates select="$map//*[contains(@class,' bookmap/bookmeta ')]"/>
-          </fo:block>
+<!--          <fo:block axsl:use-attribute-sets="__frontmatter__owner">-->
+<!--            <axsl:apply-templates select="$map//*[contains(@class,' bookmap/bookmeta ')]"/>-->
+<!--          </fo:block>-->
           <!-- cover image -->
           <fo:block axsl:use-attribute-sets="image__block">
             <axsl:call-template name="e:cover-image"/>
           </fo:block>
         </axsl:template>
         <xsl:choose>
-          <xsl:when test="exists(. ?cover_image_metadata)">
+          <xsl:when test="map:contains($root, 'cover_image_metadata')">
             <axsl:template name="e:cover-image">
-              <axsl:for-each
-                  select="($map//*[contains(@class, ' topic/data ')][@name = '{.('cover_image_metadata')}']/*[contains(@class, ' topic/image ')])[1]">
-                <axsl:apply-templates select="." mode="placeImage">
-                  <axsl:with-param name="imageAlign" select="@align"/>
-                  <axsl:with-param name="href" select="if (@scope = 'external' or opentopic-func:isAbsolute(@href)) then @href else concat($input.dir.url, @href)"/>
-                  <axsl:with-param name="height" select="@height"/>
-                  <axsl:with-param name="width" select="@width"/>
-                </axsl:apply-templates>
-              </axsl:for-each>
+              <axsl:apply-templates
+                  select="$map//*[contains(@class, ' topic/data ')][@name = '{$root ?cover_image_metadata}']/node()"/>
             </axsl:template>
           </xsl:when>
-          <xsl:when test=". ?cover_image_topic">
+          <xsl:when test="map:contains($root, 'cover_image_topic')">
             <axsl:template name="e:cover-image">
               <axsl:for-each
-                  select="($map//*[contains(@class, ' map/topicref ')][@outputclass = '{. ?cover_image_topic}'])[1]">
+                  select="($map//*[contains(@class, ' map/topicref ')][@outputclass = '{$root ?cover_image_topic}'])[1]">
                 <axsl:apply-templates select="key('id', @id)/*[contains(@class, ' topic/body ')]/node()"/>
               </axsl:for-each>
             </axsl:template>
@@ -75,20 +68,16 @@
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="exists(. ?style-cover)">
-        <axsl:attribute-set name="__frontmatter">
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-cover'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-      </xsl:if>
-      <xsl:if test="exists(. ?style-cover_title)">
-        <axsl:attribute-set name="__frontmatter__title">
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-cover_title'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-      </xsl:if>
+      <axsl:attribute-set name="__frontmatter">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-cover'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="__frontmatter__title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-cover_title'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
     </axsl:stylesheet>
   </xsl:template>
 
