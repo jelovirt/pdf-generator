@@ -3,9 +3,9 @@ name: Distribution
 on:
   push:
     branches:
-      - "!*"
+      - '!*'
     tags:
-      - "*"
+      - '*'
 
 jobs:
   java:

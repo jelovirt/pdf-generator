@@ -236,6 +236,7 @@ export enum FoProperty {
   VISIBILITY = 'visibility',
   VOICE_FAMILY = 'voice-family',
   VOLUME = 'volume',
+  WHITE_SPACE = 'white-space',
   WHITE_SPACE_COLLAPSE = 'white-space-collapse',
   WHITE_SPACE_TREATMENT = 'white-space-treatment',
   WIDOWS = 'widows',
@@ -451,7 +452,7 @@ export const headerFooterStyles: Partial<Record<FoProperty, Style>> = {
 
 export const styles: StyleConfiguration = {
   // block
-  body: {
+  [StyleName.BODY]: {
     ...base,
     'font-family': { default: 'Times New Roman', inherit: undefined },
     'font-size': { default: '10pt', inherit: undefined },
@@ -465,7 +466,7 @@ export const styles: StyleConfiguration = {
     'start-indent': { default: startIndent + 'pt', inherit: undefined },
     'line-height': { default: '1.2', inherit: undefined },
   },
-  topic: {
+  [StyleName.TOPIC]: {
     ...base,
     'font-family': { default: 'Helvetica', inherit: undefined },
     'font-size': { default: '18pt', inherit: undefined },
@@ -485,7 +486,7 @@ export const styles: StyleConfiguration = {
     // custom
     'title-numbering': { default: true, inherit: undefined },
   },
-  topic_topic: {
+  [StyleName.TOPIC_TOPIC]: {
     ...base,
     'font-family': { default: 'Helvetica', inherit: undefined },
     'font-size': { default: '14pt', inherit: undefined },
@@ -505,7 +506,7 @@ export const styles: StyleConfiguration = {
     // custom
     'title-numbering': { default: true, inherit: undefined },
   },
-  topic_topic_topic: {
+  [StyleName.TOPIC_TOPIC_TOPIC]: {
     ...base,
     'font-family': { default: 'Helvetica', inherit: undefined },
     'font-size': { default: '12pt', inherit: undefined },
@@ -521,7 +522,7 @@ export const styles: StyleConfiguration = {
     // custom
     'title-numbering': { default: true, inherit: undefined },
   },
-  topic_topic_topic_topic: {
+  [StyleName.TOPIC_TOPIC_TOPIC_TOPIC]: {
     ...base,
     'font-family': { default: 'Helvetica', inherit: StyleName.BODY },
     'font-size': { default: '10pt', inherit: StyleName.BODY },
@@ -537,7 +538,21 @@ export const styles: StyleConfiguration = {
     // custom
     'title-numbering': { default: true, inherit: undefined },
   },
-  section: {
+  [StyleName.SECTION]: {
+    ...base,
+    'font-family': { default: undefined, inherit: StyleName.BODY },
+    'font-size': { default: undefined, inherit: StyleName.BODY },
+    color: { default: undefined, inherit: StyleName.BODY },
+    'font-weight': { default: undefined, inherit: StyleName.BODY },
+    'font-style': { default: undefined, inherit: StyleName.BODY },
+    'text-decoration': { default: undefined, inherit: StyleName.BODY },
+    'space-before': { default: '6pt', inherit: StyleName.BODY },
+    'space-after': { default: '6pt', inherit: StyleName.BODY },
+    'text-align': { default: undefined, inherit: StyleName.BODY },
+    'start-indent': { default: undefined, inherit: StyleName.BODY },
+    'line-height': { default: undefined, inherit: StyleName.BODY },
+  },
+  [StyleName.SECTION_TITLE]: {
     ...base,
     'font-family': { default: 'Helvetica', inherit: undefined },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -551,7 +566,7 @@ export const styles: StyleConfiguration = {
     'start-indent': { default: undefined, inherit: StyleName.BODY },
     'line-height': { default: undefined, inherit: StyleName.BODY },
   },
-  example: {
+  [StyleName.EXAMPLE]: {
     ...base,
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -581,7 +596,7 @@ export const styles: StyleConfiguration = {
     // "border-start-width": {default: "1pt", inherit: undefined},
     // "border-start-color": {default: "black", inherit: undefined},
   },
-  example_title: {
+  [StyleName.EXAMPLE_TITLE]: {
     ...base,
     'font-family': { default: 'Helvetica', inherit: undefined },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -595,7 +610,7 @@ export const styles: StyleConfiguration = {
     'start-indent': { default: undefined, inherit: StyleName.BODY },
     'line-height': { default: undefined, inherit: StyleName.BODY },
   },
-  note: {
+  [StyleName.NOTE]: {
     ...base,
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -611,7 +626,7 @@ export const styles: StyleConfiguration = {
     // custom
     icon: { default: false, inherit: undefined },
   },
-  pre: {
+  [StyleName.PRE]: {
     ...base,
     'font-family': { default: 'Courier New', inherit: undefined },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -625,7 +640,7 @@ export const styles: StyleConfiguration = {
     'start-indent': { default: undefined, inherit: StyleName.BODY },
     'line-height': { default: undefined, inherit: StyleName.BODY },
   },
-  codeblock: {
+  [StyleName.CODEBLOCK]: {
     ...base,
     'font-family': { default: 'Courier New', inherit: undefined },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -641,7 +656,7 @@ export const styles: StyleConfiguration = {
     // custom
     'line-numbering': { default: false, inherit: undefined },
   },
-  dl: {
+  [StyleName.DL]: {
     ...base,
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -657,7 +672,7 @@ export const styles: StyleConfiguration = {
     // custom
     'dl-type': { default: 'table', inherit: undefined },
   },
-  ol: {
+  [StyleName.OL]: {
     ...base,
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -685,7 +700,7 @@ export const styles: StyleConfiguration = {
     'ol-after-4': { default: '. ', inherit: undefined },
     'ol-sublevel': { default: false, inherit: undefined },
   },
-  ul: {
+  [StyleName.UL]: {
     ...base,
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -704,7 +719,7 @@ export const styles: StyleConfiguration = {
     'ul-3': { default: '\u2022', inherit: undefined },
     'ul-4': { default: '\u2022', inherit: undefined },
   },
-  table: {
+  [StyleName.TABLE]: {
     ...base,
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -721,7 +736,7 @@ export const styles: StyleConfiguration = {
     'caption-number': { default: 'document', inherit: undefined },
     'caption-position': { default: 'before', inherit: undefined },
   },
-  fig: {
+  [StyleName.FIG]: {
     ...base,
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -738,7 +753,7 @@ export const styles: StyleConfiguration = {
     'caption-number': { default: 'document', inherit: undefined },
     'caption-position': { default: 'after', inherit: undefined },
   },
-  toc_1: {
+  [StyleName.TOC_1]: {
     ...base,
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: '14pt', inherit: StyleName.BODY },
@@ -760,7 +775,7 @@ export const styles: StyleConfiguration = {
     // custom
     prefix: { default: true, inherit: undefined },
   },
-  toc_2: {
+  [StyleName.TOC_2]: {
     ...base,
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -779,7 +794,7 @@ export const styles: StyleConfiguration = {
     'space-before': { default: '0pt', inherit: undefined },
     'space-after': { default: '0pt', inherit: undefined },
   },
-  toc_3: {
+  [StyleName.TOC_3]: {
     ...base,
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -798,7 +813,7 @@ export const styles: StyleConfiguration = {
     'space-before': { default: '0pt', inherit: undefined },
     'space-after': { default: '0pt', inherit: undefined },
   },
-  toc_4: {
+  [StyleName.TOC_4]: {
     ...base,
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: undefined, inherit: StyleName.BODY },
@@ -818,7 +833,7 @@ export const styles: StyleConfiguration = {
     'space-after': { default: '0pt', inherit: undefined },
   },
   // inline
-  link: {
+  [StyleName.LINK]: {
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: undefined, inherit: StyleName.BODY },
     color: { default: 'blue', inherit: undefined },
@@ -831,7 +846,7 @@ export const styles: StyleConfiguration = {
     'link-page-number': { default: true, inherit: undefined },
     'link-url': { default: false, inherit: undefined },
   },
-  tm: {
+  [StyleName.TM]: {
     'font-family': { default: undefined, inherit: StyleName.BODY },
     'font-size': { default: undefined, inherit: StyleName.BODY },
     color: { default: undefined, inherit: StyleName.BODY },

@@ -14,7 +14,7 @@ header:
     background-color: yellow
     height: 44pt
   even:
-    content: "{header}"
+    content: '{header}'
     padding-before: 0pt
     padding-end: 0pt
     padding-after: 0pt
@@ -50,7 +50,7 @@ footer:
       - kind: field
         value: title
       - kind: text
-        value: " — "
+        value: ' — '
       - kind: field
         value: folio
     padding-before: 0pt
@@ -87,7 +87,7 @@ footer:
       - kind: field
         value: folio
       - kind: text
-        value: " — "
+        value: ' — '
       - kind: field
         value: title
     padding-top: 0pt

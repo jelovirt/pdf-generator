@@ -12,14 +12,14 @@ header:
   even:
     border-style: dashed
     border-width: 0.5mm
-    border-color: "#FF0000"
+    border-color: '#FF0000'
 footer:
-  font-size: "10pt"
+  font-size: '10pt'
   odd:
-    content: "{chapter} – {title}"
-    font-size: "12pt"
+    content: '{chapter} – {title}'
+    font-size: '12pt'
   even:
-    content: "{title} – {chapter}"
+    content: '{title} – {chapter}'
 style:
   body:
     start-indent: 0pt
