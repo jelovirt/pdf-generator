@@ -124,7 +124,14 @@
                 <xsl:variable name="tokens" as="item()*">
                   <xsl:analyze-string select="$value" regex="\{{(.+?)\}}">
                     <xsl:matching-substring>
-                      <xsl:sequence select="map{ 'kind': 'field', 'value': regex-group(1)}"/>
+                      <xsl:choose>
+                        <xsl:when test="starts-with(regex-group(1), '#')">
+                          <xsl:sequence select="map{ 'kind': 'variable', 'value': substring(regex-group(1), 2) }"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:sequence select="map{ 'kind': 'field', 'value': regex-group(1) }"/>
+                        </xsl:otherwise>
+                      </xsl:choose>
                     </xsl:matching-substring>
                     <xsl:non-matching-substring>
                       <xsl:sequence select="map{ 'kind': 'text', 'value': .}"/>

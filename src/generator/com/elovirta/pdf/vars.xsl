@@ -4,8 +4,6 @@
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:map="http://www.w3.org/2005/xpath-functions/map"
                 xmlns:array="http://www.w3.org/2005/xpath-functions/array"
-                xmlns="http://www.idiominc.com/opentopic/vars"
-                xpath-default-namespace="http://www.idiominc.com/opentopic/vars"
                 exclude-result-prefixes="axsl map array">
 
   <xsl:import href="utils.xsl"/>
@@ -147,7 +145,7 @@
 
   <xsl:template match=".[. instance of map(*)]">
     <xsl:variable name="vars" select="$vars-all[@xml:lang = $lang]" as="element()"/>
-    <vars>
+    <variables>
       <xsl:if test="$root ?style-link-link-page-number">
 <!--        <xsl:copy-of select="$vars/variable[@id = 'blank_page']"/>-->
         <variable id="On the page"/>
@@ -178,7 +176,7 @@
         <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Chapter']"/>
         <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Appendix']"/>
       </xsl:if>
-      <xsl:if test="exists($root ?cover_image_name)">
+      <xsl:if test="map:contains($root, 'cover_image_name')">
         <variable id="cover-image-path">
           <xsl:text expand-text="yes">Customization/OpenTopic/common/artwork/{. ?cover_image_name}</xsl:text>
         </variable>
@@ -262,7 +260,7 @@
                                 else '•'"/><!--$default_style('ol')($ulField)-->
         </variable>
       </xsl:for-each>
-    </vars>
+    </variables>
   </xsl:template>
 
   <xsl:template name="variables">
@@ -279,9 +277,15 @@
               <xsl:when test="$item ?kind = 'field'">
                 <param ref-name="{$item ?value}"/>
               </xsl:when>
+              <xsl:when test="$item ?kind = 'variable'">
+                <variableref refid="{$item ?value}"/>
+              </xsl:when>
               <xsl:when test="$item ?kind = 'text'">
                 <xsl:value-of select="$item ?value"/>
               </xsl:when>
+              <xsl:otherwise>
+                <xsl:message terminate="yes">Unsupported to item kind: <xsl:value-of select="$item ?kind"/></xsl:message>
+              </xsl:otherwise>
             </xsl:choose>
           </xsl:for-each>
         </variable>
