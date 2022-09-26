@@ -14,7 +14,7 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>
+<!--  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>-->
   
   <xsl:variable name="vars-all" as="element()*">
     <vars xml:lang="de">
@@ -223,13 +223,13 @@
         <xsl:variable name="level" select="."/>
         <variable id="Ordered List Number {$level}">
           <xsl:variable name="olBeforeField" select="concat('ol-before-', $level)"/>
-          <xsl:value-of select="if (map:contains($style, 'ol') and exists($style('ol')($olBeforeField)))
-                                then $style('ol')($olBeforeField)
+          <xsl:value-of select="if (map:contains($root, concat('style-ol-', $olBeforeField)))
+                                then $root(concat('style-ol-', $olBeforeField))
                                 else ''"/><!--$default_style('ol')($olBeforeField)-->
           <param ref-name="number"/>
           <xsl:variable name="olAfterField" select="concat('ol-after-', $level)"/>
-          <xsl:value-of select="if (map:contains($style, 'ol') and exists($style('ol')($olAfterField)))
-                                then $style('ol')($olAfterField)
+          <xsl:value-of select="if (map:contains($root, concat('style-ol-', $olAfterField)))
+                                then $root(concat('style-ol-', $olAfterField))
                                 else '. '"/><!--$default_style('ol')($olAfterField)-->
         </variable>
       </xsl:for-each>
@@ -237,8 +237,8 @@
         <xsl:variable name="level" select="."/>
         <xsl:variable name="olField" select="concat('ol-', $level)"/>
         <variable id="Ordered List Format {$level}">
-          <xsl:value-of select="if (map:contains($style, 'ol') and exists($style('ol')($olField)))
-                                then $style('ol')($olField)
+          <xsl:value-of select="if (map:contains($root, concat('style-ol-', $olField)))
+                                then $root(concat('style-ol-', $olField))
                                 else '1'"/><!--$default_style('ol')($olField)-->
         </variable>
       </xsl:for-each>
@@ -246,8 +246,8 @@
         <xsl:variable name="level" select="."/>
         <xsl:variable name="ulField" select="concat('ul-', $level)"/>
         <variable id="Unordered List bullet {$level}">
-          <xsl:value-of select="if (map:contains($style, 'ol') and exists($style('ol')($ulField)))
-                                then $style('ol')($ulField)
+          <xsl:value-of select="if (map:contains($root, concat('style-ul-', $ulField)))
+                                then $root(concat('style-ul-', $ulField))
                                 else '•'"/><!--$default_style('ol')($ulField)-->
         </variable>
       </xsl:for-each>

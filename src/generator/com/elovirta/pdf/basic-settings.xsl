@@ -12,7 +12,7 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:variable name="style" select=". ?style" as="map(*)"/>
+<!--  <xsl:variable name="style" select=". ?style" as="map(*)"/>-->
 
   <xsl:template match=".[. instance of map(*)]">
     <xsl:message terminate="yes">Not supported</xsl:message>

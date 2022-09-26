@@ -12,12 +12,12 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>
+<!--  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>-->
 
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="exists($style('ol')) or exists($style('ul'))">
+      <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-ol') or starts-with($key, 'style-ul')">
         <xsl:comment>list</xsl:comment>
 
         <axsl:template match="*[contains(@class, ' topic/ul ')]/*[contains(@class, ' topic/li ')]">

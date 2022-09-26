@@ -12,7 +12,7 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>
+<!--  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>-->
 
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
