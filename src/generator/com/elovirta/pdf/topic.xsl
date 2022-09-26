@@ -12,8 +12,6 @@
 
   <xsl:output indent="yes"/>
 
-<!--  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>-->
-
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
@@ -165,132 +163,72 @@
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <!-- titles -->
-<!--      <xsl:if test="exists($style ?topic)">-->
-        <axsl:attribute-set name="topic.title">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?topic"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-topic'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
-<!--      <xsl:if test="exists($style ?topic_topic)">-->
-        <axsl:attribute-set name="topic.topic.title">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?topic_topic"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-topic_topic'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
-<!--      <xsl:if test="exists($style ?topic_topic_topic)">-->
-        <axsl:attribute-set name="topic.topic.topic.title">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?topic_topic_topic"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-topic_topic_topic'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
-<!--      <xsl:if test="exists($style ?topic_topic_topic_topic)">-->
-        <axsl:attribute-set name="topic.topic.topic.topic.title">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?topic_topic_topic_topic"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-topic_topic_topic_topic'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
+      <axsl:attribute-set name="topic.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-topic'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="topic.topic.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-topic_topic'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="topic.topic.topic.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-topic_topic_topic'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="topic.topic.topic.topic.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-topic_topic_topic_topic'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <!-- section -->
-<!--      <xsl:if test="exists($style ?section)">-->
-        <axsl:attribute-set name="section">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?section"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-section'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
-<!--      <xsl:if test="exists($style ?section_title)">-->
-        <axsl:attribute-set name="section.title">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?section_title"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-section_title'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
+      <axsl:attribute-set name="section">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-section'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="section.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-section_title'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <!-- example -->
-<!--      <xsl:if test="exists($style ?example)">-->
-        <axsl:attribute-set name="example">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?example"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-example'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
-<!--      <xsl:if test="exists($style ?example_title)">-->
-        <axsl:attribute-set name="example.title">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?example_title"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-example_title'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
+      <axsl:attribute-set name="example">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-example'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="example.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-example_title'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <!-- tm -->
-<!--      <xsl:if test="exists($style ?tm)">-->
-        <axsl:attribute-set name="tm">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?tm"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-tm'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
+      <axsl:attribute-set name="tm">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-tm'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <!-- note -->
-<!--      <xsl:if test="exists($style ?note)">-->
-        <axsl:attribute-set name="note__table">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?note"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-note'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
+      <axsl:attribute-set name="note__table">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-note'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <!-- pre -->
-<!--      <xsl:if test="exists($style ?pre)">-->
-        <axsl:attribute-set name="pre">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?pre"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-pre'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
+      <axsl:attribute-set name="pre">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-pre'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <!-- fig -->
-<!--      <xsl:if test="exists($style ?fig)">-->
-        <axsl:attribute-set name="fig">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?fig"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-fig'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
+      <axsl:attribute-set name="fig">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-fig'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
     </axsl:stylesheet>
   </xsl:template>
 

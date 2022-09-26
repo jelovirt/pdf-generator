@@ -12,10 +12,7 @@
 
   <xsl:output indent="yes"/>
 
-<!--  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>-->
-
   <xsl:template match=".[. instance of map(*)]">
-<!--    <xsl:variable name="codeblock" select="$style('codeblock')" as="map(*)?"/>-->
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <xsl:if test="$root ?style-codeblock-line-numbering">
@@ -30,9 +27,6 @@
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <axsl:attribute-set name="codeblock">
-<!--        <xsl:call-template name="attribute-set">-->
-<!--          <xsl:with-param name="style" select="$style('codeblock')"/>-->
-<!--        </xsl:call-template>-->
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-codeblock'"/>
           <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>

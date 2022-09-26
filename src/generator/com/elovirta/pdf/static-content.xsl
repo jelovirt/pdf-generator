@@ -12,8 +12,6 @@
 
   <xsl:output indent="yes"/>
 
-<!--  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>-->
-
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
@@ -609,10 +607,6 @@
 
     <xsl:if test="map:contains(., $flow) and map:contains(.($flow), $type)">
       <axsl:attribute-set name="{$type}__{$flow}">
-<!--        <xsl:call-template name="attribute-set">-->
-<!--          <xsl:with-param name="style" select=".($flow)($type)"/>-->
-<!--          &lt;!&ndash;xsl:with-param name="properties" select="$allProperties[not(. = $viewport-area-properties)]"/&ndash;&gt;-->
-<!--        </xsl:call-template>-->
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="concat($flow, '-', $type)"/>
         </xsl:call-template>

@@ -12,12 +12,9 @@
 
   <xsl:output indent="yes"/>
 
-<!--  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>-->
-
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-<!--      <xsl:variable name="table" select="$style ?table" as="map(*)?"/>-->
       <!-- caption numbering -->
       <xsl:variable name="tableCaptionNumber" select="$root ?style-table-caption-number"/>
       <xsl:choose>
@@ -209,9 +206,6 @@
       <!-- dl -->
       <xsl:if test="$root ?style-dl-dl-type">
         <axsl:attribute-set name="e:dl">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?dl"/>-->
-<!--          </xsl:call-template>-->
           <xsl:call-template name="generate-attribute-set">
             <xsl:with-param name="prefix" select="'style-dl'"/>
           </xsl:call-template>
@@ -236,16 +230,11 @@
         </axsl:attribute-set>
       </xsl:if>
       <!-- table -->
-<!--      <xsl:if test="exists($style ?table)">-->
-        <axsl:attribute-set name="table.tgroup">
-<!--          <xsl:call-template name="attribute-set">-->
-<!--            <xsl:with-param name="style" select="$style ?table"/>-->
-<!--          </xsl:call-template>-->
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-table'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-<!--      </xsl:if>-->
+      <axsl:attribute-set name="table.tgroup">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-table'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <axsl:attribute-set name="thead.row.entry">
         <axsl:attribute name="background-color">inherit</axsl:attribute>
       </axsl:attribute-set>

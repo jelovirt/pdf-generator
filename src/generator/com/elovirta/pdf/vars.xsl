@@ -14,8 +14,6 @@
 
   <xsl:output indent="yes"/>
 
-<!--  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>-->
-  
   <xsl:variable name="vars-all" as="element()*">
     <vars xml:lang="de">
       <variable id="blank_page">Diese Seite wurde absichtlich leer gelassen</variable>

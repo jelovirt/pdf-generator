@@ -12,8 +12,6 @@
 
   <xsl:output indent="yes"/>
 
-<!--  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>-->
-
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
@@ -162,10 +160,6 @@
       </xsl:if>
       <!-- font family -->
       <axsl:attribute-set name="__fo__root">
-<!--        <xsl:call-template name="attribute-set">-->
-<!--          <xsl:with-param name="style" select="$style('body')"/>-->
-<!--          <xsl:with-param name="properties" select="('font-family', 'color', 'text-align')"/>-->
-<!--        </xsl:call-template>-->
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-body'"/>
           <xsl:with-param name="properties" select="('font-family', 'color', 'text-align')"/>
@@ -174,19 +168,12 @@
       </axsl:attribute-set>
       <!-- link -->
       <axsl:attribute-set name="common.link">
-<!--        <xsl:call-template name="attribute-set">-->
-<!--          <xsl:with-param name="style" select="$style('link')"/>-->
-<!--        </xsl:call-template>-->
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-link'"/>
         </xsl:call-template>
       </axsl:attribute-set>
       <!-- normal block -->
       <axsl:attribute-set name="common.block">
-<!--        <xsl:call-template name="attribute-set">-->
-<!--          <xsl:with-param name="style" select="$style('body')"/>-->
-<!--          <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>-->
-<!--        </xsl:call-template>-->
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-body'"/>
           <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
