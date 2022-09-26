@@ -19,21 +19,24 @@
         <axsl:template name="createFrontCoverContents">
           <!-- set the title -->
           <fo:block axsl:use-attribute-sets="__frontmatter__title">
-            <axsl:choose>
-              <axsl:when test="$map/*[contains(@class,' topic/title ')][1]">
-                <axsl:apply-templates select="$map/*[contains(@class,' topic/title ')][1]"/>
-              </axsl:when>
-              <axsl:when test="$map//*[contains(@class,' bookmap/mainbooktitle ')][1]">
-                <axsl:apply-templates select="$map//*[contains(@class,' bookmap/mainbooktitle ')][1]"/>
-              </axsl:when>
-              <axsl:when test="//*[contains(@class, ' map/map ')]/@title">
-                <axsl:value-of select="//*[contains(@class, ' map/map ')]/@title"/>
-              </axsl:when>
-              <axsl:otherwise>
-                <axsl:value-of
-                    select="/descendant::*[contains(@class, ' topic/topic ')][1]/*[contains(@class, ' topic/title ')]"/>
-              </axsl:otherwise>
-            </axsl:choose>
+            <xsl:call-template name="insert-content">
+              <xsl:with-param name="id" select="'cover-title'"/>
+            </xsl:call-template>
+<!--            <axsl:choose>-->
+<!--              <axsl:when test="$map/*[contains(@class,' topic/title ')][1]">-->
+<!--                <axsl:apply-templates select="$map/*[contains(@class,' topic/title ')][1]"/>-->
+<!--              </axsl:when>-->
+<!--              <axsl:when test="$map//*[contains(@class,' bookmap/mainbooktitle ')][1]">-->
+<!--                <axsl:apply-templates select="$map//*[contains(@class,' bookmap/mainbooktitle ')][1]"/>-->
+<!--              </axsl:when>-->
+<!--              <axsl:when test="//*[contains(@class, ' map/map ')]/@title">-->
+<!--                <axsl:value-of select="//*[contains(@class, ' map/map ')]/@title"/>-->
+<!--              </axsl:when>-->
+<!--              <axsl:otherwise>-->
+<!--                <axsl:value-of-->
+<!--                    select="/descendant::*[contains(@class, ' topic/topic ')][1]/*[contains(@class, ' topic/title ')]"/>-->
+<!--              </axsl:otherwise>-->
+<!--            </axsl:choose>-->
           </fo:block>
           <!-- set the subtitle -->
           <axsl:apply-templates select="$map//*[contains(@class,' bookmap/booktitlealt ')]"/>

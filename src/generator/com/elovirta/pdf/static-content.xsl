@@ -469,25 +469,25 @@
       </xsl:if>
 
       <xsl:call-template name="generateInsert">
-        <xsl:with-param name="header" select=". ?header ?odd ?content"/>
+        <xsl:with-param name="header" select="$root ?header-odd-content"/>
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
       <xsl:if test="$mirror_page_margins">
         <xsl:call-template name="generateInsert">
-          <xsl:with-param name="header" select=". ?header ?even ?content"/>
+          <xsl:with-param name="header" select="$root ?header-even-content"/>
           <xsl:with-param name="flow" select="'header'"/>
           <xsl:with-param name="type" select="'even'"/>
         </xsl:call-template>
       </xsl:if>
       <xsl:call-template name="generateInsert">
-        <xsl:with-param name="header" select=". ?footer ?odd ?content"/>
+        <xsl:with-param name="header" select="$root ?footer-odd-content"/>
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
       <xsl:if test="$mirror_page_margins">
         <xsl:call-template name="generateInsert">
-          <xsl:with-param name="header" select=". ?footer ?even ?content"/>
+          <xsl:with-param name="header" select="$root ?footer-even-content"/>
           <xsl:with-param name="flow" select="'footer'"/>
           <xsl:with-param name="type" select="'even'"/>
         </xsl:call-template>
@@ -508,45 +508,9 @@
         <fo:static-content flow-name="{{$flow-name}}">
           <!--fo:block-container axsl:use-attribute-sets="__body-container__{$type}__{$flow}"-->
           <fo:block axsl:use-attribute-sets="__body__{$type}__{$flow}">
-            <axsl:call-template name="getVariable">
-              <axsl:with-param name="id" select="'Body {$type} {$flow}'" as="xs:string"/>
-              <axsl:with-param name="params">
-                <!-- FIXME: only generate those params that are needed -->
-                <title>
-                  <axsl:apply-templates select="/" mode="dita-ot:title-metadata"/>
-                </title>
-                <chapter>
-                  <fo:retrieve-marker retrieve-class-name="current-header"/>
-                </chapter>
-                <chapter-number>
-                  <fo:retrieve-marker retrieve-class-name="current-topic-number"/>
-                </chapter-number>
-                <folio>
-                  <fo:page-number/>
-                </folio>
-                <folio-with-total>
-                  <!-- FIXME -->
-                  <fo:page-number/>
-                  <xsl:text> (</xsl:text>
-                  <fo:page-number-citation-last ref-id="{{$e:root-id}}"/>
-                  <xsl:text>)</xsl:text>
-                </folio-with-total>
-                <!--
-                <heading>
-                  <fo:inline>
-                    <xsl:attribute name="xsl:use-attribute-sets">__body__odd__footer__heading</xsl:attribute>
-                    <fo:retrieve-marker retrieve-class-name="current-header"/>
-                  </fo:inline>
-                </heading>
-                <pagenum>
-                  <fo:inline>
-                    <xsl:attribute name="xsl:use-attribute-sets">__body__odd__footer__pagenum</xsl:attribute>
-                    <fo:page-number/>
-                  </fo:inline>
-                </pagenum>
-                -->
-              </axsl:with-param>
-            </axsl:call-template>
+            <xsl:call-template name="insert-content">
+              <xsl:with-param name="id" select="concat('Body ', $type, ' ', $flow)"/>
+            </xsl:call-template>
           </fo:block>
           <!--/fo:block-container-->
         </fo:static-content>

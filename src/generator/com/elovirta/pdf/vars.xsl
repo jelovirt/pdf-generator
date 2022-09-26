@@ -152,7 +152,20 @@
 <!--        <xsl:copy-of select="$vars/variable[@id = 'blank_page']"/>-->
         <variable id="On the page"/>
       </xsl:if>
-      <xsl:if test=". ?table_continued">
+      <xsl:choose>
+        <xsl:when test="map:contains($root, 'style-cover_title-content')">
+          <xsl:call-template name="variables">
+            <xsl:with-param name="var_names" select="'cover-title'"/>
+            <xsl:with-param name="content" select="$root ?style-cover_title-content"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <variable id="cover-title">
+            <param ref-name="title"/>
+          </variable>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:if test="$root ?table_continued">
         <xsl:copy-of select="$vars/variable[@id = '#table-continued']"/>
       </xsl:if>
       <xsl:if test="$root ?style-table-caption-number = 'none'">
@@ -165,16 +178,16 @@
         <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Chapter']"/>
         <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Appendix']"/>
       </xsl:if>
-      <xsl:if test="exists(. ?cover_image_name)">
+      <xsl:if test="exists($root ?cover_image_name)">
         <variable id="cover-image-path">
           <xsl:text expand-text="yes">Customization/OpenTopic/common/artwork/{. ?cover_image_name}</xsl:text>
         </variable>
       </xsl:if>
-      <xsl:if test=". ?blank_pages">
+      <xsl:if test="$root ?blank_pages">
         <xsl:copy-of select="$vars/variable[@id = 'blank_page']"/>
       </xsl:if>
       <xsl:call-template name="variables">
-        <xsl:with-param name="args" select=". ?header ?odd"/>
+        <xsl:with-param name="args" select="$root ?header ?odd"/>
         <xsl:with-param name="var_names" select="(
           'Body first header',
           'Body odd header',
@@ -255,7 +268,7 @@
   <xsl:template name="variables">
     <xsl:param name="args" as="map(*)?"/>
     <xsl:param name="var_names" as="item()*"/>
-    <xsl:variable name="content" select="$args ?content" as="array(*)?"/>
+    <xsl:param name="content" select="$args ?content" as="array(*)?"/>
     <xsl:if test="exists($content)">
       <xsl:for-each select="$var_names">
         <variable id="{.}">

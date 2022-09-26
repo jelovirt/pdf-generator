@@ -254,6 +254,7 @@
     'visibility',
     'voice-family',
     'volume',
+    'white-space',
     'white-space-collapse',
     'white-space-treatment',
     'widows',
@@ -324,6 +325,59 @@
     "/>
     <xsl:copy-of select="$namespaces"/>
     <xsl:attribute name="exclude-result-prefixes">xs e dita-ot ditaarch opentopic opentopic-func</xsl:attribute>
+  </xsl:template>
+
+  <xsl:template name="insert-content">
+    <xsl:param name="id" as="xs:string"/>
+
+    <axsl:call-template name="getVariable">
+      <axsl:with-param name="id" select="'{$id}'" as="xs:string"/>
+      <axsl:with-param name="params">
+        <!-- TODO: only generate those params that are needed -->
+        <title>
+          <axsl:apply-templates select="$root" mode="dita-ot:title-metadata"/>
+        </title>
+        <chapter>
+          <fo:retrieve-marker retrieve-class-name="current-header"/>
+        </chapter>
+        <chapter-number>
+          <fo:retrieve-marker retrieve-class-name="current-topic-number"/>
+        </chapter-number>
+        <page-number>
+          <fo:page-number/>
+        </page-number>
+        <page-count>
+          <fo:page-number-citation-last ref-id="{{$e:root-id}}"/>
+        </page-count>
+        <year>
+          <axsl:value-of select="format-date(current-date(), '[Y0001]')"/>
+        </year>
+        <folio>
+          <fo:page-number/>
+        </folio>
+        <folio-with-total>
+          <!-- FIXME -->
+          <fo:page-number/>
+          <xsl:text> (</xsl:text>
+          <fo:page-number-citation-last ref-id="{{$e:root-id}}"/>
+          <xsl:text>)</xsl:text>
+        </folio-with-total>
+        <!--
+        <heading>
+          <fo:inline>
+            <xsl:attribute name="xsl:use-attribute-sets">__body__odd__footer__heading</xsl:attribute>
+            <fo:retrieve-marker retrieve-class-name="current-header"/>
+          </fo:inline>
+        </heading>
+        <pagenum>
+          <fo:inline>
+            <xsl:attribute name="xsl:use-attribute-sets">__body__odd__footer__pagenum</xsl:attribute>
+            <fo:page-number/>
+          </fo:inline>
+        </pagenum>
+        -->
+      </axsl:with-param>
+    </axsl:call-template>
   </xsl:template>
 
 </xsl:stylesheet>
