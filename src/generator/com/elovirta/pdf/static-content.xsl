@@ -15,7 +15,7 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test=". ?blank_pages">
+      <xsl:if test="$root ?blank_pages">
         <axsl:template name="insertBodyStaticContents">
           <axsl:call-template name="insertBodyFootnoteSeparator"/>
           <axsl:call-template name="insertBodyOddFooter"/>
@@ -473,7 +473,7 @@
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$mirror_page_margins">
+      <xsl:if test="$root ?mirror_page_margins">
         <xsl:call-template name="generateInsert">
           <xsl:with-param name="header" select="$root ?header-even-content"/>
           <xsl:with-param name="flow" select="'header'"/>
@@ -485,7 +485,7 @@
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$mirror_page_margins">
+      <xsl:if test="$root ?mirror_page_margins">
         <xsl:call-template name="generateInsert">
           <xsl:with-param name="header" select="$root ?footer-even-content"/>
           <xsl:with-param name="flow" select="'footer'"/>
@@ -526,7 +526,7 @@
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$mirror_page_margins">
+      <xsl:if test="$root ?mirror_page_margins">
         <xsl:call-template name="generate-header-attribute-sets">
           <xsl:with-param name="flow" select="'header'"/>
           <xsl:with-param name="type" select="'even'"/>
@@ -537,14 +537,14 @@
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$mirror_page_margins">
+      <xsl:if test="$root ?mirror_page_margins">
         <xsl:call-template name="generate-header-attribute-sets">
           <xsl:with-param name="flow" select="'footer'"/>
           <xsl:with-param name="type" select="'even'"/>
         </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test=". ?blank_pages">
+      <xsl:if test="$root ?blank_pages">
         <axsl:attribute-set name="blank_page">
           <axsl:attribute name="position">absolute</axsl:attribute>
           <axsl:attribute name="top">100mm</axsl:attribute>

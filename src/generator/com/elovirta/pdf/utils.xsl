@@ -297,11 +297,11 @@
     <xsl:variable name="dummy" as="element()">
       <xsl:variable name="ns">
         <xsl:choose>
-          <xsl:when test="exists(. ?plugin_name[normalize-space()])">
-            <xsl:value-of select=". ?plugin_name"/>
+          <xsl:when test="exists($root ?plugin_name[normalize-space()])">
+            <xsl:value-of select="$root ?plugin_name"/>
           </xsl:when>
-          <xsl:when test="exists(. ?id[normalize-space()])">
-            <xsl:value-of select=". ?id"/>
+          <xsl:when test="exists($root ?id[normalize-space()])">
+            <xsl:value-of select="$root ?id"/>
           </xsl:when>
           <xsl:otherwise>com.elovirta.pdf.generated</xsl:otherwise>
         </xsl:choose>

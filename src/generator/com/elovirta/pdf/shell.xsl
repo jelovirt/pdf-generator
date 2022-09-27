@@ -15,11 +15,11 @@
   <xsl:template match=".[. instance of map(*)]">
     <xsl:variable name="plugin_name">
       <xsl:choose>
-        <xsl:when test="exists(. ?plugin_name[normalize-space()])">
-          <xsl:value-of select="concat('plugin:', . ?plugin_name, ':')"/>
+        <xsl:when test="exists($root ?plugin_name[normalize-space()])">
+          <xsl:value-of select="concat('plugin:', $root ?plugin_name, ':')"/>
         </xsl:when>
-        <xsl:when test="exists(. ?id[normalize-space()])">
-          <xsl:value-of select="concat('plugin:', . ?id, ':')"/>
+        <xsl:when test="exists($root ?id[normalize-space()])">
+          <xsl:value-of select="concat('plugin:', $root ?id, ':')"/>
         </xsl:when>
         <xsl:otherwise>../../</xsl:otherwise>
       </xsl:choose>
