@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
 <topic id="topic_fk3_mtg_wnb">
-  <title>Heading 1</title>
+  <title>First Level Heading</title>
+  <body>
+    <p>
+      Theme keys can use variables in key values. Variable references are text values that start with a dollar sign. Variable declarations are normal keys where the name of the key is concatenated value of flattened key names separated with a hyphen.
+    </p>
+    <p>
+      To same file <xref href="#topic_fk3_mtg_wnb"/>.
+    </p>
+    <p>
+      To other file <xref href="topic_topic.dita"/>.
+    </p>
+    <p>
+      External <xref href="https://www.example.com/" scope="external"/>.
+    </p>
+    <p>
+      External with text <xref href="https://www.example.com/" scope="external">example.com</xref>.
+    </p>
+  </body>
 </topic>

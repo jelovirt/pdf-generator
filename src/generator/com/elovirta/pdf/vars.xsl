@@ -178,14 +178,14 @@
       </xsl:if>
       <xsl:if test="map:contains($root, 'cover_image_name')">
         <variable id="cover-image-path">
-          <xsl:text expand-text="yes">Customization/OpenTopic/common/artwork/{. ?cover_image_name}</xsl:text>
+          <xsl:text expand-text="yes">Customization/OpenTopic/common/artwork/{$root ?cover_image_name}</xsl:text>
         </variable>
       </xsl:if>
       <xsl:if test="$root ?blank_pages">
         <xsl:copy-of select="$vars/variable[@id = 'blank_page']"/>
       </xsl:if>
       <xsl:call-template name="variables">
-        <xsl:with-param name="args" select="$root ?header ?odd"/>
+        <xsl:with-param name="prefix" select="'header-odd'"/>
         <xsl:with-param name="var_names" select="(
           'Body first header',
           'Body odd header',
@@ -197,7 +197,7 @@
           )"/>
       </xsl:call-template>
       <xsl:call-template name="variables">
-        <xsl:with-param name="args" select=". ?header ?even"/>
+        <xsl:with-param name="prefix" select="'header-even'"/>
         <xsl:with-param name="var_names" select="(
           'Body even header',
           'Preface even header',
@@ -207,7 +207,7 @@
           )"/>
       </xsl:call-template>
       <xsl:call-template name="variables">
-        <xsl:with-param name="args" select=". ?footer ?odd"/>
+        <xsl:with-param name="prefix" select="'footer-odd'"/>
         <xsl:with-param name="var_names" select="(
           'Body odd footer',
           'Body first footer',
@@ -219,7 +219,7 @@
           )"/>
       </xsl:call-template>
       <xsl:call-template name="variables">
-        <xsl:with-param name="args" select=". ?footer ?even"/>
+        <xsl:with-param name="prefix" select="'footer-even'"/>
         <xsl:with-param name="var_names" select="(
           'Body even footer',
           'Preface even footer',
@@ -264,9 +264,9 @@
   </xsl:template>
 
   <xsl:template name="variables">
-    <xsl:param name="args" as="map(*)?"/>
+    <xsl:param name="prefix"/>
     <xsl:param name="var_names" as="item()*"/>
-    <xsl:param name="content" select="$args ?content" as="array(*)?"/>
+    <xsl:param name="content" select="$root(concat($prefix, '-content'))" as="array(*)?"/>
     <xsl:if test="exists($content)">
       <xsl:for-each select="$var_names">
         <variable id="{.}">

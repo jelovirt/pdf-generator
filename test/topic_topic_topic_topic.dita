@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
 <topic id="d4">
-  <title>Heading 4</title>
+  <title>Fourth Level Heading</title>
   <body>
     <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox
       jumps over the lazy dog. The quick brown fox jumps over the lazy dog.</p>
@@ -30,7 +30,7 @@
     </table>
     <fig>
       <title>Figure caption</title>
-      <image href="http://localhost:1234/figure.a9a0fbd6.png" id="image_inm_dzv_wnb"/>
+      <image href="figure.a9a0fbd6.png" id="image_inm_dzv_wnb"/>
     </fig>
   </body>
 </topic>

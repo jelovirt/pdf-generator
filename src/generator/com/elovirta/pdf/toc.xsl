@@ -15,6 +15,14 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
+
+      <!-- start -->
+
+<!--      <xsl:call-template name="insert-content">-->
+<!--        <xsl:with-param name="id" select="'cover-title'"/>-->
+<!--      </xsl:call-template>-->
+      <!-- end -->
+
       <axsl:template match="*[contains(@class, ' bookmap/appendix ')]" mode="tocText">
         <axsl:param name="tocItemContent"/>
         <axsl:param name="currentNode"/>

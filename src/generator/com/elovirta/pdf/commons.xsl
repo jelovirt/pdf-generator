@@ -29,9 +29,9 @@
           <axsl:text>–</axsl:text>
         </axsl:if>
       </axsl:template>
-      <xsl:if test="exists($root ?style-topic-title-numbering) and $root ?style-topic-title-numbering">
-        <axsl:template name="insertChapterFirstpageStaticContent">
-          <axsl:param name="type"/>
+      <xsl:if test="map:contains($root, 'style-topic-title-numbering') and $root ?style-topic-title-numbering">
+        <axsl:template match="*" mode="insertChapterFirstpageStaticContent">
+          <axsl:param name="type" as="xs:string"/>
           <fo:block>
             <axsl:attribute name="id">
               <axsl:call-template name="generate-toc-id"/>
@@ -151,7 +151,7 @@
       <xsl:call-template name="generate-namespace-node"/>
       <axsl:variable name="e:root-id" select="'root'" as="xs:string"/>
       <!-- force page count -->
-      <xsl:if test="exists($root ?force_page_count)">
+      <xsl:if test="map:contains($root, 'force_page_count')">
         <axsl:attribute-set name="__force__page__count">
           <axsl:attribute name="force-page-count">
             <xsl:value-of select="$root ?force_page_count"/>

@@ -28,44 +28,52 @@
           <xsl:text>)</xsl:text>
         </xsl:attribute>
       </axsl:variable>
+
       <axsl:template match="*[contains(@class, ' topic/topic ')]/*[contains(@class, ' topic/title ')]" mode="getTitle">
         <axsl:variable name="topic" select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]"/>
         <axsl:variable name="id" select="$topic/@id"/>
         <axsl:variable name="mapTopics" select="key('map-id', $id)"/>
         <axsl:variable name="contents" as="node()*">
-<!--          <fo:inline>-->
-          <axsl:for-each select="$mapTopics[1]">
-            <axsl:variable name="depth" select="count(ancestor-or-self::*[contains(@class, ' map/topicref')])"/>
-            <axsl:choose>
-              <axsl:when test="parent::opentopic:map and contains(@class, ' bookmap/bookmap ')"/>
-              <axsl:when test="ancestor-or-self::*[contains(@class, ' bookmap/frontmatter ') or
-                                              contains(@class, ' bookmap/backmatter ')]"/>
-              <axsl:when test="ancestor-or-self::*[contains(@class, ' bookmap/appendix ')] and
-                          $e:number-levels[$depth]">
-                <axsl:number count="*[contains(@class, ' map/topicref ')]
-                                [ancestor-or-self::*[contains(@class, ' bookmap/appendix ')]]"
-                             level="multiple"
-                             format="A.1.1"/>
-              </axsl:when>
-              <axsl:when test="$e:number-levels[$depth]">
-                <axsl:number count="*[contains(@class, ' map/topicref ')]
-                                [not(ancestor-or-self::*[contains(@class, ' bookmap/frontmatter ')])]"
-                             level="multiple"
-                             format="1.1"/>
-              </axsl:when>
-            </axsl:choose>
-          </axsl:for-each>
-<!--          </fo:inline>-->
+          <axsl:apply-templates select="$mapTopics[1]" mode="e:title-number"/>
         </axsl:variable>
         <axsl:if test="exists($contents)">
           <axsl:copy-of select="$contents"/>
-          <axsl:value-of select="' '"/>
+          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>
         </axsl:if>
         <axsl:apply-templates/>
       </axsl:template>
 
+      <axsl:template match="*[contains(@class, ' map/topicref')]" mode="e:title-number">
+        <axsl:variable name="depth" select="count(ancestor-or-self::*[contains(@class, ' map/topicref')])"/>
+        <axsl:choose>
+          <axsl:when test="parent::opentopic:map and contains(@class, ' bookmap/bookmap ')"/>
+          <axsl:when test="ancestor-or-self::*[contains(@class, ' bookmap/frontmatter ') or
+                                            contains(@class, ' bookmap/backmatter ')]"/>
+          <axsl:when test="ancestor-or-self::*[contains(@class, ' bookmap/appendix ')] and
+                        $e:number-levels[$depth]">
+            <axsl:number count="*[contains(@class, ' map/topicref ')]
+                              [ancestor-or-self::*[contains(@class, ' bookmap/appendix ')]]"
+                         level="multiple"
+                         format="A.1.1"/>
+          </axsl:when>
+          <axsl:when test="$e:number-levels[$depth]">
+            <axsl:number count="*[contains(@class, ' map/topicref ')]
+                              [not(ancestor-or-self::*[contains(@class, ' bookmap/frontmatter ')])]"
+                         level="multiple"
+                         format="1.1"/>
+          </axsl:when>
+        </axsl:choose>
+      </axsl:template>
+
       <axsl:template name="getNavTitle">
         <axsl:variable name="topicref" select="key('map-id', @id)[1]"/>
+        <axsl:variable name="contents" as="node()*">
+          <axsl:apply-templates select="$topicref[1]" mode="e:title-number"/>
+        </axsl:variable>
+        <axsl:if test="exists($contents)">
+          <axsl:copy-of select="$contents"/>
+          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>
+        </axsl:if>
         <axsl:choose>
           <axsl:when
               test="$topicref/@locktitle = 'yes' and $topicref/*[contains(@class, ' map/topicmeta ')]/*[contains(@class, ' topic/navtitle ')]">
@@ -80,6 +88,7 @@
           </axsl:otherwise>
         </axsl:choose>
       </axsl:template>
+
       <!-- note -->
       <xsl:if test="not($root ?style-note_icon)">
 <!--        <xsl:comment>note</xsl:comment>-->

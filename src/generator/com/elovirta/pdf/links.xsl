@@ -15,74 +15,90 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="$root ?style-link-link-url">
-        <xsl:comment>Link</xsl:comment>
-        <axsl:template match="*[contains(@class,' topic/xref ')]" name="topic.xref">
-          <fo:inline>
-            <axsl:call-template name="commonattributes"/>
-          </fo:inline>
-          <axsl:variable name="destination" select="opentopic-func:getDestinationId(@href)"/>
-          <axsl:variable name="element" select="key('key_anchor',$destination)[1]"/>
-          <axsl:variable name="referenceTitle">
-            <axsl:apply-templates select="." mode="insertReferenceTitle">
-              <axsl:with-param name="href" select="@href"/>
-              <axsl:with-param name="titlePrefix" select="''"/>
-              <axsl:with-param name="destination" select="$destination"/>
-              <axsl:with-param name="element" select="$element"/>
-            </axsl:apply-templates>
-          </axsl:variable>
-          <fo:basic-link axsl:use-attribute-sets="xref">
-            <axsl:call-template name="buildBasicLinkDestination">
-              <axsl:with-param name="scope" select="@scope"/>
-              <axsl:with-param name="format" select="@format"/>
-              <axsl:with-param name="href" select="@href"/>
-            </axsl:call-template>
-            <axsl:choose>
-              <axsl:when test="not(@scope = 'external' or @format = 'html') and not($referenceTitle = '')">
-                <axsl:copy-of select="$referenceTitle"/>
-              </axsl:when>
-              <axsl:when test="not(@scope = 'external' or @format = 'html')">
-                <axsl:call-template name="insertPageNumberCitation">
-                  <axsl:with-param name="isTitleEmpty" select="true()"/>
-                  <axsl:with-param name="destination" select="$destination"/>
-                  <axsl:with-param name="element" select="$element"/>
-                </axsl:call-template>
-              </axsl:when>
-              <axsl:otherwise>
-                <axsl:choose>
-                  <axsl:when test="exists(*[not(contains(@class,' topic/desc '))] | text()) and
-                            exists(processing-instruction('ditaot')[. = 'usertext'])">
-                    <axsl:apply-templates select="*[not(contains(@class,' topic/desc '))] | text()"/>
-                  </axsl:when>
-                  <axsl:otherwise>
-                    <axsl:value-of select="e:format-link-url(@href)"/>
-                  </axsl:otherwise>
-                </axsl:choose>
-              </axsl:otherwise>
-            </axsl:choose>
-          </fo:basic-link>
-          <axsl:if
-              test="not(@scope = 'external' or @format = 'html') and not($referenceTitle = '') and not($element[contains(@class, ' topic/fn ')])">
-            <axsl:if test="not(processing-instruction('ditaot')[. = 'usertext'])">
+
+      <xsl:comment>Link</xsl:comment>
+      <axsl:template match="*[contains(@class,' topic/xref ')]" name="topic.xref">
+        <fo:inline>
+          <axsl:call-template name="commonattributes"/>
+        </fo:inline>
+        <axsl:variable name="destination" select="opentopic-func:getDestinationId(@href)"/>
+        <axsl:variable name="element" select="key('key_anchor',$destination)[1]"/>
+        <axsl:variable name="referenceTitle">
+          <axsl:apply-templates select="." mode="insertReferenceTitle">
+            <axsl:with-param name="href" select="@href"/>
+            <axsl:with-param name="titlePrefix" select="''"/>
+            <axsl:with-param name="destination" select="$destination"/>
+            <axsl:with-param name="element" select="$element"/>
+          </axsl:apply-templates>
+        </axsl:variable>
+        <fo:basic-link axsl:use-attribute-sets="xref">
+          <axsl:call-template name="buildBasicLinkDestination">
+            <axsl:with-param name="scope" select="@scope"/>
+            <axsl:with-param name="format" select="@format"/>
+            <axsl:with-param name="href" select="@href"/>
+          </axsl:call-template>
+          <axsl:choose>
+            <axsl:when test="not(@scope = 'external' or @format = 'html') and not($referenceTitle = '')">
+              <axsl:copy-of select="$referenceTitle"/>
+            </axsl:when>
+            <axsl:when test="not(@scope = 'external' or @format = 'html')">
               <axsl:call-template name="insertPageNumberCitation">
+                <axsl:with-param name="isTitleEmpty" select="true()"/>
                 <axsl:with-param name="destination" select="$destination"/>
                 <axsl:with-param name="element" select="$element"/>
               </axsl:call-template>
-            </axsl:if>
+            </axsl:when>
+<!--            <axsl:otherwise>-->
+<!--              <axsl:choose>-->
+            <axsl:when test="exists(*[not(contains(@class,' topic/desc '))] | text()) and
+                      exists(processing-instruction('ditaot')[. = 'usertext'])">
+              <axsl:apply-templates select="*[not(contains(@class,' topic/desc '))] | text()"/>
+            </axsl:when>
+            <axsl:otherwise>
+              <axsl:value-of select="e:format-link-url(@href)"/>
+            </axsl:otherwise>
+<!--              </axsl:choose>-->
+<!--            </axsl:otherwise>-->
+          </axsl:choose>
+        </fo:basic-link>
+        <axsl:if
+            test="not(@scope = 'external' or @format = 'html') and not($referenceTitle = '') and not($element[contains(@class, ' topic/fn ')])">
+          <axsl:if test="not(processing-instruction('ditaot')[. = 'usertext'])">
+            <axsl:call-template name="insertPageNumberCitation">
+              <axsl:with-param name="destination" select="$destination"/>
+              <axsl:with-param name="element" select="$element"/>
+            </axsl:call-template>
           </axsl:if>
+        </axsl:if>
+        <xsl:if test="$root ?style-link-link-url">
           <axsl:if test="@scope = 'external' and exists(processing-instruction('ditaot')[. = 'usertext'])">
             <axsl:text> (</axsl:text>
             <axsl:value-of select="e:format-link-url(@href)"/>
             <axsl:text>)</axsl:text>
           </axsl:if>
-        </axsl:template>
-        <axsl:function name="e:format-link-url">
-          <axsl:param name="href"/>
-          <axsl:variable name="h" select="if (starts-with($href, 'http://')) then substring($href, 8) else $href"/>
-          <axsl:value-of
-              select="if (contains($h, '/') and substring-after($h, '/') = '') then substring($h, 0, string-length($h)) else $h"/>
-        </axsl:function>
-      </xsl:if>
+        </xsl:if>
+      </axsl:template>
+
+      <axsl:template match="*[contains(@class, ' topic/topic ')]" mode="retrieveReferenceTitle">
+        <axsl:variable name="topicref" select="key('map-id', @id)[1]"/>
+        <axsl:variable name="contents" as="node()*">
+          <axsl:apply-templates select="$topicref[1]" mode="e:title-number"/>
+        </axsl:variable>
+        <axsl:if test="exists($contents)">
+          <axsl:copy-of select="$contents"/>
+          <axsl:text>
+            <xsl:text> </xsl:text>
+          </axsl:text>
+        </axsl:if>
+        <axsl:apply-templates select="*[contains(@class, ' topic/title ')]/node()"/>
+      </axsl:template>
+
+      <axsl:function name="e:format-link-url">
+        <axsl:param name="href"/>
+        <axsl:variable name="h" select="if (starts-with($href, 'http://')) then substring($href, 8) else $href"/>
+        <axsl:value-of
+            select="if (contains($h, '/') and substring-after($h, '/') = '') then substring($h, 0, string-length($h)) else $h"/>
+      </axsl:function>
 <!--      <xsl:if test="$link ?link-page-number">-->
 <!--        <axsl:template name="insertPageNumberCitation">-->
 <!--          <axsl:param name="isTitleEmpty" as="xs:boolean" select="false()"/>-->
