@@ -29,7 +29,7 @@
           <axsl:text>–</axsl:text>
         </axsl:if>
       </axsl:template>
-      <xsl:if test="map:contains($root, 'style-topic-title-numbering') and $root ?style-topic-title-numbering">
+<!--      <xsl:if test="map:contains($root, 'style-topic-title-numbering') and $root ?style-topic-title-numbering">-->
         <axsl:template match="*" mode="insertChapterFirstpageStaticContent">
           <axsl:param name="type" as="xs:string"/>
           <fo:block>
@@ -111,7 +111,7 @@
 <!--            </axsl:choose>-->
           </fo:block>
         </axsl:template>
-      </xsl:if>
+<!--      </xsl:if>-->
       <xsl:if test="$root ?formatter != 'fop'">
         <xsl:if test="$root ?page_number = 'chapter-page'">
           <axsl:template name="startPageNumbering">
