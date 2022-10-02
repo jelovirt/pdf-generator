@@ -38,7 +38,10 @@
         </axsl:variable>
         <axsl:if test="exists($contents)">
           <axsl:copy-of select="$contents"/>
-          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>
+<!--          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>-->
+          <axsl:text>
+            <xsl:text> </xsl:text>
+          </axsl:text>
         </axsl:if>
         <axsl:apply-templates/>
       </axsl:template>
@@ -72,7 +75,10 @@
         </axsl:variable>
         <axsl:if test="exists($contents)">
           <axsl:copy-of select="$contents"/>
-          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>
+<!--          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>-->
+          <axsl:text>
+            <xsl:text> </xsl:text>
+          </axsl:text>
         </axsl:if>
         <axsl:choose>
           <axsl:when
