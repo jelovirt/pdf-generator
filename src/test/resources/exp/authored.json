@@ -16,7 +16,7 @@
         },
         {
           "kind": "field",
-          "value": "header"
+          "value": "chapter"
         }
       ],
       "height": "44pt",
@@ -53,7 +53,7 @@
       "content": [
         {
           "kind": "field",
-          "value": "header"
+          "value": "chapter"
         },
         {
           "kind": "text",
@@ -78,11 +78,91 @@
         },
         {
           "kind": "field",
-          "value": "header"
+          "value": "chapter"
         }
       ],
       "font-size": "10pt"
     }
   },
-  "style": {}
+  "style": {
+    "body": {
+      "start-indent": "0pt"
+    },
+    "topic": {
+      "background-color": "pink"
+    }
+  },
+  "page-top": "20mm",
+  "page-inside": "20mm",
+  "page-height": "297mm",
+  "page-outside": "20mm",
+  "page-width": "210mm",
+  "page-bottom": "20mm",
+  "header-odd-border-end-color": "black",
+  "header-odd-border-after-color": "black",
+  "footer-odd-font-size": "12pt",
+  "header-odd-border-end-width": "1pt",
+  "header-even-border-end-style": "dashed",
+  "header-even-border-before-style": "dashed",
+  "header-even-border-after-style": "dashed",
+  "header-odd-border-after-width": "1pt",
+  "header-odd-border-start-color": "black",
+  "header-even-border-start-style": "dashed",
+  "header-odd-border-start-width": "1pt",
+  "footer-even-content": [
+    {
+      "kind": "field",
+      "value": "title"
+    },
+    {
+      "kind": "text",
+      "value": " – "
+    },
+    {
+      "kind": "field",
+      "value": "chapter"
+    }
+  ],
+  "header-odd-border-before-color": "black",
+  "header-odd-border-before-width": "1pt",
+  "header-odd-content": [
+    {
+      "kind": "text",
+      "value": "Test: "
+    },
+    {
+      "kind": "field",
+      "value": "chapter"
+    }
+  ],
+  "header-even-border-end-color": "#FF0000",
+  "header-odd-border-start-style": "solid",
+  "header-even-border-before-color": "#FF0000",
+  "header-even-border-after-color": "#FF0000",
+  "header-odd-height": "44pt",
+  "header-even-border-before-width": "0.5mm",
+  "header-odd-border-before-style": "solid",
+  "style-body-start-indent": "0pt",
+  "header-even-border-end-width": "0.5mm",
+  "header-even-border-after-width": "0.5mm",
+  "footer-odd-content": [
+    {
+      "kind": "field",
+      "value": "chapter"
+    },
+    {
+      "kind": "text",
+      "value": " – "
+    },
+    {
+      "kind": "field",
+      "value": "title"
+    }
+  ],
+  "header-even-border-start-color": "#FF0000",
+  "header-even-border-start-width": "0.5mm",
+  "header-odd-border-end-style": "solid",
+  "header-odd-border-after-style": "solid",
+  "footer-even-font-size": "10pt",
+  "style-topic-background-color": "pink"
 }

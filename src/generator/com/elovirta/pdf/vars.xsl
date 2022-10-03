@@ -4,8 +4,6 @@
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:map="http://www.w3.org/2005/xpath-functions/map"
                 xmlns:array="http://www.w3.org/2005/xpath-functions/array"
-                xmlns="http://www.idiominc.com/opentopic/vars"
-                xpath-default-namespace="http://www.idiominc.com/opentopic/vars"
                 exclude-result-prefixes="axsl map array">
 
   <xsl:import href="utils.xsl"/>
@@ -14,8 +12,6 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>
-  
   <xsl:variable name="vars-all" as="element()*">
     <vars xml:lang="de">
       <variable id="blank_page">Diese Seite wurde absichtlich leer gelassen</variable>
@@ -149,34 +145,47 @@
 
   <xsl:template match=".[. instance of map(*)]">
     <xsl:variable name="vars" select="$vars-all[@xml:lang = $lang]" as="element()"/>
-    <vars>
-      <xsl:if test="$style ?link ?link-page-number">
+    <variables>
+      <xsl:if test="$root ?style-link-link-page-number">
 <!--        <xsl:copy-of select="$vars/variable[@id = 'blank_page']"/>-->
         <variable id="On the page"/>
       </xsl:if>
-      <xsl:if test=". ?table_continued">
+      <xsl:choose>
+        <xsl:when test="map:contains($root, 'style-cover_title-content')">
+          <xsl:call-template name="variables">
+            <xsl:with-param name="var_names" select="'cover-title'"/>
+            <xsl:with-param name="content" select="$root ?style-cover_title-content"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <variable id="cover-title">
+            <param ref-name="title"/>
+          </variable>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:if test="$root ?table_continued">
         <xsl:copy-of select="$vars/variable[@id = '#table-continued']"/>
       </xsl:if>
-      <xsl:if test="$style ?table ?caption-number = 'none'">
+      <xsl:if test="$root ?style-table-caption-number = 'none'">
         <xsl:copy-of select="$vars/variable[@id = 'Table']"/>
       </xsl:if>
-      <xsl:if test="$style ?fig ?caption-number = 'none'">
+      <xsl:if test="$root ?style-fig-caption-number = 'none'">
         <xsl:copy-of select="$vars/variable[@id = 'Figure']"/>
       </xsl:if>
-      <xsl:if test="exists($style ?topic ?title-numbering) and not($style ?topic ?title-numbering)">
+      <xsl:if test="map:contains($root, 'style-topic-title-numbering') and not($root ?style-topic-title-numbering)">
         <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Chapter']"/>
         <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Appendix']"/>
       </xsl:if>
-      <xsl:if test="exists(. ?cover_image_name)">
+      <xsl:if test="map:contains($root, 'cover_image_name')">
         <variable id="cover-image-path">
-          <xsl:text expand-text="yes">Customization/OpenTopic/common/artwork/{. ?cover_image_name}</xsl:text>
+          <xsl:text expand-text="yes">Customization/OpenTopic/common/artwork/{$root ?cover_image_name}</xsl:text>
         </variable>
       </xsl:if>
-      <xsl:if test=". ?blank_pages">
+      <xsl:if test="$root ?blank_pages">
         <xsl:copy-of select="$vars/variable[@id = 'blank_page']"/>
       </xsl:if>
       <xsl:call-template name="variables">
-        <xsl:with-param name="args" select=". ?header ?odd"/>
+        <xsl:with-param name="prefix" select="'header-odd'"/>
         <xsl:with-param name="var_names" select="(
           'Body first header',
           'Body odd header',
@@ -188,7 +197,7 @@
           )"/>
       </xsl:call-template>
       <xsl:call-template name="variables">
-        <xsl:with-param name="args" select=". ?header ?even"/>
+        <xsl:with-param name="prefix" select="'header-even'"/>
         <xsl:with-param name="var_names" select="(
           'Body even header',
           'Preface even header',
@@ -198,7 +207,7 @@
           )"/>
       </xsl:call-template>
       <xsl:call-template name="variables">
-        <xsl:with-param name="args" select=". ?footer ?odd"/>
+        <xsl:with-param name="prefix" select="'footer-odd'"/>
         <xsl:with-param name="var_names" select="(
           'Body odd footer',
           'Body first footer',
@@ -210,7 +219,7 @@
           )"/>
       </xsl:call-template>
       <xsl:call-template name="variables">
-        <xsl:with-param name="args" select=". ?footer ?even"/>
+        <xsl:with-param name="prefix" select="'footer-even'"/>
         <xsl:with-param name="var_names" select="(
           'Body even footer',
           'Preface even footer',
@@ -223,13 +232,13 @@
         <xsl:variable name="level" select="."/>
         <variable id="Ordered List Number {$level}">
           <xsl:variable name="olBeforeField" select="concat('ol-before-', $level)"/>
-          <xsl:value-of select="if (map:contains($style, 'ol') and exists($style('ol')($olBeforeField)))
-                                then $style('ol')($olBeforeField)
+          <xsl:value-of select="if (map:contains($root, concat('style-ol-', $olBeforeField)))
+                                then $root(concat('style-ol-', $olBeforeField))
                                 else ''"/><!--$default_style('ol')($olBeforeField)-->
           <param ref-name="number"/>
           <xsl:variable name="olAfterField" select="concat('ol-after-', $level)"/>
-          <xsl:value-of select="if (map:contains($style, 'ol') and exists($style('ol')($olAfterField)))
-                                then $style('ol')($olAfterField)
+          <xsl:value-of select="if (map:contains($root, concat('style-ol-', $olAfterField)))
+                                then $root(concat('style-ol-', $olAfterField))
                                 else '. '"/><!--$default_style('ol')($olAfterField)-->
         </variable>
       </xsl:for-each>
@@ -237,8 +246,8 @@
         <xsl:variable name="level" select="."/>
         <xsl:variable name="olField" select="concat('ol-', $level)"/>
         <variable id="Ordered List Format {$level}">
-          <xsl:value-of select="if (map:contains($style, 'ol') and exists($style('ol')($olField)))
-                                then $style('ol')($olField)
+          <xsl:value-of select="if (map:contains($root, concat('style-ol-', $olField)))
+                                then $root(concat('style-ol-', $olField))
                                 else '1'"/><!--$default_style('ol')($olField)-->
         </variable>
       </xsl:for-each>
@@ -246,18 +255,18 @@
         <xsl:variable name="level" select="."/>
         <xsl:variable name="ulField" select="concat('ul-', $level)"/>
         <variable id="Unordered List bullet {$level}">
-          <xsl:value-of select="if (map:contains($style, 'ol') and exists($style('ol')($ulField)))
-                                then $style('ol')($ulField)
+          <xsl:value-of select="if (map:contains($root, concat('style-ul-', $ulField)))
+                                then $root(concat('style-ul-', $ulField))
                                 else '•'"/><!--$default_style('ol')($ulField)-->
         </variable>
       </xsl:for-each>
-    </vars>
+    </variables>
   </xsl:template>
 
   <xsl:template name="variables">
-    <xsl:param name="args" as="map(*)?"/>
+    <xsl:param name="prefix"/>
     <xsl:param name="var_names" as="item()*"/>
-    <xsl:variable name="content" select="$args ?content" as="array(*)?"/>
+    <xsl:param name="content" select="$root(concat($prefix, '-content'))" as="array(*)?"/>
     <xsl:if test="exists($content)">
       <xsl:for-each select="$var_names">
         <variable id="{.}">
@@ -268,9 +277,15 @@
               <xsl:when test="$item ?kind = 'field'">
                 <param ref-name="{$item ?value}"/>
               </xsl:when>
+              <xsl:when test="$item ?kind = 'variable'">
+                <variableref refid="{$item ?value}"/>
+              </xsl:when>
               <xsl:when test="$item ?kind = 'text'">
                 <xsl:value-of select="$item ?value"/>
               </xsl:when>
+              <xsl:otherwise>
+                <xsl:message terminate="yes">Unsupported to item kind: <xsl:value-of select="$item ?kind"/></xsl:message>
+              </xsl:otherwise>
             </xsl:choose>
           </xsl:for-each>
         </variable>

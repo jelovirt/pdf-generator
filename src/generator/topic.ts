@@ -214,7 +214,7 @@ export function generate_custom(root: Element, conf: Generator) {
 export function generate_custom_attr(root: Element, conf: Generator) {
   // titles
   _.forEach(conf.style, (e, k) => {
-    if (k.substring(0, 5) === 'topic' || k === 'section') {
+    if (k.substring(0, 5) === 'topic' || k === 'section_title') {
       const title_attr = SubElement(root, xsl('attribute-set'), {
         name: k.replace(/_/g, '.') + '.title',
       });

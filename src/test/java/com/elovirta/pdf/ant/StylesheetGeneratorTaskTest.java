@@ -5,6 +5,7 @@ import org.apache.tools.ant.Project;
 import org.dita.dost.log.DITAOTAntLogger;
 import org.dita.dost.util.XMLUtils;
 import org.json.JSONException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -54,28 +55,16 @@ public class StylesheetGeneratorTaskTest {
         final XdmValue act = task.parseTemplate();
 
         final String image = src.resolve("image/logo.svg").toString();
-        final String exp = "{\"style\":{"
+        final String exp = "{"
+                + "\"style\":{"
                 + "\"body\":{\"background-image\":\"url('" + image + "')\"},"
                 + "\"topic\":{\"background-image\":\"url('" + image + "')\"},"
-                + "\"topic.topic\":{\"background-image\":\"url('" + image + "')\"}"
-                + "}}";
-        assertEquals(exp, toString(act),
-                JSONCompareMode.STRICT);
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {
-            "empty.json",
-            "empty.yaml"
-    })
-    public void getTemplate_empty(final String template) throws URISyntaxException, SaxonApiException, JSONException {
-        final URI src = getClass().getClassLoader().getResource("src/" + template).toURI();
-        task.setTemplate(new File(src));
-
-        final XdmValue act = task.parseTemplate();
-
-        final String image = src.resolve("image/logo.svg").toString();
-        final String exp = "{\"style\":{}}";
+                + "\"topic_topic\":{\"background-image\":\"url('" + image + "')\"}"
+                + "},"
+                + "\"style-body-background-image\":\"url('" + image + "')\","
+                + "\"style-topic-background-image\":\"url('" + image + "')\","
+                + "\"style-topic_topic-background-image\":\"url('" + image + "')\""
+                +"}";
         assertEquals(exp, toString(act),
                 JSONCompareMode.STRICT);
     }
@@ -140,28 +129,18 @@ public class StylesheetGeneratorTaskTest {
     @ParameterizedTest
     @ValueSource(strings = {
             "authored.json",
-            "authored.yaml"
+            "authored.yaml",
+            "theme.json",
+            "theme.yaml",
+            "empty.json",
+            "empty.yaml"
     })
     public void getTemplate_normalize(final String template) throws URISyntaxException, SaxonApiException, JSONException {
         task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()));
 
         final XdmValue act = task.parseTemplate();
 
-        assertEquals(readToString("exp/authored.json"), toString(act),
-                JSONCompareMode.STRICT);
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {
-            "theme.json",
-            "theme.yaml"
-    })
-    public void getTemplate(final String template) throws URISyntaxException, SaxonApiException, JSONException {
-        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()));
-
-        final XdmValue act = task.parseTemplate();
-
-        assertEquals(readToString("exp/theme.json"), toString(act),
+        assertEquals(readToString("exp/" + template.substring(0, template.indexOf(".")) + ".json"), toString(act),
                 JSONCompareMode.STRICT);
     }
 

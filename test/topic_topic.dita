@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
 <topic id="xxx">
-  <title>Heading 2</title>
+  <title>Second Level Heading</title>
   <body>
     <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox
       jumps over the lazy dog. The quick brown fox jumps over the lazy dog.</p>
@@ -41,6 +41,7 @@
         scope="external" href="https://example.com/">brown fox</xref> jumps over the lazy dog.</p>
     <p>The quick <tm tmtype="tm">brown fox</tm> jumps over the <tm tmtype="reg">lazy dog</tm>. The quick <tm
         tmtype="tm">brown fox</tm> jumps over the <tm tmtype="reg">lazy dog</tm>.</p>
+    <p>Link to <xref href="topic.dita"/> and <xref href="topic_topic_topic.dita"/>.</p>
     <section>
       <title>Section title</title>
       <p>The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick brown fox

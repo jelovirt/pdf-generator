@@ -7,6 +7,8 @@
 
   <xsl:param name="base-url"/>
 
+  <xsl:variable name="separator" select="'-'"/>
+
   <xsl:template match=".[. instance of map(*)]">
     <xsl:sequence select="x:extends(., $base-url)"/>
   </xsl:template>
@@ -18,12 +20,44 @@
       <xsl:when test="map:contains($base, 'extends')">
         <xsl:variable name="extends-url" select="resolve-uri($base ?extends, $url)"/>
         <xsl:variable name="extends" select="x:extends(json-doc($extends-url), $extends-url)"/>
-        <xsl:sequence select="x:merge($extends, x:normalize($base, (), $extends-url))"/>
+        <xsl:sequence select="x:merge($extends, x:flatten(x:normalize($base, (), $extends-url)))"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:sequence select="x:normalize($base, (), $url)"/>
+        <xsl:sequence select="x:flatten(x:normalize($base, (), $url))"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="x:flatten" as="item()*" visibility="public">
+    <xsl:param name="root" as="item()"/>
+    <xsl:variable name="flattened" as="map(*)">
+      <xsl:map>
+        <xsl:sequence select="x:flatten-walker($root, $root, ())"/>
+      </xsl:map>
+    </xsl:variable>
+    <xsl:sequence select="map:merge(($root, $flattened), map{ 'duplicates': 'use-first' })"/>
+  </xsl:function>
+
+  <xsl:function name="x:flatten-walker" as="item()*">
+    <xsl:param name="root" as="map(*)"/>
+    <xsl:param name="base" as="map(*)"/>
+    <xsl:param name="ancestors" as="item()*"/>
+
+    <xsl:for-each select="map:keys($base)">
+      <xsl:variable name="key" select="."/>
+      <xsl:variable name="value" select="map:get($base, $key)"/>
+      <xsl:choose>
+        <xsl:when test="$value instance of map(*)">
+          <xsl:sequence select="x:flatten-walker($root, $value, ($ancestors, $key))"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:variable name="flattened-name" select="string-join(($ancestors, $key), $separator)"/>
+          <xsl:if test="not(map:contains($root, $flattened-name))">
+            <xsl:map-entry key="$flattened-name" select="$value"/>
+          </xsl:if>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
   </xsl:function>
 
   <xsl:function name="x:merge" as="item()*" visibility="public">
@@ -90,7 +124,14 @@
                 <xsl:variable name="tokens" as="item()*">
                   <xsl:analyze-string select="$value" regex="\{{(.+?)\}}">
                     <xsl:matching-substring>
-                      <xsl:sequence select="map{ 'kind': 'field', 'value': regex-group(1)}"/>
+                      <xsl:choose>
+                        <xsl:when test="starts-with(regex-group(1), '#')">
+                          <xsl:sequence select="map{ 'kind': 'variable', 'value': substring(regex-group(1), 2) }"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:sequence select="map{ 'kind': 'field', 'value': regex-group(1) }"/>
+                        </xsl:otherwise>
+                      </xsl:choose>
                     </xsl:matching-substring>
                     <xsl:non-matching-substring>
                       <xsl:sequence select="map{ 'kind': 'text', 'value': .}"/>
@@ -205,6 +246,19 @@
                     'even': x:normalize($value, ($ancestors, $key, 'even'), $url)
                   }"/>
               </xsl:when>
+              <!-- Rewrite h1-h4 to topic(_topic){0,3} -->
+              <xsl:when test="$key = 'h1'">
+                <xsl:map-entry key="'topic'" select="$value"/>
+              </xsl:when>
+              <xsl:when test="$key = 'h2'">
+                <xsl:map-entry key="'topic_topic'" select="$value"/>
+              </xsl:when>
+              <xsl:when test="$key = 'h3'">
+                <xsl:map-entry key="'topic_topic_topic'" select="$value"/>
+              </xsl:when>
+              <xsl:when test="$key = 'h4'">
+                <xsl:map-entry key="'topic_topic_topic_topic'" select="$value"/>
+              </xsl:when>
               <xsl:otherwise>
                 <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:otherwise>
@@ -287,7 +341,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:map>
-          <xsl:map-entry key="string-join($ancestors, '-')" select="$base"/>
+          <xsl:map-entry key="string-join($ancestors, $separator)" select="$base"/>
         </xsl:map>
       </xsl:otherwise>
     </xsl:choose>

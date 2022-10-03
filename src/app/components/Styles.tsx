@@ -234,7 +234,8 @@ export default function Styles() {
             <option value="topic_topic">Heading 2</option>
             <option value="topic_topic_topic">Heading 3</option>
             <option value="topic_topic_topic_topic">Heading 4</option>
-            <option value="section">Section title</option>
+            <option value="section">Section</option>
+            <option value="section_title">Section title</option>
             <option value="example">Example</option>
             <option value="example_title">Example title</option>
             <option value="note">Note</option>

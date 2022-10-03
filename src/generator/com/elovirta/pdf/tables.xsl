@@ -12,14 +12,11 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>
-
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:variable name="table" select="$style ?table" as="map(*)?"/>
       <!-- caption numbering -->
-      <xsl:variable name="tableCaptionNumber" select="$table ?caption-number"/>
+      <xsl:variable name="tableCaptionNumber" select="$root ?style-table-caption-number"/>
       <xsl:choose>
         <!--
         <xsl:when test="$tableCaptionNumber = 'topic'">
@@ -44,7 +41,7 @@
         </xsl:when>
       </xsl:choose>
       <!-- caption position -->
-      <xsl:if test="$table ?caption-position = 'after'">
+      <xsl:if test="$root ?style-table-caption-position = 'after'">
         <axsl:template match="*[contains(@class, ' topic/table ')]">
           <axsl:variable name="scale">
             <axsl:call-template name="getTableScale"/>
@@ -65,7 +62,7 @@
         </axsl:template>
       </xsl:if>
       <xsl:choose>
-        <xsl:when test=".('table_continued')">
+        <xsl:when test="$root ?table_continued">
           <axsl:variable name="table.frame-default" select="'all'"/>
 
           <axsl:template match="*[contains(@class, ' topic/tbody ')]" name="topic.tbody">
@@ -131,7 +128,7 @@
           </axsl:template>
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:variable name="dlStyle" select="$style ?dl ?dl-type"/>
+      <xsl:variable name="dlStyle" select="$root ?style-dl-dl-type"/>
       <xsl:choose>
         <xsl:when test="$dlStyle = 'list'">
           <axsl:template match="*[contains(@class, ' topic/dl ')]">
@@ -207,10 +204,10 @@
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <!-- dl -->
-      <xsl:if test="$style ?dl ?dl-type">
+      <xsl:if test="$root ?style-dl-dl-type">
         <axsl:attribute-set name="e:dl">
-          <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select="$style ?dl"/>
+          <xsl:call-template name="generate-attribute-set">
+            <xsl:with-param name="prefix" select="'style-dl'"/>
           </xsl:call-template>
         </axsl:attribute-set>
         <axsl:attribute-set name="e:dlentry.dt__content">
@@ -218,13 +215,13 @@
           <axsl:attribute name="keep-with-next">always</axsl:attribute>
         </axsl:attribute-set>
         <axsl:attribute-set name="e:dlentry.dd__content">
-          <xsl:if test="$style ?dl ?dl-type = 'html'">
+          <xsl:if test="$root ?style-dl-dl-type = 'html'">
             <axsl:attribute name="start-indent">from-parent(start-indent) + 5mm</axsl:attribute>
           </xsl:if>
         </axsl:attribute-set>
       </xsl:if>
       <!-- table continued -->
-      <xsl:if test=". ?table_continued">
+      <xsl:if test="$root ?table_continued">
         <axsl:attribute-set name="e:tfoot.row.entry.continued">
           <axsl:attribute name="border-right-style">hidden</axsl:attribute>
           <axsl:attribute name="border-left-style">hidden</axsl:attribute>
@@ -233,13 +230,11 @@
         </axsl:attribute-set>
       </xsl:if>
       <!-- table -->
-      <xsl:if test="exists($style ?table)">
-        <axsl:attribute-set name="table.tgroup">
-          <xsl:call-template name="attribute-set">
-            <xsl:with-param name="style" select="$style ?table"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-      </xsl:if>
+      <axsl:attribute-set name="table.tgroup">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-table'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <axsl:attribute-set name="thead.row.entry">
         <axsl:attribute name="background-color">inherit</axsl:attribute>
       </axsl:attribute-set>

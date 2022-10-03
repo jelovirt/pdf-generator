@@ -12,8 +12,6 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>
-
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
@@ -31,90 +29,91 @@
           <axsl:text>–</axsl:text>
         </axsl:if>
       </axsl:template>
-      <xsl:if test="exists($style ?topic ?title-numbering) and $style ?topic ?title-numbering">
-        <axsl:template name="insertChapterFirstpageStaticContent">
-          <axsl:param name="type"/>
+<!--      <xsl:if test="map:contains($root, 'style-topic-title-numbering') and $root ?style-topic-title-numbering">-->
+        <axsl:template match="*" mode="insertChapterFirstpageStaticContent">
+          <axsl:param name="type" as="xs:string"/>
           <fo:block>
             <axsl:attribute name="id">
               <axsl:call-template name="generate-toc-id"/>
             </axsl:attribute>
-            <axsl:choose>
-              <axsl:when test="$type = 'chapter'">
-                <fo:block axsl:use-attribute-sets="__chapter__frontmatter__name__container">
-                  <axsl:call-template name="getVariable">
-                    <axsl:with-param name="id" select="'Chapter with number'"/>
-                    <axsl:with-param name="params" as="element()*">
-                      <number>
-                        <!--fo:block axsl:use-attribute-sets="__chapter__frontmatter__number__container">
-                            <axsl:apply-templates select="key('map-id', @id)[1]" mode="topicTitleNumber"/>
-                        </fo:block-->
-                      </number>
-                    </axsl:with-param>
-                  </axsl:call-template>
-                </fo:block>
-              </axsl:when>
-              <axsl:when test="$type = 'appendix'">
-                <fo:block axsl:use-attribute-sets="__chapter__frontmatter__name__container">
-                  <axsl:call-template name="getVariable">
-                    <axsl:with-param name="id" select="'Appendix with number'"/>
-                    <axsl:with-param name="params" as="element()*">
-                      <number>
-                        <!--fo:block axsl:use-attribute-sets="__chapter__frontmatter__number__container">
-                            <axsl:apply-templates select="key('map-id', @id)[1]" mode="topicTitleNumber"/>
-                        </fo:block-->
-                      </number>
-                    </axsl:with-param>
-                  </axsl:call-template>
-                </fo:block>
-              </axsl:when>
-              <axsl:when test="$type = 'appendices'">
-                <fo:block axsl:use-attribute-sets="__chapter__frontmatter__name__container">
-                  <axsl:call-template name="getVariable">
-                    <axsl:with-param name="id" select="'Appendix with number'"/>
-                    <axsl:with-param name="params" as="element()*">
-                      <number>
-                        <fo:block axsl:use-attribute-sets="__chapter__frontmatter__number__container">
-                          <axsl:text>&#xA0;</axsl:text>
-                        </fo:block>
-                      </number>
-                    </axsl:with-param>
-                  </axsl:call-template>
-                </fo:block>
-              </axsl:when>
-              <axsl:when test="$type = 'part'">
-                <fo:block axsl:use-attribute-sets="__chapter__frontmatter__name__container">
-                  <axsl:call-template name="getVariable">
-                    <axsl:with-param name="id" select="'Part with number'"/>
-                    <axsl:with-param name="params" as="element()*">
-                      <number>
-                        <fo:block axsl:use-attribute-sets="__chapter__frontmatter__number__container">
-                          <axsl:apply-templates select="key('map-id', @id)[1]" mode="topicTitleNumber"/>
-                        </fo:block>
-                      </number>
-                    </axsl:with-param>
-                  </axsl:call-template>
-                </fo:block>
-              </axsl:when>
-              <axsl:when test="$type = 'preface'">
-                <fo:block axsl:use-attribute-sets="__chapter__frontmatter__name__container">
-                  <axsl:call-template name="getVariable">
-                    <axsl:with-param name="id" select="'Preface title'"/>
-                  </axsl:call-template>
-                </fo:block>
-              </axsl:when>
-              <axsl:when test="$type = 'notices'">
-                <fo:block axsl:use-attribute-sets="__chapter__frontmatter__name__container">
-                  <axsl:call-template name="getVariable">
-                    <axsl:with-param name="id" select="'Notices title'"/>
-                  </axsl:call-template>
-                </fo:block>
-              </axsl:when>
-            </axsl:choose>
+<!--            -->
+<!--            <axsl:choose>-->
+<!--              <axsl:when test="$type = 'chapter'">-->
+<!--                <fo:block axsl:use-attribute-sets="__chapter__frontmatter__name__container">-->
+<!--                  <axsl:call-template name="getVariable">-->
+<!--                    <axsl:with-param name="id" select="'Chapter with number'"/>-->
+<!--                    <axsl:with-param name="params" as="element()*">-->
+<!--                      <number>-->
+<!--&lt;!&ndash;                        <fo:block axsl:use-attribute-sets="__chapter__frontmatter__number__container">&ndash;&gt;-->
+<!--                          <axsl:apply-templates select="key('map-id', @id)[1]" mode="topicTitleNumber"/>-->
+<!--&lt;!&ndash;                        </fo:block>&ndash;&gt;-->
+<!--                      </number>-->
+<!--                    </axsl:with-param>-->
+<!--                  </axsl:call-template>-->
+<!--                </fo:block>-->
+<!--              </axsl:when>-->
+<!--              <axsl:when test="$type = 'appendix'">-->
+<!--                <fo:block axsl:use-attribute-sets="__chapter__frontmatter__name__container">-->
+<!--                  <axsl:call-template name="getVariable">-->
+<!--                    <axsl:with-param name="id" select="'Appendix with number'"/>-->
+<!--                    <axsl:with-param name="params" as="element()*">-->
+<!--                      <number>-->
+<!--&lt;!&ndash;                        <fo:block axsl:use-attribute-sets="__chapter__frontmatter__number__container">&ndash;&gt;-->
+<!--                          <axsl:apply-templates select="key('map-id', @id)[1]" mode="topicTitleNumber"/>-->
+<!--&lt;!&ndash;                        </fo:block>&ndash;&gt;-->
+<!--                      </number>-->
+<!--                    </axsl:with-param>-->
+<!--                  </axsl:call-template>-->
+<!--                </fo:block>-->
+<!--              </axsl:when>-->
+<!--              <axsl:when test="$type = 'appendices'">-->
+<!--                <fo:block axsl:use-attribute-sets="__chapter__frontmatter__name__container">-->
+<!--                  <axsl:call-template name="getVariable">-->
+<!--                    <axsl:with-param name="id" select="'Appendix with number'"/>-->
+<!--                    <axsl:with-param name="params" as="element()*">-->
+<!--                      <number>-->
+<!--&lt;!&ndash;                        <fo:block axsl:use-attribute-sets="__chapter__frontmatter__number__container">&ndash;&gt;-->
+<!--                          <axsl:text>&#xA0;</axsl:text>-->
+<!--&lt;!&ndash;                        </fo:block>&ndash;&gt;-->
+<!--                      </number>-->
+<!--                    </axsl:with-param>-->
+<!--                  </axsl:call-template>-->
+<!--                </fo:block>-->
+<!--              </axsl:when>-->
+<!--              <axsl:when test="$type = 'part'">-->
+<!--                <fo:block axsl:use-attribute-sets="__chapter__frontmatter__name__container">-->
+<!--                  <axsl:call-template name="getVariable">-->
+<!--                    <axsl:with-param name="id" select="'Part with number'"/>-->
+<!--                    <axsl:with-param name="params" as="element()*">-->
+<!--                      <number>-->
+<!--&lt;!&ndash;                        <fo:block axsl:use-attribute-sets="__chapter__frontmatter__number__container">&ndash;&gt;-->
+<!--                          <axsl:apply-templates select="key('map-id', @id)[1]" mode="topicTitleNumber"/>-->
+<!--&lt;!&ndash;                        </fo:block>&ndash;&gt;-->
+<!--                      </number>-->
+<!--                    </axsl:with-param>-->
+<!--                  </axsl:call-template>-->
+<!--                </fo:block>-->
+<!--              </axsl:when>-->
+<!--              <axsl:when test="$type = 'preface'">-->
+<!--                <fo:block axsl:use-attribute-sets="__chapter__frontmatter__name__container">-->
+<!--                  <axsl:call-template name="getVariable">-->
+<!--                    <axsl:with-param name="id" select="'Preface title'"/>-->
+<!--                  </axsl:call-template>-->
+<!--                </fo:block>-->
+<!--              </axsl:when>-->
+<!--              <axsl:when test="$type = 'notices'">-->
+<!--                <fo:block axsl:use-attribute-sets="__chapter__frontmatter__name__container">-->
+<!--                  <axsl:call-template name="getVariable">-->
+<!--                    <axsl:with-param name="id" select="'Notices title'"/>-->
+<!--                  </axsl:call-template>-->
+<!--                </fo:block>-->
+<!--              </axsl:when>-->
+<!--            </axsl:choose>-->
           </fo:block>
         </axsl:template>
-      </xsl:if>
-      <xsl:if test=". ?formatter != 'fop'">
-        <xsl:if test=". ?page_number = 'chapter-page'">
+<!--      </xsl:if>-->
+      <xsl:if test="$root ?formatter != 'fop'">
+        <xsl:if test="$root ?page_number = 'chapter-page'">
           <axsl:template name="startPageNumbering">
             <axsl:variable name="topicType" as="xs:string">
               <axsl:call-template name="determineTopicType"/>
@@ -142,8 +141,8 @@
           </axsl:template>
         </xsl:if>
       </xsl:if>
-      <xsl:if test=". ?cover_image_topic">
-        <axsl:template match="*[contains(@class, ' topic/topic ')][@outputclass = '{. ?cover_image_topic}']" priority="1000"/>
+      <xsl:if test="$root ?cover_image_topic">
+        <axsl:template match="*[contains(@class, ' topic/topic ')][@outputclass = '{$root ?cover_image_topic}']" priority="1000"/>
       </xsl:if>
     </axsl:stylesheet>
   </xsl:template>
@@ -153,31 +152,31 @@
       <xsl:call-template name="generate-namespace-node"/>
       <axsl:variable name="e:root-id" select="'root'" as="xs:string"/>
       <!-- force page count -->
-      <xsl:if test="exists(. ?force_page_count)">
+      <xsl:if test="map:contains($root, 'force_page_count')">
         <axsl:attribute-set name="__force__page__count">
           <axsl:attribute name="force-page-count">
-            <xsl:value-of select=". ?force_page_count"/>
+            <xsl:value-of select="$root ?force_page_count"/>
           </axsl:attribute>
         </axsl:attribute-set>
       </xsl:if>
       <!-- font family -->
       <axsl:attribute-set name="__fo__root">
-        <xsl:call-template name="attribute-set">
-          <xsl:with-param name="style" select="$style('body')"/>
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-body'"/>
           <xsl:with-param name="properties" select="('font-family', 'color', 'text-align')"/>
         </xsl:call-template>
         <axsl:attribute name="id" select="$e:root-id"/>
       </axsl:attribute-set>
       <!-- link -->
       <axsl:attribute-set name="common.link">
-        <xsl:call-template name="attribute-set">
-          <xsl:with-param name="style" select="$style('link')"/>
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-link'"/>
         </xsl:call-template>
       </axsl:attribute-set>
       <!-- normal block -->
       <axsl:attribute-set name="common.block">
-        <xsl:call-template name="attribute-set">
-          <xsl:with-param name="style" select="$style('body')"/>
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-body'"/>
           <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
         </xsl:call-template>
       </axsl:attribute-set>

@@ -12,12 +12,10 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:variable name="style" select=". => map:get('style')" as="map(*)"/>
-
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test=". ?blank_pages">
+      <xsl:if test="false() and $root ?blank_pages">
         <axsl:template name="insertBodyStaticContents">
           <axsl:call-template name="insertBodyFootnoteSeparator"/>
           <axsl:call-template name="insertBodyOddFooter"/>
@@ -470,26 +468,66 @@
         </axsl:template>
       </xsl:if>
 
+      <!-- TOC -->
+      <xsl:call-template name="generate-insert-static-contents">
+        <xsl:with-param name="sequence" select="'toc'"/>
+      </xsl:call-template>
       <xsl:call-template name="generateInsert">
-        <xsl:with-param name="header" select=". ?header ?odd ?content"/>
+        <xsl:with-param name="header" select="$root ?header-odd-content"/>
+        <xsl:with-param name="sequence" select="'toc'"/>
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$mirror_page_margins">
+      <xsl:if test="$root ?mirror_page_margins">
         <xsl:call-template name="generateInsert">
-          <xsl:with-param name="header" select=". ?header ?even ?content"/>
+          <xsl:with-param name="header" select="$root ?header-even-content"/>
+          <xsl:with-param name="sequence" select="'toc'"/>
           <xsl:with-param name="flow" select="'header'"/>
           <xsl:with-param name="type" select="'even'"/>
         </xsl:call-template>
       </xsl:if>
       <xsl:call-template name="generateInsert">
-        <xsl:with-param name="header" select=". ?footer ?odd ?content"/>
+        <xsl:with-param name="header" select="$root ?footer-odd-content"/>
+        <xsl:with-param name="sequence" select="'toc'"/>
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$mirror_page_margins">
+      <xsl:if test="$root ?mirror_page_margins">
         <xsl:call-template name="generateInsert">
-          <xsl:with-param name="header" select=". ?footer ?even ?content"/>
+          <xsl:with-param name="header" select="$root ?footer-even-content"/>
+          <xsl:with-param name="sequence" select="'toc'"/>
+          <xsl:with-param name="flow" select="'footer'"/>
+          <xsl:with-param name="type" select="'even'"/>
+        </xsl:call-template>
+      </xsl:if>
+      <!-- Body -->
+      <xsl:call-template name="generate-insert-static-contents">
+        <xsl:with-param name="sequence" select="'body'"/>
+      </xsl:call-template>
+      <xsl:call-template name="generateInsert">
+        <xsl:with-param name="header" select="$root ?header-odd-content"/>
+        <xsl:with-param name="sequence" select="'body'"/>
+        <xsl:with-param name="flow" select="'header'"/>
+        <xsl:with-param name="type" select="'odd'"/>
+      </xsl:call-template>
+      <xsl:if test="$root ?mirror_page_margins">
+        <xsl:call-template name="generateInsert">
+          <xsl:with-param name="header" select="$root ?header-even-content"/>
+          <xsl:with-param name="sequence" select="'body'"/>
+          <xsl:with-param name="flow" select="'header'"/>
+          <xsl:with-param name="type" select="'even'"/>
+        </xsl:call-template>
+      </xsl:if>
+      <xsl:call-template name="generateInsert">
+        <xsl:with-param name="header" select="$root ?footer-odd-content"/>
+        <xsl:with-param name="sequence" select="'body'"/>
+        <xsl:with-param name="flow" select="'footer'"/>
+        <xsl:with-param name="type" select="'odd'"/>
+      </xsl:call-template>
+      <xsl:if test="$root ?mirror_page_margins">
+        <xsl:call-template name="generateInsert">
+          <xsl:with-param name="header" select="$root ?footer-even-content"/>
+          <xsl:with-param name="sequence" select="'body'"/>
           <xsl:with-param name="flow" select="'footer'"/>
           <xsl:with-param name="type" select="'even'"/>
         </xsl:call-template>
@@ -497,55 +535,64 @@
     </axsl:stylesheet>
   </xsl:template>
 
+  <xsl:template name="generate-insert-static-contents">
+    <xsl:param name="sequence"/>
+    <xsl:variable name="sequenceCase" select="concat(upper-case(substring($sequence, 1, 1)), substring($sequence, 2))"/>
+
+    <axsl:template name="insert{$sequenceCase}StaticContents">
+      <xsl:if test="$sequence eq 'body'">
+        <axsl:call-template name="insert{$sequenceCase}FootnoteSeparator"/>
+      </xsl:if>
+      <axsl:call-template name="insert{$sequenceCase}OddFooter"/>
+      <xsl:if test="$root ?mirror_page_margins">
+        <axsl:call-template name="insert{$sequenceCase}EvenFooter"/>
+      </xsl:if>
+      <axsl:call-template name="insert{$sequenceCase}OddHeader"/>
+      <xsl:if test="$root ?blank_pages">
+        <axsl:call-template name="generateBlank">
+          <axsl:with-param name="base" as="element()?">
+            <axsl:call-template name="insert{$sequenceCase}OddHeader"/>
+          </axsl:with-param>
+        </axsl:call-template>
+      </xsl:if>
+      <xsl:if test="$root ?mirror_page_margins">
+        <axsl:call-template name="insert{$sequenceCase}EvenHeader"/>
+        <xsl:if test="$root ?blank_pages">
+          <axsl:call-template name="generateBlank">
+            <axsl:with-param name="base" as="element()?">
+              <axsl:call-template name="insert{$sequenceCase}EvenHeader"/>
+            </axsl:with-param>
+          </axsl:call-template>
+        </xsl:if>
+      </xsl:if>
+      <xsl:if test="$sequence eq 'body'">
+        <axsl:call-template name="insert{$sequenceCase}FirstHeader"/>
+        <axsl:call-template name="insert{$sequenceCase}FirstFooter"/>
+        <axsl:call-template name="insert{$sequenceCase}LastHeader"/>
+        <axsl:call-template name="insert{$sequenceCase}LastFooter"/>
+      </xsl:if>
+    </axsl:template>
+  </xsl:template>
+
   <xsl:template name="generateInsert">
     <xsl:param name="header" as="array(*)?"/>
+    <xsl:param name="sequence" select="'body'"/>
     <xsl:param name="flow"/>
     <xsl:param name="type"/>
+
     <xsl:if test="exists($header)">
       <xsl:variable name="flowCase" select="concat(upper-case(substring($flow, 1, 1)), substring($flow, 2))"/>
       <xsl:variable name="typeCase" select="concat(upper-case(substring($type, 1, 1)), substring($type, 2))"/>
+      <xsl:variable name="sequenceCase" select="concat(upper-case(substring($sequence, 1, 1)), substring($sequence, 2))"/>
       <xsl:comment select="concat($flow, ' ', $type)"/>
-      <axsl:template name="insertBody{$typeCase}{$flowCase}">
-        <axsl:param name="flow-name" as="xs:string" select="'{$type}-body-{$flow}'"/>
+      <axsl:template name="insert{$sequenceCase}{$typeCase}{$flowCase}">
+        <axsl:param name="flow-name" as="xs:string" select="'{$type}-{$sequence}-{$flow}'"/>
         <fo:static-content flow-name="{{$flow-name}}">
           <!--fo:block-container axsl:use-attribute-sets="__body-container__{$type}__{$flow}"-->
-          <fo:block axsl:use-attribute-sets="__body__{$type}__{$flow}">
-            <axsl:call-template name="getVariable">
-              <axsl:with-param name="id" select="'Body {$type} {$flow}'" as="xs:string"/>
-              <axsl:with-param name="params">
-                <!-- FIXME: only generate those params that are needed -->
-                <title>
-                  <axsl:apply-templates select="/" mode="dita-ot:title-metadata"/>
-                </title>
-                <chapter>
-                  <fo:retrieve-marker retrieve-class-name="current-header"/>
-                </chapter>
-                <folio>
-                  <fo:page-number/>
-                </folio>
-                <folio-with-total>
-                  <!-- FIXME -->
-                  <fo:page-number/>
-                  <xsl:text> (</xsl:text>
-                  <fo:page-number-citation-last ref-id="{{$e:root-id}}"/>
-                  <xsl:text>)</xsl:text>
-                </folio-with-total>
-                <!--
-                <heading>
-                  <fo:inline>
-                    <xsl:attribute name="xsl:use-attribute-sets">__body__odd__footer__heading</xsl:attribute>
-                    <fo:retrieve-marker retrieve-class-name="current-header"/>
-                  </fo:inline>
-                </heading>
-                <pagenum>
-                  <fo:inline>
-                    <xsl:attribute name="xsl:use-attribute-sets">__body__odd__footer__pagenum</xsl:attribute>
-                    <fo:page-number/>
-                  </fo:inline>
-                </pagenum>
-                -->
-              </axsl:with-param>
-            </axsl:call-template>
+          <fo:block axsl:use-attribute-sets="__{$sequence}__{$type}__{$flow}">
+            <xsl:call-template name="insert-content">
+              <xsl:with-param name="id" select="concat($sequenceCase, ' ', $type, ' ', $flow)"/>
+            </xsl:call-template>
           </fo:block>
           <!--/fo:block-container-->
         </fo:static-content>
@@ -561,7 +608,7 @@
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$mirror_page_margins">
+      <xsl:if test="$root ?mirror_page_margins">
         <xsl:call-template name="generate-header-attribute-sets">
           <xsl:with-param name="flow" select="'header'"/>
           <xsl:with-param name="type" select="'even'"/>
@@ -572,14 +619,14 @@
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$mirror_page_margins">
+      <xsl:if test="$root ?mirror_page_margins">
         <xsl:call-template name="generate-header-attribute-sets">
           <xsl:with-param name="flow" select="'footer'"/>
           <xsl:with-param name="type" select="'even'"/>
         </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test=". ?blank_pages">
+      <xsl:if test="$root ?blank_pages">
         <axsl:attribute-set name="blank_page">
           <axsl:attribute name="position">absolute</axsl:attribute>
           <axsl:attribute name="top">100mm</axsl:attribute>
@@ -606,9 +653,8 @@
 
     <xsl:if test="map:contains(., $flow) and map:contains(.($flow), $type)">
       <axsl:attribute-set name="{$type}__{$flow}">
-        <xsl:call-template name="attribute-set">
-          <xsl:with-param name="style" select=".($flow)($type)"/>
-          <!--xsl:with-param name="properties" select="$allProperties[not(. = $viewport-area-properties)]"/-->
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="concat($flow, '-', $type)"/>
         </xsl:call-template>
         <!--xsl:for-each select="$viewport-area-properties">
           <axsl:attribute name="{.}" select="'auto'"/>

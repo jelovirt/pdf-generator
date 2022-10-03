@@ -3,5 +3,5 @@ style:
     background-image: image/logo.svg
   topic:
     background-image: url('image/logo.svg')
-  topic.topic:
+  topic_topic:
     background-image: url("image/logo.svg")

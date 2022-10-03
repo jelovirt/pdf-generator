@@ -7,7 +7,7 @@ page:
   inside: 20mm
 header:
   odd:
-    content: "{title}"
+    content: '{title}'
     padding-before: 0pt
     padding-end: 0pt
     padding-after: 0pt
@@ -38,7 +38,7 @@ header:
     color: black
     background-color: transparent
   even:
-    content: "{title}"
+    content: '{title}'
     padding-before: 0pt
     padding-end: 0pt
     padding-after: 0pt
@@ -70,7 +70,7 @@ header:
     background-color: transparent
 footer:
   odd:
-    content: "{folio}"
+    content: '{folio}'
     padding-before: 0pt
     padding-end: 0pt
     padding-after: 0pt
@@ -101,7 +101,7 @@ footer:
     color: black
     background-color: transparent
   even:
-    content: "{folio}"
+    content: '{folio}'
     padding-before: 0pt
     padding-end: 0pt
     padding-after: 0pt
@@ -162,7 +162,7 @@ style:
     text-decoration: none
     color: black
     background-color: transparent
-  topic:
+  h1:
     background-color: transparent
     padding-before: 0pt
     padding-end: 0pt
@@ -193,7 +193,7 @@ style:
     start-indent: 0pt
     line-height: '1.2'
     title-numbering: true
-  topic_topic:
+  h2:
     background-color: transparent
     padding-before: 0pt
     padding-end: 0pt
@@ -224,7 +224,7 @@ style:
     start-indent: 0pt
     line-height: '1.2'
     title-numbering: true
-  topic_topic_topic:
+  h3:
     background-color: transparent
     padding-before: 0pt
     padding-end: 0pt
@@ -255,7 +255,7 @@ style:
     start-indent: 0pt
     line-height: '1.2'
     title-numbering: true
-  topic_topic_topic_topic:
+  h4:
     background-color: transparent
     padding-before: 0pt
     padding-end: 0pt
@@ -286,7 +286,7 @@ style:
     start-indent: 0pt
     line-height: '1.2'
     title-numbering: true
-  section:
+  section_title:
     background-color: transparent
     padding-before: 0pt
     padding-end: 0pt
@@ -531,10 +531,10 @@ style:
     ol-2: '1'
     ol-3: '1'
     ol-4: '1'
-    ol-after-1: ". "
-    ol-after-2: ". "
-    ol-after-3: ". "
-    ol-after-4: ". "
+    ol-after-1: '. '
+    ol-after-2: '. '
+    ol-after-3: '. '
+    ol-after-4: '. '
   ul:
     background-color: transparent
     padding-before: 0pt
@@ -565,10 +565,10 @@ style:
     text-align: start
     start-indent: 25pt
     line-height: '1.2'
-    ul-1: "•"
-    ul-2: "•"
-    ul-3: "•"
-    ul-4: "•"
+    ul-1: '•'
+    ul-2: '•'
+    ul-3: '•'
+    ul-4: '•'
   table:
     background-color: transparent
     padding-before: 0pt
