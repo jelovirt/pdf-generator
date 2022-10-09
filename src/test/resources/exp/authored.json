@@ -89,7 +89,10 @@
       "start-indent": "0pt"
     },
     "topic": {
-      "background-color": "pink"
+      "background-color": "pink",
+      "border-after-color": "gray",
+      "border-after-style": "solid",
+      "border-after-width": "1pt"
     }
   },
   "page-top": "20mm",
@@ -164,5 +167,8 @@
   "header-odd-border-end-style": "solid",
   "header-odd-border-after-style": "solid",
   "footer-even-font-size": "10pt",
-  "style-topic-background-color": "pink"
+  "style-topic-background-color": "pink",
+  "style-topic-border-after-color": "gray",
+  "style-topic-border-after-style": "solid",
+  "style-topic-border-after-width": "1pt"
 }
