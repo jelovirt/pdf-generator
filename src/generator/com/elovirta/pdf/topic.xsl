@@ -89,6 +89,9 @@
           <axsl:when test="$topicref/@locktitle = 'yes' and $topicref/@navtitle">
             <axsl:value-of select="$topicref/@navtitle"/>
           </axsl:when>
+          <axsl:when test="*[contains(@class,' topic/titlealts ')]/*[contains(@class,' topic/navtitle ')]">
+            <axsl:apply-templates select="*[contains(@class,' topic/titlealts ')]/*[contains(@class,' topic/navtitle ')]/node()"/>
+          </axsl:when>
           <axsl:otherwise>
             <axsl:apply-templates select="*[contains(@class,' topic/title ')]/node()"/>
           </axsl:otherwise>
