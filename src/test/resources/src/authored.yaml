@@ -25,3 +25,4 @@ style:
     start-indent: 0pt
   h1:
     background-color: pink
+    border-after: solid 1pt gray

@@ -191,14 +191,14 @@
                   <xsl:map-entry key="concat('border-', ., '-color')" select="$tokens ?color"/>                  
                 </xsl:for-each>
               </xsl:when>
-              <xsl:when test="matches($key, '^border-(top|right|bottom|left)$')">
+              <xsl:when test="matches($key, '^border-(top|right|bottom|left|before|end|after|start)$')">
                 <xsl:variable name="tokens" select="x:parse-border($value)" as="map(*)"/>
                 <xsl:variable name="direction">
                   <xsl:choose>
-                    <xsl:when test="$key = 'border-top'">before</xsl:when>
-                    <xsl:when test="$key = 'border-right'">end</xsl:when>
-                    <xsl:when test="$key = 'border-bottom'">after</xsl:when>
-                    <xsl:when test="$key = 'border-left'">start</xsl:when>
+                    <xsl:when test="$key = ('border-top', 'border-before')">before</xsl:when>
+                    <xsl:when test="$key = ('border-right', 'border-end')">end</xsl:when>
+                    <xsl:when test="$key = ('border-bottom', 'border-after')">after</xsl:when>
+                    <xsl:when test="$key = ('border-left', 'border-start')">start</xsl:when>
                   </xsl:choose>
                 </xsl:variable>
                 <xsl:map-entry key="concat('border-', $direction, '-style')" select="$tokens ?style"/>
@@ -248,16 +248,16 @@
               </xsl:when>
               <!-- Rewrite h1-h4 to topic(_topic){0,3} -->
               <xsl:when test="$key = 'h1'">
-                <xsl:map-entry key="'topic'" select="$value"/>
+                <xsl:map-entry key="'topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
               <xsl:when test="$key = 'h2'">
-                <xsl:map-entry key="'topic_topic'" select="$value"/>
+                <xsl:map-entry key="'topic_topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
               <xsl:when test="$key = 'h3'">
-                <xsl:map-entry key="'topic_topic_topic'" select="$value"/>
+                <xsl:map-entry key="'topic_topic_topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
               <xsl:when test="$key = 'h4'">
-                <xsl:map-entry key="'topic_topic_topic_topic'" select="$value"/>
+                <xsl:map-entry key="'topic_topic_topic_topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key), $url)"/>
