@@ -247,6 +247,11 @@
           <xsl:with-param name="prefix" select="'style-fig'"/>
         </xsl:call-template>
       </axsl:attribute-set>
+      <axsl:attribute-set name="fig.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-fig-caption'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
     </axsl:stylesheet>
   </xsl:template>
 
