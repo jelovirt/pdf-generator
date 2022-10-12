@@ -230,6 +230,11 @@
         </axsl:attribute-set>
       </xsl:if>
       <!-- table -->
+      <axsl:attribute-set name="table.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-table-caption'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <axsl:attribute-set name="table.tgroup">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-table'"/>
