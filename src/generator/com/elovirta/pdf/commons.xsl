@@ -113,7 +113,7 @@
         </axsl:template>
 <!--      </xsl:if>-->
       <xsl:if test="$root ?formatter != 'fop'">
-        <xsl:if test="$root ?page_number = 'chapter-page'">
+        <xsl:if test="$root ?page-number = 'chapter-page'">
           <axsl:template name="startPageNumbering">
             <axsl:variable name="topicType" as="xs:string">
               <axsl:call-template name="determineTopicType"/>
@@ -141,8 +141,8 @@
           </axsl:template>
         </xsl:if>
       </xsl:if>
-      <xsl:if test="$root ?cover_image_topic">
-        <axsl:template match="*[contains(@class, ' topic/topic ')][@outputclass = '{$root ?cover_image_topic}']" priority="1000"/>
+      <xsl:if test="$root ?cover-image-topic">
+        <axsl:template match="*[contains(@class, ' topic/topic ')][@outputclass = '{$root ?cover-image-topic}']" priority="1000"/>
       </xsl:if>
     </axsl:stylesheet>
   </xsl:template>
@@ -152,10 +152,10 @@
       <xsl:call-template name="generate-namespace-node"/>
       <axsl:variable name="e:root-id" select="'root'" as="xs:string"/>
       <!-- force page count -->
-      <xsl:if test="map:contains($root, 'force_page_count')">
+      <xsl:if test="map:contains($root, 'force-page-count')">
         <axsl:attribute-set name="__force__page__count">
           <axsl:attribute name="force-page-count">
-            <xsl:value-of select="$root ?force_page_count"/>
+            <xsl:value-of select="$root ?force-page-count"/>
           </axsl:attribute>
         </axsl:attribute-set>
       </xsl:if>

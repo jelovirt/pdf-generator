@@ -151,10 +151,10 @@
         <variable id="On the page"/>
       </xsl:if>
       <xsl:choose>
-        <xsl:when test="map:contains($root, 'style-cover_title-content')">
+        <xsl:when test="map:contains($root, 'style-cover-title-content')">
           <xsl:call-template name="variables">
             <xsl:with-param name="var_names" select="'cover-title'"/>
-            <xsl:with-param name="content" select="$root ?style-cover_title-content"/>
+            <xsl:with-param name="content" select="$root ?style-cover-title-content"/>
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
@@ -163,7 +163,7 @@
           </variable>
         </xsl:otherwise>
       </xsl:choose>
-      <xsl:if test="$root ?table_continued">
+      <xsl:if test="$root ?table-continued">
         <xsl:copy-of select="$vars/variable[@id = '#table-continued']"/>
       </xsl:if>
       <xsl:if test="$root ?style-table-caption-number = 'none'">
@@ -176,12 +176,12 @@
         <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Chapter']"/>
         <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Appendix']"/>
       </xsl:if>
-      <xsl:if test="map:contains($root, 'cover_image_name')">
+      <xsl:if test="map:contains($root, 'cover-image-name')">
         <variable id="cover-image-path">
-          <xsl:text expand-text="yes">Customization/OpenTopic/common/artwork/{$root ?cover_image_name}</xsl:text>
+          <xsl:text expand-text="yes">Customization/OpenTopic/common/artwork/{$root ?cover-image-name}</xsl:text>
         </variable>
       </xsl:if>
-      <xsl:if test="$root ?blank_pages">
+      <xsl:if test="$root ?blank-pages">
         <xsl:copy-of select="$vars/variable[@id = 'blank_page']"/>
       </xsl:if>
       <xsl:call-template name="variables">

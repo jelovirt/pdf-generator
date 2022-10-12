@@ -15,7 +15,7 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <axsl:variable name="blank-pages" select="{boolean($root ?blank_pages)}()"/>
+      <axsl:variable name="blank-pages" select="{boolean($root ?blank-pages)}()"/>
 
       <axsl:template match="/" mode="create-page-masters">
         <axsl:variable name="base" as="element()*">
@@ -144,16 +144,16 @@
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <!-- page column count -->
-      <xsl:if test="map:contains($root, 'body_column_count')">
+      <xsl:if test="map:contains($root, 'body-column-count')">
         <xsl:variable name="root" select="."/>
         <xsl:for-each select="('region-body.odd', 'region-body.even')">
           <axsl:attribute-set name="{.}">
             <axsl:attribute name="column-count">
-              <xsl:value-of select="$root ?body_column_count"/>
+              <xsl:value-of select="$root ?body-column-count"/>
             </axsl:attribute>
-            <xsl:if test="$root ?column_gap">
+            <xsl:if test="$root ?column-gap">
               <axsl:attribute name="column-gap">
-                <xsl:value-of select="$root ?column_gap"/>
+                <xsl:value-of select="$root ?column-gap"/>
               </axsl:attribute>
             </xsl:if>
           </axsl:attribute-set>
@@ -163,11 +163,11 @@
             <axsl:attribute name="column-count">1</axsl:attribute>
           </axsl:attribute-set>
         </xsl:for-each>
-        <xsl:if test="map:contains($root, 'index_column_count')">
+        <xsl:if test="map:contains($root, 'index-column-count')">
           <xsl:for-each select="('region-bodyindex.odd', 'region-bodyindex.even')">
             <axsl:attribute-set name="{.}">
               <axsl:attribute name="column-count">
-                <xsl:value-of select="$root ?index_column_count"/>
+                <xsl:value-of select="$root ?index-column-count"/>
               </axsl:attribute>
             </axsl:attribute-set>
           </xsl:for-each>
