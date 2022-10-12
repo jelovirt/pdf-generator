@@ -246,21 +246,21 @@
                     'even': x:normalize($value, ($ancestors, $key, 'even'), $url)
                   }"/>
               </xsl:when>
-              <!-- Rewrite h1-h4 to topic(_topic){0,3} -->
+              <!-- Rewrite h1-h4 to topic(-topic){0,3} -->
               <xsl:when test="$key = 'h1'">
                 <xsl:map-entry key="'topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
               <xsl:when test="$key = 'h2'">
-                <xsl:map-entry key="'topic_topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
+                <xsl:map-entry key="'topic-topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
               <xsl:when test="$key = 'h3'">
-                <xsl:map-entry key="'topic_topic_topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
+                <xsl:map-entry key="'topic-topic-topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
               <xsl:when test="$key = 'h4'">
-                <xsl:map-entry key="'topic_topic_topic_topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
+                <xsl:map-entry key="'topic-topic-topic-topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key), $url)"/>
+                <xsl:map-entry key="replace($key, '_', '-')" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:for-each>

@@ -11,10 +11,10 @@
 
   <xsl:output indent="yes"/>
 
-  <xsl:param name="version" select=". ?ot_version"/>
+  <xsl:param name="version" select=". ?ot-version"/>
   <xsl:param name="formatter" select=". ?formatter"/>
 
-  <xsl:variable name="mirror_page_margins" select="boolean(. ?mirror_page_margins)" as="xs:boolean"/>
+  <xsl:variable name="mirror_page_margins" select="boolean(. ?mirror-page-margins)" as="xs:boolean"/>
 
   <xsl:variable name="allProperties" select="
     'absolute-position',
@@ -297,8 +297,8 @@
     <xsl:variable name="dummy" as="element()">
       <xsl:variable name="ns">
         <xsl:choose>
-          <xsl:when test="exists($root ?plugin_name[normalize-space()])">
-            <xsl:value-of select="$root ?plugin_name"/>
+          <xsl:when test="exists($root ?plugin-name[normalize-space()])">
+            <xsl:value-of select="$root ?plugin-name"/>
           </xsl:when>
           <xsl:when test="exists($root ?id[normalize-space()])">
             <xsl:value-of select="$root ?id"/>

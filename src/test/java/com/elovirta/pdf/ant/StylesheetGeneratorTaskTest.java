@@ -59,11 +59,11 @@ public class StylesheetGeneratorTaskTest {
                 + "\"style\":{"
                 + "\"body\":{\"background-image\":\"url('" + image + "')\"},"
                 + "\"topic\":{\"background-image\":\"url('" + image + "')\"},"
-                + "\"topic_topic\":{\"background-image\":\"url('" + image + "')\"}"
+                + "\"topic-topic\":{\"background-image\":\"url('" + image + "')\"}"
                 + "},"
                 + "\"style-body-background-image\":\"url('" + image + "')\","
                 + "\"style-topic-background-image\":\"url('" + image + "')\","
-                + "\"style-topic_topic-background-image\":\"url('" + image + "')\""
+                + "\"style-topic-topic-background-image\":\"url('" + image + "')\""
                 +"}";
         assertEquals(exp, toString(act),
                 JSONCompareMode.STRICT);

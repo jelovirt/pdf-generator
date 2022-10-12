@@ -20,8 +20,8 @@
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <axsl:param name="pdfFormatter" select="'{. ?formatter}'"/>
-      <xsl:if test="map:contains($root, 'toc_maximum_level')">
-        <axsl:param name="tocMaximumLevel" select="{$root ?toc_maximum_level}"/>
+      <xsl:if test="map:contains($root, 'toc-maximum-level')">
+        <axsl:param name="tocMaximumLevel" select="{$root ?toc-maximum-level}"/>
       </xsl:if>
       <!-- page size -->
       <xsl:if test="map:contains($root, 'page-width')">
@@ -35,8 +35,8 @@
         </axsl:variable>
       </xsl:if>
       <!-- mirror pages -->
-      <xsl:if test="$root ?mirror_page_margins">
-        <axsl:variable name="mirror-page-margins" select="{$root ?mirror_page_margins}()"/>
+      <xsl:if test="$root ?mirror-page-margins">
+        <axsl:variable name="mirror-page-margins" select="{$root ?mirror-page-margins}()"/>
       </xsl:if>
       <!-- page margins -->
       <xsl:for-each select="('top', 'outside', 'bottom', 'inside')">
@@ -66,7 +66,7 @@
         </axsl:variable>
       </xsl:if>
       <axsl:variable name="antArgsChapterLayout">
-        <xsl:value-of select="if (map:contains($root, 'chapter_layout')) then $root ?chapter_layout else 'BASIC'"/>
+        <xsl:value-of select="if (map:contains($root, 'chapter-layout')) then $root ?chapter-layout else 'BASIC'"/>
       </axsl:variable>
     </axsl:stylesheet>
   </xsl:template>

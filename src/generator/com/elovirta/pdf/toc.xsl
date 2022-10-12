@@ -69,28 +69,28 @@
         <axsl:for-each select="$currentNode">
           <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>
           <axsl:choose>
-            <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc_1')">
+            <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc-1')">
               <axsl:when test="$level eq 1">
                 <fo:block axsl:use-attribute-sets="__toc__topic__content">
                   <axsl:copy-of select="$tocItemContent"/>
                 </fo:block>
               </axsl:when>
             </xsl:if>
-            <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc_2')">
+            <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc-2')">
               <axsl:when test="$level eq 2">
                 <fo:block axsl:use-attribute-sets="__toc__topic__content_2">
                   <axsl:copy-of select="$tocItemContent"/>
                 </fo:block>
               </axsl:when>
             </xsl:if>
-            <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc_3')">
+            <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc-3')">
               <axsl:when test="$level eq 3">
                 <fo:block axsl:use-attribute-sets="__toc__topic__content_3">
                   <axsl:copy-of select="$tocItemContent"/>
                 </fo:block>
               </axsl:when>
             </xsl:if>
-            <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc_4')">
+            <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc-4')">
               <axsl:when test="$level eq 4">
                 <fo:block axsl:use-attribute-sets="__toc__topic__content_4">
                   <axsl:copy-of select="$tocItemContent"/>
@@ -107,7 +107,7 @@
         </axsl:for-each>
       </axsl:template>
 
-<!--      <xsl:if test="map:contains($root, 'style-toc_1.prefix') and not($root ?style-toc_1.prefix)">-->
+<!--      <xsl:if test="map:contains($root, 'style-toc-1.prefix') and not($root ?style-toc-1.prefix)">-->
         <axsl:template match="node()" mode="tocPrefix"/>
 <!--      </xsl:if>-->
 <!--      <axsl:template-->
@@ -141,24 +141,24 @@
         <axsl:attribute name="start-indent">
           <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>
           <axsl:choose>
-            <xsl:if test="map:contains($root,  'style-toc_1-start-indent')">
+            <xsl:if test="map:contains($root,  'style-toc-1-start-indent')">
               <axsl:when test="$level eq 1">
-                <axsl:value-of select="concat('{$root ?style-toc_1-start-indent} + ', $toc.text-indent)"/>
+                <axsl:value-of select="concat('{$root ?style-toc-1-start-indent} + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
-            <xsl:if test="map:contains($root,  'style-toc_2-start-indent')">
+            <xsl:if test="map:contains($root,  'style-toc-2-start-indent')">
               <axsl:when test="$level eq 2">
-                <axsl:value-of select="concat('{$root ?style-toc_2-start-indent} + ', $toc.text-indent)"/>
+                <axsl:value-of select="concat('{$root ?style-toc-2-start-indent} + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
-            <xsl:if test="map:contains($root,  'style-toc_3-start-indent')">
+            <xsl:if test="map:contains($root,  'style-toc-3-start-indent')">
               <axsl:when test="$level eq 3">
-                <axsl:value-of select="concat('{$root ?style-toc_3-start-indent} + ', $toc.text-indent)"/>
+                <axsl:value-of select="concat('{$root ?style-toc-3-start-indent} + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
-            <xsl:if test="map:contains($root,  'style-toc_4-start-indent')">
+            <xsl:if test="map:contains($root,  'style-toc-4-start-indent')">
               <axsl:when test="$level eq 4">
-                <axsl:value-of select="concat('{$root ?style-toc_4-start-indent} + ', $toc.text-indent)"/>
+                <axsl:value-of select="concat('{$root ?style-toc-4-start-indent} + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
             <!-- Workaround for xsl:choose must contain at least one xsl:when -->
@@ -172,7 +172,7 @@
 
       <axsl:attribute-set name="__toc__indent__booklist">
         <axsl:attribute name="start-indent">
-          <axsl:value-of select="concat('{$root ?style-toc_1-start-indent} + ', $toc.text-indent)"/>
+          <axsl:value-of select="concat('{$root ?style-toc-1-start-indent} + ', $toc.text-indent)"/>
         </axsl:attribute>
       </axsl:attribute-set>
 
@@ -204,7 +204,7 @@
         </xsl:call-template>
       </axsl:attribute-set>
 
-      <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc_1')">
+      <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc-1')">
         <axsl:attribute-set name="__toc__chapter__content">
           <xsl:call-template name="generate-attribute-set">
             <xsl:with-param name="prefix" select="'style-toc_1'"/>

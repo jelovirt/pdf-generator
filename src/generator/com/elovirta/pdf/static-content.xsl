@@ -15,7 +15,7 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="false() and $root ?blank_pages">
+      <xsl:if test="false() and $root ?blank-pages">
         <axsl:template name="insertBodyStaticContents">
           <axsl:call-template name="insertBodyFootnoteSeparator"/>
           <axsl:call-template name="insertBodyOddFooter"/>
@@ -478,7 +478,7 @@
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$root ?mirror_page_margins">
+      <xsl:if test="$root ?mirror-page-margins">
         <xsl:call-template name="generateInsert">
           <xsl:with-param name="header" select="$root ?header-even-content"/>
           <xsl:with-param name="sequence" select="'toc'"/>
@@ -492,7 +492,7 @@
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$root ?mirror_page_margins">
+      <xsl:if test="$root ?mirror-page-margins">
         <xsl:call-template name="generateInsert">
           <xsl:with-param name="header" select="$root ?footer-even-content"/>
           <xsl:with-param name="sequence" select="'toc'"/>
@@ -510,7 +510,7 @@
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$root ?mirror_page_margins">
+      <xsl:if test="$root ?mirror-page-margins">
         <xsl:call-template name="generateInsert">
           <xsl:with-param name="header" select="$root ?header-even-content"/>
           <xsl:with-param name="sequence" select="'body'"/>
@@ -524,7 +524,7 @@
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$root ?mirror_page_margins">
+      <xsl:if test="$root ?mirror-page-margins">
         <xsl:call-template name="generateInsert">
           <xsl:with-param name="header" select="$root ?footer-even-content"/>
           <xsl:with-param name="sequence" select="'body'"/>
@@ -544,20 +544,20 @@
         <axsl:call-template name="insert{$sequenceCase}FootnoteSeparator"/>
       </xsl:if>
       <axsl:call-template name="insert{$sequenceCase}OddFooter"/>
-      <xsl:if test="$root ?mirror_page_margins">
+      <xsl:if test="$root ?mirror-page-margins">
         <axsl:call-template name="insert{$sequenceCase}EvenFooter"/>
       </xsl:if>
       <axsl:call-template name="insert{$sequenceCase}OddHeader"/>
-      <xsl:if test="$root ?blank_pages">
+      <xsl:if test="$root ?blank-pages">
         <axsl:call-template name="generateBlank">
           <axsl:with-param name="base" as="element()?">
             <axsl:call-template name="insert{$sequenceCase}OddHeader"/>
           </axsl:with-param>
         </axsl:call-template>
       </xsl:if>
-      <xsl:if test="$root ?mirror_page_margins">
+      <xsl:if test="$root ?mirror-page-margins">
         <axsl:call-template name="insert{$sequenceCase}EvenHeader"/>
-        <xsl:if test="$root ?blank_pages">
+        <xsl:if test="$root ?blank-pages">
           <axsl:call-template name="generateBlank">
             <axsl:with-param name="base" as="element()?">
               <axsl:call-template name="insert{$sequenceCase}EvenHeader"/>
@@ -608,7 +608,7 @@
         <xsl:with-param name="flow" select="'header'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$root ?mirror_page_margins">
+      <xsl:if test="$root ?mirror-page-margins">
         <xsl:call-template name="generate-header-attribute-sets">
           <xsl:with-param name="flow" select="'header'"/>
           <xsl:with-param name="type" select="'even'"/>
@@ -619,14 +619,14 @@
         <xsl:with-param name="flow" select="'footer'"/>
         <xsl:with-param name="type" select="'odd'"/>
       </xsl:call-template>
-      <xsl:if test="$root ?mirror_page_margins">
+      <xsl:if test="$root ?mirror-page-margins">
         <xsl:call-template name="generate-header-attribute-sets">
           <xsl:with-param name="flow" select="'footer'"/>
           <xsl:with-param name="type" select="'even'"/>
         </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test="$root ?blank_pages">
+      <xsl:if test="$root ?blank-pages">
         <axsl:attribute-set name="blank_page">
           <axsl:attribute name="position">absolute</axsl:attribute>
           <axsl:attribute name="top">100mm</axsl:attribute>

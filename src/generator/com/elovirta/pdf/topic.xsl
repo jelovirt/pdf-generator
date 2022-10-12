@@ -21,9 +21,9 @@
           <xsl:text>(</xsl:text>
           <xsl:value-of select="(
             boolean($root ?style-topic-title-numbering),
-            boolean($root ?style-topic_topic-title-numbering),
-            boolean($root ?style-topic_topic_topic-title-numbering),
-            boolean($root ?style-topic_topic_topic_topic-title-numbering)
+            boolean($root ?style-topic-topic-title-numbering),
+            boolean($root ?style-topic-topic-topic-title-numbering),
+            boolean($root ?style-topic-topic-topic-topic-title-numbering)
             ) ! concat(., '()')" separator=", "/>
           <xsl:text>)</xsl:text>
         </xsl:attribute>
@@ -99,7 +99,7 @@
       </axsl:template>
 
       <!-- note -->
-      <xsl:if test="not($root ?style-note_icon)">
+      <xsl:if test="not($root ?style-note-icon)">
 <!--        <xsl:comment>note</xsl:comment>-->
         <axsl:template match="*[contains(@class,' topic/note ')]" mode="setNoteImagePath"/>
       </xsl:if>
@@ -188,7 +188,7 @@
       </axsl:attribute-set>
       <axsl:attribute-set name="topic.topic.title">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-topic_topic'"/>
+          <xsl:with-param name="prefix" select="'style-topic-topic'"/>
         </xsl:call-template>
       </axsl:attribute-set>
       <axsl:attribute-set name="topic.topic.topic.title">

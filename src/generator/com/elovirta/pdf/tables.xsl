@@ -62,7 +62,7 @@
         </axsl:template>
       </xsl:if>
       <xsl:choose>
-        <xsl:when test="$root ?table_continued">
+        <xsl:when test="$root ?table-continued">
           <axsl:variable name="table.frame-default" select="'all'"/>
 
           <axsl:template match="*[contains(@class, ' topic/tbody ')]" name="topic.tbody">
@@ -221,7 +221,7 @@
         </axsl:attribute-set>
       </xsl:if>
       <!-- table continued -->
-      <xsl:if test="$root ?table_continued">
+      <xsl:if test="$root ?table-continued">
         <axsl:attribute-set name="e:tfoot.row.entry.continued">
           <axsl:attribute name="border-right-style">hidden</axsl:attribute>
           <axsl:attribute name="border-left-style">hidden</axsl:attribute>
