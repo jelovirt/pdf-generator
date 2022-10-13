@@ -1,16 +1,20 @@
 <xsl:stylesheet version="3.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:axsl="http://www.w3.org/1999/XSL/Transform/alias"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:map="http://www.w3.org/2005/xpath-functions/map"
                 xmlns:array="http://www.w3.org/2005/xpath-functions/array"
-                exclude-result-prefixes="axsl map array">
+                exclude-result-prefixes="xs axsl map array">
 
   <xsl:import href="utils.xsl"/>
 
   <xsl:namespace-alias stylesheet-prefix="axsl" result-prefix="xsl"/>
 
   <xsl:output indent="yes"/>
+
+  <xsl:variable name="note-types" as="xs:string+"
+                select="'notice', 'tip', 'fastpath', 'restriction', 'important', 'remember', 'attention', 'caution', 'danger', 'warning', 'trouble', 'other'"/>
 
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
@@ -110,14 +114,11 @@
             <axsl:when test="@type = 'note' or not(@type)">
               <wrapper axsl:use-attribute-sets="note__table"/>
             </axsl:when>
-            <xsl:for-each select="'notice', 'tip', 'fastpath', 'restriction', 'important', 'remember', 'attention', 'caution', 'danger', 'warning', 'trouble'">
+            <xsl:for-each select="$note-types">
               <axsl:when test="@type = '{.}'">
                 <wrapper axsl:use-attribute-sets="note__table__{.}"/>
               </axsl:when>
             </xsl:for-each>
-            <axsl:when test="@type = 'other'">
-              <wrapper axsl:use-attribute-sets="note__table__other"/>
-            </axsl:when>
           </axsl:choose>
         </axsl:variable>
         <axsl:choose>
@@ -283,66 +284,25 @@
           <xsl:with-param name="prefix" select="'style-note'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="note__table__notice" use-attribute-sets="note__table">
+      <xsl:for-each select="$note-types">
+        <axsl:attribute-set name="note__table__{.}" use-attribute-sets="note__table">
+          <xsl:call-template name="generate-attribute-set">
+            <xsl:with-param name="prefix" select="concat('style-note-', .)"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+      </xsl:for-each>
+      <axsl:attribute-set name="note__label">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-note-notice'"/>
+          <xsl:with-param name="prefix" select="'style-note-label'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="note__table__tip" use-attribute-sets="note__table">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-note-tip'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="note__table__fastpath" use-attribute-sets="note__table">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-note-fastpath'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="note__table__restriction" use-attribute-sets="note__table">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-note-restriction'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="note__table__important" use-attribute-sets="note__table">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-note-important'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="note__table__remember" use-attribute-sets="note__table">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-note-remember'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="note__table__attention" use-attribute-sets="note__table">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-note-attention'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="note__table__caution" use-attribute-sets="note__table">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-note-caution'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="note__table__danger" use-attribute-sets="note__table">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-note-danger'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="note__table__warning" use-attribute-sets="note__table">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-note-warning'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="note__table__trouble" use-attribute-sets="note__table">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-note-trouble'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="note__table__other" use-attribute-sets="note__table">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-note-other'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
+      <xsl:for-each select="$note-types">
+        <axsl:attribute-set name="note__label__{.}" use-attribute-sets="note__label">
+          <xsl:call-template name="generate-attribute-set">
+            <xsl:with-param name="prefix" select="concat('style-note-', ., '-label')"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+      </xsl:for-each>
       <!-- pre -->
       <axsl:attribute-set name="pre">
         <xsl:call-template name="generate-attribute-set">
