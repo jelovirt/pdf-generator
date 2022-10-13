@@ -112,7 +112,7 @@
         <axsl:variable name="atts" as="element()">
           <axsl:choose>
             <axsl:when test="@type = 'note' or not(@type)">
-              <wrapper axsl:use-attribute-sets="note__table"/>
+              <wrapper axsl:use-attribute-sets="note__table__note"/>
             </axsl:when>
             <xsl:for-each select="$note-types">
               <axsl:when test="@type = '{.}'">
@@ -150,6 +150,54 @@
             </fo:block>
           </axsl:otherwise>
         </axsl:choose>
+      </axsl:template>
+
+      <axsl:template match="*" mode="placeNoteContent">
+        <fo:block axsl:use-attribute-sets="note">
+          <axsl:call-template name="commonattributes"/>
+          <!--fo:inline axsl:use-attribute-sets="note__label"-->
+            <axsl:choose>
+              <axsl:when test="@type = 'note' or empty(@type)">
+                <fo:inline axsl:use-attribute-sets="note__label__note">
+                  <axsl:call-template name="getVariable">
+                    <axsl:with-param name="id" select="'note-note-label'"/>
+                  </axsl:call-template>
+                </fo:inline>
+              </axsl:when>
+              <xsl:for-each select="$note-types[. ne 'other']">
+                <axsl:when test="@type = '{.}'">
+                  <fo:inline axsl:use-attribute-sets="note__label__{.}">
+                    <axsl:call-template name="getVariable">
+                      <axsl:with-param name="id" select="'note-{.}-label'"/>
+                      <!--axsl:with-param name="id" select="'{concat(upper-case(substring(., 1, 1)), substring(., 2))}'"/-->
+                    </axsl:call-template>
+                  </fo:inline>
+                </axsl:when>
+              </xsl:for-each>
+              <axsl:when test="@type = 'other'">
+                <fo:inline axsl:use-attribute-sets="note__label__other">
+                  <axsl:choose>
+                    <axsl:when test="@othertype">
+                      <axsl:value-of select="@othertype"/>
+                    </axsl:when>
+                    <axsl:otherwise>
+                      <axsl:text>[</axsl:text>
+                      <axsl:value-of select="@type"/>
+                      <axsl:text>]</axsl:text>
+                    </axsl:otherwise>
+                  </axsl:choose>
+                </fo:inline>
+              </axsl:when>
+            </axsl:choose>
+          <!--/fo:inline-->
+          <!--xsl:if test="map:contains($root, concat('style-note-', @type, '-label-content'))">
+            <axsl:call-template name="getVariable">
+              <axsl:with-param name="id" select="'#note-separator'"/>
+            </axsl:call-template>
+            <axsl:text><xsl:text> </xsl:text></axsl:text>
+          </xsl:if-->
+          <axsl:apply-templates/>
+        </fo:block>
       </axsl:template>
 
       <!-- fig -->
@@ -279,13 +327,13 @@
         </xsl:call-template>
       </axsl:attribute-set>
       <!-- note -->
-      <axsl:attribute-set name="note__table">
+      <axsl:attribute-set name="note__table__note">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-note'"/>
         </xsl:call-template>
       </axsl:attribute-set>
       <xsl:for-each select="$note-types">
-        <axsl:attribute-set name="note__table__{.}" use-attribute-sets="note__table">
+        <axsl:attribute-set name="note__table__{.}" use-attribute-sets="note__table__note">
           <xsl:call-template name="generate-attribute-set">
             <xsl:with-param name="prefix" select="concat('style-note-', .)"/>
           </xsl:call-template>
@@ -296,7 +344,7 @@
           <xsl:with-param name="prefix" select="'style-note-label'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <xsl:for-each select="$note-types">
+      <xsl:for-each select="'note', $note-types">
         <axsl:attribute-set name="note__label__{.}" use-attribute-sets="note__label">
           <xsl:call-template name="generate-attribute-set">
             <xsl:with-param name="prefix" select="concat('style-note-', ., '-label')"/>
