@@ -260,6 +260,20 @@
                                 else '•'"/><!--$default_style('ol')($ulField)-->
         </variable>
       </xsl:for-each>
+      <xsl:if test="map:contains($root, 'style-note-label-content')">
+        <xsl:call-template name="variables">
+          <xsl:with-param name="prefix" select="'style-note-label'"/>
+          <xsl:with-param name="var_names" select="'Note'"/>
+        </xsl:call-template>
+      </xsl:if>
+      <xsl:for-each select="'note', 'notice', 'tip', 'fastpath', 'restriction', 'important', 'remember', 'attention', 'caution', 'danger', 'warning', 'trouble', 'other'">
+        <xsl:if test="map:contains($root, concat('style-note-', ., '-label-content'))">
+          <xsl:call-template name="variables">
+            <xsl:with-param name="prefix" select="concat('style-note-', ., '-label')"/>
+            <xsl:with-param name="var_names" select="concat(upper-case(substring(., 1, 1)), substring(., 2))"/>
+          </xsl:call-template>
+        </xsl:if>
+      </xsl:for-each>
     </variables>
   </xsl:template>
 
