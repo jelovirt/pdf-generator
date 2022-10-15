@@ -260,6 +260,22 @@
                                 else '•'"/><!--$default_style('ol')($ulField)-->
         </variable>
       </xsl:for-each>
+      <!-- Table -->
+      <xsl:if test="map:contains($root, 'style-table-caption-content')">
+        <xsl:call-template name="variables">
+          <xsl:with-param name="prefix" select="'style-table-caption'"/>
+          <xsl:with-param name="var_names" select="'Table.title'"/>
+        </xsl:call-template>
+      </xsl:if>
+
+      <!-- Fig -->
+      <xsl:if test="map:contains($root, 'style-fig-caption-content')">
+        <xsl:call-template name="variables">
+          <xsl:with-param name="prefix" select="'style-fig-caption'"/>
+          <xsl:with-param name="var_names" select="'Figure.title'"/>
+        </xsl:call-template>
+      </xsl:if>
+
       <!-- Note -->
       <!--xsl:if test="map:contains($root, 'style-note-label-content')">
         <xsl:call-template name="variables">
