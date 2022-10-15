@@ -290,12 +290,12 @@
       </axsl:attribute-set>
       <axsl:attribute-set name="topic.topic.topic.title">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-topic_topic_topic'"/>
+          <xsl:with-param name="prefix" select="'style-topic-topic-topic'"/>
         </xsl:call-template>
       </axsl:attribute-set>
       <axsl:attribute-set name="topic.topic.topic.topic.title">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-topic_topic_topic_topic'"/>
+          <xsl:with-param name="prefix" select="'style-topic-topic-topic-topic'"/>
         </xsl:call-template>
       </axsl:attribute-set>
       <!-- section -->
@@ -306,7 +306,7 @@
       </axsl:attribute-set>
       <axsl:attribute-set name="section.title">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-section_title'"/>
+          <xsl:with-param name="prefix" select="'style-section-title'"/>
         </xsl:call-template>
       </axsl:attribute-set>
       <!-- example -->
@@ -317,7 +317,7 @@
       </axsl:attribute-set>
       <axsl:attribute-set name="example.title">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-example_title'"/>
+          <xsl:with-param name="prefix" select="'style-example-title'"/>
         </xsl:call-template>
       </axsl:attribute-set>
       <!-- tm -->

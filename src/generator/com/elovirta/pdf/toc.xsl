@@ -178,28 +178,28 @@
 
       <axsl:attribute-set name="__toc__topic__content">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-toc_1'"/>
+          <xsl:with-param name="prefix" select="'style-toc-1'"/>
           <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
         </xsl:call-template>
       </axsl:attribute-set>
 
       <axsl:attribute-set name="__toc__topic__content_2" use-attribute-sets="__toc__topic__content">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-toc_2'"/>
+          <xsl:with-param name="prefix" select="'style-toc-2'"/>
           <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
         </xsl:call-template>
       </axsl:attribute-set>
 
       <axsl:attribute-set name="__toc__topic__content_3" use-attribute-sets="__toc__topic__content">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-toc_3'"/>
+          <xsl:with-param name="prefix" select="'style-toc-3'"/>
           <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
         </xsl:call-template>
       </axsl:attribute-set>
 
       <axsl:attribute-set name="__toc__topic__content_4" use-attribute-sets="__toc__topic__content">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-toc_4'"/>
+          <xsl:with-param name="prefix" select="'style-toc-4'"/>
           <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
         </xsl:call-template>
       </axsl:attribute-set>
@@ -207,42 +207,42 @@
       <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc-1')">
         <axsl:attribute-set name="__toc__chapter__content">
           <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-toc_1'"/>
+            <xsl:with-param name="prefix" select="'style-toc-1'"/>
             <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
           </xsl:call-template>
         </axsl:attribute-set>
 
         <axsl:attribute-set name="__toc__appendix__content">
           <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-toc_1'"/>
+            <xsl:with-param name="prefix" select="'style-toc-1'"/>
             <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
           </xsl:call-template>
         </axsl:attribute-set>
 
         <axsl:attribute-set name="__toc__part__content">
           <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-toc_1'"/>
+            <xsl:with-param name="prefix" select="'style-toc-1'"/>
             <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
           </xsl:call-template>
         </axsl:attribute-set>
 
         <axsl:attribute-set name="__toc__preface__content">
           <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-toc_1'"/>
+            <xsl:with-param name="prefix" select="'style-toc-1'"/>
             <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
           </xsl:call-template>
         </axsl:attribute-set>
 
         <axsl:attribute-set name="__toc__notices__content">
           <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-toc_1'"/>
+            <xsl:with-param name="prefix" select="'style-toc-1'"/>
             <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
           </xsl:call-template>
         </axsl:attribute-set>
 
         <axsl:attribute-set name="__toc__topic__content__booklist">
           <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-toc_1'"/>
+            <xsl:with-param name="prefix" select="'style-toc-1'"/>
             <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
           </xsl:call-template>
         </axsl:attribute-set>
