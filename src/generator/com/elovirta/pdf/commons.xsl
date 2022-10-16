@@ -15,20 +15,27 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
+
       <axsl:template name="getChapterPrefix">
-        <axsl:variable as="element()*" name="topicref" select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)" />
-        <axsl:variable as="element()*" name="chapter" select="$topicref/ancestor-or-self::*[contains(@class, ' map/topicref ')]
-                                                                                    [parent::opentopic:map or
-                                                                                     parent::*[contains(@class, ' bookmap/part ')] or
-                                                                                     parent::*[contains(@class, ' bookmap/appendices ')]][1]" />
+        <axsl:variable name="topicref" as="element()*"
+                       select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)" />
+        <axsl:variable name="chapter" as="element()*"
+                       select="$topicref/ancestor-or-self::*[contains(@class, ' map/topicref ')]
+                                                            [not(contains(@class, ' bookmap/part ')) and
+                                                             not(contains(@class, ' bookmap/appendices ')) and
+                                                             not(contains(@class, ' bookmap/backmatter '))]
+                                                            [parent::opentopic:map or
+                                                             parent::*[contains(@class, ' bookmap/part ')] or
+                                                             parent::*[contains(@class, ' bookmap/appendices ')]]" />
         <axsl:variable name="number" as="node()*">
-          <axsl:apply-templates select="$chapter[1]" mode="topicTitleNumber"/>
+          <axsl:apply-templates select="$chapter[1]" mode="e:chapter-number"/>
         </axsl:variable>
         <axsl:if test="exists($number)">
           <axsl:copy-of select="$number"/>
           <axsl:text>–</axsl:text>
         </axsl:if>
       </axsl:template>
+
 <!--      <xsl:if test="map:contains($root, 'style-topic-title-numbering') and $root ?style-topic-title-numbering">-->
         <axsl:template match="*" mode="insertChapterFirstpageStaticContent">
           <axsl:param name="type" as="xs:string"/>

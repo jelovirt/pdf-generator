@@ -72,6 +72,31 @@
         </axsl:choose>
       </axsl:template>
 
+      <axsl:template match="*[contains(@class, ' map/topicref')]" mode="e:chapter-number">
+        <axsl:variable name="depth" select="count(ancestor-or-self::*[contains(@class, ' map/topicref')])"/>
+        <axsl:choose>
+          <axsl:when test="parent::opentopic:map and contains(@class, ' bookmap/bookmap ')"/>
+          <axsl:when test="ancestor-or-self::*[contains(@class, ' bookmap/frontmatter ') or
+                                            contains(@class, ' bookmap/backmatter ')]"/>
+          <axsl:when test="ancestor-or-self::*[contains(@class, ' bookmap/appendix ')] and
+                        $e:number-levels[$depth]">
+            <axsl:number count="*[contains(@class, ' map/topicref ')]
+                              [ancestor-or-self::*[contains(@class, ' bookmap/appendix ')]]"
+                         level="single"
+                         format="A"/>
+          </axsl:when>
+          <axsl:when test="$e:number-levels[$depth]">
+            <axsl:variable name="res">
+              <axsl:number count="*[contains(@class, ' map/topicref ')]
+                                   [not(ancestor-or-self::*[contains(@class, ' bookmap/frontmatter ')])]"
+                           level="multiple"
+                           format="1.1"/>
+            </axsl:variable>
+            <axsl:value-of select="tokenize($res, '\.')[1]"/>
+          </axsl:when>
+        </axsl:choose>
+      </axsl:template>
+
       <axsl:template name="getNavTitle">
         <axsl:variable name="topicref" select="key('map-id', @id)[1]"/>
         <axsl:variable name="contents" as="node()*">
