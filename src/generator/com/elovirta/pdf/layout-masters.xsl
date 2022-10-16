@@ -15,66 +15,65 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <axsl:variable name="blank-pages" select="{boolean($root ?blank-pages)}()"/>
+      <xsl:variable name="blank-pages" select="boolean($root ?blank-pages)"/>
 
-      <axsl:template match="/" mode="create-page-masters">
-        <axsl:variable name="base" as="element()*">
-          <axsl:next-match/>
-        </axsl:variable>
-        <axsl:copy-of select="$base"/>
-        <axsl:if test="$blank-pages">
+      <xsl:if test="$blank-pages">
+        <axsl:template match="/" mode="create-page-masters">
+          <axsl:variable name="base" as="element()*">
+            <axsl:next-match/>
+          </axsl:variable>
+          <axsl:copy-of select="$base"/>
           <axsl:apply-templates select="$base[ends-with(@master-name, '-odd') or ends-with(@master-name, '-even')]"
                                 mode="blankPage"/>
-        </axsl:if>
-      </axsl:template>
-
-      <axsl:template match="@* | node()" mode="blankPage">
-        <axsl:copy>
-          <axsl:apply-templates select="@* | node()" mode="blankPage"/>
-        </axsl:copy>
-      </axsl:template>
-      <axsl:template match="fo:simple-page-master/@master-name" mode="blankPage">
-        <axsl:attribute name="{{name()}}" select="concat(., '--blank')"/>
-      </axsl:template>
-      <axsl:template match="fo:region-before/@region-name" mode="blankPage">
-        <axsl:attribute name="{{name()}}" select="concat(., '--blank')"/>
-      </axsl:template>
+        </axsl:template>
+        <axsl:template match="@* | node()" mode="blankPage">
+          <axsl:copy>
+            <axsl:apply-templates select="@* | node()" mode="blankPage"/>
+          </axsl:copy>
+        </axsl:template>
+        <axsl:template match="fo:simple-page-master/@master-name" mode="blankPage">
+          <axsl:attribute name="{{name()}}" select="concat(., '--blank')"/>
+        </axsl:template>
+        <axsl:template match="fo:region-before/@region-name" mode="blankPage">
+          <axsl:attribute name="{{name()}}" select="concat(., '--blank')"/>
+        </axsl:template>
+      </xsl:if>
 
       <axsl:template match="/" mode="create-page-sequences">
         <axsl:call-template name="generate-page-sequence-master">
           <axsl:with-param name="master-name" select="'toc-sequence'"/>
           <axsl:with-param name="master-reference" select="'toc'"/>
           <axsl:with-param name="first" select="false()"/>
-          <axsl:with-param name="last" select="false() and not($blank-pages)"/>
-          <axsl:with-param name="blank" select="$blank-pages"/>
+          <axsl:with-param name="last" select="false() and {not($blank-pages)}()"/>
+          <axsl:with-param name="blank" select="{$blank-pages}()"/>
         </axsl:call-template>
         <axsl:call-template name="generate-page-sequence-master">
           <axsl:with-param name="master-name" select="'body-sequence'"/>
           <axsl:with-param name="master-reference" select="'body'"/>
           <axsl:with-param name="first" select="false()"/>
-          <axsl:with-param name="last" select="false() and not($blank-pages)"/>
-          <axsl:with-param name="blank" select="$blank-pages"/>
+          <axsl:with-param name="last" select="false() and {not($blank-pages)}()"/>
+          <axsl:with-param name="blank" select="{$blank-pages}()"/>
         </axsl:call-template>
         <axsl:call-template name="generate-page-sequence-master">
           <axsl:with-param name="master-name" select="'ditamap-body-sequence'"/>
           <axsl:with-param name="master-reference" select="'body'"/>
           <axsl:with-param name="first" select="false()"/>
           <axsl:with-param name="last" select="false()"/>
-          <axsl:with-param name="blank" select="$blank-pages"/>
+          <axsl:with-param name="blank" select="{$blank-pages}()"/>
         </axsl:call-template>
         <axsl:call-template name="generate-page-sequence-master">
           <axsl:with-param name="master-name" select="'index-sequence'"/>
           <axsl:with-param name="master-reference" select="'index'"/>
           <axsl:with-param name="first" select="false()"/>
-          <axsl:with-param name="last" select="false() and not($blank-pages)"/>
-          <axsl:with-param name="blank" select="$blank-pages"/>
+          <axsl:with-param name="last" select="false() and {not($blank-pages)}()"/>
+          <axsl:with-param name="blank" select="{$blank-pages}()"/>
         </axsl:call-template>
         <axsl:call-template name="generate-page-sequence-master">
           <axsl:with-param name="master-name" select="'front-matter'"/>
           <axsl:with-param name="master-reference" select="'front-matter'"/>
           <axsl:with-param name="first" select="false()"/>
-          <axsl:with-param name="last" select="false() and not($blank-pages)"/>
-          <axsl:with-param name="blank" select="$blank-pages"/>
+          <axsl:with-param name="last" select="false() and {not($blank-pages)}()"/>
+          <axsl:with-param name="blank" select="{$blank-pages}()"/>
         </axsl:call-template>
         <axsl:if test="$generate-back-cover">
           <axsl:call-template name="generate-page-sequence-master">
@@ -87,8 +86,8 @@
           <axsl:with-param name="master-name" select="'glossary-sequence'"/>
           <axsl:with-param name="master-reference" select="'glossary'"/>
           <axsl:with-param name="first" select="false()"/>
-          <axsl:with-param name="last" select="false() and not($blank-pages)"/>
-          <axsl:with-param name="blank" select="$blank-pages"/>
+          <axsl:with-param name="last" select="false() and {not($blank-pages)}()"/>
+          <axsl:with-param name="blank" select="{$blank-pages}()"/>
         </axsl:call-template>
       </axsl:template>
 
@@ -103,7 +102,7 @@
           <fo:repeatable-page-master-alternatives>
             <axsl:if test="$first">
               <fo:conditional-page-master-reference master-reference="{{$master-reference}}-first"
-                                                    odd-or-even="odd" page-position="xfirst"/>
+                                                    odd-or-even="odd" page-position="first"/>
             </axsl:if>
             <axsl:if test="$last">
               <fo:conditional-page-master-reference master-reference="{{$master-reference}}-last"
