@@ -220,6 +220,7 @@
           </xsl:if>
         </axsl:attribute-set>
       </xsl:if>
+
       <!-- table continued -->
       <xsl:if test="$root ?table-continued">
         <axsl:attribute-set name="e:tfoot.row.entry.continued">
@@ -229,6 +230,7 @@
           <axsl:attribute name="font-style">italic</axsl:attribute>
         </axsl:attribute-set>
       </xsl:if>
+
       <!-- table -->
       <axsl:attribute-set name="table.title">
         <xsl:call-template name="generate-attribute-set">
@@ -240,9 +242,22 @@
           <xsl:with-param name="prefix" select="'style-table'"/>
         </xsl:call-template>
       </axsl:attribute-set>
+      <axsl:attribute-set name="thead.row">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-table-header'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <axsl:attribute-set name="thead.row.entry">
         <axsl:attribute name="background-color">inherit</axsl:attribute>
       </axsl:attribute-set>
+
+      <!-- simpletable -->
+      <axsl:attribute-set name="sthead">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-table-header'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+
     </axsl:stylesheet>
   </xsl:template>
 

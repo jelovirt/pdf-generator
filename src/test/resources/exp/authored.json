@@ -93,6 +93,11 @@
       "border-after-color": "gray",
       "border-after-style": "solid",
       "border-after-width": "1pt"
+    },
+    "table": {
+      "header": {
+        "color": "green"
+      }
     }
   },
   "page-top": "20mm",
@@ -170,5 +175,6 @@
   "style-topic-background-color": "pink",
   "style-topic-border-after-color": "gray",
   "style-topic-border-after-style": "solid",
-  "style-topic-border-after-width": "1pt"
+  "style-topic-border-after-width": "1pt",
+  "style-table-header-color": "green"
 }
