@@ -157,13 +157,13 @@
             </xsl:if>
           </axsl:attribute-set>
         </xsl:for-each>
-        <xsl:for-each select="('region-bodyfrontmatter.odd', 'region-bodyfrontmatter.even')">
+        <xsl:for-each select="('region-body__frontmatter.odd', 'region-body__frontmatter.even')">
           <axsl:attribute-set name="{.}">
             <axsl:attribute name="column-count">1</axsl:attribute>
           </axsl:attribute-set>
         </xsl:for-each>
         <xsl:if test="map:contains($root, 'index-column-count')">
-          <xsl:for-each select="('region-bodyindex.odd', 'region-bodyindex.even')">
+          <xsl:for-each select="('region-body__index.odd', 'region-body__index.even')">
             <axsl:attribute-set name="{.}">
               <axsl:attribute name="column-count">
                 <xsl:value-of select="$root ?index-column-count"/>
