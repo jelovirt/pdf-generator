@@ -859,7 +859,7 @@
   "include-related-links": "none",
   "force-page-count": "even",
   "index-column-count": 2,
-  "mirror-page-margins": false,
+  "page-mirror-margins": false,
   "blank-pages": false,
   "page-number": "page",
   "task-label": false,

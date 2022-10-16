@@ -76,7 +76,7 @@ export default class Generator {
   task_label;
   include_related_links;
   column_gap;
-  mirror_page_margins;
+  page_mirror_margins;
   table_continued;
   formatter;
   cover_image_metadata;
@@ -127,7 +127,7 @@ export default class Generator {
     if (conf.column_gap) {
       this.column_gap = conf.column_gap;
     }
-    this.mirror_page_margins = conf.mirror_page_margins;
+    this.page_mirror_margins = conf.page_mirror_margins;
     this.table_continued = conf.table_continued;
     this.formatter = conf.formatter;
     if (conf.cover_image_metadata) {

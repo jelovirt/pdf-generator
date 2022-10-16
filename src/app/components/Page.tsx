@@ -108,11 +108,11 @@ export default function Page() {
         </fieldset>
         <fieldset>
           <p>
-            <label htmlFor="mirror_page_margins">Mirror margins</label>
+            <label htmlFor="page_mirror_margins">Mirror margins</label>
             <Field
               type="checkbox"
-              name="mirror_page_margins"
-              id="mirror_page_margins"
+              name="page_mirror_margins"
+              id="page_mirror_margins"
             />
           </p>
         </fieldset>
@@ -159,7 +159,7 @@ export default function Page() {
         </fieldset>
       </div>
       <PagePreview
-        mirror_page_margins={values.mirror_page_margins}
+        page_mirror_margins={values.page_mirror_margins}
         page_size={values.page_size}
         orientation={values.orientation}
         top={values.page.top}

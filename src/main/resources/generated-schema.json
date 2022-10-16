@@ -40,7 +40,7 @@
       ],
       "description": "Style configuration."
     },
-    "mirror_page_margins": {
+    "page_mirror_margins": {
       "type": "boolean",
       "description": "Duplex pages with recto and verso pages.",
       "default": false

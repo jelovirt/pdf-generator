@@ -124,7 +124,7 @@ style:
     font-family: Comic Sans MS
   h1:
     color: $brand-primary-color
-mirror_page_margins: false
+page_mirror_margins: false
 blank_pages: false
 body_column_count: 1
 index_column_count: 2
