@@ -162,20 +162,6 @@
           </axsl:if>
         </axsl:template>
 
-        <axsl:template name="generateBlank">
-          <axsl:param name="base" as="element()?"/>
-          <fo:static-content flow-name="{{$base/@flow-name}}--blank">
-            <axsl:copy-of select="$base/*"/>
-            <fo:block-container axsl:use-attribute-sets="blank_page">
-              <fo:block>
-                <axsl:call-template name="getVariable">
-                  <axsl:with-param name="id" select="'blank_page'"/>
-                </axsl:call-template>
-              </fo:block>
-            </fo:block-container>
-          </fo:static-content>
-        </axsl:template>
-
         <!-- Body -->
 
         <!--
@@ -468,6 +454,22 @@
         </axsl:template>
       </xsl:if>
 
+      <xsl:if test="$root ?blank-pages">
+        <axsl:template name="generateBlank">
+          <axsl:param name="base" as="element()?"/>
+          <fo:static-content flow-name="{{$base/@flow-name}}--blank">
+            <axsl:copy-of select="$base/*"/>
+            <fo:block-container axsl:use-attribute-sets="blank_page">
+              <fo:block>
+                <axsl:call-template name="getVariable">
+                  <axsl:with-param name="id" select="'blank_page'"/>
+                </axsl:call-template>
+              </fo:block>
+            </fo:block-container>
+          </fo:static-content>
+        </axsl:template>
+      </xsl:if>
+
       <!-- TOC -->
       <xsl:call-template name="generate-insert-static-contents">
         <xsl:with-param name="sequence" select="'toc'"/>
@@ -500,6 +502,7 @@
           <xsl:with-param name="type" select="'even'"/>
         </xsl:call-template>
       </xsl:if>
+
       <!-- Body -->
       <xsl:call-template name="generate-insert-static-contents">
         <xsl:with-param name="sequence" select="'body'"/>
@@ -532,6 +535,35 @@
           <xsl:with-param name="type" select="'even'"/>
         </xsl:call-template>
       </xsl:if>
+
+      <!-- Cover -->
+      <axsl:template name="insertFrontMatterOddHeader">
+        <fo:static-content flow-name="odd-frontmatter-header"/>
+        <!--          <axsl:call-template name="insertBodyOddHeader">-->
+        <!--            <axsl:with-param name="flow-name" select="'odd-frontmatter-header'"/>-->
+        <!--          </axsl:call-template>-->
+      </axsl:template>
+
+      <axsl:template name="insertFrontMatterEvenHeader">
+        <fo:static-content flow-name="even-frontmatter-header"/>
+        <!--          <axsl:call-template name="insertBodyOddHeader">-->
+        <!--            <axsl:with-param name="flow-name" select="'even-frontmatter-header'"/>-->
+        <!--          </axsl:call-template>-->
+      </axsl:template>
+
+      <axsl:template name="insertFrontMatterOddFooter">
+        <fo:static-content flow-name="odd-frontmatter-footer"/>
+        <!--          <axsl:call-template name="insertBodyOddFooter">-->
+        <!--            <axsl:with-param name="flow-name" select="'odd-frontmatter-footer'"/>-->
+        <!--          </axsl:call-template>-->
+      </axsl:template>
+
+      <axsl:template name="insertFrontMatterEvenFooter">
+        <fo:static-content flow-name="even-frontmatter-footer"/>
+        <!--          <axsl:call-template name="insertBodyOddFooter">-->
+        <!--            <axsl:with-param name="flow-name" select="'even-frontmatter-footer'"/>-->
+        <!--          </axsl:call-template>-->
+      </axsl:template>
     </axsl:stylesheet>
   </xsl:template>
 
