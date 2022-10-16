@@ -14,7 +14,7 @@
   <xsl:param name="version" select=". ?ot-version"/>
   <xsl:param name="formatter" select=". ?formatter"/>
 
-  <xsl:variable name="mirror_page_margins" select="boolean(. ?mirror-page-margins)" as="xs:boolean"/>
+  <xsl:variable name="page_mirror_margins" select="boolean(. ?page-mirror-margins)" as="xs:boolean"/>
 
   <xsl:variable name="allProperties" select="
     'absolute-position',

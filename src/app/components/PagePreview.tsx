@@ -2,7 +2,7 @@ import React, { CSSProperties } from 'react';
 import { Length } from '../../generator/Model';
 
 export default function PagePreview(props: {
-  mirror_page_margins: boolean;
+  page_mirror_margins: boolean;
   page_size: string;
   orientation: 'portrait' | 'landscape';
   top: Length;
@@ -12,7 +12,7 @@ export default function PagePreview(props: {
 }) {
   return (
     <div className="example-block col-md-7" id="margin.example">
-      {props.mirror_page_margins && <PreviewPage {...props} even={true} />}
+      {props.page_mirror_margins && <PreviewPage {...props} even={true} />}
       <PreviewPage {...props} even={false} />
     </div>
   );

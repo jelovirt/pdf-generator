@@ -31,13 +31,13 @@ export default function Header() {
             </thead>
             <tbody>
               <tr>
-                {values.mirror_page_margins && (
+                {values.page_mirror_margins && (
                   <th className="even">Even header:</th>
                 )}
-                <th>{values.mirror_page_margins ? 'Odd header' : 'Header'}:</th>
+                <th>{values.page_mirror_margins ? 'Odd header' : 'Header'}:</th>
               </tr>
               <tr>
-                {values.mirror_page_margins && (
+                {values.page_mirror_margins && (
                   <td className="even">
                     <TagContainer
                       fields={values.header.even.content}
@@ -57,13 +57,13 @@ export default function Header() {
                 </td>
               </tr>
               <tr>
-                {values.mirror_page_margins && (
+                {values.page_mirror_margins && (
                   <th className="even">Even footer:</th>
                 )}
-                <th>{values.mirror_page_margins ? 'Odd footer' : 'Footer'}:</th>
+                <th>{values.page_mirror_margins ? 'Odd footer' : 'Footer'}:</th>
               </tr>
               <tr>
-                {values.mirror_page_margins && (
+                {values.page_mirror_margins && (
                   <td className="even">
                     <TagContainer
                       fields={values.footer.even.content}

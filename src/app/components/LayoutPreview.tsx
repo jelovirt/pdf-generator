@@ -4,7 +4,7 @@ import { PreviewPage } from './PagePreview';
 
 export default function LayoutPreview(props: {
   force_page_count: 'auto' | 'even' | 'odd';
-  mirror_page_margins: boolean;
+  page_mirror_margins: boolean;
   page_size: string;
   orientation: 'portrait' | 'landscape';
   top: Length;

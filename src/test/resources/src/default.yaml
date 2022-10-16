@@ -774,7 +774,7 @@ style:
     text-decoration: none
     line-height: '1.2'
     symbol-scope: always
-mirror_page_margins: false
+page_mirror_margins: false
 blank_pages: false
 body_column_count: 1
 index_column_count: 2

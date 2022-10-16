@@ -72,7 +72,7 @@ export default function Layout() {
       </div>
       <LayoutPreview
         force_page_count={values.force_page_count}
-        mirror_page_margins={values.mirror_page_margins}
+        page_mirror_margins={values.page_mirror_margins}
         page_size={values.page_size}
         orientation={values.orientation}
         top={values.page.top}

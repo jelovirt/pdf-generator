@@ -20,9 +20,9 @@ export function generate_custom_attr(root: Element, conf: Generator) {
   SubElement(root, xsl('variable'), { name: 'page-height' }).text =
     conf.page.height;
   // mirror pages
-  if (conf.mirror_page_margins) {
+  if (conf.page_mirror_margins) {
     SubElement(root, xsl('variable'), {
-      name: 'mirror-page-margins',
+      name: 'page-mirror-margins',
       select: 'true()',
     });
   }

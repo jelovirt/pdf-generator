@@ -35,8 +35,8 @@
         </axsl:variable>
       </xsl:if>
       <!-- mirror pages -->
-      <xsl:if test="$root ?mirror-page-margins">
-        <axsl:variable name="mirror-page-margins" select="{$root ?mirror-page-margins}()"/>
+      <xsl:if test="$root ?page-mirror-margins">
+        <axsl:variable name="mirror-page-margins" select="{$root ?page-mirror-margins}()"/>
       </xsl:if>
       <!-- page margins -->
       <xsl:for-each select="('top', 'outside', 'bottom', 'inside')">

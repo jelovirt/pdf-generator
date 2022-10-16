@@ -65,7 +65,7 @@ export type Model = {
   };
   style: Record<StyleName, Record<Property, string>>;
   // override_shell: boolean;
-  mirror_page_margins: boolean;
+  page_mirror_margins: boolean;
   body_column_count: number;
   blank_pages: boolean;
   index_column_count: number;
@@ -159,7 +159,7 @@ export function getInitStore(): PluginModel {
     style: getInitStyle(),
     formatter: Formatter.FOP,
     // override_shell: true,
-    mirror_page_margins: false,
+    page_mirror_margins: false,
     blank_pages: false,
     body_column_count: 1,
     index_column_count: 2,
