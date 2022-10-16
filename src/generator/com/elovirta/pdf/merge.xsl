@@ -231,7 +231,7 @@
                 <xsl:map-entry key="$name" select="$value"/>
               </xsl:when>
               <!-- Group header and footer styles under odd and even -->
-              <xsl:when test="$key = ('header', 'footer') and exists(($value ?odd, $value ?even))">
+              <xsl:when test="$key = ('header', 'footer') and empty($ancestors) and exists(($value ?odd, $value ?even))">
                 <xsl:variable name="other" select="x:exclude($value, ('odd', 'even'))" as="map(*)"/>
                 <xsl:map-entry key="$key" select="
                   map {
@@ -239,7 +239,7 @@
                    'even': x:normalize(map:merge(($value ?even, $other)), ($ancestors, $key, 'even'), $url)
                   }"/>
               </xsl:when>
-              <xsl:when test="$key = ('header', 'footer') and empty(($value ?odd, $value ?even))">
+              <xsl:when test="$key = ('header', 'footer') and empty($ancestors) and empty(($value ?odd, $value ?even))">
                 <xsl:map-entry key="$key" select="
                   map {
                     'odd': x:normalize($value, ($ancestors, $key, 'odd'), $url),

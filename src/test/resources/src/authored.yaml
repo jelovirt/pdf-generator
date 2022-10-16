@@ -26,3 +26,6 @@ style:
   h1:
     background-color: pink
     border-after: solid 1pt gray
+  table:
+    header:
+      color: green
