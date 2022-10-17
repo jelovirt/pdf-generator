@@ -393,6 +393,18 @@
           <xsl:with-param name="prefix" select="'style-fig-caption'"/>
         </xsl:call-template>
       </axsl:attribute-set>
+      <!-- keyword -->
+      <axsl:attribute-set name="keyword">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-keyword'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- term -->
+      <axsl:attribute-set name="term">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-term'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
     </axsl:stylesheet>
   </xsl:template>
 
