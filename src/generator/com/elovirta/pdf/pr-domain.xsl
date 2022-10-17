@@ -20,6 +20,11 @@
           <axsl:sequence select="true()"/>
         </axsl:template>
       </xsl:if>
+      <xsl:if test="$root ?style-codeblock-show-whitespace">
+        <axsl:template match="node()" mode="codeblock.show-whitespace" as="xs:boolean">
+          <axsl:sequence select="true()"/>
+        </axsl:template>
+      </xsl:if>
     </axsl:stylesheet>
   </xsl:template>
 

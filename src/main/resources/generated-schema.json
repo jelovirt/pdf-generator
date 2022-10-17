@@ -588,6 +588,40 @@
         }
       }
     },
+    "codeblock_type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block_style_type"
+        }
+      ],
+      "properties": {
+        "line-numbering": {
+          "type": "boolean",
+          "description": "Show line numbers."
+        },
+        "show-whitespace": {
+          "type": "boolean",
+          "description": "Show whitespace characters."
+        },
+        "caption-number": {
+          "type": "string",
+          "enum": [
+            "chapter",
+            "document"
+          ],
+          "description": "Number figures with chapter prefix or use whole document numbering."
+        },
+        "caption-position": {
+          "type": "string",
+          "enum": [
+            "before",
+            "after"
+          ],
+          "description": "Place figure caption before or after figure."
+        }
+      }
+    },
     "dl_type": {
       "type": "object",
       "allOf": [
@@ -771,7 +805,7 @@
             "$ref": "#/definitions/body_type"
           },
           "codeblock": {
-            "$ref": "#/definitions/body_type"
+            "$ref": "#/definitions/codeblock_type"
           },
           "dl": {
             "$ref": "#/definitions/dl_type"
