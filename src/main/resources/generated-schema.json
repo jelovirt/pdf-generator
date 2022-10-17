@@ -588,6 +588,40 @@
         }
       }
     },
+    "codeblock_type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block_style_type"
+        }
+      ],
+      "properties": {
+        "line-numbering": {
+          "type": "boolean",
+          "description": "Show line numbers."
+        },
+        "show-whitespace": {
+          "type": "boolean",
+          "description": "Show whitespace characters."
+        },
+        "caption-number": {
+          "type": "string",
+          "enum": [
+            "chapter",
+            "document"
+          ],
+          "description": "Number figures with chapter prefix or use whole document numbering."
+        },
+        "caption-position": {
+          "type": "string",
+          "enum": [
+            "before",
+            "after"
+          ],
+          "description": "Place figure caption before or after figure."
+        }
+      }
+    },
     "dl_type": {
       "type": "object",
       "allOf": [
@@ -752,59 +786,69 @@
           "$ref": "#/definitions/body_type"
         },
         "section": {
-        "cover_title": {
-          "$ref": "#/definitions/body_type"
-        },
-        "section": {
-          "$ref": "#/definitions/body_type"
-        },
-        "example": {
-          "$ref": "#/definitions/body_type"
-        },
-        "example_title": {
-          "$ref": "#/definitions/body_type"
-        },
-        "note": {
-          "$ref": "#/definitions/body_type"
-        },
-        "pre": {
-          "$ref": "#/definitions/body_type"
-        },
-        "codeblock": {
-          "$ref": "#/definitions/body_type"
-        },
-        "dl": {
-          "$ref": "#/definitions/dl_type"
-        },
-        "ol": {
-          "$ref": "#/definitions/ol_type"
-        },
-        "ul": {
-          "$ref": "#/definitions/ul_type"
-        },
-        "table": {
-          "$ref": "#/definitions/table_type"
-        },
-        "fig": {
-          "$ref": "#/definitions/table_type"
-        },
-        "toc_1": {
-          "$ref": "#/definitions/toc_1_type"
-        },
-        "toc_2": {
-          "$ref": "#/definitions/body_type"
-        },
-        "toc_3": {
-          "$ref": "#/definitions/body_type"
-        },
-        "toc_4": {
-          "$ref": "#/definitions/body_type"
-        },
-        "link": {
-          "$ref": "#/definitions/link_type"
-        },
-        "tm": {
-          "$ref": "#/definitions/tm_type"
+          "cover_title": {
+            "$ref": "#/definitions/body_type"
+          },
+          "section": {
+            "$ref": "#/definitions/body_type"
+          },
+          "example": {
+            "$ref": "#/definitions/body_type"
+          },
+          "example_title": {
+            "$ref": "#/definitions/body_type"
+          },
+          "note": {
+            "$ref": "#/definitions/body_type"
+          },
+          "pre": {
+            "$ref": "#/definitions/body_type"
+          },
+          "codeblock": {
+            "$ref": "#/definitions/codeblock_type"
+          },
+          "dl": {
+            "$ref": "#/definitions/dl_type"
+          },
+          "ol": {
+            "$ref": "#/definitions/ol_type"
+          },
+          "ul": {
+            "$ref": "#/definitions/ul_type"
+          },
+          "table": {
+            "$ref": "#/definitions/table_type"
+          },
+          "fig": {
+            "$ref": "#/definitions/table_type"
+          },
+          "toc_1": {
+            "$ref": "#/definitions/toc_1_type"
+          },
+          "toc_2": {
+            "$ref": "#/definitions/body_type"
+          },
+          "toc_3": {
+            "$ref": "#/definitions/body_type"
+          },
+          "toc_4": {
+            "$ref": "#/definitions/body_type"
+          },
+          "link": {
+            "$ref": "#/definitions/link_type"
+          },
+          "tm": {
+            "$ref": "#/definitions/tm_type"
+          },
+          "keyword": {
+            "$ref": "#/definitions/inline_style_type"
+          },
+          "term": {
+            "$ref": "#/definitions/inline_style_type"
+          },
+          "codeph": {
+            "$ref": "#/definitions/inline_style_type"
+          }
         }
       }
     }

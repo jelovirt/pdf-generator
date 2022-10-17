@@ -20,6 +20,11 @@
           <axsl:sequence select="true()"/>
         </axsl:template>
       </xsl:if>
+      <xsl:if test="$root ?style-codeblock-show-whitespace">
+        <axsl:template match="node()" mode="codeblock.show-whitespace" as="xs:boolean">
+          <axsl:sequence select="true()"/>
+        </axsl:template>
+      </xsl:if>
     </axsl:stylesheet>
   </xsl:template>
 
@@ -30,6 +35,12 @@
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-codeblock'"/>
           <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+
+      <axsl:attribute-set name="codeph">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-codeph'"/>
         </xsl:call-template>
       </axsl:attribute-set>
     </axsl:stylesheet>
