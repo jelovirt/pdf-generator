@@ -32,6 +32,12 @@
           <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
         </xsl:call-template>
       </axsl:attribute-set>
+
+      <axsl:attribute-set name="codeph">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-codeph'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
     </axsl:stylesheet>
   </xsl:template>
 

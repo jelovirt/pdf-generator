@@ -811,6 +811,9 @@
           },
           "term": {
             "$ref": "#/definitions/inline_style_type"
+          },
+          "codeph": {
+            "$ref": "#/definitions/inline_style_type"
           }
         }
       }
