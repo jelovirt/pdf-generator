@@ -133,7 +133,9 @@ public class StylesheetGeneratorTaskTest {
             "theme.json",
             "theme.yaml",
             "empty.json",
-            "empty.yaml"
+            "empty.yaml",
+            "variable.json",
+            "variable.yaml"
     })
     public void getTemplate_normalize(final String template) throws URISyntaxException, SaxonApiException, JSONException {
         task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()));

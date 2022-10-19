@@ -1,0 +1,44 @@
+{
+  "brand": {
+    "font": "Helvetica",
+    "color": "#000000"
+  },
+  "page": {
+    "height": "297mm",
+    "width": "210mm"
+  },
+  "style": {
+    "base": {
+      "font": "12pt $brand-font",
+      "border-before-style": "solid",
+      "border-before-width": "1pt",
+      "border-before-color": "#000000",
+      "border-start-style": "solid",
+      "border-start-width": "1pt",
+      "border-start-color": "#000000",
+      "border-after-style": "solid",
+      "border-after-width": "1pt",
+      "border-after-color": "#000000",
+      "border-end-style": "solid",
+      "border-end-width": "1pt",
+      "border-end-color": "#000000"
+    }
+  },
+  "brand-font": "Helvetica",
+  "brand-color": "#000000",
+  "page-height": "297mm",
+  "page-width": "210mm",
+  "style-base-font": "12pt $brand-font",
+  "style-base-border-before-style": "solid",
+  "style-base-border-before-width": "1pt",
+  "style-base-border-before-color": "#000000",
+  "style-base-border-start-style": "solid",
+  "style-base-border-start-width": "1pt",
+  "style-base-border-start-color": "#000000",
+  "style-base-border-after-style": "solid",
+  "style-base-border-after-width": "1pt",
+  "style-base-border-after-color": "#000000",
+  "style-base-border-end-style": "solid",
+  "style-base-border-end-width": "1pt",
+  "style-base-border-end-color": "#000000"
+}
