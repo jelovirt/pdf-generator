@@ -56,11 +56,11 @@ public class StylesheetGeneratorTaskTest {
 
         final String image = src.resolve("image/logo.svg").toString();
         final String exp = "{"
-                + "\"style\":{"
-                + "\"body\":{\"background-image\":\"url('" + image + "')\"},"
-                + "\"topic\":{\"background-image\":\"url('" + image + "')\"},"
-                + "\"topic-topic\":{\"background-image\":\"url('" + image + "')\"}"
-                + "},"
+//                + "\"style\":{"
+//                + "\"body\":{\"background-image\":\"" + "image/logo.svg" + "\"},"
+//                + "\"topic\":{\"background-image\":\"url('" + "image/logo.svg" + "')\"},"
+//                + "\"topic-topic\":{\"background-image\":\"url('" + "image/logo.svg" + "')\"}"
+//                + "},"
                 + "\"style-body-background-image\":\"url('" + image + "')\","
                 + "\"style-topic-background-image\":\"url('" + image + "')\","
                 + "\"style-topic-topic-background-image\":\"url('" + image + "')\""

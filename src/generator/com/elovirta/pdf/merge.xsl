@@ -37,7 +37,7 @@
         <xsl:sequence select="x:flatten-walker($root, $root, ())"/>
       </xsl:map>
     </xsl:variable>
-    <xsl:sequence select="map:merge(($root, $flattened), map{ 'duplicates': 'use-first' })"/>
+    <xsl:sequence select="map:merge(($flattened), map{ 'duplicates': 'use-first' })"/>
   </xsl:function>
 
   <xsl:function name="x:flatten-walker" as="item()*">
@@ -53,7 +53,7 @@
           <xsl:sequence select="x:flatten-walker($root, $value, ($ancestors, $key))"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:variable name="flattened-name" select="string-join(($ancestors, $key), $separator)"/>
+          <xsl:variable name="flattened-name" select="replace(string-join(($ancestors, $key), $separator), '_', '-')"/>
           <xsl:if test="not(map:contains($root, $flattened-name))">
             <xsl:map-entry key="$flattened-name" select="$value"/>
           </xsl:if>
@@ -165,7 +165,7 @@
               </xsl:when>
               <xsl:when test="$key = 'orientation' and $ancestors = ('page')"/>
               <!-- Convert image reference to FO format -->
-              <xsl:when test="$key = 'background-image'">
+              <xsl:when test="matches($key, '[\-\^]background-image$')">
                 <xsl:variable name="image-url">
                   <xsl:analyze-string select="$value" regex="url\([&quot;'](.+?)[&quot;']\)">
                     <xsl:matching-substring>

@@ -1,14 +1,4 @@
 {
-  "style": {
-    "base": {
-      "color": "black",
-      "font-family": "sans-serif"
-    },
-    "pre": {
-      "color": "gray",
-      "font-family": "monospace"
-    }
-  },
   "style-base-color": "black",
   "style-base-font-family": "sans-serif",
   "style-pre-color": "gray",
