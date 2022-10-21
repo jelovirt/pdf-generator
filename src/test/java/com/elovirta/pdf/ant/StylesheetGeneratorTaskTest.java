@@ -146,6 +146,20 @@ public class StylesheetGeneratorTaskTest {
                 JSONCompareMode.STRICT);
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "flatten.json",
+            "flatten.yaml"
+    })
+    public void getTemplate_flatten(final String template) throws URISyntaxException, SaxonApiException, JSONException {
+        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()));
+
+        final XdmValue act = task.parseTemplate();
+
+        assertEquals(readToString("exp/" + template.substring(0, template.indexOf(".")) + ".json"), toString(act),
+                JSONCompareMode.STRICT);
+    }
+
     private String readToString(final String name) {
         final InputStream baseInput = getClass().getClassLoader().getResourceAsStream(name);
         return new BufferedReader(new InputStreamReader(baseInput, StandardCharsets.UTF_8))
