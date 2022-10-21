@@ -185,23 +185,23 @@ public class StylesheetGeneratorTask extends Task {
             if (extendsValue != null) {
                 final URI extendsUri = url.resolve(extendsValue.getStringValue());
                 final XdmItem extendsRes = parseYamlTemplate(executable, parseYaml(extendsUri), url);
-                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
-                        base, XdmEmptySequence.getInstance(), new XdmAtomicValue(extendsUri)
-                });
                 final XdmValue flattened = transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
-                        normalized
+                        base
+                });
+                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
+                        flattened, XdmEmptySequence.getInstance(), new XdmAtomicValue(extendsUri)
                 });
                 return transformer.callFunction(QName.fromClarkName("{x}merge"), new XdmValue[]{
-                        extendsRes.stream().asXdmValue(), flattened
+                        extendsRes.stream().asXdmValue(), normalized
                 }).itemAt(0);
             } else {
-                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
-                        base, XdmEmptySequence.getInstance(), new XdmAtomicValue(url)
-                });
                 final XdmValue flattened = transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
-                        normalized
+                        base
                 });
-                return flattened.itemAt(0);
+                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
+                        flattened, XdmEmptySequence.getInstance(), new XdmAtomicValue(url)
+                });
+                return normalized.itemAt(0);
             }
         } catch (SaxonApiException e) {
             throw new BuildException(String.format("Failed to parse template %s", template), e);

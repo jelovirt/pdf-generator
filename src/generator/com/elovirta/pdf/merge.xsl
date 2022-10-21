@@ -20,10 +20,12 @@
       <xsl:when test="map:contains($base, 'extends')">
         <xsl:variable name="extends-url" select="resolve-uri($base ?extends, $url)"/>
         <xsl:variable name="extends" select="x:extends(json-doc($extends-url), $extends-url)"/>
-        <xsl:sequence select="x:merge($extends, x:flatten(x:normalize($base, (), $extends-url)))"/>
+<!--        <xsl:sequence select="x:merge($extends, x:flatten(x:normalize($base, (), $extends-url)))"/>-->
+        <xsl:sequence select="map:merge((x:normalize(x:flatten($base), (), $extends-url), $extends),
+                                        map{ 'duplicates': 'use-first' })"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:sequence select="x:flatten(x:normalize($base, (), $url))"/>
+        <xsl:sequence select="x:normalize(x:flatten($base), (), $url)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
@@ -112,9 +114,9 @@
       </xsl:when>
       <xsl:when test="$base instance of map(*)">
         <xsl:map>
-          <xsl:if test="empty($ancestors) and not(map:contains($base, 'style'))">
-            <xsl:map-entry key="'style'" select="map{}"/>
-          </xsl:if>
+<!--          <xsl:if test="empty($ancestors) and not(map:contains($base, 'style'))">-->
+<!--            <xsl:map-entry key="'style'" select="map{}"/>-->
+<!--          </xsl:if>-->
           <xsl:for-each select="map:keys($base)">
             <xsl:variable name="key" select="."/>
             <xsl:variable name="value" select="map:get($base, $key)"/>
@@ -141,18 +143,18 @@
                 <xsl:map-entry key="$key" select="array{ $tokens }"/>
               </xsl:when>
               <!-- Map page size and orientation into page dimensions -->
-              <xsl:when test="$key = 'size' and $ancestors = ('page')">
+              <xsl:when test="$key = 'page-size' and empty($ancestors)">
                 <xsl:variable name="sizes" select="map:get($page-sizes, $value)" as="array(*)?"/>
                 <xsl:choose>
                   <xsl:when test="exists($sizes)">
                     <xsl:choose>
-                      <xsl:when test="$base ?orientation = 'landscape'">
-                        <xsl:map-entry key="'height'" select="array:get($sizes, 1)"/>
-                        <xsl:map-entry key="'width'" select="array:get($sizes, 2)"/>
+                      <xsl:when test="$base ?page-orientation = 'landscape'">
+                        <xsl:map-entry key="'page-height'" select="array:get($sizes, 1)"/>
+                        <xsl:map-entry key="'page-width'" select="array:get($sizes, 2)"/>
                       </xsl:when>
                       <xsl:otherwise>
-                        <xsl:map-entry key="'height'" select="array:get($sizes, 2)"/>
-                        <xsl:map-entry key="'width'" select="array:get($sizes, 1)"/>
+                        <xsl:map-entry key="'page-height'" select="array:get($sizes, 2)"/>
+                        <xsl:map-entry key="'page-width'" select="array:get($sizes, 1)"/>
                       </xsl:otherwise>
                     </xsl:choose>
                   </xsl:when>
