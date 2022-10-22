@@ -53,13 +53,22 @@
           <xsl:sequence select="x:flatten-walker($root, $value, ($ancestors, $key))"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:variable name="flattened-name" select="replace(string-join(($ancestors, $key), $separator), '_', '-')"/>
+          <xsl:variable name="flattened-name" select="string-join(($ancestors, $key), $separator) => x:rewrite-key-name()"/>
           <xsl:if test="not(map:contains($root, $flattened-name))">
             <xsl:map-entry key="$flattened-name" select="$value"/>
           </xsl:if>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
+  </xsl:function>
+
+  <xsl:function name="x:rewrite-key-name" as="xs:string">
+    <xsl:param name="key" as="xs:string"/>
+    <xsl:value-of select="replace($key, '_', '-')
+                       => replace('-(space|border|padding)-top', '-$1-before')
+                       => replace('-(space|border|padding)-right', '-$1-end')
+                       => replace('-(space|border|padding)-bottom', '-$1-after')
+                       => replace('-(space|border|padding)-left', '-$1-start')"/>
   </xsl:function>
 
   <xsl:function name="x:merge" as="item()*" visibility="public">
@@ -122,7 +131,7 @@
             <xsl:variable name="value" select="map:get($base, $key)"/>
             <xsl:choose>
               <!-- Parse content DSL into AST -->
-              <xsl:when test="$key = 'content' and not($value instance of array(*))">
+              <xsl:when test="matches($key, '-content$') and not($value instance of array(*))">
                 <xsl:variable name="tokens" as="item()*">
                   <xsl:analyze-string select="$value" regex="\{{(.+?)\}}">
                     <xsl:matching-substring>
@@ -163,7 +172,7 @@
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:when>
-              <xsl:when test="$key = 'orientation' and $ancestors = ('page')"/>
+              <xsl:when test="$key = 'page-orientation' and empty($ancestors)"/>
               <!-- Convert image reference to FO format -->
               <xsl:when test="matches($key, '[\-\^]background-image$')">
                 <xsl:variable name="image-url">
@@ -249,17 +258,17 @@
                   }"/>
               </xsl:when>
               <!-- Rewrite h1-h4 to topic(-topic){0,3} -->
-              <xsl:when test="$key = 'h1'">
-                <xsl:map-entry key="'topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
+              <xsl:when test="matches($key, '-h1-')">
+                <xsl:map-entry key="replace($key, '-h1-', '-topic-')" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
-              <xsl:when test="$key = 'h2'">
-                <xsl:map-entry key="'topic-topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
+              <xsl:when test="matches($key, '-h2-')">
+                <xsl:map-entry key="replace($key, '-h2-', '-topic-topic-')" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
-              <xsl:when test="$key = 'h3'">
-                <xsl:map-entry key="'topic-topic-topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
+              <xsl:when test="matches($key, '-h3-')">
+                <xsl:map-entry key="replace($key, '-h3-', '-topic-topic-topic-')" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
-              <xsl:when test="$key = 'h4'">
-                <xsl:map-entry key="'topic-topic-topic-topic'" select="x:normalize($value, ($ancestors, $key), $url)"/>
+              <xsl:when test="matches($key, '-h4-')">
+                <xsl:map-entry key="replace($key, '-h4-', '-topic-topic-topic-topic-')" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:map-entry key="replace($key, '_', '-')" select="x:normalize($value, ($ancestors, $key), $url)"/>
@@ -348,47 +357,42 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-    
+
+  <!-- Resolve variables in flattened theme -->
   <xsl:function name="x:resolveVariables" as="item()">
-    <xsl:param name="base" as="item()"/>
+    <xsl:param name="base" as="map(*)"/>
     <xsl:param name="keys" as="map(*)"/>
-    
-    <xsl:choose>
-      <xsl:when test="$base instance of array(*)">
-        <xsl:variable name="array" as="map(*)*">
-          <xsl:for-each select="1 to array:size($base)">
-            <xsl:variable name="index" select="."/>
-            <xsl:variable name="value" select="array:get($base, $index)"/>
-            <xsl:sequence select="x:resolveVariables($value, $keys)"/>
-          </xsl:for-each>
+
+    <xsl:map>
+      <xsl:for-each select="map:keys($base)">
+        <xsl:variable name="key" select="."/>
+        <xsl:variable name="value" as="item()">
+          <xsl:variable name="v" select="map:get($base, $key)"/>
+          <xsl:choose>
+            <xsl:when test="$v instance of array(*) or $v instance of map(*)">
+              <xsl:sequence select="$v"/>
+            </xsl:when>
+            <xsl:when test="starts-with(string($v), '$')">
+              <xsl:variable name="variable" select="substring(string($v), 2)"/>
+              <xsl:choose>
+                <xsl:when test="map:contains($keys, $variable)">
+                  <xsl:sequence select="map:get($keys, $variable)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:message>[ERROR] No binding for variable <xsl:value-of select="$variable"/> found</xsl:message>
+                  <xsl:sequence select="$v"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:sequence select="$v"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:variable>
-        <xsl:sequence select="array{ $array }"/>
-      </xsl:when>
-      <xsl:when test="$base instance of map(*)">
-        <xsl:map>
-          <xsl:for-each select="map:keys($base)">
-            <xsl:variable name="key" select="."/>
-            <xsl:variable name="value" select="map:get($base, $key)"/>
-            <xsl:map-entry key="$key" select="x:resolveVariables($value, $keys)"/>
-          </xsl:for-each>
-        </xsl:map>
-      </xsl:when>
-      <xsl:when test="starts-with(string($base), '$')">
-        <xsl:variable name="variable" select="substring(string($base), 2)"/>
-        <xsl:choose>
-          <xsl:when test="map:contains($keys, $variable)">
-            <xsl:sequence select="map:get($keys, $variable)"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:message>[ERROR] No binding for variable <xsl:value-of select="$base"/> found</xsl:message>
-            <xsl:sequence select="$base"/>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:sequence select="$base"/>
-      </xsl:otherwise>
-    </xsl:choose>
+<!--            <xsl:map-entry key="$key" select="x:resolveVariables($value, $keys)"/>-->
+        <xsl:map-entry key="$key" select="$value"/>
+      </xsl:for-each>
+    </xsl:map>
   </xsl:function>
 
 </xsl:stylesheet>
