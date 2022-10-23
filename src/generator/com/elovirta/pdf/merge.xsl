@@ -355,39 +355,54 @@
 
   <!-- Resolve variables in flattened theme -->
   <xsl:function name="x:resolveVariables" as="item()">
-    <xsl:param name="base" as="map(*)"/>
+    <xsl:param name="base" as="item()"/>
     <xsl:param name="keys" as="map(*)"/>
 
-    <xsl:map>
-      <xsl:for-each select="map:keys($base)">
-        <xsl:variable name="key" select="."/>
-        <xsl:variable name="value" as="item()">
-          <xsl:variable name="v" select="map:get($base, $key)"/>
-          <xsl:choose>
-            <xsl:when test="$v instance of array(*) or $v instance of map(*)">
-              <xsl:sequence select="$v"/>
-            </xsl:when>
-            <xsl:when test="starts-with(string($v), '$')">
-              <xsl:variable name="variable" select="substring(string($v), 2)"/>
+    <xsl:choose>
+      <xsl:when test="$base instance of map(*)">
+        <xsl:map>
+          <xsl:for-each select="map:keys($base)">
+            <xsl:variable name="key" select="."/>
+            <xsl:variable name="value" select="map:get($base, $key)"/>
+            <xsl:map-entry key="." select="x:resolveVariables($value, $keys)"/>
+          </xsl:for-each>
+        </xsl:map>
+      </xsl:when>
+      <xsl:when test="$base instance of array(*)">
+        <xsl:variable name="array" as="item()*">
+          <xsl:for-each select="1 to array:size($base)">
+            <xsl:variable name="index" select="."/>
+            <xsl:variable name="value" select="array:get($base, $index)"/>
+            <xsl:sequence select="x:resolveVariables($value, $keys)"/>
+          </xsl:for-each>
+        </xsl:variable>
+        <xsl:sequence select="array{ $array }"/>
+      </xsl:when>
+      <xsl:when test="$base instance of xs:string">
+        <xsl:value-of>
+          <xsl:analyze-string select="$base" regex="\$[\w-]+">
+            <xsl:matching-substring>
+              <xsl:variable name="variable" select="substring(., 2)"/>
               <xsl:choose>
                 <xsl:when test="map:contains($keys, $variable)">
                   <xsl:sequence select="map:get($keys, $variable)"/>
                 </xsl:when>
                 <xsl:otherwise>
                   <xsl:message>[ERROR] No binding for variable <xsl:value-of select="$variable"/> found</xsl:message>
-                  <xsl:sequence select="$v"/>
+                  <xsl:sequence select="."/>
                 </xsl:otherwise>
               </xsl:choose>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:sequence select="$v"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-<!--            <xsl:map-entry key="$key" select="x:resolveVariables($value, $keys)"/>-->
-        <xsl:map-entry key="$key" select="$value"/>
-      </xsl:for-each>
-    </xsl:map>
+            </xsl:matching-substring>
+            <xsl:non-matching-substring>
+              <xsl:value-of select="."/>
+            </xsl:non-matching-substring>
+          </xsl:analyze-string>
+        </xsl:value-of>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="$base"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
 
 </xsl:stylesheet>

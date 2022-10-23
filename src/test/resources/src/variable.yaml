@@ -5,5 +5,5 @@ page:
   size: A4
 style:
   base:
-    font: 12pt Helvetica
-    border: 'solid 1pt #000000'
+    font: 12pt $brand-font
+    border: solid 1pt $brand-color
