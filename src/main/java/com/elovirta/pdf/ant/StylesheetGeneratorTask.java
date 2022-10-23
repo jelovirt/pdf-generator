@@ -74,6 +74,7 @@ public class StylesheetGeneratorTask extends Task {
         generate(xdmItem, "links.xsl", "xsl/fo/links.xsl", null);
         generate(xdmItem, "lists.xsl", "xsl/fo/lists.xsl", null);
         generate(xdmItem, "pr-domain.xsl", "xsl/fo/pr-domain.xsl", null);
+//        generate(xdmItem, "sw-domain.xsl", "xsl/fo/sw-domain.xsl", null);
         generate(xdmItem, "static-content.xsl", "xsl/fo/static-content.xsl", null);
         generate(xdmItem, "topic.xsl", "xsl/fo/topic.xsl", null);
         generate(xdmItem, "layout-masters.xsl", "cfg/fo/layout-masters.xsl", null);
@@ -88,6 +89,7 @@ public class StylesheetGeneratorTask extends Task {
         generate(xdmItem, "links.xsl", "cfg/fo/attrs/links-attr.xsl", ATTR);
         generate(xdmItem, "lists.xsl", "cfg/fo/attrs/lists-attr.xsl", ATTR);
         generate(xdmItem, "pr-domain.xsl", "cfg/fo/attrs/pr-domain-attr.xsl", ATTR);
+        generate(xdmItem, "sw-domain.xsl", "cfg/fo/attrs/sw-domain-attr.xsl", ATTR);
         generate(xdmItem, "topic.xsl", "cfg/fo/attrs/topic-attr.xsl", ATTR);
         final File shell = generate(xdmItem, "shell.xsl", "xsl/fo/topic2fo_shell.xsl", null);
         for (String lang : new String[]{"de", "en", "es", "fi", "fr", "he", "it", "ja", "nl", "ro", "ru", "sl", "sv", "zh-CN"}) {
