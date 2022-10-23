@@ -154,9 +154,13 @@ public class StylesheetGeneratorTask extends Task {
     private XdmItem resolveVariables(final XsltExecutable executable, final XdmItem base) {
         try {
             final Xslt30Transformer transformer = executable.load30();
-            return transformer.callFunction(QName.fromClarkName("{x}resolve"), new XdmValue[]{
+            final XdmValue resolved = transformer.callFunction(QName.fromClarkName("{x}resolve"), new XdmValue[]{
                     base
-            }).itemAt(0);
+            });
+            final XdmValue expanded = transformer.callFunction(QName.fromClarkName("{x}expandShorthand"), new XdmValue[]{
+                    resolved
+            });
+            return expanded.itemAt(0);
         } catch (SaxonApiException e) {
             throw new BuildException("Failed to resolve variables", e);
         }

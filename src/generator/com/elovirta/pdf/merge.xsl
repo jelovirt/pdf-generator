@@ -3,6 +3,8 @@
   xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:x="x"
   exclude-result-prefixes="xs x" version="3.0">
 
+  <xsl:import href="utils.xsl"/>
+
   <xsl:output method="json"/>
 
   <xsl:param name="base-url"/>
@@ -68,7 +70,11 @@
                        => replace('-(space|border|padding)-top', '-$1-before')
                        => replace('-(space|border|padding)-right', '-$1-end')
                        => replace('-(space|border|padding)-bottom', '-$1-after')
-                       => replace('-(space|border|padding)-left', '-$1-start')"/>
+                       => replace('-(space|border|padding)-left', '-$1-start')
+                       => replace('^style-h1-', 'style-topic-')
+                       => replace('^style-h2-', 'style-topic-topic-')
+                       => replace('^style-h3-', 'style-topic-topic-topic-')
+                       => replace('^style-h4-', 'style-topic-topic-topic-topic-')"/>
   </xsl:function>
 
   <xsl:function name="x:merge" as="item()*" visibility="public">
@@ -194,70 +200,90 @@
                 </xsl:map-entry>                    
               </xsl:when>
               <!-- Expand border shorthand -->
-              <xsl:when test="$key = 'border'">
-                <xsl:variable name="tokens" select="x:parse-border($value)" as="map(*)"/>
-                <xsl:for-each select="('before', 'end', 'after', 'start')">
-                  <xsl:map-entry key="concat('border-', ., '-style')" select="$tokens ?style"/>
-                  <xsl:map-entry key="concat('border-', ., '-width')" select="$tokens ?width"/>
-                  <xsl:map-entry key="concat('border-', ., '-color')" select="$tokens ?color"/>                  
+<!--              <xsl:when test="$key = 'border'">-->
+<!--                <xsl:variable name="tokens" select="x:parse-border($value)" as="map(*)"/>-->
+<!--                <xsl:for-each select="('before', 'end', 'after', 'start')">-->
+<!--                  <xsl:map-entry key="concat('border-', ., '-style')" select="$tokens ?style"/>-->
+<!--                  <xsl:map-entry key="concat('border-', ., '-width')" select="$tokens ?width"/>-->
+<!--                  <xsl:map-entry key="concat('border-', ., '-color')" select="$tokens ?color"/>                  -->
+<!--                </xsl:for-each>-->
+<!--              </xsl:when>-->
+<!--              <xsl:when test="matches($key, '^border-(top|right|bottom|left|before|end|after|start)$')">-->
+<!--                <xsl:variable name="tokens" select="x:parse-border($value)" as="map(*)"/>-->
+<!--                <xsl:variable name="direction">-->
+<!--                  <xsl:choose>-->
+<!--                    <xsl:when test="$key = ('border-top', 'border-before')">before</xsl:when>-->
+<!--                    <xsl:when test="$key = ('border-right', 'border-end')">end</xsl:when>-->
+<!--                    <xsl:when test="$key = ('border-bottom', 'border-after')">after</xsl:when>-->
+<!--                    <xsl:when test="$key = ('border-left', 'border-start')">start</xsl:when>-->
+<!--                  </xsl:choose>-->
+<!--                </xsl:variable>-->
+<!--                <xsl:map-entry key="concat('border-', $direction, '-style')" select="$tokens ?style"/>-->
+<!--                <xsl:map-entry key="concat('border-', $direction, '-width')" select="$tokens ?width"/>-->
+<!--                <xsl:map-entry key="concat('border-', $direction, '-color')" select="$tokens ?color"/>                  -->
+<!--              </xsl:when>-->
+<!--              <xsl:when test="matches($key, '^border-(style|width|color)$')">-->
+<!--                <xsl:variable name="type" select="substring-after($key, '-')"/>-->
+<!--                <xsl:for-each select="('before', 'end', 'after', 'start')">-->
+<!--                  <xsl:map-entry key="concat('border-', ., '-', $type)" select="$value"/>-->
+<!--                </xsl:for-each>-->
+<!--              </xsl:when>-->
+<!--              <xsl:when test="matches($key, '^.+?-(top|right|bottom|left)(-.+?)?$')">-->
+<!--                <xsl:variable name="name">-->
+<!--                  <xsl:analyze-string select="$key" regex="^(.+?-)(top|right|bottom|left)(-.+?)?$">-->
+<!--                    <xsl:matching-substring>-->
+<!--                      <xsl:value-of>-->
+<!--                        <xsl:value-of select="regex-group(1)"/>-->
+<!--                        <xsl:choose>-->
+<!--                          <xsl:when test="regex-group(2) = 'top'">before</xsl:when>-->
+<!--                          <xsl:when test="regex-group(2) = 'right'">end</xsl:when>-->
+<!--                          <xsl:when test="regex-group(2) = 'bottom'">after</xsl:when>-->
+<!--                          <xsl:when test="regex-group(2) = 'left'">start</xsl:when>-->
+<!--                        </xsl:choose>-->
+<!--                        <xsl:value-of select="regex-group(3)"/>-->
+<!--                      </xsl:value-of>-->
+<!--                    </xsl:matching-substring>-->
+<!--                  </xsl:analyze-string>-->
+<!--                </xsl:variable>-->
+<!--                <xsl:map-entry key="$name" select="$value"/>-->
+<!--              </xsl:when>-->
+
+              <xsl:when test="matches($key, '^(header|footer)-(odd|even)-') and empty($ancestors)">
+                <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key), $url)"/>
+              </xsl:when>
+              <xsl:when test="matches($key, '^(header|footer)-') and empty($ancestors)">
+                <xsl:variable name="suffix" select="replace($key, '^(header|footer)-.+$', '$1')"/>
+                <xsl:for-each select="$allProperties">
+                  <xsl:variable name="property" select="."/>
+                  <xsl:variable name="common-property-key" select="concat($suffix, '-', $property)"/>
+                  <xsl:if test="$key = $common-property-key">
+                    <xsl:for-each select="('odd', 'even')">
+                      <xsl:variable name="side-property-key" select="concat($suffix, '-', ., '-', $property)"/>
+                      <xsl:if test="not(map:contains($base, $side-property-key))">
+                        <xsl:map-entry key="$side-property-key" select="$value"/>
+                      </xsl:if>
+                    </xsl:for-each>
+                  </xsl:if>
                 </xsl:for-each>
-              </xsl:when>
-              <xsl:when test="matches($key, '^border-(top|right|bottom|left|before|end|after|start)$')">
-                <xsl:variable name="tokens" select="x:parse-border($value)" as="map(*)"/>
-                <xsl:variable name="direction">
-                  <xsl:choose>
-                    <xsl:when test="$key = ('border-top', 'border-before')">before</xsl:when>
-                    <xsl:when test="$key = ('border-right', 'border-end')">end</xsl:when>
-                    <xsl:when test="$key = ('border-bottom', 'border-after')">after</xsl:when>
-                    <xsl:when test="$key = ('border-left', 'border-start')">start</xsl:when>
-                  </xsl:choose>
-                </xsl:variable>
-                <xsl:map-entry key="concat('border-', $direction, '-style')" select="$tokens ?style"/>
-                <xsl:map-entry key="concat('border-', $direction, '-width')" select="$tokens ?width"/>
-                <xsl:map-entry key="concat('border-', $direction, '-color')" select="$tokens ?color"/>                  
-              </xsl:when>
-              <xsl:when test="matches($key, '^border-(style|width|color)$')">
-                <xsl:variable name="type" select="substring-after($key, '-')"/>
-                <xsl:for-each select="('before', 'end', 'after', 'start')">
-                  <xsl:map-entry key="concat('border-', ., '-', $type)" select="$value"/>
-                </xsl:for-each>
-              </xsl:when>
-              <xsl:when test="matches($key, '^.+?-(top|right|bottom|left)(-.+?)?$')">
-                <xsl:variable name="name">
-                  <xsl:analyze-string select="$key" regex="^(.+?-)(top|right|bottom|left)(-.+?)?$">
-                    <xsl:matching-substring>
-                      <xsl:value-of>
-                        <xsl:value-of select="regex-group(1)"/>
-                        <xsl:choose>
-                          <xsl:when test="regex-group(2) = 'top'">before</xsl:when>
-                          <xsl:when test="regex-group(2) = 'right'">end</xsl:when>
-                          <xsl:when test="regex-group(2) = 'bottom'">after</xsl:when>
-                          <xsl:when test="regex-group(2) = 'left'">start</xsl:when>
-                        </xsl:choose>
-                        <xsl:value-of select="regex-group(3)"/>
-                      </xsl:value-of>
-                    </xsl:matching-substring>
-                  </xsl:analyze-string>
-                </xsl:variable>
-                <xsl:map-entry key="$name" select="$value"/>
               </xsl:when>
               <!-- Group header and footer styles under odd and even -->
-              <xsl:when test="$key = ('header', 'footer') and empty($ancestors) and exists(($value ?odd, $value ?even))">
-                <xsl:variable name="other" select="x:exclude($value, ('odd', 'even'))" as="map(*)"/>
-                <xsl:map-entry key="$key" select="
-                  map {
-                   'odd': x:normalize(map:merge(($value ?odd, $other)), ($ancestors, $key, 'odd'), $url),
-                   'even': x:normalize(map:merge(($value ?even, $other)), ($ancestors, $key, 'even'), $url)
-                  }"/>
-              </xsl:when>
-              <xsl:when test="$key = ('header', 'footer') and empty($ancestors) and empty(($value ?odd, $value ?even))">
-                <xsl:map-entry key="$key" select="
-                  map {
-                    'odd': x:normalize($value, ($ancestors, $key, 'odd'), $url),
-                    'even': x:normalize($value, ($ancestors, $key, 'even'), $url)
-                  }"/>
-              </xsl:when>
+<!--              <xsl:when test="$key = ('header', 'footer') and empty($ancestors) and exists(($value ?odd, $value ?even))">-->
+<!--                <xsl:variable name="other" select="x:exclude($value, ('odd', 'even'))" as="map(*)"/>-->
+<!--                <xsl:map-entry key="$key" select="-->
+<!--                  map {-->
+<!--                   'odd': x:normalize(map:merge(($value ?odd, $other)), ($ancestors, $key, 'odd'), $url),-->
+<!--                   'even': x:normalize(map:merge(($value ?even, $other)), ($ancestors, $key, 'even'), $url)-->
+<!--                  }"/>-->
+<!--              </xsl:when>-->
+<!--              <xsl:when test="$key = ('header', 'footer') and empty($ancestors) and empty(($value ?odd, $value ?even))">-->
+<!--                <xsl:map-entry key="$key" select="-->
+<!--                  map {-->
+<!--                    'odd': x:normalize($value, ($ancestors, $key, 'odd'), $url),-->
+<!--                    'even': x:normalize($value, ($ancestors, $key, 'even'), $url)-->
+<!--                  }"/>-->
+<!--              </xsl:when>-->
               <!-- Rewrite h1-h4 to topic(-topic){0,3} -->
+              <!--
               <xsl:when test="matches($key, '-h1-')">
                 <xsl:map-entry key="replace($key, '-h1-', '-topic-')" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:when>
@@ -269,9 +295,9 @@
               </xsl:when>
               <xsl:when test="matches($key, '-h4-')">
                 <xsl:map-entry key="replace($key, '-h4-', '-topic-topic-topic-topic-')" select="x:normalize($value, ($ancestors, $key), $url)"/>
-              </xsl:when>
+              </xsl:when>-->
               <xsl:otherwise>
-                <xsl:map-entry key="replace($key, '_', '-')" select="x:normalize($value, ($ancestors, $key), $url)"/>
+                <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key), $url)"/>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:for-each>
@@ -283,6 +309,54 @@
     </xsl:choose>
   </xsl:function>
   
+  <xsl:function name="x:expandShorthand" as="item()*" visibility="public">
+    <xsl:param name="base" as="item()*"/>
+
+    <xsl:map>
+      <xsl:for-each select="map:keys($base)">
+        <xsl:variable name="key" select="."/>
+        <xsl:variable name="value" select="map:get($base, $key)"/>
+        <xsl:choose>
+          <xsl:when test="matches($key, '-border$')">
+            <xsl:variable name="suffix" select="replace($key, '-border$', '')" as="xs:string"/>
+            <xsl:variable name="tokens" select="x:parse-border($value)" as="map(*)"/>
+            <xsl:for-each select="('before', 'end', 'after', 'start')">
+              <xsl:map-entry key="concat($suffix, '-border-', ., '-style')" select="$tokens ?style"/>
+              <xsl:map-entry key="concat($suffix, '-border-', ., '-width')" select="$tokens ?width"/>
+              <xsl:map-entry key="concat($suffix, '-border-', ., '-color')" select="$tokens ?color"/>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:when test="matches($key, '-border-(top|right|bottom|left|before|end|after|start)$')">
+            <xsl:variable name="suffix" select="replace($key, '-border-(top|right|bottom|left|before|end|after|start)$', '')" as="xs:string"/>
+            <xsl:variable name="tokens" select="x:parse-border($value)" as="map(*)"/>
+            <xsl:variable name="direction">
+              <xsl:choose>
+                <xsl:when test="matches($key, '-border-(top|before)$')">before</xsl:when>
+                <xsl:when test="matches($key, '-border-(right|end)$')">end</xsl:when>
+                <xsl:when test="matches($key, '-border-(bottom|after)$')">after</xsl:when>
+                <xsl:when test="matches($key, '-border-(left|start)$')">start</xsl:when>
+              </xsl:choose>
+            </xsl:variable>
+            <xsl:map-entry key="concat($suffix, '-border-', $direction, '-style')" select="$tokens ?style"/>
+            <xsl:map-entry key="concat($suffix, '-border-', $direction, '-width')" select="$tokens ?width"/>
+            <xsl:map-entry key="concat($suffix, '-border-', $direction, '-color')" select="$tokens ?color"/>
+          </xsl:when>
+          <xsl:when test="matches($key, '-border-(style|width|color)$')">
+            <xsl:variable name="suffix" select="replace($key, '-border-(style|width|color)$', '')" as="xs:string"/>
+            <xsl:variable name="type" select="replace($key, '^.+-(style|width|color)$', '$1')"/>
+            <xsl:for-each select="('before', 'end', 'after', 'start')">
+              <xsl:map-entry key="concat($suffix, '-border-', ., '-', $type)" select="$value"/>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:map-entry key="$key" select="$value"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
+    </xsl:map>
+
+  </xsl:function>
+
   <xsl:function name="x:exclude">
     <xsl:param name="map" as="map(*)"/>
     <xsl:param name="names" as="item()*"/>
@@ -325,11 +399,11 @@
     'Letter': ['8.5in', '11in'],
     'PA4': ['210mm', '280mm'] 
     }"/>
-  
 
   <xsl:function name="x:resolve" as="map(*)" visibility="public">
     <xsl:param name="base" as="map(*)"/>
-    <xsl:variable name="keys" select="x:flatten($base, ())" as="map(*)"/>
+<!--    <xsl:variable name="keys" select="x:flatten($base, ())" as="map(*)"/>-->
+    <xsl:variable name="keys" select="$base" as="map(*)"/>
     <xsl:sequence select="x:resolveVariables($base, $keys)"/>
   </xsl:function>
   
