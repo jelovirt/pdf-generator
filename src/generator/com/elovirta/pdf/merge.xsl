@@ -14,7 +14,7 @@
   <xsl:template match=".[. instance of map(*)]">
     <xsl:sequence select="x:extends(., $base-url)"/>
   </xsl:template>
-  
+
   <xsl:function name="x:extends" as="item()*">
     <xsl:param name="base" as="item()*"/>
     <xsl:param name="url"/>
@@ -195,7 +195,7 @@
                     <xsl:value-of select="resolve-uri($image-url, $url)"/>
                     <xsl:text>')</xsl:text>
                   </xsl:value-of>
-                </xsl:map-entry>                    
+                </xsl:map-entry>
               </xsl:when>
               <xsl:when test="matches($key, '^(header|footer)-(odd|even)-') and empty($ancestors)">
                 <xsl:map-entry key="$key" select="x:normalize($value, ($ancestors, $key), $url)"/>
@@ -228,7 +228,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-  
+
   <xsl:function name="x:expandShorthand" as="item()*" visibility="public">
     <xsl:param name="base" as="item()*"/>
 
@@ -288,7 +288,7 @@
       </xsl:for-each>
     </xsl:map>
   </xsl:function>
-  
+
   <xsl:function name="x:parse-border" as="map(*)">
     <xsl:param name="value" as="item()"/>
     <xsl:map>
@@ -304,7 +304,7 @@
             <xsl:map-entry key="'color'" select="."/>
           </xsl:otherwise>
         </xsl:choose>
-      </xsl:for-each>                    
+      </xsl:for-each>
     </xsl:map>
   </xsl:function>
 
@@ -326,7 +326,7 @@
     <xsl:variable name="keys" select="$base" as="map(*)"/>
     <xsl:sequence select="x:resolveVariables($base, $keys)"/>
   </xsl:function>
-  
+
   <xsl:function name="x:flatten" as="map(*)">
     <xsl:param name="base" as="item()"/>
     <xsl:param name="ancestors" as="item()*"/>
@@ -378,7 +378,7 @@
         </xsl:variable>
         <xsl:sequence select="array{ $array }"/>
       </xsl:when>
-      <xsl:when test="$base instance of xs:string">
+      <xsl:when test="$base instance of xs:string and matches($base, '\$[\w-]+')">
         <xsl:value-of>
           <xsl:analyze-string select="$base" regex="\$[\w-]+">
             <xsl:matching-substring>
