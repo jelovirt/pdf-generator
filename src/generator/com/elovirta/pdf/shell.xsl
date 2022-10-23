@@ -168,6 +168,7 @@
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/reference-elements.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/sw-domain-attr.xsl"/>
+      <axsl:import href="{$plugin_name}cfg/fo/attrs/sw-domain-attr.xsl"/>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/sw-domain.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/pr-domain-attr.xsl"/>
