@@ -107,6 +107,7 @@
     'flow-map-reference',
     'flow-name',
     'flow-name-reference',
+    'font',
     'font-family',
     'font-selection-strategy',
     'font-size',

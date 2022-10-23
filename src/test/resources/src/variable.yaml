@@ -1,0 +1,9 @@
+brand:
+  font: Helvetica
+  color: '#000000'
+page:
+  size: A4
+style:
+  base:
+    font: 12pt $brand-font
+    border: solid 1pt $brand-color

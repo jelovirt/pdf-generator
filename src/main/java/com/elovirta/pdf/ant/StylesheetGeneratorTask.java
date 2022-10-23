@@ -154,9 +154,13 @@ public class StylesheetGeneratorTask extends Task {
     private XdmItem resolveVariables(final XsltExecutable executable, final XdmItem base) {
         try {
             final Xslt30Transformer transformer = executable.load30();
-            return transformer.callFunction(QName.fromClarkName("{x}resolve"), new XdmValue[]{
+            final XdmValue resolved = transformer.callFunction(QName.fromClarkName("{x}resolve"), new XdmValue[]{
                     base
-            }).itemAt(0);
+            });
+            final XdmValue expanded = transformer.callFunction(QName.fromClarkName("{x}expandShorthand"), new XdmValue[]{
+                    resolved
+            });
+            return expanded.itemAt(0);
         } catch (SaxonApiException e) {
             throw new BuildException("Failed to resolve variables", e);
         }
@@ -185,23 +189,23 @@ public class StylesheetGeneratorTask extends Task {
             if (extendsValue != null) {
                 final URI extendsUri = url.resolve(extendsValue.getStringValue());
                 final XdmItem extendsRes = parseYamlTemplate(executable, parseYaml(extendsUri), url);
-                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
-                        base, XdmEmptySequence.getInstance(), new XdmAtomicValue(extendsUri)
-                });
                 final XdmValue flattened = transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
-                        normalized
+                        base
+                });
+                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
+                        flattened, XdmEmptySequence.getInstance(), new XdmAtomicValue(extendsUri)
                 });
                 return transformer.callFunction(QName.fromClarkName("{x}merge"), new XdmValue[]{
-                        extendsRes.stream().asXdmValue(), flattened
+                        extendsRes.stream().asXdmValue(), normalized
                 }).itemAt(0);
             } else {
-                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
-                        base, XdmEmptySequence.getInstance(), new XdmAtomicValue(url)
-                });
                 final XdmValue flattened = transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
-                        normalized
+                        base
                 });
-                return flattened.itemAt(0);
+                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
+                        flattened, XdmEmptySequence.getInstance(), new XdmAtomicValue(url)
+                });
+                return normalized.itemAt(0);
             }
         } catch (SaxonApiException e) {
             throw new BuildException(String.format("Failed to parse template %s", template), e);

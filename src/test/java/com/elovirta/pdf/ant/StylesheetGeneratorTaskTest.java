@@ -56,11 +56,11 @@ public class StylesheetGeneratorTaskTest {
 
         final String image = src.resolve("image/logo.svg").toString();
         final String exp = "{"
-                + "\"style\":{"
-                + "\"body\":{\"background-image\":\"url('" + image + "')\"},"
-                + "\"topic\":{\"background-image\":\"url('" + image + "')\"},"
-                + "\"topic-topic\":{\"background-image\":\"url('" + image + "')\"}"
-                + "},"
+//                + "\"style\":{"
+//                + "\"body\":{\"background-image\":\"" + "image/logo.svg" + "\"},"
+//                + "\"topic\":{\"background-image\":\"url('" + "image/logo.svg" + "')\"},"
+//                + "\"topic-topic\":{\"background-image\":\"url('" + "image/logo.svg" + "')\"}"
+//                + "},"
                 + "\"style-body-background-image\":\"url('" + image + "')\","
                 + "\"style-topic-background-image\":\"url('" + image + "')\","
                 + "\"style-topic-topic-background-image\":\"url('" + image + "')\""
@@ -133,9 +133,39 @@ public class StylesheetGeneratorTaskTest {
             "theme.json",
             "theme.yaml",
             "empty.json",
-            "empty.yaml"
+            "empty.yaml",
+            "variable.json",
+            "variable.yaml"
     })
     public void getTemplate_normalize(final String template) throws URISyntaxException, SaxonApiException, JSONException {
+        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()));
+
+        final XdmValue act = task.parseTemplate();
+
+        assertEquals(readToString("exp/" + template.substring(0, template.indexOf(".")) + ".json"), toString(act),
+                JSONCompareMode.STRICT);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "flatten.json",
+            "flatten.yaml"
+    })
+    public void getTemplate_flatten(final String template) throws URISyntaxException, SaxonApiException, JSONException {
+        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()));
+
+        final XdmValue act = task.parseTemplate();
+
+        assertEquals(readToString("exp/" + template.substring(0, template.indexOf(".")) + ".json"), toString(act),
+                JSONCompareMode.STRICT);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "size.json",
+            "size.yaml"
+    })
+    public void getTemplate_normalize_single(final String template) throws URISyntaxException, SaxonApiException, JSONException {
         task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()));
 
         final XdmValue act = task.parseTemplate();
