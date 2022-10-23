@@ -405,6 +405,17 @@
           <xsl:with-param name="prefix" select="'style-term'"/>
         </xsl:call-template>
       </axsl:attribute-set>
+      <!-- shortdesc -->
+      <axsl:attribute-set name="topic__shortdesc">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-shortdesc'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="abstract" use-attribute-sets="common.block">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-shortdesc'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
     </axsl:stylesheet>
   </xsl:template>
 
