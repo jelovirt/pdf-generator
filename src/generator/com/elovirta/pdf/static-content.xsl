@@ -683,25 +683,23 @@
     <xsl:param name="flow"/>
     <xsl:param name="type"/>
 
-    <xsl:if test="map:contains(., $flow) and map:contains(.($flow), $type)">
-      <axsl:attribute-set name="{$type}__{$flow}">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="concat($flow, '-', $type)"/>
-        </xsl:call-template>
-        <!--xsl:for-each select="$viewport-area-properties">
-          <axsl:attribute name="{.}" select="'auto'"/>
-        </xsl:for-each-->
-      </axsl:attribute-set>
-      <!--axsl:attribute-set name="container__{$type}__{$flow}">
-        <xsl:call-template name="attribute-set">
-          <xsl:with-param name="style" select=".($flow)($type)"/>
-          <!- -xsl:with-param name="properties" select="$viewport-area-properties"/- ->
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <xsl:for-each select="('body', 'toc', 'index', 'glossary')">
-        <axsl:attribute-set name="__{.}-container__{$type}__{$flow}" use-attribute-sets="container__{$type}__{$flow}"/>
+    <axsl:attribute-set name="{$type}__{$flow}">
+      <xsl:call-template name="generate-attribute-set">
+        <xsl:with-param name="prefix" select="concat($flow, '-', $type)"/>
+      </xsl:call-template>
+      <!--xsl:for-each select="$viewport-area-properties">
+        <axsl:attribute name="{.}" select="'auto'"/>
       </xsl:for-each-->
-    </xsl:if>
+    </axsl:attribute-set>
+    <!--axsl:attribute-set name="container__{$type}__{$flow}">
+      <xsl:call-template name="attribute-set">
+        <xsl:with-param name="style" select=".($flow)($type)"/>
+        <!- -xsl:with-param name="properties" select="$viewport-area-properties"/- ->
+      </xsl:call-template>
+    </axsl:attribute-set>
+    <xsl:for-each select="('body', 'toc', 'index', 'glossary')">
+      <axsl:attribute-set name="__{.}-container__{$type}__{$flow}" use-attribute-sets="container__{$type}__{$flow}"/>
+    </xsl:for-each-->
   </xsl:template>
 
 </xsl:stylesheet>
