@@ -236,8 +236,8 @@ public class StylesheetGeneratorTask extends Task {
         return parameters;
     }
 
-    public void setTemplate(final File template) {
-        this.template = template;
+    public void setTemplate(final String template) {
+        this.template = new File(template).getAbsoluteFile();
     }
 
     public void setTodir(final File dstDir) {
