@@ -187,6 +187,12 @@
           <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
         </xsl:call-template>
       </axsl:attribute-set>
+      <axsl:attribute-set name="common.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-body'"/>
+          <xsl:with-param name="properties" select="('space-before', 'space-after')"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
     </axsl:stylesheet>
   </xsl:template>
 
