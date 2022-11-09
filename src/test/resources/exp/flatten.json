@@ -1,6 +1,6 @@
 {
-  "style-base-color": "black",
-  "style-base-font-family": "sans-serif",
+  "style-body-color": "black",
+  "style-body-font-family": "sans-serif",
   "style-pre-color": "gray",
   "style-pre-font-family": "monospace"
 }

@@ -5,7 +5,8 @@
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:map="http://www.w3.org/2005/xpath-functions/map"
                 xmlns:array="http://www.w3.org/2005/xpath-functions/array"
-                exclude-result-prefixes="axsl map array">
+                xmlns:x="x"
+                exclude-result-prefixes="axsl map array x">
 
   <xsl:namespace-alias stylesheet-prefix="axsl" result-prefix="xsl"/>
 
@@ -15,6 +16,28 @@
   <xsl:param name="formatter" select=". ?formatter"/>
 
   <xsl:variable name="page_mirror_margins" select="boolean(. ?page-mirror-margins)" as="xs:boolean"/>
+
+  <xsl:function name="x:within" as="xs:string+">
+    <xsl:param name="property" as="xs:string"/>
+    <xsl:sequence select="(
+        $property,
+        concat($property, '.within-line'),
+        concat($property, '.within-column'),
+        concat($property, '.within-page')
+      )"/>
+  </xsl:function>
+
+  <xsl:function name="x:space" as="xs:string+">
+    <xsl:param name="property" as="xs:string"/>
+    <xsl:sequence select="(
+        $property,
+        concat($property, '.minimum'),
+        concat($property, '.optimum'),
+        concat($property, '.maximum'),
+        concat($property, '.conditionality'),
+        concat($property, '.precedence')
+      )"/>
+  </xsl:function>
 
   <xsl:variable name="allProperties" select="
     'absolute-position',
@@ -32,8 +55,8 @@
     'background-position-vertical',
     'background-repeat',
     'baseline-shift',
-    'blank-or-not-blank',
-    'block-progression-dimension',
+    x:space('blank-or-not-blank'),
+    x:space('block-progression-dimension'),
     'border',
     'border-after-color',
     'border-after-precedence',
@@ -138,13 +161,13 @@
     'internal-destination',
     'intrinsic-scale-value',
     'intrusion-displace',
-    'keep-together',
-    'keep-with-next',
-    'keep-with-previous',
+    x:within('keep-together'),
+    x:within('keep-with-next'),
+    x:within('keep-with-previous'),
     'language',
     'last-line-end-indent',
     'leader-alignment',
-    'leader-length',
+    x:space('leader-length'),
     'leader-pattern',
     'leader-pattern-width',
     'left',
@@ -218,10 +241,10 @@
     'script',
     'show-destination',
     'source-document',
-    'space-after',
-    'space-before',
-    'space-end',
-    'space-start',
+    x:space('space-after'),
+    x:space('space-before'),
+    x:space('space-end'),
+    x:space('space-start'),
     'span',
     'speak',
     'speak-header',

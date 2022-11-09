@@ -205,17 +205,21 @@
       <xsl:call-template name="generate-namespace-node"/>
       <!-- dl -->
       <xsl:if test="$root ?style-dl-dl-type">
-        <axsl:attribute-set name="e:dl">
+        <axsl:attribute-set name="e:dl" use-attribute-sets="common.block">
           <xsl:call-template name="generate-attribute-set">
             <xsl:with-param name="prefix" select="'style-dl'"/>
           </xsl:call-template>
         </axsl:attribute-set>
         <axsl:attribute-set name="e:dlentry.dt__content">
+          <xsl:if test="$root ?style-dl-dl-type = 'html'">
+            <xsl:attribute name="use-attribute-sets">common.block</xsl:attribute>
+          </xsl:if>
           <axsl:attribute name="font-weight">bold</axsl:attribute>
           <axsl:attribute name="keep-with-next">always</axsl:attribute>
         </axsl:attribute-set>
         <axsl:attribute-set name="e:dlentry.dd__content">
           <xsl:if test="$root ?style-dl-dl-type = 'html'">
+            <xsl:attribute name="use-attribute-sets">common.block</xsl:attribute>
             <axsl:attribute name="start-indent">from-parent(start-indent) + 5mm</axsl:attribute>
           </xsl:if>
         </axsl:attribute-set>

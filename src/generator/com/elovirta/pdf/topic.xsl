@@ -352,7 +352,7 @@
         </xsl:call-template>
       </axsl:attribute-set>
       <!-- note -->
-      <axsl:attribute-set name="note__table__note">
+      <axsl:attribute-set name="note__table__note" use-attribute-sets="common.block">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-note'"/>
         </xsl:call-template>
