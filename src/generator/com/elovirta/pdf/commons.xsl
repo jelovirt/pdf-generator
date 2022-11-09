@@ -184,7 +184,7 @@
       <axsl:attribute-set name="common.block">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-body'"/>
-          <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
+          <xsl:with-param name="properties" select="$allProperties[not(. = ('start-indent', 'font-family', 'font-size', 'line-height'))]"/>
         </xsl:call-template>
       </axsl:attribute-set>
       <axsl:attribute-set name="common.title">
