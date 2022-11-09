@@ -146,10 +146,46 @@
   <xsl:template match=".[. instance of map(*)]">
     <xsl:variable name="vars" select="$vars-all[@xml:lang = $lang]" as="element()"/>
     <variables>
-      <xsl:if test="$root ?style-link-link-page-number">
-<!--        <xsl:copy-of select="$vars/variable[@id = 'blank_page']"/>-->
-        <variable id="On the page"/>
-      </xsl:if>
+      <xsl:choose>
+        <xsl:when test="map:contains($root, 'style-link-content')">
+          <xsl:call-template name="variables">
+            <xsl:with-param name="prefix" select="'style-link'"/>
+            <xsl:with-param name="var_names" select="'link-local'"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:when test="map:contains($root ,'style-link-link-page-number') and not($root ?style-link-link-page-number)">
+          <variable id="link-local">
+            <param ref-name="link-text"/>
+          </variable>
+        </xsl:when>
+        <xsl:otherwise>
+          <variable id="link-local">
+            <param ref-name="link-text"/>
+            <variableref refid="On the page"/>
+          </variable>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:choose>
+        <xsl:when test="map:contains($root, 'style-link-external-content')">
+          <xsl:call-template name="variables">
+            <xsl:with-param name="prefix" select="'style-link-external'"/>
+            <xsl:with-param name="var_names" select="'link-external'"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:when test="map:contains($root ,'style-link-link-url') and $root ?style-link-link-url">
+          <variable id="link-external">
+            <param ref-name="link-text"/>
+            <xsl:text> (</xsl:text>
+            <param ref-name="url"/>
+            <xsl:text>)</xsl:text>
+          </variable>
+        </xsl:when>
+        <xsl:otherwise>
+          <variable id="link-external">
+            <param ref-name="link-text"/>
+          </variable>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:choose>
         <xsl:when test="map:contains($root, 'style-cover-title-content')">
           <xsl:call-template name="variables">
