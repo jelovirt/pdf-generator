@@ -202,6 +202,33 @@
           </axsl:otherwise>
         </axsl:choose>
       </axsl:template>
+
+      <axsl:template name="insertLinkShortDesc">
+        <axsl:param name="destination"/>
+        <axsl:param name="element"/>
+        <axsl:param name="linkScope"/>
+        <axsl:choose>
+          <!-- User specified description (from map or topic): use that. -->
+          <axsl:when test="*[contains(@class, ' topic/desc ')] and
+                            processing-instruction()[name() = 'ditaot'][. = 'usershortdesc']">
+            <fo:block axsl:use-attribute-sets="link__shortdesc">
+              <axsl:apply-templates select="*[contains(@class, ' topic/desc ')]"/>
+            </fo:block>
+          </axsl:when>
+          <!-- External: do not attempt to retrieve. -->
+          <axsl:when test="$linkScope = 'external'">
+          </axsl:when>
+          <!-- When the target has a short description and no local override, use the target -->
+          <axsl:when test="$element/*[contains(@class, ' topic/shortdesc ')]">
+            <axsl:variable name="generatedShortdesc" as="node()*">
+              <axsl:apply-templates select="$element/*[contains(@class, ' topic/shortdesc ')]/node()"/>
+            </axsl:variable>
+            <fo:block axsl:use-attribute-sets="link__shortdesc">
+              <axsl:apply-templates select="$generatedShortdesc" mode="dropCopiedIds"/>
+            </fo:block>
+          </axsl:when>
+        </axsl:choose>
+      </axsl:template>
     </axsl:stylesheet>
   </xsl:template>
 
@@ -211,9 +238,11 @@
       <axsl:attribute-set name="link__shortdesc">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-body'"/>
-          <xsl:with-param name="properties" select="'space-after'"/>
+          <xsl:with-param name="properties" select="('space-after', 'start-indent')"/>
         </xsl:call-template>
-        <axsl:attribute name="start-indent">from-parent(start-indent) + 15pt</axsl:attribute>
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-link-desc'"/>
+        </xsl:call-template>
       </axsl:attribute-set>
     </axsl:stylesheet>
   </xsl:template>
