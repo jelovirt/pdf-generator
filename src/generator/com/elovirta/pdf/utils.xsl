@@ -10,7 +10,7 @@
 
   <xsl:namespace-alias stylesheet-prefix="axsl" result-prefix="xsl"/>
 
-  <xsl:output indent="yes"/>
+  <xsl:output indent="no"/>
 
   <xsl:param name="version" select=". ?ot-version"/>
   <xsl:param name="formatter" select=". ?formatter"/>

@@ -11,7 +11,7 @@
 
   <xsl:namespace-alias stylesheet-prefix="axsl" result-prefix="xsl"/>
 
-  <xsl:output indent="yes"/>
+  <xsl:output indent="no"/>
 
   <xsl:variable name="note-types" as="xs:string+"
                 select="'notice', 'tip', 'fastpath', 'restriction', 'important', 'remember', 'attention', 'caution', 'danger', 'warning', 'trouble', 'other'"/>
