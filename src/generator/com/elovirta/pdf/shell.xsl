@@ -10,7 +10,7 @@
 
   <xsl:namespace-alias stylesheet-prefix="axsl" result-prefix="xsl"/>
 
-  <xsl:output indent="yes"/>
+  <xsl:output indent="no"/>
 
   <xsl:template match=".[. instance of map(*)]">
     <xsl:variable name="plugin_name">

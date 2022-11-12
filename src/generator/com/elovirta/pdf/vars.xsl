@@ -10,7 +10,7 @@
 
   <xsl:namespace-alias stylesheet-prefix="axsl" result-prefix="xsl"/>
 
-  <xsl:output indent="yes"/>
+  <xsl:output indent="no"/>
 
   <xsl:variable name="vars-all" as="element()*">
     <vars xml:lang="de">
