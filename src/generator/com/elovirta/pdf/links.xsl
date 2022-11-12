@@ -18,9 +18,6 @@
 
       <xsl:comment>Link</xsl:comment>
       <axsl:template match="*[contains(@class,' topic/xref ')][not(@type = 'fn')]" name="topic.xref">
-        <fo:inline>
-          <axsl:call-template name="commonattributes"/>
-        </fo:inline>
         <axsl:variable name="destination" select="opentopic-func:getDestinationId(@href)"/>
         <axsl:variable name="element" select="key('key_anchor',$destination)[1]"/>
         <axsl:variable name="referenceTitle" as="node()*">
@@ -32,6 +29,7 @@
           </axsl:apply-templates>
         </axsl:variable>
         <fo:basic-link axsl:use-attribute-sets="xref">
+          <axsl:call-template name="commonattributes"/>
           <axsl:call-template name="buildBasicLinkDestination">
             <axsl:with-param name="scope" select="@scope"/>
             <axsl:with-param name="format" select="@format"/>
@@ -102,37 +100,35 @@
         </axsl:variable>
 
         <fo:block axsl:use-attribute-sets="link">
-          <fo:inline axsl:use-attribute-sets="link__content">
-            <fo:basic-link>
-              <axsl:call-template name="buildBasicLinkDestination">
-                <axsl:with-param name="scope" select="$linkScope"/>
-                <axsl:with-param name="href" select="@href"/>
-              </axsl:call-template>
-              <axsl:choose>
-                <axsl:when test="not($linkScope = 'external') and exists($referenceTitle)">
-                  <axsl:call-template name="e:insertPageNumberCitation">
-                    <axsl:with-param name="referenceTitle" select="$referenceTitle"/>
-                    <axsl:with-param name="isTitleEmpty" select="false()"/>
-                    <axsl:with-param name="destination" select="$destination"/>
-                    <axsl:with-param name="element" select="$element"/>
-                  </axsl:call-template>
-                </axsl:when>
-                <axsl:when test="not($linkScope = 'external')">
-                  <axsl:call-template name="e:insertPageNumberCitation">
-                    <axsl:with-param name="isTitleEmpty" select="true()"/>
-                    <axsl:with-param name="destination" select="$destination"/>
-                    <axsl:with-param name="element" select="$element"/>
-                  </axsl:call-template>
-                </axsl:when>
-                <axsl:when test="*[contains(@class, ' topic/linktext ')]">
-                  <axsl:apply-templates select="*[contains(@class, ' topic/linktext ')]"/>
-                </axsl:when>
-                <axsl:otherwise>
-                  <axsl:value-of select="e:format-link-url(@href)"/>
-                </axsl:otherwise>
-              </axsl:choose>
-            </fo:basic-link>
-          </fo:inline>
+          <fo:basic-link axsl:use-attribute-sets="link__content">
+            <axsl:call-template name="buildBasicLinkDestination">
+              <axsl:with-param name="scope" select="$linkScope"/>
+              <axsl:with-param name="href" select="@href"/>
+            </axsl:call-template>
+            <axsl:choose>
+              <axsl:when test="not($linkScope = 'external') and exists($referenceTitle)">
+                <axsl:call-template name="e:insertPageNumberCitation">
+                  <axsl:with-param name="referenceTitle" select="$referenceTitle"/>
+                  <axsl:with-param name="isTitleEmpty" select="false()"/>
+                  <axsl:with-param name="destination" select="$destination"/>
+                  <axsl:with-param name="element" select="$element"/>
+                </axsl:call-template>
+              </axsl:when>
+              <axsl:when test="not($linkScope = 'external')">
+                <axsl:call-template name="e:insertPageNumberCitation">
+                  <axsl:with-param name="isTitleEmpty" select="true()"/>
+                  <axsl:with-param name="destination" select="$destination"/>
+                  <axsl:with-param name="element" select="$element"/>
+                </axsl:call-template>
+              </axsl:when>
+              <axsl:when test="*[contains(@class, ' topic/linktext ')]">
+                <axsl:apply-templates select="*[contains(@class, ' topic/linktext ')]"/>
+              </axsl:when>
+              <axsl:otherwise>
+                <axsl:value-of select="e:format-link-url(@href)"/>
+              </axsl:otherwise>
+            </axsl:choose>
+          </fo:basic-link>
           <axsl:call-template name="insertLinkShortDesc">
             <axsl:with-param name="destination" select="$destination"/>
             <axsl:with-param name="element" select="$element"/>
@@ -170,35 +166,27 @@
         <axsl:choose>
           <axsl:when test="not($element) or ($destination = '')"/>
           <axsl:when test="$isTitleEmpty">
-            <fo:inline>
-              <axsl:call-template name="getVariable">
-                <axsl:with-param name="id" select="'Page'"/>
-                <axsl:with-param name="params">
-                  <pagenum>
-                    <fo:inline>
-                      <fo:page-number-citation ref-id="{{$destination}}"/>
-                    </fo:inline>
-                  </pagenum>
-                </axsl:with-param>
-              </axsl:call-template>
-            </fo:inline>
+            <axsl:call-template name="getVariable">
+              <axsl:with-param name="id" select="'Page'"/>
+              <axsl:with-param name="params">
+                <pagenum>
+                  <fo:page-number-citation ref-id="{{$destination}}"/>
+                </pagenum>
+              </axsl:with-param>
+            </axsl:call-template>
           </axsl:when>
           <axsl:otherwise>
-            <fo:inline>
-              <axsl:call-template name="getVariable">
-                <axsl:with-param name="id" select="'link-local'"/>
-                <axsl:with-param name="params">
-                  <link-text>
-                    <axsl:copy-of select="$referenceTitle"/>
-                  </link-text>
-                  <pagenum>
-                    <fo:inline>
-                      <fo:page-number-citation ref-id="{{$destination}}"/>
-                    </fo:inline>
-                  </pagenum>
-                </axsl:with-param>
-              </axsl:call-template>
-            </fo:inline>
+            <axsl:call-template name="getVariable">
+              <axsl:with-param name="id" select="'link-local'"/>
+              <axsl:with-param name="params">
+                <link-text>
+                  <axsl:copy-of select="$referenceTitle"/>
+                </link-text>
+                <pagenum>
+                  <fo:page-number-citation ref-id="{{$destination}}"/>
+                </pagenum>
+              </axsl:with-param>
+            </axsl:call-template>
           </axsl:otherwise>
         </axsl:choose>
       </axsl:template>
