@@ -1,3 +1,5 @@
+$schema: ../../../main/resources/schema.json
+
 page:
   size: A4
   top: 20mm

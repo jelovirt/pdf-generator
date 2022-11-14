@@ -1,7 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
-  "additionalProperties": false,
   "default": "Theme template.",
   "properties": {
     "$schema": {
@@ -352,11 +351,7 @@
             },
             "force-count": {
               "type": "string",
-              "enum": [
-                "auto",
-                "even",
-                "odd"
-              ],
+              "enum": ["auto", "even", "odd"],
               "default": "auto",
               "description": "Force chapter to end on even or odd pages."
             },
@@ -938,6 +933,135 @@
               "$ref": "#/definitions/inline-style-type"
             },
             "systemoutput": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "apiname": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "codeph": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "option": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "parmname": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "synph": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "syntaxdiagram": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "groupseq": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "groupchoice": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "groupcomp": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "fragment": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "fragref": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "synblk": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "synnote": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "synnoteref": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "kwd": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "var": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "oper": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "delim": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "sep": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "repsep": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "b": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "i": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "u": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "tt": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "sup": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "sub": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "line-through": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "overline": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "markupname": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "uicontrol": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "wintitle": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "menucascade": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "shortcut": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "screen": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "filepath": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "filepath": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "xmlelement": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "xmlatt": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "textentity": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "parameterentity": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "numcharref": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "xmlnsname": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "xmlpi": {
               "$ref": "#/definitions/inline-style-type"
             }
           }
