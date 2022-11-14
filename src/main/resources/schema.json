@@ -1,0 +1,948 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "default": "Theme template.",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "extends": {
+      "type": "string",
+      "description": "Extend another theme. Value is a URI to the theme to be extended."
+    },
+    "page": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/page-type"
+        }
+      ],
+      "description": "Page configuration."
+    },
+    "header": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/header-type"
+        }
+      ],
+      "description": "Page header configuration."
+    },
+    "footer": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/header-type"
+        }
+      ],
+      "description": "Page footer configuration."
+    },
+    "style": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/style-type"
+        }
+      ],
+      "description": "Style configuration."
+    },
+    "chapter-layout": {
+      "type": "string",
+      "enum": ["MINITOC", "BASIC"],
+      "default": "MINITOC",
+      "description": "Generate TOC for section."
+    },
+    "bookmark-style": {
+      "type": "string",
+      "enum": ["COLLAPSED", "EXPANDED"],
+      "default": "COLLAPSED",
+      "description": "Expand state of PDF bookmarks."
+    },
+    "toc-maximum-level": {
+      "type": "integer",
+      "description": "Maximum TOC depth.",
+      "default": 4
+    },
+    "task-label": {
+      "type": "boolean",
+      "description": "Generate labels for task sections.",
+      "default": false
+    },
+    "include-related-links": {
+      "type": "string",
+      "enum": ["none", "all", "nofamily"],
+      "default": "nofamily",
+      "description": "Specifies which link types are used to generate related links."
+    },
+    "page-number": {
+      "type": "string",
+      "enum": ["page", "chapter-page"],
+      "description": "Generate page numbers with chapter number.",
+      "default": "page"
+    }
+  },
+  "definitions": {
+    "length-type": {
+      "type": "string",
+      "pattern": "^-?\\d+(\\.\\d+)?(cm|mm|in|pt|pc|px|em)?$"
+    },
+    "colour-type": {
+      "type": "string",
+      "pattern": "^(#[a-eA-E0-9]{6}|#[a-eA-E0-9]{3}|rgb\\(\\d+,\\d+,\\d+\\)|rgb\\(\\d+%,\\d+%,\\d+%\\)|transparent|aqua|black|blue|cyan|fuchsia|gray|green|lime|maroon|navy|olive|orange|pink|purple|red|silver|teal|white|yellow|inherit)$"
+    },
+    "font-weight-type": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "bold",
+        "bolder",
+        "lighter",
+        "100",
+        "200",
+        "300",
+        "400",
+        "500",
+        "600",
+        "700",
+        "800",
+        "900",
+        "inherit"
+      ]
+    },
+    "border-style-type": {
+      "type": "string",
+      "enum": [
+        "none",
+        "hidden",
+        "dotted",
+        "dashed",
+        "solid",
+        "double",
+        "groove",
+        "ridge",
+        "inset",
+        "outset",
+        "inherit"
+      ]
+    },
+    "block-style-type": {
+      "type": "object",
+      "properties": {
+        "background-color": {
+          "$ref": "#/definitions/colour-type"
+        },
+        "padding-before": {
+          "$ref": "#/definitions/length-type"
+        },
+        "padding-end": {
+          "$ref": "#/definitions/length-type"
+        },
+        "padding-after": {
+          "$ref": "#/definitions/length-type"
+        },
+        "padding-start": {
+          "$ref": "#/definitions/length-type"
+        },
+        "end-indent": {
+          "$ref": "#/definitions/length-type"
+        },
+        "border-before-style": {
+          "$ref": "#/definitions/border-style-type"
+        },
+        "border-before-width": {
+          "$ref": "#/definitions/length-type"
+        },
+        "border-before-color": {
+          "$ref": "#/definitions/colour-type"
+        },
+        "border-end-style": {
+          "$ref": "#/definitions/border-style-type"
+        },
+        "border-end-width": {
+          "$ref": "#/definitions/length-type"
+        },
+        "border-end-color": {
+          "$ref": "#/definitions/colour-type"
+        },
+        "border-after-style": {
+          "$ref": "#/definitions/border-style-type"
+        },
+        "border-after-width": {
+          "$ref": "#/definitions/length-type"
+        },
+        "border-after-color": {
+          "$ref": "#/definitions/colour-type"
+        },
+        "border-start-style": {
+          "$ref": "#/definitions/border-style-type"
+        },
+        "border-start-width": {
+          "$ref": "#/definitions/length-type"
+        },
+        "border-start-color": {
+          "$ref": "#/definitions/colour-type"
+        },
+        "font-family": {
+          "type": "string"
+        },
+        "font-size": {
+          "$ref": "#/definitions/length-type"
+        },
+        "color": {
+          "$ref": "#/definitions/colour-type"
+        },
+        "font-weight": {
+          "$ref": "#/definitions/font-weight-type"
+        },
+        "font-style": {
+          "type": "string"
+        },
+        "text-decoration": {
+          "type": "string"
+        },
+        "text-align": {
+          "type": "string"
+        },
+        "start-indent": {
+          "$ref": "#/definitions/length-type"
+        },
+        "line-height": {
+          "$ref": "#/definitions/length-type"
+        },
+        "space-before": {
+          "$ref": "#/definitions/length-type"
+        },
+        "space-after": {
+          "$ref": "#/definitions/length-type"
+        }
+      }
+    },
+    "inline-style-type": {
+      "type": "object",
+      "properties": {
+        "font-family": {
+          "type": "string"
+        },
+        "font-size": {
+          "$ref": "#/definitions/length-type"
+        },
+        "color": {
+          "$ref": "#/definitions/colour-type"
+        },
+        "background-color": {
+          "$ref": "#/definitions/colour-type"
+        },
+        "font-weight": {
+          "$ref": "#/definitions/font-weight-type"
+        },
+        "font-style": {
+          "type": "string",
+          "enum": ["normal", "italic", "oblique", "backslant", "inherit"]
+        },
+        "text-decoration": {
+          "type": "string"
+        },
+        "line-height": {
+          "$ref": "#/definitions/length-type"
+        }
+      }
+    },
+    "page-size-type": {
+      "type": "object",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "string",
+              "enum": [
+                "A3",
+                "A4",
+                "A5",
+                "Executive",
+                "JIS B5",
+                "Tabloid",
+                "Legal",
+                "Letter",
+                "PA4"
+              ],
+              "description": "Page size.",
+              "default": "Letter"
+            },
+            "orientation": {
+              "type": "string",
+              "enum": ["portrait", "letter"],
+              "description": "Page orientation.",
+              "default": "portrait"
+            }
+          },
+          "required": ["size"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "height": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length-type"
+                }
+              ],
+              "description": "Page height.",
+              "default": "11in"
+            },
+            "width": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length-type"
+                }
+              ],
+              "description": "Page width.",
+              "default": "8.5in"
+            }
+          },
+          "required": ["height", "width"]
+        }
+      ]
+    },
+    "page-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/page-size-type"
+        },
+        {
+          "properties": {
+            "top": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length-type"
+                }
+              ],
+              "description": "Page top margin.",
+              "default": "20mm"
+            },
+            "outside": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length-type"
+                }
+              ],
+              "description": "Page outside margin.",
+              "default": "20mm"
+            },
+            "bottom": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length-type"
+                }
+              ],
+              "description": "Page bottom margin.",
+              "default": "20mm"
+            },
+            "inside": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length-type"
+                }
+              ],
+              "description": "Page inside margin.",
+              "default": "20mm"
+            },
+            "mirror-margins": {
+              "type": "boolean",
+              "description": "Duplex pages with recto and verso pages.",
+              "default": false
+            },
+            "force-count": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "even",
+                "odd"
+              ],
+              "default": "auto",
+              "description": "Force chapter to end on even or odd pages."
+            },
+            "blank-pages": {
+              "type": "boolean",
+              "description": "Mark blank pages with ",
+              "default": false
+            },
+            "column-gap": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/length-type"
+                }
+              ],
+              "description": "Column gap on multi column pages."
+            },
+            "body-column-count": {
+              "type": "integer",
+              "description": "Column count on content pages.",
+              "default": 1
+            },
+            "index-column-count": {
+              "type": "integer",
+              "description": "Column count on index pages.",
+              "default": 2
+            }
+          }
+        }
+      ],
+      "description": "Page configuration.",
+      "examples": [
+        {
+          "height": "297mm",
+          "width": "210mm",
+          "top": "20mm",
+          "outside": "20mm",
+          "bottom": "20mm",
+          "inside": "30mm"
+        }
+      ]
+    },
+    "content-template-type": {
+      "type": "string",
+      "description": "Header or footer contents template.",
+      "examples": ["{title} — {chapter}"]
+    },
+    "content-array-type": {
+      "type": "array",
+      "minItems": 0,
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": ["field"],
+              "description": "Type of content block."
+            },
+            "value": {
+              "type": "string",
+              "enum": ["title", "chapter", "folio", "folio-with-total"],
+              "description": "Field name."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": ["text"],
+              "description": "Type of content block."
+            },
+            "value": {
+              "type": "string",
+              "description": "Text content of block."
+            }
+          }
+        }
+      ],
+      "description": "Header or footer contents. This is the parsed form of contents template.",
+      "examples": [
+        [
+          {
+            "kind": "field",
+            "value": "title"
+          },
+          {
+            "kind": "text",
+            "value": " — "
+          },
+          {
+            "kind": "field",
+            "value": "chapter"
+          }
+        ]
+      ]
+    },
+    "content-type": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/content-template-type"
+            },
+            {
+              "$ref": "#/definitions/content-array-type"
+            }
+          ]
+        }
+      }
+    },
+    "odd-type": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/block-style-type"
+        },
+        {
+          "$ref": "#/definitions/content-type"
+        }
+      ]
+    },
+    "header-type": {
+      "type": "object",
+      "properties": {
+        "odd": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/odd-type"
+            }
+          ],
+          "description": "Header or footer on verso pages."
+        },
+        "even": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/odd-type"
+            }
+          ],
+          "description": "Header or footer on recto pages."
+        }
+      },
+      "description": "Page header and footer configuration."
+    },
+    "body-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block-style-type"
+        }
+      ],
+      "properties": {}
+    },
+    "topic-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block-style-type"
+        }
+      ],
+      "properties": {
+        "title-numbering": {
+          "type": "boolean",
+          "description": "Generate title numbering."
+        }
+      }
+    },
+    "codeblock-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block-style-type"
+        }
+      ],
+      "properties": {
+        "line-numbering": {
+          "type": "boolean",
+          "description": "Show line numbers."
+        },
+        "show-whitespace": {
+          "type": "boolean",
+          "description": "Show whitespace characters."
+        },
+        "caption-number": {
+          "type": "string",
+          "enum": ["chapter", "document"],
+          "description": "Number figures with chapter prefix or use whole document numbering."
+        },
+        "caption-position": {
+          "type": "string",
+          "enum": ["before", "after"],
+          "description": "Place figure caption before or after figure."
+        }
+      }
+    },
+    "dl-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block-style-type"
+        }
+      ],
+      "properties": {
+        "dl-type": {
+          "type": "string",
+          "enum": ["html", "table", "list"],
+          "description": "Definition list output style."
+        }
+      }
+    },
+    "ol-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block-style-type"
+        }
+      ],
+      "properties": {
+        "ol-1": {
+          "type": "string"
+        },
+        "ol-2": {
+          "type": "string"
+        },
+        "ol-3": {
+          "type": "string"
+        },
+        "ol-4": {
+          "type": "string"
+        },
+        "ol-after-1": {
+          "type": "string"
+        },
+        "ol-after-2": {
+          "type": "string"
+        },
+        "ol-after-3": {
+          "type": "string"
+        },
+        "ol-after-4": {
+          "type": "string"
+        }
+      }
+    },
+    "ul-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block-style-type"
+        }
+      ],
+      "properties": {
+        "ul-1": {
+          "type": "string"
+        },
+        "ul-2": {
+          "type": "string"
+        },
+        "ul-3": {
+          "type": "string"
+        },
+        "ul-4": {
+          "type": "string"
+        }
+      }
+    },
+    "caption-type": {
+      "properties": {
+        "caption-number": {
+          "type": "string",
+          "enum": ["chapter", "document", "none"],
+          "description": "Number captions."
+        },
+        "caption-position": {
+          "type": "string",
+          "enum": ["after", "before"],
+          "description": "Caption position."
+        }
+      }
+    },
+    "table-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block-style-type"
+        },
+        {
+          "$ref": "#/definitions/caption-type"
+        }
+      ],
+      "properties": {
+        "table-continued": {
+          "type": "boolean",
+          "description": "Generate 'Table continued' on page break within table.",
+          "default": false
+        }
+      }
+    },
+    "toc-1-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block-style-type"
+        }
+      ],
+      "properties": {
+        "prefix": {
+          "type": "boolean"
+        }
+      }
+    },
+    "link-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/inline-style-type"
+        }
+      ],
+      "properties": {
+        "link-page-number": {
+          "type": "boolean",
+          "description": "Generate page number to internal links."
+        }
+      }
+    },
+    "tm-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/inline-style-type"
+        }
+      ],
+      "properties": {
+        "symbol-scope": {
+          "type": "string"
+        }
+      }
+    },
+    "section-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/body-type"
+        }
+      ],
+      "properties": {
+        "title": {
+          "$ref": "#/definitions/body-type"
+        }
+      }
+    },
+    "label-type": {
+      "properties": {
+        "label": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/block-style-type"
+            },
+            {
+              "$ref": "#/definitions/content-type"
+            }
+          ]
+        }
+      }
+    },
+    "note-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/block-style-type"
+        },
+        {
+          "$ref": "#/definitions/label-type"
+        }
+      ]
+    },
+    "style-type": {
+      "type": "object",
+      "allOf": [
+        {
+          "properties": {
+            "body": {
+              "$ref": "#/definitions/body-type"
+            },
+            "shortdesc": {},
+            "h1": {
+              "$ref": "#/definitions/topic-type"
+            },
+            "h2": {
+              "$ref": "#/definitions/topic-type"
+            },
+            "h3": {
+              "$ref": "#/definitions/topic-type"
+            },
+            "h4": {
+              "$ref": "#/definitions/topic-type"
+            },
+            "cover": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/block-style-type"
+                },
+                {
+                  "properties": {
+                    "image-metadata": {
+                      "type": "string",
+                      "description": "Name of metadata element to use as cover image.",
+                      "default": null
+                    },
+                    "image-topic": {
+                      "type": "string",
+                      "description": "Outputclass for cover topic.",
+                      "default": null
+                    },
+                    "title": {
+                      "allOf": [
+                        {
+                          "$ref": "#/definitions/block-style-type"
+                        },
+                        {
+                          "$ref": "#/definitions/content-type"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "section": {
+              "$ref": "#/definitions/section-type"
+            },
+            "example": {
+              "$ref": "#/definitions/section-type"
+            },
+            "note": {
+              "type": "object",
+              "allOf": [
+                {
+                  "$ref": "#/definitions/note-type"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "note": {
+                      "$ref": "#/definitions/note-type"
+                    },
+                    "tip": {
+                      "$ref": "#/definitions/note-type"
+                    },
+                    "fastpath": {
+                      "$ref": "#/definitions/note-type"
+                    },
+                    "restriction": {
+                      "$ref": "#/definitions/note-type"
+                    },
+                    "important": {
+                      "$ref": "#/definitions/note-type"
+                    },
+                    "remember": {
+                      "$ref": "#/definitions/note-type"
+                    },
+                    "attention": {
+                      "$ref": "#/definitions/note-type"
+                    },
+                    "caution": {
+                      "$ref": "#/definitions/note-type"
+                    },
+                    "notice": {
+                      "$ref": "#/definitions/note-type"
+                    },
+                    "danger": {
+                      "$ref": "#/definitions/note-type"
+                    },
+                    "warning": {
+                      "$ref": "#/definitions/note-type"
+                    },
+                    "trouble": {
+                      "$ref": "#/definitions/note-type"
+                    },
+                    "other": {
+                      "$ref": "#/definitions/note-type"
+                    }
+                  }
+                }
+              ]
+            },
+            "pre": {
+              "$ref": "#/definitions/body-type"
+            },
+            "codeblock": {
+              "$ref": "#/definitions/codeblock-type"
+            },
+            "dl": {
+              "$ref": "#/definitions/dl-type"
+            },
+            "ol": {
+              "$ref": "#/definitions/ol-type"
+            },
+            "ul": {
+              "$ref": "#/definitions/ul-type"
+            },
+            "table": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/table-type"
+                }
+              ],
+              "properties": {
+                "caption": {
+                  "$ref": "#/definitions/block-style-type"
+                },
+                "header": {
+                  "$ref": "#/definitions/block-style-type"
+                }
+              }
+            },
+            "fig": {
+              "type": "object",
+              "allOf": [
+                {
+                  "$ref": "#/definitions/block-style-type"
+                },
+                {
+                  "$ref": "#/definitions/caption-type"
+                }
+              ]
+            },
+            "toc-1": {
+              "$ref": "#/definitions/toc-1-type"
+            },
+            "toc-2": {
+              "$ref": "#/definitions/body-type"
+            },
+            "toc-3": {
+              "$ref": "#/definitions/body-type"
+            },
+            "toc-4": {
+              "$ref": "#/definitions/body-type"
+            },
+            "link": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/link-type"
+                }
+              ],
+              "properties": {
+                "external": {
+                  "allOf": [
+                    {
+                      "$ref": "#/definitions/content-type"
+                    }
+                  ]
+                }
+              }
+            },
+            "tm": {
+              "$ref": "#/definitions/tm-type"
+            },
+            "keyword": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "term": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "codeph": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "filepath": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "cmdname": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "varname": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "userinput": {
+              "$ref": "#/definitions/inline-style-type"
+            },
+            "systemoutput": {
+              "$ref": "#/definitions/inline-style-type"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
