@@ -38,9 +38,24 @@
         </xsl:call-template>
       </axsl:attribute-set>
 
+      <axsl:attribute-set name="apiname">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-apiname'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <axsl:attribute-set name="codeph">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-codeph'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="option">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-option'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="parmname">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-parmname'"/>
         </xsl:call-template>
       </axsl:attribute-set>
     </axsl:stylesheet>
