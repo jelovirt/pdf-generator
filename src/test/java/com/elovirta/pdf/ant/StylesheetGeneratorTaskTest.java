@@ -49,12 +49,11 @@ public class StylesheetGeneratorTaskTest {
             "image.yaml"
     })
     public void getTemplate_normalizeImage(final String template) throws URISyntaxException, SaxonApiException, JSONException {
-        final URI src = getClass().getClassLoader().getResource("src/" + template).toURI();
-        task.setTemplate(new File(src));
+        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()).getAbsolutePath());
 
         final XdmValue act = task.parseTemplate();
 
-        final String image = src.resolve("image/logo.svg").toString();
+        final String image = getClass().getClassLoader().getResource("src/" + template).toURI().resolve("image/logo.svg").toString();
         final String exp = "{"
 //                + "\"style\":{"
 //                + "\"body\":{\"background-image\":\"" + "image/logo.svg" + "\"},"
@@ -86,6 +85,7 @@ public class StylesheetGeneratorTaskTest {
             "layout-masters.xsl",
             "static-content.xsl",
             "tables.xsl",
+            "task-elements.xsl",
             "toc.xsl",
             "tables.xsl",
             //"basic-settings.xsl",
@@ -138,7 +138,7 @@ public class StylesheetGeneratorTaskTest {
             "variable.yaml"
     })
     public void getTemplate_normalize(final String template) throws URISyntaxException, SaxonApiException, JSONException {
-        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()));
+        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()).getAbsolutePath());
 
         final XdmValue act = task.parseTemplate();
 
@@ -152,7 +152,7 @@ public class StylesheetGeneratorTaskTest {
             "flatten.yaml"
     })
     public void getTemplate_flatten(final String template) throws URISyntaxException, SaxonApiException, JSONException {
-        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()));
+        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()).getAbsolutePath());
 
         final XdmValue act = task.parseTemplate();
 
@@ -166,7 +166,7 @@ public class StylesheetGeneratorTaskTest {
             "size.yaml"
     })
     public void getTemplate_normalize_single(final String template) throws URISyntaxException, SaxonApiException, JSONException {
-        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()));
+        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()).getAbsolutePath());
 
         final XdmValue act = task.parseTemplate();
 
