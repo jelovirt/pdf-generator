@@ -416,6 +416,54 @@
           <xsl:with-param name="prefix" select="'style-shortdesc'"/>
         </xsl:call-template>
       </axsl:attribute-set>
+      <!-- figgroup -->
+      <axsl:attribute-set name="figgroup">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-figgroup'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- lines -->
+      <axsl:attribute-set name="lines">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-lines'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- ph -->
+      <axsl:attribute-set name="ph">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-ph'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- fn -->
+      <axsl:attribute-set name="fn">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-fn'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- cite -->
+      <axsl:attribute-set name="cite">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-cite'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- image -->
+      <axsl:attribute-set name="image">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-image'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- q -->
+      <axsl:attribute-set name="q">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-q'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- lq -->
+      <axsl:attribute-set name="lq">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-lq'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
     </axsl:stylesheet>
   </xsl:template>
 
