@@ -73,6 +73,7 @@ public class StylesheetGeneratorTask extends Task {
         generate(xdmItem, "toc.xsl", "xsl/fo/toc.xsl", null);
         generate(xdmItem, "links.xsl", "xsl/fo/links.xsl", null);
         generate(xdmItem, "lists.xsl", "xsl/fo/lists.xsl", null);
+        generate(xdmItem, "hi-domain.xsl", "xsl/fo/hi-domain.xsl", null);
         generate(xdmItem, "pr-domain.xsl", "xsl/fo/pr-domain.xsl", null);
 //        generate(xdmItem, "sw-domain.xsl", "xsl/fo/sw-domain.xsl", null);
         generate(xdmItem, "static-content.xsl", "xsl/fo/static-content.xsl", null);
@@ -89,6 +90,7 @@ public class StylesheetGeneratorTask extends Task {
         generate(xdmItem, "basic-settings.xsl", "cfg/fo/attrs/basic-settings.xsl", ATTR);
         generate(xdmItem, "links.xsl", "cfg/fo/attrs/links-attr.xsl", ATTR);
         generate(xdmItem, "lists.xsl", "cfg/fo/attrs/lists-attr.xsl", ATTR);
+        generate(xdmItem, "hi-domain.xsl", "cfg/fo/attrs/hi-domain-attr.xsl", ATTR);
         generate(xdmItem, "pr-domain.xsl", "cfg/fo/attrs/pr-domain-attr.xsl", ATTR);
         generate(xdmItem, "sw-domain.xsl", "cfg/fo/attrs/sw-domain-attr.xsl", ATTR);
         generate(xdmItem, "topic.xsl", "cfg/fo/attrs/topic-attr.xsl", ATTR);

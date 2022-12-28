@@ -178,7 +178,9 @@
       <axsl:import href="{$plugin_name}xsl/fo/pr-domain.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/hi-domain-attr.xsl"/>
+      <axsl:import href="{$plugin_name}cfg/fo/attrs/hi-domain-attr.xsl"/>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/hi-domain.xsl"/>
+      <axsl:import href="{$plugin_name}xsl/fo/hi-domain.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/ui-domain-attr.xsl"/>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/ui-domain.xsl"/>
