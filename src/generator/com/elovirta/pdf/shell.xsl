@@ -199,7 +199,9 @@
         <axsl:import href="plugin:org.dita.pdf2:xsl/fo/svg-domain.xsl"/>
 
         <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/hazard-d-attr.xsl"/>
+        <axsl:import href="{$plugin_name}cfg/fo/attrs/hazard-d-attr.xsl"/>
         <axsl:import href="plugin:org.dita.pdf2:xsl/fo/hazard-d.xsl"/>
+        <axsl:import href="{$plugin_name}xsl/fo/hazard-d.xsl"/>
       </xsl:if>
 
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/static-content-attr.xsl"/>
