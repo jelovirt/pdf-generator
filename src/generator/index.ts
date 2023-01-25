@@ -17,6 +17,10 @@ import LayoutMasters from '../../build/generator/layout-masters.sef.json';
 import Links from '../../build/generator/links.sef.json';
 import Lists from '../../build/generator/lists.sef.json';
 import PrDomain from '../../build/generator/pr-domain.sef.json';
+import HazardDomain from '../../build/generator/hazard-d.sef.json';
+import HiDomain from '../../build/generator/hi-domain.sef.json';
+import MarkupDomain from '../../build/generator/markup-domain.sef.json';
+import UiDomain from '../../build/generator/ui-domain.sef.json';
 import StaticContent from '../../build/generator/static-content.sef.json';
 import Tables from '../../build/generator/tables.sef.json';
 import Toc from '../../build/generator/toc.sef.json';
@@ -390,6 +394,9 @@ export default class Generator {
     custom_xslt(Links, 'links');
     custom_xslt(Lists, 'lists');
     custom_xslt(PrDomain, 'pr-domain');
+    // custom_xslt(HiDomain, 'hi-domain');
+    // custom_xslt(MarkupDomain, 'markup-domain');
+    // custom_xslt(UiDomain, 'ui-domain');
     custom_xslt(StaticContent, 'static-content');
     custom_xslt(Topic, 'topic');
     this.run_generation(
@@ -421,6 +428,10 @@ export default class Generator {
     attr_xslt(Links, 'links-attr');
     attr_xslt(Lists, 'lists-attr');
     attr_xslt(PrDomain, 'pr-domain-attr');
+    attr_xslt(HazardDomain, 'hazard-d-attr');
+    attr_xslt(HiDomain, 'hi-domain-attr');
+    attr_xslt(MarkupDomain, 'markup-domain-attr');
+    attr_xslt(UiDomain, 'ui-domain-attr');
     attr_xslt(Topic, 'topic-attr');
 
     // shell XSLT

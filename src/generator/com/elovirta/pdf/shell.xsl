@@ -183,15 +183,19 @@
       <axsl:import href="{$plugin_name}xsl/fo/hi-domain.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/ui-domain-attr.xsl"/>
+      <axsl:import href="{$plugin_name}cfg/fo/attrs/ui-domain-attr.xsl"/>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/ui-domain.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/ut-domain.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/abbrev-domain.xsl"/>
-      <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/markup-domain-attr.xsl"/>
 
-      <axsl:import href="plugin:org.dita.pdf2:xsl/fo/markup-domain.xsl"/>
+      <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/markup-domain-attr.xsl"/>
+      <axsl:import href="{$plugin_name}cfg/fo/attrs/markup-domain-attr.xsl"/>
+
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/xml-domain-attr.xsl"/>
+      <axsl:import href="{$plugin_name}cfg/fo/attrs/xml-domain-attr.xsl"/>
+      <axsl:import href="plugin:org.dita.pdf2:xsl/fo/markup-domain.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/xml-domain.xsl"/>
       <xsl:if test="$version = ('3.5', '3.6', '3.7', '4.0', '4.1')">

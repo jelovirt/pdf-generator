@@ -94,6 +94,9 @@ public class StylesheetGeneratorTask extends Task {
         generate(xdmItem, "hi-domain.xsl", "cfg/fo/attrs/hi-domain-attr.xsl", ATTR);
         generate(xdmItem, "pr-domain.xsl", "cfg/fo/attrs/pr-domain-attr.xsl", ATTR);
         generate(xdmItem, "sw-domain.xsl", "cfg/fo/attrs/sw-domain-attr.xsl", ATTR);
+        generate(xdmItem, "markup-domain.xsl", "cfg/fo/attrs/markup-domain-attr.xsl", ATTR);
+        generate(xdmItem, "ui-domain.xsl", "cfg/fo/attrs/ui-domain-attr.xsl", ATTR);
+        generate(xdmItem, "xml-domain.xsl", "cfg/fo/attrs/xml-domain-attr.xsl", ATTR);
         generate(xdmItem, "hazard-d.xsl", "cfg/fo/attrs/hazard-d-attr.xsl", ATTR);
         generate(xdmItem, "topic.xsl", "cfg/fo/attrs/topic-attr.xsl", ATTR);
         generate(xdmItem, "task-elements.xsl", "cfg/fo/attrs/task-elements-attr.xsl", ATTR);
