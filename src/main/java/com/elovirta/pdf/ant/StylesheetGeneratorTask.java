@@ -73,9 +73,12 @@ public class StylesheetGeneratorTask extends Task {
         generate(xdmItem, "toc.xsl", "xsl/fo/toc.xsl", null);
         generate(xdmItem, "links.xsl", "xsl/fo/links.xsl", null);
         generate(xdmItem, "lists.xsl", "xsl/fo/lists.xsl", null);
+        generate(xdmItem, "hi-domain.xsl", "xsl/fo/hi-domain.xsl", null);
         generate(xdmItem, "pr-domain.xsl", "xsl/fo/pr-domain.xsl", null);
+        generate(xdmItem, "hazard-d.xsl", "xsl/fo/hazard-d.xsl", null);
 //        generate(xdmItem, "sw-domain.xsl", "xsl/fo/sw-domain.xsl", null);
         generate(xdmItem, "static-content.xsl", "xsl/fo/static-content.xsl", null);
+//        generate(xdmItem, "task-elements.xsl", "xsl/fo/task-elements.xsl", null);
         generate(xdmItem, "topic.xsl", "xsl/fo/topic.xsl", null);
         generate(xdmItem, "layout-masters.xsl", "cfg/fo/layout-masters.xsl", null);
         generate(xdmItem, "front-matter.xsl", "cfg/fo/attrs/front-matter-attr.xsl", ATTR);
@@ -88,9 +91,15 @@ public class StylesheetGeneratorTask extends Task {
         generate(xdmItem, "basic-settings.xsl", "cfg/fo/attrs/basic-settings.xsl", ATTR);
         generate(xdmItem, "links.xsl", "cfg/fo/attrs/links-attr.xsl", ATTR);
         generate(xdmItem, "lists.xsl", "cfg/fo/attrs/lists-attr.xsl", ATTR);
+        generate(xdmItem, "hi-domain.xsl", "cfg/fo/attrs/hi-domain-attr.xsl", ATTR);
         generate(xdmItem, "pr-domain.xsl", "cfg/fo/attrs/pr-domain-attr.xsl", ATTR);
         generate(xdmItem, "sw-domain.xsl", "cfg/fo/attrs/sw-domain-attr.xsl", ATTR);
+        generate(xdmItem, "markup-domain.xsl", "cfg/fo/attrs/markup-domain-attr.xsl", ATTR);
+        generate(xdmItem, "ui-domain.xsl", "cfg/fo/attrs/ui-domain-attr.xsl", ATTR);
+        generate(xdmItem, "xml-domain.xsl", "cfg/fo/attrs/xml-domain-attr.xsl", ATTR);
+        generate(xdmItem, "hazard-d.xsl", "cfg/fo/attrs/hazard-d-attr.xsl", ATTR);
         generate(xdmItem, "topic.xsl", "cfg/fo/attrs/topic-attr.xsl", ATTR);
+        generate(xdmItem, "task-elements.xsl", "cfg/fo/attrs/task-elements-attr.xsl", ATTR);
         final File shell = generate(xdmItem, "shell.xsl", "xsl/fo/topic2fo_shell.xsl", null);
         for (String lang : new String[]{"de", "en", "es", "fi", "fr", "he", "it", "ja", "nl", "ro", "ru", "sl", "sv", "zh-CN"}) {
             generate(xdmItem, "vars.xsl", String.format("cfg/common/vars/%s.xml", lang), null,

@@ -1,7 +1,6 @@
 <xsl:stylesheet version="3.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:axsl="http://www.w3.org/1999/XSL/Transform/alias"
-                xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:map="http://www.w3.org/2005/xpath-functions/map"
                 xmlns:array="http://www.w3.org/2005/xpath-functions/array"
                 exclude-result-prefixes="axsl map array">
@@ -15,147 +14,145 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:if test="$root ?style-codeblock-line-numbering">
-        <axsl:template match="node()" mode="codeblock.generate-line-number" as="xs:boolean">
-          <axsl:sequence select="true()"/>
-        </axsl:template>
-      </xsl:if>
-      <xsl:if test="$root ?style-codeblock-show-whitespace">
-        <axsl:template match="node()" mode="codeblock.show-whitespace" as="xs:boolean">
-          <axsl:sequence select="true()"/>
-        </axsl:template>
-      </xsl:if>
     </axsl:stylesheet>
   </xsl:template>
 
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <axsl:attribute-set name="codeblock">
+      <axsl:attribute-set name="prereq">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-codeblock'"/>
-          <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
+          <xsl:with-param name="prefix" select="'style-prereq'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-
-      <axsl:attribute-set name="apiname">
+      <axsl:attribute-set name="context">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-apiname'"/>
+          <xsl:with-param name="prefix" select="'style-context'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="codeph">
+      <axsl:attribute-set name="steps">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-codeph'"/>
+          <xsl:with-param name="prefix" select="'style-steps'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="option">
+      <axsl:attribute-set name="steps-informal">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-option'"/>
+          <xsl:with-param name="prefix" select="'style-steps-informal'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="parmname">
+      <axsl:attribute-set name="steps-unordered">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-parmname'"/>
+          <xsl:with-param name="prefix" select="'style-steps-unordered'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="parml">
+      <axsl:attribute-set name="step">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-parml'"/>
+          <xsl:with-param name="prefix" select="'style-step'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="plentry">
+      <axsl:attribute-set name="stepsection">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-plentry'"/>
+          <xsl:with-param name="prefix" select="'style-stepsection'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="pt">
+      <axsl:attribute-set name="cmd">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-pt'"/>
+          <xsl:with-param name="prefix" select="'style-cmd'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="pd">
+      <axsl:attribute-set name="info">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-pd'"/>
+          <xsl:with-param name="prefix" select="'style-info'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="synph">
+      <axsl:attribute-set name="substeps">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-synph'"/>
+          <xsl:with-param name="prefix" select="'style-substeps'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="syntaxdiagram">
+      <axsl:attribute-set name="substep">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-syntaxdiagram'"/>
+          <xsl:with-param name="prefix" select="'style-substep'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="groupseq">
+      <axsl:attribute-set name="stepxmp">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-groupseq'"/>
+          <xsl:with-param name="prefix" select="'style-stepxmp'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="groupchoice">
+      <axsl:attribute-set name="choicetable">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-groupchoice'"/>
+          <xsl:with-param name="prefix" select="'style-choicetable'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="groupcomp">
+      <axsl:attribute-set name="chhead">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-groupcomp'"/>
+          <xsl:with-param name="prefix" select="'style-chhead'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="fragment">
+      <axsl:attribute-set name="choptionhd">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-fragment'"/>
+          <xsl:with-param name="prefix" select="'style-choptionhd'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="fragref">
+      <axsl:attribute-set name="chdeschd">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-fragref'"/>
+          <xsl:with-param name="prefix" select="'style-chdeschd'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="synblk">
+      <axsl:attribute-set name="chrow">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-synblk'"/>
+          <xsl:with-param name="prefix" select="'style-chrow'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="synnote">
+      <axsl:attribute-set name="choption">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-synnote'"/>
+          <xsl:with-param name="prefix" select="'style-choption'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="synnoteref">
+      <axsl:attribute-set name="chdesc">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-synnoteref'"/>
+          <xsl:with-param name="prefix" select="'style-chdesc'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="kwd">
+      <axsl:attribute-set name="choices">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-kwd'"/>
+          <xsl:with-param name="prefix" select="'style-choices'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="var">
+      <axsl:attribute-set name="choice">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-var'"/>
+          <xsl:with-param name="prefix" select="'style-choice'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="oper">
+      <axsl:attribute-set name="steptroubleshooting">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-oper'"/>
+          <xsl:with-param name="prefix" select="'style-steptroubleshooting'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="delim">
+      <axsl:attribute-set name="stepresult">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-delim'"/>
+          <xsl:with-param name="prefix" select="'style-stepresult'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="sep">
+      <axsl:attribute-set name="tutorialinfo">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-sep'"/>
+          <xsl:with-param name="prefix" select="'style-tutorialinfo'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="repsep">
+      <axsl:attribute-set name="tasktroubleshooting">
         <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-repsep'"/>
+          <xsl:with-param name="prefix" select="'style-tasktroubleshooting'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="result">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-result'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="postreq">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-postreq'"/>
         </xsl:call-template>
       </axsl:attribute-set>
     </axsl:stylesheet>

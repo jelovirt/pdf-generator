@@ -257,45 +257,45 @@
           </fo:block>
         </axsl:template>
       </xsl:if>
+
       <!-- tm -->
-      <xsl:if test="$root ?style-tm-symbol-scope != 'always'">
-<!--        <xsl:comment>tm</xsl:comment>-->
-        <xsl:choose>
-          <xsl:when test="$root ?style-tm-symbol-scope = 'chapter'">
-            <axsl:function name="e:tm-value" as="xs:string">
-              <axsl:param name="node" as="element()"/>
-              <axsl:value-of select="normalize-space($node)"/>
-            </axsl:function>
+      <xsl:choose>
+        <xsl:when test="$root ?style-tm-symbol-scope = 'always'">
+        </xsl:when>
+        <xsl:when test="$root ?style-tm-symbol-scope = 'chapter'">
+          <axsl:function name="e:tm-value" as="xs:string">
+            <axsl:param name="node" as="element()"/>
+            <axsl:value-of select="normalize-space($node)"/>
+          </axsl:function>
 
-            <axsl:key name="e:first-tm" match="*[contains(@class, ' topic/tm ')]" use="e:tm-value(.)"/>
+          <axsl:key name="e:first-tm" match="*[contains(@class, ' topic/tm ')]" use="e:tm-value(.)"/>
 
-            <axsl:template match="*[contains(@class, ' topic/tm ')]">
-              <axsl:variable name="tmText" as="xs:string" select="e:tm-value(.)"/>
-              <axsl:variable name="tm-scope" as="element()"
-                             select="(ancestor-or-self::*[contains(@class, ' topic/topic ')])[1]"/>
-              <axsl:variable name="tms" as="element()+" select="key('e:first-tm', $tmText, $tm-scope)"/>
-              <axsl:variable name="isFirst" as="xs:boolean" select="$tms[1] is ."/>
-              <axsl:choose>
-                <axsl:when test="$isFirst">
-                  <axsl:next-match/>
-                </axsl:when>
-                <axsl:otherwise>
-                  <fo:inline axsl:use-attribute-sets="tm">
-                    <axsl:apply-templates/>
-                  </fo:inline>
-                </axsl:otherwise>
-              </axsl:choose>
-            </axsl:template>
-          </xsl:when>
-          <xsl:when test="$root ?style-tm-symbol-scope = 'never'">
-            <axsl:template match="*[contains(@class, ' topic/tm ')]">
-              <fo:inline axsl:use-attribute-sets="tm">
-                <axsl:apply-templates/>
-              </fo:inline>
-            </axsl:template>
-          </xsl:when>
-        </xsl:choose>
-      </xsl:if>
+          <axsl:template match="*[contains(@class, ' topic/tm ')]">
+            <axsl:variable name="tmText" as="xs:string" select="e:tm-value(.)"/>
+            <axsl:variable name="tm-scope" as="element()"
+                           select="(ancestor-or-self::*[contains(@class, ' topic/topic ')])[1]"/>
+            <axsl:variable name="tms" as="element()+" select="key('e:first-tm', $tmText, $tm-scope)"/>
+            <axsl:variable name="isFirst" as="xs:boolean" select="$tms[1] is ."/>
+            <axsl:choose>
+              <axsl:when test="$isFirst">
+                <axsl:next-match/>
+              </axsl:when>
+              <axsl:otherwise>
+                <fo:inline axsl:use-attribute-sets="tm">
+                  <axsl:apply-templates/>
+                </fo:inline>
+              </axsl:otherwise>
+            </axsl:choose>
+          </axsl:template>
+        </xsl:when>
+        <xsl:when test="$root ?style-tm-symbol-scope = 'never'">
+          <axsl:template match="*[contains(@class, ' topic/tm ')]">
+            <fo:inline axsl:use-attribute-sets="tm">
+              <axsl:apply-templates/>
+            </fo:inline>
+          </axsl:template>
+        </xsl:when>
+      </xsl:choose>
     </axsl:stylesheet>
   </xsl:template>
 
@@ -414,6 +414,54 @@
       <axsl:attribute-set name="abstract" use-attribute-sets="common.block">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-shortdesc'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- figgroup -->
+      <axsl:attribute-set name="figgroup">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-figgroup'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- lines -->
+      <axsl:attribute-set name="lines">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-lines'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- ph -->
+      <axsl:attribute-set name="ph">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-ph'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- fn -->
+      <axsl:attribute-set name="fn">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-fn'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- cite -->
+      <axsl:attribute-set name="cite">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-cite'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- image -->
+      <axsl:attribute-set name="image">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-image'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- q -->
+      <axsl:attribute-set name="q">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-q'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <!-- lq -->
+      <axsl:attribute-set name="lq">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-lq'"/>
         </xsl:call-template>
       </axsl:attribute-set>
     </axsl:stylesheet>
