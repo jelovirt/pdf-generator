@@ -21,41 +21,13 @@
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <axsl:attribute-set name="uicontrol">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-uicontrol'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="wintitle">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-wintitle'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="menucascade">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-menucascade'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="shortcut">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-shortcut'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="screen">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-screen'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="filepath">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-filepath'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="filepath">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-filepath'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
+      <xsl:for-each select="('uicontrol', 'wintitle', 'menucascade', 'shortcut', 'screen', 'filepath', 'filepath')">
+        <axsl:attribute-set name="{.}">
+          <xsl:call-template name="generate-attribute-set">
+            <xsl:with-param name="prefix" select="concat('style-', .)"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+      </xsl:for-each>
     </axsl:stylesheet>
   </xsl:template>
 

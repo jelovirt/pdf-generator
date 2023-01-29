@@ -39,31 +39,13 @@
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:for-each>
-      <axsl:attribute-set name="messagepanel">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-messagepanel'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="consequence">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-consequence'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="howtoavoid">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-howtoavoid'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="typeofhazard">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-typeofhazard'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="hazardsymbol">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-hazardsymbol'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
+      <xsl:for-each select="('messagepanel', 'consequence', 'howtoavoid', 'typeofhazard', 'hazardsymbol')">
+        <axsl:attribute-set name="{.}">
+          <xsl:call-template name="generate-attribute-set">
+            <xsl:with-param name="prefix" select="concat('style-', .)"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+      </xsl:for-each>
     </axsl:stylesheet>
   </xsl:template>
 
