@@ -1,6 +1,5 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
   "default": "Theme template.",
   "properties": {
     "$schema": {
@@ -11,7 +10,6 @@
       "description": "Extend another theme. Value is a URI to the theme to be extended."
     },
     "page": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/page-type"
@@ -20,7 +18,6 @@
       "description": "Page configuration."
     },
     "header": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/header-type"
@@ -29,7 +26,6 @@
       "description": "Page header configuration."
     },
     "footer": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/header-type"
@@ -38,7 +34,6 @@
       "description": "Page footer configuration."
     },
     "style": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/style-type"
@@ -126,7 +121,6 @@
       ]
     },
     "block-style-type": {
-      "type": "object",
       "properties": {
         "background-color": {
           "$ref": "#/definitions/colour-type"
@@ -218,7 +212,6 @@
       }
     },
     "inline-style-type": {
-      "type": "object",
       "properties": {
         "font-family": {
           "type": "string"
@@ -248,10 +241,8 @@
       }
     },
     "page-size-type": {
-      "type": "object",
       "oneOf": [
         {
-          "type": "object",
           "properties": {
             "size": {
               "type": "string",
@@ -279,7 +270,6 @@
           "required": ["size"]
         },
         {
-          "type": "object",
           "properties": {
             "height": {
               "allOf": [
@@ -305,7 +295,6 @@
       ]
     },
     "page-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/page-size-type"
@@ -407,7 +396,6 @@
       "minItems": 0,
       "allOf": [
         {
-          "type": "object",
           "properties": {
             "kind": {
               "type": "string",
@@ -422,7 +410,6 @@
           }
         },
         {
-          "type": "object",
           "properties": {
             "kind": {
               "type": "string",
@@ -455,7 +442,6 @@
       ]
     },
     "content-type": {
-      "type": "object",
       "properties": {
         "content": {
           "anyOf": [
@@ -480,7 +466,6 @@
       ]
     },
     "header-type": {
-      "type": "object",
       "properties": {
         "odd": {
           "allOf": [
@@ -502,7 +487,6 @@
       "description": "Page header and footer configuration."
     },
     "body-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/block-style-type"
@@ -511,7 +495,6 @@
       "properties": {}
     },
     "topic-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/block-style-type"
@@ -525,7 +508,6 @@
       }
     },
     "codeblock-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/block-style-type"
@@ -553,7 +535,6 @@
       }
     },
     "dl-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/block-style-type"
@@ -568,7 +549,6 @@
       }
     },
     "ol-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/block-style-type"
@@ -602,7 +582,6 @@
       }
     },
     "ul-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/block-style-type"
@@ -638,7 +617,6 @@
       }
     },
     "table-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/block-style-type"
@@ -656,7 +634,6 @@
       }
     },
     "toc-1-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/block-style-type"
@@ -669,7 +646,6 @@
       }
     },
     "link-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/inline-style-type"
@@ -683,7 +659,6 @@
       }
     },
     "tm-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/inline-style-type"
@@ -696,7 +671,6 @@
       }
     },
     "section-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/body-type"
@@ -723,7 +697,6 @@
       }
     },
     "note-type": {
-      "type": "object",
       "allOf": [
         {
           "$ref": "#/definitions/block-style-type"
@@ -734,7 +707,6 @@
       ]
     },
     "style-type": {
-      "type": "object",
       "allOf": [
         {
           "properties": {
@@ -792,13 +764,11 @@
               "$ref": "#/definitions/section-type"
             },
             "note": {
-              "type": "object",
               "allOf": [
                 {
                   "$ref": "#/definitions/note-type"
                 },
                 {
-                  "type": "object",
                   "properties": {
                     "note": {
                       "$ref": "#/definitions/note-type"
@@ -874,7 +844,6 @@
               }
             },
             "fig": {
-              "type": "object",
               "allOf": [
                 {
                   "$ref": "#/definitions/block-style-type"
