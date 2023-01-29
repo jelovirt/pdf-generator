@@ -12,7 +12,7 @@
     "page": {
       "allOf": [
         {
-          "$ref": "#/definitions/page-type"
+          "$ref": "#/$defs/page-type"
         }
       ],
       "description": "Page configuration."
@@ -20,7 +20,7 @@
     "header": {
       "allOf": [
         {
-          "$ref": "#/definitions/header-type"
+          "$ref": "#/$defs/header-type"
         }
       ],
       "description": "Page header configuration."
@@ -28,7 +28,7 @@
     "footer": {
       "allOf": [
         {
-          "$ref": "#/definitions/header-type"
+          "$ref": "#/$defs/header-type"
         }
       ],
       "description": "Page footer configuration."
@@ -36,7 +36,7 @@
     "style": {
       "allOf": [
         {
-          "$ref": "#/definitions/style-type"
+          "$ref": "#/$defs/style-type"
         }
       ],
       "description": "Style configuration."
@@ -76,7 +76,7 @@
       "default": "page"
     }
   },
-  "definitions": {
+  "$defs": {
     "length-type": {
       "type": "string",
       "pattern": "^-?\\d+(\\.\\d+)?(cm|mm|in|pt|pc|px|em)?$"
@@ -123,70 +123,70 @@
     "block-style-type": {
       "properties": {
         "background-color": {
-          "$ref": "#/definitions/colour-type"
+          "$ref": "#/$defs/colour-type"
         },
         "padding-before": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "padding-end": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "padding-after": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "padding-start": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "end-indent": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "border-before-style": {
-          "$ref": "#/definitions/border-style-type"
+          "$ref": "#/$defs/border-style-type"
         },
         "border-before-width": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "border-before-color": {
-          "$ref": "#/definitions/colour-type"
+          "$ref": "#/$defs/colour-type"
         },
         "border-end-style": {
-          "$ref": "#/definitions/border-style-type"
+          "$ref": "#/$defs/border-style-type"
         },
         "border-end-width": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "border-end-color": {
-          "$ref": "#/definitions/colour-type"
+          "$ref": "#/$defs/colour-type"
         },
         "border-after-style": {
-          "$ref": "#/definitions/border-style-type"
+          "$ref": "#/$defs/border-style-type"
         },
         "border-after-width": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "border-after-color": {
-          "$ref": "#/definitions/colour-type"
+          "$ref": "#/$defs/colour-type"
         },
         "border-start-style": {
-          "$ref": "#/definitions/border-style-type"
+          "$ref": "#/$defs/border-style-type"
         },
         "border-start-width": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "border-start-color": {
-          "$ref": "#/definitions/colour-type"
+          "$ref": "#/$defs/colour-type"
         },
         "font-family": {
           "type": "string"
         },
         "font-size": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "color": {
-          "$ref": "#/definitions/colour-type"
+          "$ref": "#/$defs/colour-type"
         },
         "font-weight": {
-          "$ref": "#/definitions/font-weight-type"
+          "$ref": "#/$defs/font-weight-type"
         },
         "font-style": {
           "type": "string"
@@ -198,16 +198,16 @@
           "type": "string"
         },
         "start-indent": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "line-height": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "space-before": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "space-after": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         }
       }
     },
@@ -217,16 +217,16 @@
           "type": "string"
         },
         "font-size": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         },
         "color": {
-          "$ref": "#/definitions/colour-type"
+          "$ref": "#/$defs/colour-type"
         },
         "background-color": {
-          "$ref": "#/definitions/colour-type"
+          "$ref": "#/$defs/colour-type"
         },
         "font-weight": {
-          "$ref": "#/definitions/font-weight-type"
+          "$ref": "#/$defs/font-weight-type"
         },
         "font-style": {
           "type": "string",
@@ -236,7 +236,7 @@
           "type": "string"
         },
         "line-height": {
-          "$ref": "#/definitions/length-type"
+          "$ref": "#/$defs/length-type"
         }
       }
     },
@@ -274,7 +274,7 @@
             "height": {
               "allOf": [
                 {
-                  "$ref": "#/definitions/length-type"
+                  "$ref": "#/$defs/length-type"
                 }
               ],
               "description": "Page height.",
@@ -283,7 +283,7 @@
             "width": {
               "allOf": [
                 {
-                  "$ref": "#/definitions/length-type"
+                  "$ref": "#/$defs/length-type"
                 }
               ],
               "description": "Page width.",
@@ -297,14 +297,14 @@
     "page-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/page-size-type"
+          "$ref": "#/$defs/page-size-type"
         },
         {
           "properties": {
             "top": {
               "allOf": [
                 {
-                  "$ref": "#/definitions/length-type"
+                  "$ref": "#/$defs/length-type"
                 }
               ],
               "description": "Page top margin.",
@@ -313,7 +313,7 @@
             "outside": {
               "allOf": [
                 {
-                  "$ref": "#/definitions/length-type"
+                  "$ref": "#/$defs/length-type"
                 }
               ],
               "description": "Page outside margin.",
@@ -322,7 +322,7 @@
             "bottom": {
               "allOf": [
                 {
-                  "$ref": "#/definitions/length-type"
+                  "$ref": "#/$defs/length-type"
                 }
               ],
               "description": "Page bottom margin.",
@@ -331,7 +331,7 @@
             "inside": {
               "allOf": [
                 {
-                  "$ref": "#/definitions/length-type"
+                  "$ref": "#/$defs/length-type"
                 }
               ],
               "description": "Page inside margin.",
@@ -356,7 +356,7 @@
             "column-gap": {
               "allOf": [
                 {
-                  "$ref": "#/definitions/length-type"
+                  "$ref": "#/$defs/length-type"
                 }
               ],
               "description": "Column gap on multi column pages."
@@ -446,10 +446,10 @@
         "content": {
           "anyOf": [
             {
-              "$ref": "#/definitions/content-template-type"
+              "$ref": "#/$defs/content-template-type"
             },
             {
-              "$ref": "#/definitions/content-array-type"
+              "$ref": "#/$defs/content-array-type"
             }
           ]
         }
@@ -458,10 +458,10 @@
     "odd-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/block-style-type"
+          "$ref": "#/$defs/block-style-type"
         },
         {
-          "$ref": "#/definitions/content-type"
+          "$ref": "#/$defs/content-type"
         }
       ]
     },
@@ -470,7 +470,7 @@
         "odd": {
           "allOf": [
             {
-              "$ref": "#/definitions/odd-type"
+              "$ref": "#/$defs/odd-type"
             }
           ],
           "description": "Header or footer on verso pages."
@@ -478,7 +478,7 @@
         "even": {
           "allOf": [
             {
-              "$ref": "#/definitions/odd-type"
+              "$ref": "#/$defs/odd-type"
             }
           ],
           "description": "Header or footer on recto pages."
@@ -489,7 +489,7 @@
     "body-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/block-style-type"
+          "$ref": "#/$defs/block-style-type"
         }
       ],
       "properties": {}
@@ -497,7 +497,7 @@
     "topic-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/block-style-type"
+          "$ref": "#/$defs/block-style-type"
         }
       ],
       "properties": {
@@ -510,7 +510,7 @@
     "codeblock-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/block-style-type"
+          "$ref": "#/$defs/block-style-type"
         }
       ],
       "properties": {
@@ -537,7 +537,7 @@
     "dl-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/block-style-type"
+          "$ref": "#/$defs/block-style-type"
         }
       ],
       "properties": {
@@ -551,7 +551,7 @@
     "ol-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/block-style-type"
+          "$ref": "#/$defs/block-style-type"
         }
       ],
       "properties": {
@@ -584,7 +584,7 @@
     "ul-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/block-style-type"
+          "$ref": "#/$defs/block-style-type"
         }
       ],
       "properties": {
@@ -619,10 +619,10 @@
     "table-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/block-style-type"
+          "$ref": "#/$defs/block-style-type"
         },
         {
-          "$ref": "#/definitions/caption-type"
+          "$ref": "#/$defs/caption-type"
         }
       ],
       "properties": {
@@ -636,7 +636,7 @@
     "toc-1-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/block-style-type"
+          "$ref": "#/$defs/block-style-type"
         }
       ],
       "properties": {
@@ -648,7 +648,7 @@
     "link-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/inline-style-type"
+          "$ref": "#/$defs/inline-style-type"
         }
       ],
       "properties": {
@@ -661,7 +661,7 @@
     "tm-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/inline-style-type"
+          "$ref": "#/$defs/inline-style-type"
         }
       ],
       "properties": {
@@ -673,12 +673,12 @@
     "section-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/body-type"
+          "$ref": "#/$defs/body-type"
         }
       ],
       "properties": {
         "title": {
-          "$ref": "#/definitions/body-type"
+          "$ref": "#/$defs/body-type"
         }
       }
     },
@@ -687,10 +687,10 @@
         "label": {
           "allOf": [
             {
-              "$ref": "#/definitions/block-style-type"
+              "$ref": "#/$defs/block-style-type"
             },
             {
-              "$ref": "#/definitions/content-type"
+              "$ref": "#/$defs/content-type"
             }
           ]
         }
@@ -699,10 +699,10 @@
     "note-type": {
       "allOf": [
         {
-          "$ref": "#/definitions/block-style-type"
+          "$ref": "#/$defs/block-style-type"
         },
         {
-          "$ref": "#/definitions/label-type"
+          "$ref": "#/$defs/label-type"
         }
       ]
     },
@@ -711,25 +711,25 @@
         {
           "properties": {
             "body": {
-              "$ref": "#/definitions/body-type"
+              "$ref": "#/$defs/body-type"
             },
             "shortdesc": {},
             "h1": {
-              "$ref": "#/definitions/topic-type"
+              "$ref": "#/$defs/topic-type"
             },
             "h2": {
-              "$ref": "#/definitions/topic-type"
+              "$ref": "#/$defs/topic-type"
             },
             "h3": {
-              "$ref": "#/definitions/topic-type"
+              "$ref": "#/$defs/topic-type"
             },
             "h4": {
-              "$ref": "#/definitions/topic-type"
+              "$ref": "#/$defs/topic-type"
             },
             "cover": {
               "allOf": [
                 {
-                  "$ref": "#/definitions/block-style-type"
+                  "$ref": "#/$defs/block-style-type"
                 },
                 {
                   "properties": {
@@ -746,10 +746,10 @@
                     "title": {
                       "allOf": [
                         {
-                          "$ref": "#/definitions/block-style-type"
+                          "$ref": "#/$defs/block-style-type"
                         },
                         {
-                          "$ref": "#/definitions/content-type"
+                          "$ref": "#/$defs/content-type"
                         }
                       ]
                     }
@@ -758,284 +758,275 @@
               ]
             },
             "section": {
-              "$ref": "#/definitions/section-type"
+              "$ref": "#/$defs/section-type"
             },
             "example": {
-              "$ref": "#/definitions/section-type"
+              "$ref": "#/$defs/section-type"
             },
             "note": {
               "allOf": [
                 {
-                  "$ref": "#/definitions/note-type"
+                  "$ref": "#/$defs/note-type"
                 },
                 {
                   "properties": {
                     "note": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     },
                     "tip": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     },
                     "fastpath": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     },
                     "restriction": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     },
                     "important": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     },
                     "remember": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     },
                     "attention": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     },
                     "caution": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     },
                     "notice": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     },
                     "danger": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     },
                     "warning": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     },
                     "trouble": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     },
                     "other": {
-                      "$ref": "#/definitions/note-type"
+                      "$ref": "#/$defs/note-type"
                     }
                   }
                 }
               ]
             },
             "pre": {
-              "$ref": "#/definitions/body-type"
+              "$ref": "#/$defs/body-type"
             },
             "codeblock": {
-              "$ref": "#/definitions/codeblock-type"
+              "$ref": "#/$defs/codeblock-type"
             },
             "dl": {
-              "$ref": "#/definitions/dl-type"
+              "$ref": "#/$defs/dl-type"
             },
             "ol": {
-              "$ref": "#/definitions/ol-type"
+              "$ref": "#/$defs/ol-type"
             },
             "ul": {
-              "$ref": "#/definitions/ul-type"
+              "$ref": "#/$defs/ul-type"
             },
             "table": {
               "allOf": [
                 {
-                  "$ref": "#/definitions/table-type"
+                  "$ref": "#/$defs/table-type"
                 }
               ],
               "properties": {
                 "caption": {
-                  "$ref": "#/definitions/block-style-type"
+                  "$ref": "#/$defs/block-style-type"
                 },
                 "header": {
-                  "$ref": "#/definitions/block-style-type"
+                  "$ref": "#/$defs/block-style-type"
                 }
               }
             },
             "fig": {
               "allOf": [
                 {
-                  "$ref": "#/definitions/block-style-type"
+                  "$ref": "#/$defs/block-style-type"
                 },
                 {
-                  "$ref": "#/definitions/caption-type"
+                  "$ref": "#/$defs/caption-type"
                 }
               ]
             },
             "toc-1": {
-              "$ref": "#/definitions/toc-1-type"
+              "$ref": "#/$defs/toc-1-type"
             },
             "toc-2": {
-              "$ref": "#/definitions/body-type"
+              "$ref": "#/$defs/body-type"
             },
             "toc-3": {
-              "$ref": "#/definitions/body-type"
+              "$ref": "#/$defs/body-type"
             },
             "toc-4": {
-              "$ref": "#/definitions/body-type"
+              "$ref": "#/$defs/body-type"
             },
             "link": {
               "allOf": [
                 {
-                  "$ref": "#/definitions/link-type"
+                  "$ref": "#/$defs/link-type"
                 }
               ],
               "properties": {
                 "external": {
                   "allOf": [
                     {
-                      "$ref": "#/definitions/content-type"
+                      "$ref": "#/$defs/content-type"
                     }
                   ]
                 }
               }
             },
             "tm": {
-              "$ref": "#/definitions/tm-type"
+              "$ref": "#/$defs/tm-type"
             },
             "keyword": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "term": {
-              "$ref": "#/definitions/inline-style-type"
-            },
-            "codeph": {
-              "$ref": "#/definitions/inline-style-type"
-            },
-            "filepath": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "cmdname": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "varname": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "userinput": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "systemoutput": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "apiname": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "codeph": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "option": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "parmname": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "synph": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "syntaxdiagram": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "groupseq": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "groupchoice": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "groupcomp": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "fragment": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "fragref": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "synblk": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "synnote": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "synnoteref": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "kwd": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "var": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "oper": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "delim": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "sep": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "repsep": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "b": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "i": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "u": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "tt": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "sup": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "sub": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "line-through": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "overline": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "markupname": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "uicontrol": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "wintitle": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "menucascade": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "shortcut": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "screen": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "filepath": {
-              "$ref": "#/definitions/inline-style-type"
-            },
-            "filepath": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "xmlelement": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "xmlatt": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "textentity": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "parameterentity": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "numcharref": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "xmlnsname": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             },
             "xmlpi": {
-              "$ref": "#/definitions/inline-style-type"
+              "$ref": "#/$defs/inline-style-type"
             }
           }
         }
