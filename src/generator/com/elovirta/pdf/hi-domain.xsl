@@ -21,46 +21,13 @@
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <axsl:attribute-set name="b">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-b'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="i">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-i'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="u">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-u'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="tt">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-tt'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="sup">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-sup'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="sub">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-sub'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="line-through">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-line-through'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="overline">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-overline'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
+      <xsl:for-each select="('b', 'i', 'u', 'tt', 'sup', 'sub', 'ine-through', 'overline')">
+        <axsl:attribute-set name="{.}">
+          <xsl:call-template name="generate-attribute-set">
+            <xsl:with-param name="prefix" select="concat('style-', .)"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+      </xsl:for-each>
     </axsl:stylesheet>
   </xsl:template>
 

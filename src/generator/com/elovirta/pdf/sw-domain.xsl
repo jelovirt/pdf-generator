@@ -21,31 +21,13 @@
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <axsl:attribute-set name="filepath">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-filepath'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="cmdname">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-cmdname'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="varname">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-varname'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="userinput">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-userinput'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
-      <axsl:attribute-set name="systemoutput">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-systemoutput'"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
+      <xsl:for-each select="('filepath', 'cmdname', 'varname', 'userinput', 'systemoutput')">
+        <axsl:attribute-set name="{.}">
+          <xsl:call-template name="generate-attribute-set">
+            <xsl:with-param name="prefix" select="concat('style-', .)"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+      </xsl:for-each>
     </axsl:stylesheet>
   </xsl:template>
 
