@@ -21,7 +21,7 @@
   <xsl:template match=".[. instance of map(*)]" mode="attr">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
-      <xsl:for-each select="('uicontrol', 'wintitle', 'menucascade', 'shortcut', 'screen', 'filepath', 'filepath')">
+      <xsl:for-each select="('uicontrol', 'wintitle', 'menucascade', 'shortcut', 'screen', 'filepath')">
         <axsl:attribute-set name="{.}">
           <xsl:call-template name="generate-attribute-set">
             <xsl:with-param name="prefix" select="concat('style-', .)"/>
