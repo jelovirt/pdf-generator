@@ -1,0 +1,927 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "default": "Theme template.",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "extends": {
+      "type": "string",
+      "description": "Extend another theme. Value is a URI to the theme to be extended."
+    },
+    "page": {
+      "$ref": "#/$defs/page-type",
+      "description": "Page configuration."
+    },
+    "header": {
+      "$ref": "#/$defs/header-type",
+      "description": "Page header configuration."
+    },
+    "footer": {
+      "$ref": "#/$defs/header-type",
+      "description": "Page footer configuration."
+    },
+    "style": {
+      "$ref": "#/$defs/style-type",
+      "description": "Style configuration."
+    },
+    "chapter-layout": {
+      "type": "string",
+      "enum": ["MINITOC", "BASIC"],
+      "default": "MINITOC",
+      "description": "Generate TOC for section."
+    },
+    "bookmark-style": {
+      "type": "string",
+      "enum": ["COLLAPSED", "EXPANDED"],
+      "default": "COLLAPSED",
+      "description": "Expand state of PDF bookmarks."
+    },
+    "toc-maximum-level": {
+      "type": "integer",
+      "description": "Maximum TOC depth.",
+      "default": 4
+    },
+    "task-label": {
+      "type": "boolean",
+      "description": "Generate labels for task sections.",
+      "default": false
+    },
+    "include-related-links": {
+      "type": "string",
+      "enum": ["none", "all", "nofamily"],
+      "default": "nofamily",
+      "description": "Specifies which link types are used to generate related links."
+    },
+    "page-number": {
+      "type": "string",
+      "enum": ["page", "chapter-page"],
+      "description": "Generate page numbers with chapter number.",
+      "default": "page"
+    }
+  },
+  "$defs": {
+    "length-type": {
+      "type": "string",
+      "pattern": "^-?\\d+(\\.\\d+)?(cm|mm|in|pt|pc|px|em)?$"
+    },
+    "colour-type": {
+      "type": "string",
+      "pattern": "^(#[a-eA-E0-9]{6}|#[a-eA-E0-9]{3}|rgb\\(\\d+,\\d+,\\d+\\)|rgb\\(\\d+%,\\d+%,\\d+%\\)|transparent|aqua|black|blue|cyan|fuchsia|gray|green|lime|maroon|navy|olive|orange|pink|purple|red|silver|teal|white|yellow|inherit)$"
+    },
+    "font-weight-type": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "bold",
+        "bolder",
+        "lighter",
+        "100",
+        "200",
+        "300",
+        "400",
+        "500",
+        "600",
+        "700",
+        "800",
+        "900",
+        "inherit"
+      ]
+    },
+    "border-style-type": {
+      "type": "string",
+      "enum": [
+        "none",
+        "hidden",
+        "dotted",
+        "dashed",
+        "solid",
+        "double",
+        "groove",
+        "ridge",
+        "inset",
+        "outset",
+        "inherit"
+      ]
+    },
+    "block-style-type": {
+      "properties": {
+        "background-color": {
+          "$ref": "#/$defs/colour-type"
+        },
+        "padding-before": {
+          "$ref": "#/$defs/length-type"
+        },
+        "padding-end": {
+          "$ref": "#/$defs/length-type"
+        },
+        "padding-after": {
+          "$ref": "#/$defs/length-type"
+        },
+        "padding-start": {
+          "$ref": "#/$defs/length-type"
+        },
+        "end-indent": {
+          "$ref": "#/$defs/length-type"
+        },
+        "border-before-style": {
+          "$ref": "#/$defs/border-style-type"
+        },
+        "border-before-width": {
+          "$ref": "#/$defs/length-type"
+        },
+        "border-before-color": {
+          "$ref": "#/$defs/colour-type"
+        },
+        "border-end-style": {
+          "$ref": "#/$defs/border-style-type"
+        },
+        "border-end-width": {
+          "$ref": "#/$defs/length-type"
+        },
+        "border-end-color": {
+          "$ref": "#/$defs/colour-type"
+        },
+        "border-after-style": {
+          "$ref": "#/$defs/border-style-type"
+        },
+        "border-after-width": {
+          "$ref": "#/$defs/length-type"
+        },
+        "border-after-color": {
+          "$ref": "#/$defs/colour-type"
+        },
+        "border-start-style": {
+          "$ref": "#/$defs/border-style-type"
+        },
+        "border-start-width": {
+          "$ref": "#/$defs/length-type"
+        },
+        "border-start-color": {
+          "$ref": "#/$defs/colour-type"
+        },
+        "font-family": {
+          "type": "string"
+        },
+        "font-size": {
+          "$ref": "#/$defs/length-type"
+        },
+        "color": {
+          "$ref": "#/$defs/colour-type"
+        },
+        "font-weight": {
+          "$ref": "#/$defs/font-weight-type"
+        },
+        "font-style": {
+          "type": "string"
+        },
+        "text-decoration": {
+          "type": "string"
+        },
+        "text-align": {
+          "type": "string"
+        },
+        "start-indent": {
+          "$ref": "#/$defs/length-type"
+        },
+        "line-height": {
+          "$ref": "#/$defs/length-type"
+        },
+        "space-before": {
+          "$ref": "#/$defs/length-type"
+        },
+        "space-after": {
+          "$ref": "#/$defs/length-type"
+        }
+      }
+    },
+    "inline-style-type": {
+      "properties": {
+        "font-family": {
+          "type": "string"
+        },
+        "font-size": {
+          "$ref": "#/$defs/length-type"
+        },
+        "color": {
+          "$ref": "#/$defs/colour-type"
+        },
+        "background-color": {
+          "$ref": "#/$defs/colour-type"
+        },
+        "font-weight": {
+          "$ref": "#/$defs/font-weight-type"
+        },
+        "font-style": {
+          "type": "string",
+          "enum": ["normal", "italic", "oblique", "backslant", "inherit"]
+        },
+        "text-decoration": {
+          "type": "string"
+        },
+        "line-height": {
+          "$ref": "#/$defs/length-type"
+        }
+      }
+    },
+    "page-size-type": {
+      "oneOf": [
+        {
+          "properties": {
+            "size": {
+              "type": "string",
+              "enum": [
+                "A3",
+                "A4",
+                "A5",
+                "Executive",
+                "JIS B5",
+                "Tabloid",
+                "Legal",
+                "Letter",
+                "PA4"
+              ],
+              "description": "Page size.",
+              "default": "Letter"
+            },
+            "orientation": {
+              "type": "string",
+              "enum": ["portrait", "letter"],
+              "description": "Page orientation.",
+              "default": "portrait"
+            }
+          },
+          "required": ["size"]
+        },
+        {
+          "properties": {
+            "height": {
+              "$ref": "#/$defs/length-type",
+
+              "description": "Page height.",
+              "default": "11in"
+            },
+            "width": {
+              "$ref": "#/$defs/length-type",
+
+              "description": "Page width.",
+              "default": "8.5in"
+            }
+          },
+          "required": ["height", "width"]
+        }
+      ]
+    },
+    "page-type": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/page-size-type"
+        },
+        {
+          "properties": {
+            "top": {
+              "$ref": "#/$defs/length-type",
+              "description": "Page top margin.",
+              "default": "20mm"
+            },
+            "outside": {
+              "$ref": "#/$defs/length-type",
+
+              "description": "Page outside margin.",
+              "default": "20mm"
+            },
+            "bottom": {
+              "$ref": "#/$defs/length-type",
+
+              "description": "Page bottom margin.",
+              "default": "20mm"
+            },
+            "inside": {
+              "$ref": "#/$defs/length-type",
+              "description": "Page inside margin.",
+              "default": "20mm"
+            },
+            "mirror-margins": {
+              "type": "boolean",
+              "description": "Duplex pages with recto and verso pages.",
+              "default": false
+            },
+            "force-count": {
+              "type": "string",
+              "enum": ["auto", "even", "odd"],
+              "default": "auto",
+              "description": "Force chapter to end on even or odd pages."
+            },
+            "blank-pages": {
+              "type": "boolean",
+              "description": "Mark blank pages with ",
+              "default": false
+            },
+            "column-gap": {
+              "$ref": "#/$defs/length-type",
+              "description": "Column gap on multi column pages."
+            },
+            "body-column-count": {
+              "type": "integer",
+              "description": "Column count on content pages.",
+              "default": 1
+            },
+            "index-column-count": {
+              "type": "integer",
+              "description": "Column count on index pages.",
+              "default": 2
+            }
+          }
+        }
+      ],
+      "description": "Page configuration.",
+      "examples": [
+        {
+          "height": "297mm",
+          "width": "210mm",
+          "top": "20mm",
+          "outside": "20mm",
+          "bottom": "20mm",
+          "inside": "30mm"
+        }
+      ]
+    },
+    "content-template-type": {
+      "type": "string",
+      "description": "Header or footer contents template.",
+      "examples": ["{title} — {chapter}"]
+    },
+    "content-array-type": {
+      "type": "array",
+      "minItems": 0,
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": ["field"],
+              "description": "Type of content block."
+            },
+            "value": {
+              "type": "string",
+              "enum": ["title", "chapter", "folio", "folio-with-total"],
+              "description": "Field name."
+            }
+          }
+        },
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": ["text"],
+              "description": "Type of content block."
+            },
+            "value": {
+              "type": "string",
+              "description": "Text content of block."
+            }
+          }
+        }
+      ],
+      "description": "Header or footer contents. This is the parsed form of contents template.",
+      "examples": [
+        [
+          {
+            "kind": "field",
+            "value": "title"
+          },
+          {
+            "kind": "text",
+            "value": " — "
+          },
+          {
+            "kind": "field",
+            "value": "chapter"
+          }
+        ]
+      ]
+    },
+    "content-type": {
+      "properties": {
+        "content": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/content-template-type"
+            },
+            {
+              "$ref": "#/$defs/content-array-type"
+            }
+          ]
+        }
+      }
+    },
+    "odd-type": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/block-style-type"
+        },
+        {
+          "$ref": "#/$defs/content-type"
+        }
+      ]
+    },
+    "header-type": {
+      "properties": {
+        "odd": {
+          "$ref": "#/$defs/odd-type",
+          "description": "Header or footer on verso pages."
+        },
+        "even": {
+          "$ref": "#/$defs/odd-type",
+          "description": "Header or footer on recto pages."
+        }
+      },
+      "description": "Page header and footer configuration."
+    },
+    "body-type": {
+      "$ref": "#/$defs/block-style-type",
+      "properties": {}
+    },
+    "topic-type": {
+      "$ref": "#/$defs/block-style-type",
+      "properties": {
+        "title-numbering": {
+          "type": "boolean",
+          "description": "Generate title numbering."
+        }
+      }
+    },
+    "codeblock-type": {
+      "$ref": "#/$defs/block-style-type",
+      "properties": {
+        "line-numbering": {
+          "type": "boolean",
+          "description": "Show line numbers."
+        },
+        "show-whitespace": {
+          "type": "boolean",
+          "description": "Show whitespace characters."
+        },
+        "caption-number": {
+          "type": "string",
+          "enum": ["chapter", "document"],
+          "description": "Number figures with chapter prefix or use whole document numbering."
+        },
+        "caption-position": {
+          "type": "string",
+          "enum": ["before", "after"],
+          "description": "Place figure caption before or after figure."
+        }
+      }
+    },
+    "dl-type": {
+      "$ref": "#/$defs/block-style-type",
+      "properties": {
+        "dl-type": {
+          "type": "string",
+          "enum": ["html", "table", "list"],
+          "description": "Definition list output style."
+        }
+      }
+    },
+    "ol-type": {
+      "$ref": "#/$defs/block-style-type",
+      "properties": {
+        "ol-1": {
+          "type": "string"
+        },
+        "ol-2": {
+          "type": "string"
+        },
+        "ol-3": {
+          "type": "string"
+        },
+        "ol-4": {
+          "type": "string"
+        },
+        "ol-after-1": {
+          "type": "string"
+        },
+        "ol-after-2": {
+          "type": "string"
+        },
+        "ol-after-3": {
+          "type": "string"
+        },
+        "ol-after-4": {
+          "type": "string"
+        }
+      }
+    },
+    "ul-type": {
+      "$ref": "#/$defs/block-style-type",
+      "properties": {
+        "ul-1": {
+          "type": "string"
+        },
+        "ul-2": {
+          "type": "string"
+        },
+        "ul-3": {
+          "type": "string"
+        },
+        "ul-4": {
+          "type": "string"
+        }
+      }
+    },
+    "caption-type": {
+      "properties": {
+        "caption-number": {
+          "type": "string",
+          "enum": ["chapter", "document", "none"],
+          "description": "Number captions."
+        },
+        "caption-position": {
+          "type": "string",
+          "enum": ["after", "before"],
+          "description": "Caption position."
+        }
+      }
+    },
+    "table-type": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/block-style-type"
+        },
+        {
+          "$ref": "#/$defs/caption-type"
+        }
+      ],
+      "properties": {
+        "table-continued": {
+          "type": "boolean",
+          "description": "Generate 'Table continued' on page break within table.",
+          "default": false
+        }
+      }
+    },
+    "toc-1-type": {
+      "$ref": "#/$defs/block-style-type",
+      "properties": {
+        "prefix": {
+          "type": "boolean"
+        }
+      }
+    },
+    "link-type": {
+      "$ref": "#/$defs/inline-style-type",
+      "properties": {
+        "link-page-number": {
+          "type": "boolean",
+          "description": "Generate page number to internal links."
+        }
+      }
+    },
+    "tm-type": {
+      "$ref": "#/$defs/inline-style-type",
+      "properties": {
+        "symbol-scope": {
+          "type": "string"
+        }
+      }
+    },
+    "section-type": {
+      "$ref": "#/$defs/body-type",
+      "properties": {
+        "title": {
+          "$ref": "#/$defs/body-type"
+        }
+      }
+    },
+    "label-type": {
+      "properties": {
+        "label": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/block-style-type"
+            },
+            {
+              "$ref": "#/$defs/content-type"
+            }
+          ]
+        }
+      }
+    },
+    "note-type": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/block-style-type"
+        },
+        {
+          "$ref": "#/$defs/label-type"
+        }
+      ]
+    },
+    "style-type": {
+      "allOf": [
+        {
+          "properties": {
+            "body": {
+              "$ref": "#/$defs/body-type"
+            },
+            "shortdesc": {
+              "$ref": "#/$defs/block-style-type"
+            },
+            "h1": {
+              "$ref": "#/$defs/topic-type"
+            },
+            "h2": {
+              "$ref": "#/$defs/topic-type"
+            },
+            "h3": {
+              "$ref": "#/$defs/topic-type"
+            },
+            "h4": {
+              "$ref": "#/$defs/topic-type"
+            },
+            "cover": {
+              "$ref": "#/$defs/block-style-type",
+              "properties": {
+                "image-metadata": {
+                  "type": "string",
+                  "description": "Name of metadata element to use as cover image.",
+                  "default": null
+                },
+                "image-topic": {
+                  "type": "string",
+                  "description": "Outputclass for cover topic.",
+                  "default": null
+                },
+                "title": {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/block-style-type"
+                    },
+                    {
+                      "$ref": "#/$defs/content-type"
+                    }
+                  ]
+                }
+              }
+            },
+            "section": {
+              "$ref": "#/$defs/section-type"
+            },
+            "example": {
+              "$ref": "#/$defs/section-type"
+            },
+            "note": {
+              "$ref": "#/$defs/note-type",
+
+              "properties": {
+                "note": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "tip": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "fastpath": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "restriction": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "important": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "remember": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "attention": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "caution": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "notice": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "danger": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "warning": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "trouble": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "other": {
+                  "$ref": "#/$defs/note-type"
+                }
+              }
+            },
+            "pre": {
+              "$ref": "#/$defs/body-type"
+            },
+            "codeblock": {
+              "$ref": "#/$defs/codeblock-type"
+            },
+            "dl": {
+              "$ref": "#/$defs/dl-type"
+            },
+            "ol": {
+              "$ref": "#/$defs/ol-type"
+            },
+            "ul": {
+              "$ref": "#/$defs/ul-type"
+            },
+            "table": {
+              "$ref": "#/$defs/table-type",
+              "properties": {
+                "caption": {
+                  "$ref": "#/$defs/block-style-type"
+                },
+                "header": {
+                  "$ref": "#/$defs/block-style-type"
+                }
+              }
+            },
+            "fig": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/block-style-type"
+                },
+                {
+                  "$ref": "#/$defs/caption-type"
+                }
+              ]
+            },
+            "toc-1": {
+              "$ref": "#/$defs/toc-1-type"
+            },
+            "toc-2": {
+              "$ref": "#/$defs/body-type"
+            },
+            "toc-3": {
+              "$ref": "#/$defs/body-type"
+            },
+            "toc-4": {
+              "$ref": "#/$defs/body-type"
+            },
+            "link": {
+              "$ref": "#/$defs/link-type",
+              "properties": {
+                "external": {
+                  "$ref": "#/$defs/content-type"
+                }
+              }
+            },
+            "tm": {
+              "$ref": "#/$defs/tm-type"
+            },
+            "keyword": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "term": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "cmdname": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "varname": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "userinput": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "systemoutput": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "apiname": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "codeph": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "option": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "parmname": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "synph": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "syntaxdiagram": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "groupseq": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "groupchoice": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "groupcomp": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "fragment": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "fragref": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "synblk": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "synnote": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "synnoteref": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "kwd": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "var": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "oper": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "delim": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "sep": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "repsep": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "b": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "i": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "u": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "tt": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "sup": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "sub": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "line-through": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "overline": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "markupname": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "uicontrol": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "wintitle": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "menucascade": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "shortcut": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "screen": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "filepath": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "xmlelement": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "xmlatt": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "textentity": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "parameterentity": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "numcharref": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "xmlnsname": {
+              "$ref": "#/$defs/inline-style-type"
+            },
+            "xmlpi": {
+              "$ref": "#/$defs/inline-style-type"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

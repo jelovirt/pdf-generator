@@ -53,6 +53,7 @@ task dist(type: Zip, dependsOn: [jar]) {
     into("") {
         from ("src/main/resources") {
             include "build.xml"
+            include "schema.json"
         }
         from ("src/main/resources") {
             expand(
