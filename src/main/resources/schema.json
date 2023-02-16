@@ -10,35 +10,19 @@
       "description": "Extend another theme. Value is a URI to the theme to be extended."
     },
     "page": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/page-type"
-        }
-      ],
+      "$ref": "#/$defs/page-type",
       "description": "Page configuration."
     },
     "header": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/header-type"
-        }
-      ],
+      "$ref": "#/$defs/header-type",
       "description": "Page header configuration."
     },
     "footer": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/header-type"
-        }
-      ],
+      "$ref": "#/$defs/header-type",
       "description": "Page footer configuration."
     },
     "style": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/style-type"
-        }
-      ],
+      "$ref": "#/$defs/style-type",
       "description": "Style configuration."
     },
     "chapter-layout": {
@@ -272,20 +256,14 @@
         {
           "properties": {
             "height": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/length-type"
-                }
-              ],
+              "$ref": "#/$defs/length-type",
+
               "description": "Page height.",
               "default": "11in"
             },
             "width": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/length-type"
-                }
-              ],
+              "$ref": "#/$defs/length-type",
+
               "description": "Page width.",
               "default": "8.5in"
             }
@@ -302,38 +280,24 @@
         {
           "properties": {
             "top": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/length-type"
-                }
-              ],
+              "$ref": "#/$defs/length-type",
               "description": "Page top margin.",
               "default": "20mm"
             },
             "outside": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/length-type"
-                }
-              ],
+              "$ref": "#/$defs/length-type",
+
               "description": "Page outside margin.",
               "default": "20mm"
             },
             "bottom": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/length-type"
-                }
-              ],
+              "$ref": "#/$defs/length-type",
+
               "description": "Page bottom margin.",
               "default": "20mm"
             },
             "inside": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/length-type"
-                }
-              ],
+              "$ref": "#/$defs/length-type",
               "description": "Page inside margin.",
               "default": "20mm"
             },
@@ -354,11 +318,7 @@
               "default": false
             },
             "column-gap": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/length-type"
-                }
-              ],
+              "$ref": "#/$defs/length-type",
               "description": "Column gap on multi column pages."
             },
             "body-column-count": {
@@ -468,38 +428,22 @@
     "header-type": {
       "properties": {
         "odd": {
-          "allOf": [
-            {
-              "$ref": "#/$defs/odd-type"
-            }
-          ],
+          "$ref": "#/$defs/odd-type",
           "description": "Header or footer on verso pages."
         },
         "even": {
-          "allOf": [
-            {
-              "$ref": "#/$defs/odd-type"
-            }
-          ],
+          "$ref": "#/$defs/odd-type",
           "description": "Header or footer on recto pages."
         }
       },
       "description": "Page header and footer configuration."
     },
     "body-type": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/block-style-type"
-        }
-      ],
+      "$ref": "#/$defs/block-style-type",
       "properties": {}
     },
     "topic-type": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/block-style-type"
-        }
-      ],
+      "$ref": "#/$defs/block-style-type",
       "properties": {
         "title-numbering": {
           "type": "boolean",
@@ -508,11 +452,7 @@
       }
     },
     "codeblock-type": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/block-style-type"
-        }
-      ],
+      "$ref": "#/$defs/block-style-type",
       "properties": {
         "line-numbering": {
           "type": "boolean",
@@ -535,11 +475,7 @@
       }
     },
     "dl-type": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/block-style-type"
-        }
-      ],
+      "$ref": "#/$defs/block-style-type",
       "properties": {
         "dl-type": {
           "type": "string",
@@ -549,11 +485,7 @@
       }
     },
     "ol-type": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/block-style-type"
-        }
-      ],
+      "$ref": "#/$defs/block-style-type",
       "properties": {
         "ol-1": {
           "type": "string"
@@ -582,11 +514,7 @@
       }
     },
     "ul-type": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/block-style-type"
-        }
-      ],
+      "$ref": "#/$defs/block-style-type",
       "properties": {
         "ul-1": {
           "type": "string"
@@ -634,11 +562,7 @@
       }
     },
     "toc-1-type": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/block-style-type"
-        }
-      ],
+      "$ref": "#/$defs/block-style-type",
       "properties": {
         "prefix": {
           "type": "boolean"
@@ -646,11 +570,7 @@
       }
     },
     "link-type": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/inline-style-type"
-        }
-      ],
+      "$ref": "#/$defs/inline-style-type",
       "properties": {
         "link-page-number": {
           "type": "boolean",
@@ -659,11 +579,7 @@
       }
     },
     "tm-type": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/inline-style-type"
-        }
-      ],
+      "$ref": "#/$defs/inline-style-type",
       "properties": {
         "symbol-scope": {
           "type": "string"
@@ -671,11 +587,7 @@
       }
     },
     "section-type": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/body-type"
-        }
-      ],
+      "$ref": "#/$defs/body-type",
       "properties": {
         "title": {
           "$ref": "#/$defs/body-type"
@@ -713,7 +625,9 @@
             "body": {
               "$ref": "#/$defs/body-type"
             },
-            "shortdesc": {},
+            "shortdesc": {
+              "$ref": "#/$defs/block-style-type"
+            },
             "h1": {
               "$ref": "#/$defs/topic-type"
             },
@@ -727,35 +641,29 @@
               "$ref": "#/$defs/topic-type"
             },
             "cover": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/block-style-type"
+              "$ref": "#/$defs/block-style-type",
+              "properties": {
+                "image-metadata": {
+                  "type": "string",
+                  "description": "Name of metadata element to use as cover image.",
+                  "default": null
                 },
-                {
-                  "properties": {
-                    "image-metadata": {
-                      "type": "string",
-                      "description": "Name of metadata element to use as cover image.",
-                      "default": null
+                "image-topic": {
+                  "type": "string",
+                  "description": "Outputclass for cover topic.",
+                  "default": null
+                },
+                "title": {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/block-style-type"
                     },
-                    "image-topic": {
-                      "type": "string",
-                      "description": "Outputclass for cover topic.",
-                      "default": null
-                    },
-                    "title": {
-                      "allOf": [
-                        {
-                          "$ref": "#/$defs/block-style-type"
-                        },
-                        {
-                          "$ref": "#/$defs/content-type"
-                        }
-                      ]
+                    {
+                      "$ref": "#/$defs/content-type"
                     }
-                  }
+                  ]
                 }
-              ]
+              }
             },
             "section": {
               "$ref": "#/$defs/section-type"
@@ -764,54 +672,49 @@
               "$ref": "#/$defs/section-type"
             },
             "note": {
-              "allOf": [
-                {
+              "$ref": "#/$defs/note-type",
+
+              "properties": {
+                "note": {
                   "$ref": "#/$defs/note-type"
                 },
-                {
-                  "properties": {
-                    "note": {
-                      "$ref": "#/$defs/note-type"
-                    },
-                    "tip": {
-                      "$ref": "#/$defs/note-type"
-                    },
-                    "fastpath": {
-                      "$ref": "#/$defs/note-type"
-                    },
-                    "restriction": {
-                      "$ref": "#/$defs/note-type"
-                    },
-                    "important": {
-                      "$ref": "#/$defs/note-type"
-                    },
-                    "remember": {
-                      "$ref": "#/$defs/note-type"
-                    },
-                    "attention": {
-                      "$ref": "#/$defs/note-type"
-                    },
-                    "caution": {
-                      "$ref": "#/$defs/note-type"
-                    },
-                    "notice": {
-                      "$ref": "#/$defs/note-type"
-                    },
-                    "danger": {
-                      "$ref": "#/$defs/note-type"
-                    },
-                    "warning": {
-                      "$ref": "#/$defs/note-type"
-                    },
-                    "trouble": {
-                      "$ref": "#/$defs/note-type"
-                    },
-                    "other": {
-                      "$ref": "#/$defs/note-type"
-                    }
-                  }
+                "tip": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "fastpath": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "restriction": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "important": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "remember": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "attention": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "caution": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "notice": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "danger": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "warning": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "trouble": {
+                  "$ref": "#/$defs/note-type"
+                },
+                "other": {
+                  "$ref": "#/$defs/note-type"
                 }
-              ]
+              }
             },
             "pre": {
               "$ref": "#/$defs/body-type"
@@ -829,11 +732,7 @@
               "$ref": "#/$defs/ul-type"
             },
             "table": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/table-type"
-                }
-              ],
+              "$ref": "#/$defs/table-type",
               "properties": {
                 "caption": {
                   "$ref": "#/$defs/block-style-type"
@@ -866,18 +765,10 @@
               "$ref": "#/$defs/body-type"
             },
             "link": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/link-type"
-                }
-              ],
+              "$ref": "#/$defs/link-type",
               "properties": {
                 "external": {
-                  "allOf": [
-                    {
-                      "$ref": "#/$defs/content-type"
-                    }
-                  ]
+                  "$ref": "#/$defs/content-type"
                 }
               }
             },
