@@ -3,3 +3,4 @@ dist
 temp
 node_modules
 build
+lib/SaxonJS2.rt.js

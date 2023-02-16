@@ -70,20 +70,13 @@
     },
     "force_page_count": {
       "type": "string",
-      "enum": [
-        "auto",
-        "even",
-        "odd"
-      ],
+      "enum": ["auto", "even", "odd"],
       "default": "auto",
       "description": "Force chapter to end on even or odd pages."
     },
     "chapter_layout": {
       "type": "string",
-      "enum": [
-        "MINITOC",
-        "BASIC"
-      ],
+      "enum": ["MINITOC", "BASIC"],
       "default": "MINITOC",
       "description": "Generate TOC for section."
     },
@@ -99,10 +92,7 @@
     },
     "bookmark_style": {
       "type": "string",
-      "enum": [
-        "COLLAPSED",
-        "EXPANDED"
-      ],
+      "enum": ["COLLAPSED", "EXPANDED"],
       "default": "COLLAPSED",
       "description": "Expand state of PDF bookmarks."
     },
@@ -118,11 +108,7 @@
     },
     "include_related_links": {
       "type": "string",
-      "enum": [
-        "none",
-        "all",
-        "nofamily"
-      ],
+      "enum": ["none", "all", "nofamily"],
       "default": "nofamily",
       "description": "Specifies which link types are used to generate related links."
     },
@@ -133,10 +119,7 @@
     },
     "page_number": {
       "type": "string",
-      "enum": [
-        "page",
-        "chapter-page"
-      ],
+      "enum": ["page", "chapter-page"],
       "description": "Generate page numbers with chapter number.",
       "default": "page"
     }
@@ -297,13 +280,7 @@
         },
         "font-style": {
           "type": "string",
-          "enum": [
-            "normal",
-            "italic",
-            "oblique",
-            "backslant",
-            "inherit"
-          ]
+          "enum": ["normal", "italic", "oblique", "backslant", "inherit"]
         },
         "text-decoration": {
           "type": "string"
@@ -337,17 +314,12 @@
             },
             "orientation": {
               "type": "string",
-              "enum": [
-                "portrait",
-                "letter"
-              ],
+              "enum": ["portrait", "letter"],
               "description": "Page orientation.",
               "default": "portrait"
             }
           },
-          "required": [
-            "size"
-          ]
+          "required": ["size"]
         },
         {
           "type": "object",
@@ -371,10 +343,7 @@
               "default": "8.5in"
             }
           },
-          "required": [
-            "height",
-            "width"
-          ]
+          "required": ["height", "width"]
         }
       ]
     },
@@ -440,9 +409,7 @@
     "content_template_type": {
       "type": "string",
       "description": "Header or footer contents template.",
-      "examples": [
-        "{title} — {chapter}"
-      ]
+      "examples": ["{title} — {chapter}"]
     },
     "content_array_type": {
       "type": "array",
@@ -453,19 +420,12 @@
           "properties": {
             "kind": {
               "type": "string",
-              "enum": [
-                "field"
-              ],
+              "enum": ["field"],
               "description": "Type of content block."
             },
             "value": {
               "type": "string",
-              "enum": [
-                "title",
-                "chapter",
-                "folio",
-                "folio-with-total"
-              ],
+              "enum": ["title", "chapter", "folio", "folio-with-total"],
               "description": "Field name."
             }
           }
@@ -475,9 +435,7 @@
           "properties": {
             "kind": {
               "type": "string",
-              "enum": [
-                "text"
-              ],
+              "enum": ["text"],
               "description": "Type of content block."
             },
             "value": {
@@ -571,8 +529,7 @@
           "$ref": "#/definitions/block_style_type"
         }
       ],
-      "properties": {
-      }
+      "properties": {}
     },
     "topic_type": {
       "type": "object",
@@ -606,18 +563,12 @@
         },
         "caption-number": {
           "type": "string",
-          "enum": [
-            "chapter",
-            "document"
-          ],
+          "enum": ["chapter", "document"],
           "description": "Number figures with chapter prefix or use whole document numbering."
         },
         "caption-position": {
           "type": "string",
-          "enum": [
-            "before",
-            "after"
-          ],
+          "enum": ["before", "after"],
           "description": "Place figure caption before or after figure."
         }
       }
@@ -632,11 +583,7 @@
       "properties": {
         "dl-type": {
           "type": "string",
-          "enum": [
-            "html",
-            "table",
-            "list"
-          ],
+          "enum": ["html", "table", "list"],
           "description": "Definition list output style."
         }
       }
@@ -707,19 +654,12 @@
       "properties": {
         "caption-number": {
           "type": "string",
-          "enum": [
-            "chapter",
-            "document",
-            "none"
-          ],
+          "enum": ["chapter", "document", "none"],
           "description": "Number captions."
         },
         "caption-position": {
           "type": "string",
-          "enum": [
-            "after",
-            "before"
-          ],
+          "enum": ["after", "before"],
           "description": "Caption position."
         }
       }
