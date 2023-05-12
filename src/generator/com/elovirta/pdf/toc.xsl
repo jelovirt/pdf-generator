@@ -131,6 +131,11 @@
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
 
+      <axsl:function name="e:force-unit">
+        <axsl:param name="value"/>
+        <axsl:sequence select="if (normalize-space($value) = '0') then '0pt' else $value"/>
+      </axsl:function>
+      
       <axsl:attribute-set name="__toc__header">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-topic'"/>
@@ -143,22 +148,22 @@
           <axsl:choose>
             <xsl:if test="map:contains($root,  'style-toc-1-start-indent')">
               <axsl:when test="$level eq 1">
-                <axsl:value-of select="concat('{$root ?style-toc-1-start-indent} + ', $toc.text-indent)"/>
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-toc-1-start-indent}'), ' + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
             <xsl:if test="map:contains($root,  'style-toc-2-start-indent')">
               <axsl:when test="$level eq 2">
-                <axsl:value-of select="concat('{$root ?style-toc-2-start-indent} + ', $toc.text-indent)"/>
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-toc-2-start-indent}'), ' + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
             <xsl:if test="map:contains($root,  'style-toc-3-start-indent')">
               <axsl:when test="$level eq 3">
-                <axsl:value-of select="concat('{$root ?style-toc-3-start-indent} + ', $toc.text-indent)"/>
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-toc-3-start-indent}'), ' + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
             <xsl:if test="map:contains($root,  'style-toc-4-start-indent')">
               <axsl:when test="$level eq 4">
-                <axsl:value-of select="concat('{$root ?style-toc-4-start-indent} + ', $toc.text-indent)"/>
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-toc-4-start-indent}'), ' + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
             <!-- Workaround for xsl:choose must contain at least one xsl:when -->
@@ -172,7 +177,7 @@
 
       <axsl:attribute-set name="__toc__indent__booklist">
         <axsl:attribute name="start-indent">
-          <axsl:value-of select="concat('{$root ?style-toc-1-start-indent} + ', $toc.text-indent)"/>
+          <axsl:value-of select="concat(e:force-unit('{$root ?style-toc-1-start-indent}'), ' + ', $toc.text-indent)"/>
         </axsl:attribute>
       </axsl:attribute-set>
 
