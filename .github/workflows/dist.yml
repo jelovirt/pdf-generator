@@ -23,7 +23,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: build/distributions/com.elovirta.pdf.zip
+          files: build/distributions/com.elovirta.pdf-*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Set variables
