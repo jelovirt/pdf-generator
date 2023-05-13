@@ -26,3 +26,39 @@ jobs:
           files: build/distributions/com.elovirta.pdf.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set variables
+        run: |
+          echo "CHKSUM=$(shasum -a 256 build/distributions/com.elovirta.pdf-*.zip | cut -d ' ' -f 1)" >> $GITHUB_ENV
+          echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_ENV
+          echo "PLUGIN_NAME=com.elovirta.pdf" >> $GITHUB_ENV
+      - name: Check out registry
+        uses: actions/checkout@v3
+        with:
+          repository: dita-ot/registry
+          path: registry
+      - name: Update registry
+        working-directory: registry
+        run: |
+          URL=https://github.com/jelovirt/pdf-generator/releases/download/${{ env.VERSION }}/com.elovirta.pdf-${{ env.VERSION }}.zip
+          cat ${{ env.PLUGIN_NAME }}.json \
+            | jq '.[length -1]' \
+            | jq --arg url "$URL" '. | .url|=$url' \
+            | jq --arg chksum "${{ env.CHKSUM }}" '. | .cksum|=$chksum' \
+            | jq --arg vers "${{ env.VERSION }}" '. | .vers|=$vers' > buf.json 
+          jq '. += [input]' ${{ env.PLUGIN_NAME }}.json buf.json \
+            | jq . > concat.json
+          mv concat.json ${{ env.PLUGIN_NAME }}.json
+          rm buf.json
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          path: registry
+          token: ${{ secrets.TOKEN }}
+          push-to-fork: jelovirt/registry
+          branch-suffix: timestamp
+          commit-message: Add ${{ env.PLUGIN_NAME }} ${{ env.VERSION }}
+          title: Add ${{ env.PLUGIN_NAME }} ${{ env.VERSION }}
+          body: |
+            Add plug-in `${{ env.PLUGIN_NAME }}` version `${{ env.VERSION }}`.
+
+            * [Release notes](https://github.com/jelovirt/pdf-generator/releases/tag/${{ env.VERSION }})    

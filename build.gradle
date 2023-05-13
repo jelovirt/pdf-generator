@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
-version = '0.6.0'
+version = '0.7.0'
 
 test {
     useJUnitPlatform()
@@ -63,5 +63,5 @@ task dist(type: Zip, dependsOn: [jar]) {
             include "plugin.xml"
         }
     }
-    archiveFileName = "com.elovirta.pdf.zip"
+    archiveFileName = "com.elovirta.pdf-${project.version}.zip"
 }
