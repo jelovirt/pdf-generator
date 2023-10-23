@@ -254,6 +254,11 @@
       <axsl:attribute-set name="thead.row.entry">
         <axsl:attribute name="background-color">inherit</axsl:attribute>
       </axsl:attribute-set>
+      <axsl:attribute-set name="tbody.row.entry">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-table-entry'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
 
       <!-- simpletable -->
       <axsl:attribute-set name="sthead">

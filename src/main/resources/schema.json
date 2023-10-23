@@ -739,6 +739,9 @@
                 },
                 "header": {
                   "$ref": "#/$defs/block-style-type"
+                },
+                "entry": {
+                  "$ref": "#/$defs/block-style-type"
                 }
               }
             },
