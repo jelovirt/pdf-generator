@@ -662,6 +662,16 @@
                       "$ref": "#/$defs/content-type"
                     }
                   ]
+                },
+                "titlealt": {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/block-style-type"
+                    },
+                    {
+                      "$ref": "#/$defs/content-type"
+                    }
+                  ]
                 }
               }
             },
