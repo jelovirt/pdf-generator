@@ -84,6 +84,11 @@
           <xsl:with-param name="prefix" select="'style-cover-title'"/>
         </xsl:call-template>
       </axsl:attribute-set>
+      <axsl:attribute-set name="__frontmatter__subtitle">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-cover-titlealt'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
     </axsl:stylesheet>
   </xsl:template>
 
