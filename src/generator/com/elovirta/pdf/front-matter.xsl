@@ -39,9 +39,10 @@
 <!--            </axsl:choose>-->
         </fo:block>
         <!-- set the subtitle -->
-        <fo:block axsl:use-attribute-sets="__frontmatter__titlealt">
-            <axsl:apply-templates select="$map//*[contains(@class,' bookmap/booktitlealt ')]"/>
-        </fo:block>
+        <axsl:apply-templates select="$map//*[contains(@class,' bookmap/booktitlealt ')]"/>
+<!--          <fo:block axsl:use-attribute-sets="__frontmatter__owner">-->
+<!--            <axsl:apply-templates select="$map//*[contains(@class,' bookmap/bookmeta ')]"/>-->
+<!--          </fo:block>-->
         <!-- cover image -->
         <fo:block axsl:use-attribute-sets="image__block">
           <axsl:call-template name="e:cover-image"/>
@@ -83,7 +84,7 @@
           <xsl:with-param name="prefix" select="'style-cover-title'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="__frontmatter__titlealt">
+      <axsl:attribute-set name="__frontmatter__subtitle">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-cover-titlealt'"/>
         </xsl:call-template>
