@@ -20,15 +20,23 @@ jobs:
           cache: gradle
       - name: Build with Gradle
         run: ./gradlew dist
+      - name: Set variables
+        run: |
+          echo "CHKSUM=$(shasum -a 256 build/distributions/com.elovirta.pdf-*.zip | cut -d ' ' -f 1)" >> $GITHUB_ENV
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: build/distributions/com.elovirta.pdf-*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      shasum: ${{ env.CHKSUM }}
+  registry:
+    needs: dist
+    runs-on: ubuntu-latest
+    steps:
       - name: Set variables
         run: |
-          echo "CHKSUM=$(shasum -a 256 build/distributions/com.elovirta.pdf-*.zip | cut -d ' ' -f 1)" >> $GITHUB_ENV
           echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_ENV
           echo "PLUGIN_NAME=com.elovirta.pdf" >> $GITHUB_ENV
       - name: Check out registry
@@ -43,7 +51,7 @@ jobs:
           cat ${{ env.PLUGIN_NAME }}.json \
             | jq '.[length -1]' \
             | jq --arg url "$URL" '. | .url|=$url' \
-            | jq --arg chksum "${{ env.CHKSUM }}" '. | .cksum|=$chksum' \
+            | jq --arg chksum "${{ needs.dist.outputs.shasum }}" '. | .cksum|=$chksum' \
             | jq --arg vers "${{ env.VERSION }}" '. | .vers|=$vers' > buf.json 
           jq '. += [input]' ${{ env.PLUGIN_NAME }}.json buf.json \
             | jq . > concat.json
@@ -61,4 +69,4 @@ jobs:
           body: |
             Add plug-in `${{ env.PLUGIN_NAME }}` version `${{ env.VERSION }}`.
 
-            * [Release notes](https://github.com/jelovirt/pdf-generator/releases/tag/${{ env.VERSION }})    
+            * [Release notes](https://github.com/jelovirt/pdf-generator/releases/tag/${{ env.VERSION }})
