@@ -170,7 +170,7 @@
           <axsl:apply-templates select="*[contains(@class,' topic/related-links ')]"/>
         </axsl:if>
         <!-- Part TOC -->
-        <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="toc"/>
+        <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="part-toc"/>
         <!--
         <axsl:if test="*[contains(@class, ' topic/topic ')]">
           <fo:block axsl:use-attribute-sets="__toc__mini">
