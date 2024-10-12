@@ -151,6 +151,41 @@
       <xsl:if test="$root ?cover-image-topic">
         <axsl:template match="*[contains(@class, ' topic/topic ')][@outputclass = '{$root ?cover-image-topic}']" priority="1000"/>
       </xsl:if>
+
+      <axsl:template match="*" mode="createMiniToc">
+        <!-- Part introduction -->
+        <axsl:apply-templates select="*[contains(@class,' topic/titlealts ')]"/>
+        <axsl:if test="*[contains(@class,' topic/shortdesc ')
+                         or contains(@class, ' topic/abstract ')]/node()">
+          <fo:block axsl:use-attribute-sets="p">
+            <axsl:apply-templates select="*[contains(@class,' topic/shortdesc ')
+                                            or contains(@class, ' topic/abstract ')]/node()"/>
+          </fo:block>
+        </axsl:if>
+        <axsl:apply-templates select="*[contains(@class,' topic/body ')]/*"/>
+        <axsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]"/>
+        <axsl:if test="*[contains(@class,' topic/related-links ')]//
+                         *[contains(@class,' topic/link ')]
+                          [not(@role) or @role != 'child']">
+          <axsl:apply-templates select="*[contains(@class,' topic/related-links ')]"/>
+        </axsl:if>
+        <!-- Part TOC -->
+        <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="toc"/>
+        <!--
+        <axsl:if test="*[contains(@class, ' topic/topic ')]">
+          <fo:block axsl:use-attribute-sets="__toc__mini">
+            <fo:block axsl:use-attribute-sets="__toc__mini__header">
+              <axsl:call-template name="getVariable">
+                <axsl:with-param name="id" select="'Mini Toc'"/>
+              </axsl:call-template>
+            </fo:block>
+            <fo:list-block axsl:use-attribute-sets="__toc__mini__list">
+              <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="in-this-chapter-list"/>
+            </fo:list-block>
+          </fo:block>
+        </axsl:if>
+        -->
+      </axsl:template>
     </axsl:stylesheet>
   </xsl:template>
 
