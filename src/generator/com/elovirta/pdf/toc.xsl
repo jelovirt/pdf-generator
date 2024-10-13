@@ -220,8 +220,15 @@
 
       <axsl:attribute-set name="__toc__indent">
         <axsl:attribute name="start-indent">
-          <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>
+          <axsl:variable name="level" as="xs:integer">
+            <axsl:apply-templates select="." mode="get-topic-level"/>
+          </axsl:variable>
           <axsl:choose>
+            <xsl:if test="map:contains($root,  'style-toc-part-start-indent')">
+              <axsl:when test="$level eq 1 and key('map-id', @id)/self::*[contains(@class, ' bookmap/part ')]">
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-toc-part-start-indent}'), ' + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
             <xsl:if test="map:contains($root,  'style-toc-1-start-indent')">
               <axsl:when test="$level eq 1">
                 <axsl:value-of select="concat(e:force-unit('{$root ?style-toc-1-start-indent}'), ' + ', $toc.text-indent)"/>
@@ -288,6 +295,13 @@
         <axsl:attribute name="start-indent">
           <axsl:value-of select="concat(e:force-unit('{$root ?style-toc-1-start-indent}'), ' + ', $toc.text-indent)"/>
         </axsl:attribute>
+      </axsl:attribute-set>
+
+      <axsl:attribute-set name="__toc__part__content" use-attribute-sets="__toc__topic__content">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-toc-part'"/>
+          <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
+        </xsl:call-template>
       </axsl:attribute-set>
 
       <axsl:attribute-set name="__toc__topic__content">
