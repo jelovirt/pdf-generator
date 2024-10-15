@@ -186,6 +186,64 @@
         </axsl:if>
         -->
       </axsl:template>
+
+      <axsl:template match="*" mode="processTopicPartInsideFlow">
+        <fo:block axsl:use-attribute-sets="topic">
+          <!-- TODO: Replace with mode="commonattributes" -->
+          <axsl:call-template name="commonattributes"/>
+          <axsl:if test="empty(ancestor::*[contains(@class, ' topic/topic ')])">
+            <fo:marker marker-class-name="current-topic-number">
+              <axsl:variable name="topicref"
+                            select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
+                            as="element()?"
+              />
+              <axsl:for-each select="$topicref">
+                <axsl:apply-templates select="." mode="topicTitleNumber"/>
+              </axsl:for-each>
+            </fo:marker>
+            <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
+          </axsl:if>
+          <axsl:apply-templates select="." mode="customTopicMarker"/>
+
+          <axsl:apply-templates select="*[contains(@class,' topic/prolog ')]"/>
+
+          <axsl:apply-templates select="." mode="insertChapterFirstpageStaticContent">
+            <axsl:with-param name="type" select="'part'"/>
+          </axsl:apply-templates>
+
+          <fo:block axsl:use-attribute-sets="part.title">
+            <axsl:apply-templates select="." mode="customTopicAnchor"/>
+            <axsl:call-template name="pullPrologIndexTerms"/>
+            <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]"/>
+            <axsl:for-each select="*[contains(@class,' topic/title ')]">
+              <axsl:apply-templates select="." mode="getTitle"/>
+            </axsl:for-each>
+          </fo:block>
+
+          <axsl:choose>
+            <axsl:when test="$partLayout = 'BASIC'">
+              <axsl:apply-templates select="* except(*[contains(@class, ' topic/title ') or
+                                                       contains(@class,' ditaot-d/ditaval-startprop ') or
+                                                       contains(@class, ' topic/prolog ') or
+                                                       contains(@class, ' topic/topic ')])"/>
+              <!--axsl:apply-templates select="." mode="buildRelationships"/-->
+            </axsl:when>
+            <axsl:otherwise>
+              <axsl:apply-templates select="." mode="createMiniToc"/>
+            </axsl:otherwise>
+          </axsl:choose>
+          <axsl:for-each select="*[contains(@class,' topic/topic ')]">
+            <axsl:variable name="topicType" as="xs:string">
+              <axsl:call-template name="determineTopicType"/>
+            </axsl:variable>
+            <axsl:if test="$topicType = 'topicSimple'">
+              <axsl:apply-templates select="."/>
+            </axsl:if>
+          </axsl:for-each>
+          <axsl:call-template name="pullPrologIndexTerms.end-range"/>
+        </fo:block>
+      </axsl:template>
+
     </axsl:stylesheet>
   </xsl:template>
 

@@ -225,7 +225,7 @@
           </axsl:variable>
           <axsl:choose>
             <xsl:if test="map:contains($root,  'style-toc-part-start-indent')">
-              <axsl:when test="$level eq 1 and key('map-id', @id)/self::*[contains(@class, ' bookmap/part ')]">
+              <axsl:when test="$level eq 0 and key('map-id', @id)/self::*[contains(@class, ' bookmap/part ')]">
                 <axsl:value-of select="concat(e:force-unit('{$root ?style-toc-part-start-indent}'), ' + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>

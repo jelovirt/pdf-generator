@@ -323,6 +323,11 @@
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <!-- titles -->
+      <axsl:attribute-set name="part.title" use-attribute-sets="topic.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-part'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <axsl:attribute-set name="topic.title">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-topic'"/>
