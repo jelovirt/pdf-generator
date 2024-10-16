@@ -68,6 +68,9 @@
       <axsl:variable name="antArgsChapterLayout">
         <xsl:value-of select="if (map:contains($root, 'chapter-layout')) then $root ?chapter-layout else 'BASIC'"/>
       </axsl:variable>
+      <axsl:variable name="partLayout">
+        <xsl:value-of select="if (map:contains($root, 'part-layout')) then $root ?part-layout else 'BASIC'"/>
+      </axsl:variable>
     </axsl:stylesheet>
   </xsl:template>
 
