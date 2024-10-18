@@ -63,6 +63,26 @@
                          level="multiple"
                          format="A.1.1"/>
           </axsl:when>
+          <xsl:choose>
+            <xsl:when test="$root ?style-part-title-numbering">
+              <axsl:when test="self::*[contains(@class, ' bookmap/part ')]">
+                <axsl:call-template name="getVariable">
+                  <axsl:with-param name="id" select="'Part with number'"/>
+  <!--                <axsl:with-param name="id" select="'Table of Contents Part'"/>-->
+                  <axsl:with-param name="params">
+                    <number>
+                      <axsl:number count="*[contains(@class, ' bookmap/part ')]"
+                                   level="single"
+                                   format="1"/>
+                    </number>
+                  </axsl:with-param>
+                </axsl:call-template>
+              </axsl:when>
+            </xsl:when>
+            <xsl:otherwise>
+              <axsl:when test="self::*[contains(@class, ' bookmap/part ')]"/>
+            </xsl:otherwise>
+          </xsl:choose>
           <axsl:when test="$e:number-levels[$depth]">
             <axsl:number count="*[contains(@class, ' map/topicref ')]
                               [not(ancestor-or-self::*[contains(@class, ' bookmap/frontmatter ')])]"
@@ -303,6 +323,11 @@
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <!-- titles -->
+      <axsl:attribute-set name="part.title" use-attribute-sets="topic.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-part'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
       <axsl:attribute-set name="topic.title">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-topic'"/>

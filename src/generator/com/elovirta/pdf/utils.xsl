@@ -337,6 +337,7 @@
         <xsl:attribute name="ditaarch:dummy" namespace="http://dita.oasis-open.org/architecture/2005/"/>
         <xsl:attribute name="opentopic:dummy" namespace="http://www.idiominc.com/opentopic"/>
         <xsl:attribute name="opentopic-func:dummy" namespace="http://www.idiominc.com/opentopic/exsl/function"/>
+        <xsl:attribute name="fox:dummy" namespace="http://xmlgraphics.apache.org/fop/extensions"/>
       </dummy>
     </xsl:variable>
     <xsl:variable name="namespaces" select="
@@ -345,7 +346,8 @@
       $dummy/namespace::dita-ot,
       $dummy/namespace::ditaarch,
       $dummy/namespace::opentopic,
-      $dummy/namespace::opentopic-func
+      $dummy/namespace::opentopic-func,
+      $dummy/namespace::fox
     "/>
     <xsl:copy-of select="$namespaces"/>
     <xsl:attribute name="exclude-result-prefixes">xs e dita-ot ditaarch opentopic opentopic-func</xsl:attribute>
