@@ -35,11 +35,7 @@
 
       <axsl:template match="*[contains(@class, ' topic/topic ')]/*[contains(@class, ' topic/title ')]" mode="getTitle">
         <axsl:variable name="topic" select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]"/>
-        <axsl:variable name="id" select="$topic/@id"/>
-        <axsl:variable name="mapTopics" select="key('map-id', $id)"/>
-        <axsl:variable name="contents" as="node()*">
-          <axsl:apply-templates select="$mapTopics[1]" mode="e:title-number"/>
-        </axsl:variable>
+        <axsl:variable name="contents" as="node()*" select="e:get-title-number($topic)"/>
         <axsl:if test="exists($contents)">
           <axsl:copy-of select="$contents"/>
 <!--          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>-->
@@ -49,6 +45,12 @@
         </axsl:if>
         <axsl:apply-templates/>
       </axsl:template>
+
+      <axsl:function name="e:get-title-number" as="node()*">
+        <axsl:param name="topic" as="element()"/>
+        <axsl:variable name="topicref" as="element()*" select="key('map-id', $topic/@id, root($topic))"/>
+        <axsl:apply-templates select="$topicref[1]" mode="e:title-number"/>
+      </axsl:function>
 
       <axsl:template match="*[contains(@class, ' map/topicref')]" mode="e:title-number">
         <axsl:variable name="depth" select="count(ancestor-or-self::*[contains(@class, ' map/topicref')])"/>
@@ -119,9 +121,7 @@
 
       <axsl:template name="getNavTitle">
         <axsl:variable name="topicref" select="key('map-id', @id)[1]"/>
-        <axsl:variable name="contents" as="node()*">
-          <axsl:apply-templates select="$topicref[1]" mode="e:title-number"/>
-        </axsl:variable>
+        <axsl:variable name="contents" as="node()*" select="e:get-title-number(.)"/>
         <axsl:if test="exists($contents)">
           <axsl:copy-of select="$contents"/>
 <!--          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>-->

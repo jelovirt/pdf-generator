@@ -138,10 +138,7 @@
       </axsl:template>
 
       <axsl:template match="*[contains(@class, ' topic/topic ')]" mode="retrieveReferenceTitle">
-        <axsl:variable name="topicref" select="key('map-id', @id)[1]"/>
-        <axsl:variable name="contents" as="node()*">
-          <axsl:apply-templates select="$topicref[1]" mode="e:title-number"/>
-        </axsl:variable>
+        <axsl:variable name="contents" as="node()*" select="e:get-title-number(.)"/>
         <axsl:if test="exists($contents)">
           <axsl:copy-of select="$contents"/>
           <axsl:text>
