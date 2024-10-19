@@ -187,18 +187,23 @@
             </axsl:for-each>
           </fo:block>
 
-          <axsl:choose>
-            <axsl:when test="$partLayout = 'BASIC'">
-              <axsl:apply-templates select="* except(*[contains(@class, ' topic/title ') or
+          <axsl:apply-templates select="* except(*[contains(@class, ' topic/title ') or
                                                        contains(@class,' ditaot-d/ditaval-startprop ') or
                                                        contains(@class, ' topic/prolog ') or
                                                        contains(@class, ' topic/topic ')])"/>
+
+          <axsl:choose>
+            <axsl:when test="$partLayout = 'BASIC'">
               <!--axsl:apply-templates select="." mode="buildRelationships"/-->
             </axsl:when>
             <axsl:otherwise>
-              <axsl:apply-templates select="." mode="createPartToc"/>
+              <fo:block axsl:use-attribute-sets="e:part_toc">
+              <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="part-toc"/>
+              </fo:block>
+<!--              <axsl:apply-templates select="." mode="createPartToc"/>-->
             </axsl:otherwise>
           </axsl:choose>
+
           <axsl:for-each select="*[contains(@class,' topic/topic ')]">
             <axsl:variable name="topicType" as="xs:string">
               <axsl:call-template name="determineTopicType"/>
@@ -211,8 +216,10 @@
         </fo:block>
       </axsl:template>
 
-      <axsl:template match="*" mode="createPartToc">
+<!--      <axsl:template match="*" mode="createPartToc">-->
         <!-- Part introduction -->
+        <!--
+
         <axsl:apply-templates select="*[contains(@class,' topic/titlealts ')]"/>
         <axsl:if test="*[contains(@class,' topic/shortdesc ')
                          or contains(@class, ' topic/abstract ')]/node()">
@@ -223,13 +230,15 @@
         </axsl:if>
         <axsl:apply-templates select="*[contains(@class,' topic/body ')]/*"/>
         <axsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]"/>
+
         <axsl:if test="*[contains(@class,' topic/related-links ')]//
                          *[contains(@class,' topic/link ')]
                           [not(@role) or @role != 'child']">
           <axsl:apply-templates select="*[contains(@class,' topic/related-links ')]"/>
         </axsl:if>
+        -->
         <!-- Part TOC -->
-        <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="part-toc"/>
+<!--        <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="part-toc"/>-->
         <!--
         <axsl:if test="*[contains(@class, ' topic/topic ')]">
           <fo:block axsl:use-attribute-sets="__toc__mini">
@@ -244,7 +253,7 @@
           </fo:block>
         </axsl:if>
         -->
-      </axsl:template>
+<!--      </axsl:template>-->
 
       <!-- Chapter -->
 
@@ -285,40 +294,46 @@
 
           <axsl:choose>
             <axsl:when test="$chapterLayout='BASIC'">
-              <axsl:apply-templates select="* except(*[contains(@class, ' topic/title ') or contains(@class,' ditaot-d/ditaval-startprop ') or
-                      contains(@class, ' topic/prolog ') or contains(@class, ' topic/topic ')])"/>
               <!--xsl:apply-templates select="." mode="buildRelationships"/-->
             </axsl:when>
             <axsl:otherwise>
-              <axsl:apply-templates select="." mode="createMiniToc"/>
+              <fo:block axsl:use-attribute-sets="e:chapter_toc">
+                <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="chapter-toc"/>
+              </fo:block>
+              <!--              <axsl:apply-templates select="." mode="createMiniToc"/>-->
             </axsl:otherwise>
           </axsl:choose>
+
+          <axsl:apply-templates select="* except(*[contains(@class, ' topic/title ') or
+                                                       contains(@class,' ditaot-d/ditaval-startprop ') or
+                                                       contains(@class, ' topic/prolog ') or
+                                                       contains(@class, ' topic/topic ')])"/>
 
           <axsl:apply-templates select="*[contains(@class,' topic/topic ')]"/>
           <axsl:call-template name="pullPrologIndexTerms.end-range"/>
         </fo:block>
       </axsl:template>
 
-      <axsl:template match="*" mode="createMiniToc">
-        <!-- Chapter TOC -->
-        <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="chapter-toc"/>
-        <!-- Chapter introduction -->
-        <axsl:apply-templates select="*[contains(@class,' topic/titlealts ')]"/>
-        <axsl:if test="*[contains(@class,' topic/shortdesc ')
-                         or contains(@class, ' topic/abstract ')]/node()">
-          <fo:block axsl:use-attribute-sets="p">
-            <axsl:apply-templates select="*[contains(@class,' topic/shortdesc ')
-                                            or contains(@class, ' topic/abstract ')]/node()"/>
-          </fo:block>
-        </axsl:if>
-        <axsl:apply-templates select="*[contains(@class,' topic/body ')]/*"/>
-        <axsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]"/>
-        <axsl:if test="*[contains(@class,' topic/related-links ')]//
-                         *[contains(@class,' topic/link ')]
-                          [not(@role) or @role != 'child']">
-          <axsl:apply-templates select="*[contains(@class,' topic/related-links ')]"/>
-        </axsl:if>
-      </axsl:template>
+<!--      <axsl:template match="*" mode="createMiniToc">-->
+<!--        &lt;!&ndash; Chapter TOC &ndash;&gt;-->
+<!--        <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="chapter-toc"/>-->
+<!--        &lt;!&ndash; Chapter introduction &ndash;&gt;-->
+<!--        <axsl:apply-templates select="*[contains(@class,' topic/titlealts ')]"/>-->
+<!--        <axsl:if test="*[contains(@class,' topic/shortdesc ')-->
+<!--                         or contains(@class, ' topic/abstract ')]/node()">-->
+<!--          <fo:block axsl:use-attribute-sets="p">-->
+<!--            <axsl:apply-templates select="*[contains(@class,' topic/shortdesc ')-->
+<!--                                            or contains(@class, ' topic/abstract ')]/node()"/>-->
+<!--          </fo:block>-->
+<!--        </axsl:if>-->
+<!--        <axsl:apply-templates select="*[contains(@class,' topic/body ')]/*"/>-->
+<!--        <axsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]"/>-->
+<!--        <axsl:if test="*[contains(@class,' topic/related-links ')]//-->
+<!--                         *[contains(@class,' topic/link ')]-->
+<!--                          [not(@role) or @role != 'child']">-->
+<!--          <axsl:apply-templates select="*[contains(@class,' topic/related-links ')]"/>-->
+<!--        </axsl:if>-->
+<!--      </axsl:template>-->
 
     </axsl:stylesheet>
   </xsl:template>
