@@ -126,6 +126,8 @@
 
       <!-- Part TOC -->
 
+      <axsl:variable name="e:partTocMaximumLevel" select="{($root ?style-part-toc-maximum-level, 6)[1] + 1}"/>
+
       <axsl:template match="node()" mode="part-toc">
         <axsl:param name="include"/>
         <axsl:apply-templates mode="#current">
@@ -138,7 +140,7 @@
         <axsl:variable name="topicLevel" as="xs:integer">
           <axsl:apply-templates select="." mode="get-topic-level"/>
         </axsl:variable>
-        <axsl:if test="$topicLevel &lt; $tocMaximumLevel">
+        <axsl:if test="$topicLevel &lt; $e:partTocMaximumLevel">
           <axsl:variable name="mapTopicref" select="key('map-id', @id)[1]" as="element()?"/>
           <axsl:choose>
             <axsl:when test="$mapTopicref[@toc = 'yes' or not(@toc)] or
@@ -203,7 +205,9 @@
         </axsl:if>
       </axsl:template>
 
-     <!-- Chapter TOC -->
+      <!-- Chapter TOC -->
+
+      <axsl:variable name="e:chapterTocMaximumLevel" select="{($root ?style-chapter-toc-maximum-level, 6)[1] + 2}"/>
 
       <axsl:template match="node()" mode="chapter-toc">
         <axsl:param name="include"/>
@@ -217,7 +221,7 @@
         <axsl:variable name="topicLevel" as="xs:integer">
           <axsl:apply-templates select="." mode="get-topic-level"/>
         </axsl:variable>
-        <axsl:if test="$topicLevel &lt; $tocMaximumLevel">
+        <axsl:if test="$topicLevel &lt; $e:chapterTocMaximumLevel">
           <axsl:variable name="mapTopicref" select="key('map-id', @id)[1]" as="element()?"/>
           <axsl:choose>
             <axsl:when test="$mapTopicref[@toc = 'yes' or not(@toc)] or
