@@ -80,6 +80,7 @@ public class StylesheetGeneratorTask extends Task {
         generate(xdmItem, "static-content.xsl", "xsl/fo/static-content.xsl", null);
 //        generate(xdmItem, "task-elements.xsl", "xsl/fo/task-elements.xsl", null);
         generate(xdmItem, "topic.xsl", "xsl/fo/topic.xsl", null);
+        generate(xdmItem, "task-elements.xsl", "xsl/fo/task-elements.xsl", null);
         generate(xdmItem, "layout-masters.xsl", "cfg/fo/layout-masters.xsl", null);
         generate(xdmItem, "front-matter.xsl", "cfg/fo/attrs/front-matter-attr.xsl", ATTR);
         generate(xdmItem, "commons.xsl", "cfg/fo/attrs/commons-attr.xsl", ATTR);

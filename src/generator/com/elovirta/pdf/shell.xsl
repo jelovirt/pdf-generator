@@ -166,6 +166,7 @@
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/task-elements-attr.xsl"/>
       <axsl:import href="{$plugin_name}cfg/fo/attrs/task-elements-attr.xsl"/>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/task-elements.xsl"/>
+      <axsl:import href="{$plugin_name}xsl/fo/task-elements.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/reference-elements-attr.xsl"/>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/reference-elements.xsl"/>
