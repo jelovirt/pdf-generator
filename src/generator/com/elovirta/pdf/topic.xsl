@@ -47,44 +47,55 @@
         <axsl:apply-templates/>
       </axsl:template>
 
-      <axsl:variable name="map-without-parts" as="document-node()">
-        <axsl:document>
-          <opentopic:map>
-            <axsl:apply-templates select="$map/*[contains(@class, ' map/topicref ')]" mode="gen-map-without-parts"/>
-          </opentopic:map>
-        </axsl:document>
-      </axsl:variable>
+      <xsl:choose>
+        <xsl:when test="$root ?style-chapter-numbering = 'document'">
+          <axsl:variable name="map-without-parts" as="document-node()">
+            <axsl:document>
+              <opentopic:map>
+                <axsl:apply-templates select="$map/*[contains(@class, ' map/topicref ')]" mode="gen-map-without-parts"/>
+              </opentopic:map>
+            </axsl:document>
+          </axsl:variable>
 
-      <axsl:template match="*[contains(@class, ' map/topicref ')]" mode="gen-map-without-parts">
-        <axsl:copy>
-          <axsl:copy-of select="@*"/>
-          <axsl:apply-templates select="*[contains(@class, ' map/topicref ')]" mode="#current"/>
-        </axsl:copy>
-      </axsl:template>
+          <axsl:template match="*[contains(@class, ' map/topicref ')]" mode="gen-map-without-parts">
+            <axsl:copy>
+              <axsl:copy-of select="@*"/>
+              <axsl:apply-templates select="*[contains(@class, ' map/topicref ')]" mode="#current"/>
+            </axsl:copy>
+          </axsl:template>
 
-      <axsl:template match="*[contains(@class, ' bookmap/part ')]" mode="gen-map-without-parts" priority="10">
-        <axsl:apply-templates select="*[contains(@class, ' map/topicref ')]" mode="#current"/>
-      </axsl:template>
+          <axsl:template match="*[contains(@class, ' bookmap/part ')]" mode="gen-map-without-parts" priority="10">
+            <axsl:apply-templates select="*[contains(@class, ' map/topicref ')]" mode="#current"/>
+          </axsl:template>
 
-      <axsl:key name="map-without-parts-id"
-                match="*"
-                use="@id"/>
+          <axsl:key name="map-without-parts-id"
+                    match="*"
+                    use="@id"/>
 
-      <axsl:function name="e:get-title-number" as="node()*">
-        <axsl:param name="topic" as="element()"/>
-        <axsl:variable name="topicref" as="element()?" select="key('map-id', $topic/@id, root($topic))[1]"/>
-<!--        <axsl:if test="empty($topicref)">-->
-<!--          <axsl:message terminate="yes" select="'empty topicref', $topic/title"/>-->
-<!--        </axsl:if>-->
-        <axsl:choose>
-          <axsl:when test="contains($topicref/@class, ' bookmap/part ')">
-            <axsl:apply-templates select="$topicref" mode="e:title-number"/>
-          </axsl:when>
-          <axsl:otherwise>
-            <axsl:apply-templates select="key('map-without-parts-id', $topicref/@id, $map-without-parts)" mode="e:title-number"/>
-          </axsl:otherwise>
-        </axsl:choose>
-      </axsl:function>
+          <axsl:function name="e:get-title-number" as="node()*">
+            <axsl:param name="topic" as="element()"/>
+            <axsl:variable name="topicref" as="element()?" select="key('map-id', $topic/@id, root($topic))[1]"/>
+    <!--        <axsl:if test="empty($topicref)">-->
+    <!--          <axsl:message terminate="yes" select="'empty topicref', $topic/title"/>-->
+    <!--        </axsl:if>-->
+            <axsl:choose>
+              <axsl:when test="contains($topicref/@class, ' bookmap/part ')">
+                <axsl:apply-templates select="$topicref" mode="e:title-number"/>
+              </axsl:when>
+              <axsl:otherwise>
+                <axsl:apply-templates select="key('map-without-parts-id', $topicref/@id, $map-without-parts)" mode="e:title-number"/>
+              </axsl:otherwise>
+            </axsl:choose>
+          </axsl:function>
+        </xsl:when>
+        <xsl:otherwise>
+          <axsl:function name="e:get-title-number" as="node()*">
+            <axsl:param name="topic" as="element()"/>
+            <axsl:variable name="topicref" as="element()*" select="key('map-id', $topic/@id, root($topic))"/>
+            <axsl:apply-templates select="$topicref[1]" mode="e:title-number"/>
+          </axsl:function>
+        </xsl:otherwise>
+      </xsl:choose>
 
       <axsl:template match="*[contains(@class, ' map/topicref')]" mode="e:title-number">
         <axsl:variable name="depth" select="count(ancestor-or-self::*[contains(@class, ' map/topicref')])"/>
@@ -107,9 +118,18 @@
   <!--                <axsl:with-param name="id" select="'Table of Contents Part'"/>-->
                   <axsl:with-param name="params">
                     <number>
-                      <axsl:number count="*[contains(@class, ' bookmap/part ')]"
-                                   level="single"
-                                   format="1"/>
+                      <xsl:choose>
+                        <xsl:when test="$root ?style-chapter-numbering = 'document'">
+                          <axsl:number count="*[contains(@class, ' bookmap/part ')]"
+                                       level="single"
+                                       format="1"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <axsl:number count="*[contains(@class, ' bookmap/part ') or contains(@class, ' bookmap/chapter ')]"
+                                       level="single"
+                                       format="1"/>
+                        </xsl:otherwise>
+                      </xsl:choose>
                     </number>
                   </axsl:with-param>
                 </axsl:call-template>
