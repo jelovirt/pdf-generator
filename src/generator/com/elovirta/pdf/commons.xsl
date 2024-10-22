@@ -199,7 +199,12 @@
             </fo:block>
           </axsl:if>
           <axsl:apply-templates select="*[contains(@class,' topic/body ')]"/>
-
+          <axsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]"/>
+          <axsl:if test="*[contains(@class,' topic/related-links ')]//
+                           *[contains(@class,' topic/link ')]
+                            [not(@role) or @role != 'child']">
+            <axsl:apply-templates select="*[contains(@class,' topic/related-links ')]"/>
+          </axsl:if>
           <axsl:choose>
             <axsl:when test="$partLayout = 'BASIC'">
               <!--axsl:apply-templates select="." mode="buildRelationships"/-->
@@ -320,7 +325,12 @@
             </fo:block>
           </axsl:if>
           <axsl:apply-templates select="*[contains(@class,' topic/body ')]"/>
-
+          <axsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]"/>
+          <axsl:if test="*[contains(@class,' topic/related-links ')]//
+                           *[contains(@class,' topic/link ')]
+                            [not(@role) or @role != 'child']">
+            <axsl:apply-templates select="*[contains(@class,' topic/related-links ')]"/>
+          </axsl:if>
           <axsl:apply-templates select="*[contains(@class,' topic/topic ')]"/>
           <axsl:call-template name="pullPrologIndexTerms.end-range"/>
         </fo:block>
