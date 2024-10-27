@@ -34,18 +34,18 @@
         </xsl:attribute>
       </axsl:variable>
 
-      <axsl:template match="*[contains(@class, ' topic/topic ')]/*[contains(@class, ' topic/title ')]" mode="getTitle">
-        <axsl:variable name="topic" select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]"/>
-        <axsl:variable name="contents" as="node()*" select="e:get-title-number($topic)"/>
-        <axsl:if test="exists($contents)">
-          <axsl:copy-of select="$contents"/>
-<!--          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>-->
-          <axsl:text>
-            <xsl:text> </xsl:text>
-          </axsl:text>
-        </axsl:if>
-        <axsl:apply-templates/>
-      </axsl:template>
+<!--      <axsl:template match="*[contains(@class, ' topic/topic ')]/*[contains(@class, ' topic/title ')]" mode="getTitle">-->
+<!--        <axsl:variable name="topic" select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]"/>-->
+<!--        <axsl:variable name="contents" as="node()*" select="e:get-title-number($topic)"/>-->
+<!--        <axsl:if test="exists($contents)">-->
+<!--          <axsl:copy-of select="$contents"/>-->
+<!--&lt;!&ndash;          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>&ndash;&gt;-->
+<!--          <axsl:text>-->
+<!--            <xsl:text> </xsl:text>-->
+<!--          </axsl:text>-->
+<!--        </axsl:if>-->
+<!--        <axsl:apply-templates/>-->
+<!--      </axsl:template>-->
 
       <xsl:choose>
         <xsl:when test="$root ?style-chapter-numbering = 'document'">
@@ -113,11 +113,11 @@
           <xsl:choose>
             <xsl:when test="$root ?style-part-title-numbering">
               <axsl:when test="self::*[contains(@class, ' bookmap/part ')]">
-                <axsl:call-template name="getVariable">
-                  <axsl:with-param name="id" select="'Part with number'"/>
-  <!--                <axsl:with-param name="id" select="'Table of Contents Part'"/>-->
-                  <axsl:with-param name="params">
-                    <number>
+<!--                <axsl:call-template name="getVariable">-->
+<!--                  <axsl:with-param name="id" select="'Part with number'"/>-->
+<!--  &lt;!&ndash;                <axsl:with-param name="id" select="'Table of Contents Part'"/>&ndash;&gt;-->
+<!--                  <axsl:with-param name="params">-->
+<!--                    <number>-->
                       <xsl:choose>
                         <xsl:when test="$root ?style-chapter-numbering = 'document'">
                           <axsl:number count="*[contains(@class, ' bookmap/part ')]"
@@ -130,9 +130,32 @@
                                        format="1"/>
                         </xsl:otherwise>
                       </xsl:choose>
-                    </number>
-                  </axsl:with-param>
-                </axsl:call-template>
+<!--                    </number>-->
+<!--                  </axsl:with-param>-->
+<!--                </axsl:call-template>-->
+              </axsl:when>
+            </xsl:when>
+            <xsl:when test="$root ?style-chapter-title-numbering">
+              <axsl:when test="self::*[contains(@class, ' bookmap/chapter ')]">
+<!--                <axsl:call-template name="getVariable">-->
+<!--                  <axsl:with-param name="id" select="'Chapter with number'"/>-->
+<!--                  <axsl:with-param name="params">-->
+<!--                    <number>-->
+                      <xsl:choose>
+                        <xsl:when test="$root ?style-chapter-numbering = 'document'">
+                          <axsl:number count="*[contains(@class, ' bookmap/chapter ')]"
+                                       level="single"
+                                       format="1"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <axsl:number count="*[contains(@class, ' bookmap/chapter '))]"
+                                       level="single"
+                                       format="1"/>
+                        </xsl:otherwise>
+                      </xsl:choose>
+<!--                    </number>-->
+<!--                  </axsl:with-param>-->
+<!--                </axsl:call-template>-->
               </axsl:when>
             </xsl:when>
             <xsl:otherwise>

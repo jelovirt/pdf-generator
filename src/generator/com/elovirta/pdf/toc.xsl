@@ -110,19 +110,21 @@
 <!--      <xsl:if test="map:contains($root, 'style-toc-1.prefix') and not($root ?style-toc-1.prefix)">-->
         <axsl:template match="node()" mode="tocPrefix"/>
 <!--      </xsl:if>-->
-<!--      <axsl:template-->
-<!--          match="*[contains(@class, ' bookmap/chapter ')] (:|-->
-<!--                 *[contains(@class, ' bookmap/bookmap ')]/opentopic:map/*[contains(@class, ' map/topicref ')]:)"-->
-<!--          mode="tocPrefix" priority="-1">-->
-<!--        <axsl:call-template name="getVariable">-->
-<!--          <axsl:with-param name="id" select="'Table of Contents Chapter'"/>-->
-<!--          <axsl:with-param name="params">-->
-<!--            <number>-->
-<!--              <axsl:apply-templates select="." mode="topicTitleNumber"/>-->
-<!--            </number>-->
-<!--          </axsl:with-param>-->
-<!--        </axsl:call-template>-->
-<!--      </axsl:template>-->
+      <!--
+      <xsl:if test="$root ?style-chapter-title-numbering">
+        <axsl:template match="*[contains(@class, ' bookmap/chapter ')]"
+            mode="tocPrefix" priority="-1">
+          <axsl:call-template name="getVariable">
+            <axsl:with-param name="id" select="'Table of Contents Chapter'"/>
+            <axsl:with-param name="params">
+              <number>
+                <axsl:apply-templates select="." mode="topicTitleNumber"/>
+              </number>
+            </axsl:with-param>
+          </axsl:call-template>
+        </axsl:template>
+      </xsl:if>
+      -->
 
       <!-- Part TOC -->
 
