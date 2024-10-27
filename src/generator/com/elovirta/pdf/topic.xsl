@@ -198,14 +198,14 @@
 
       <axsl:template name="getNavTitle">
         <axsl:variable name="topicref" select="key('map-id', @id)[1]"/>
-        <axsl:variable name="contents" as="node()*" select="e:get-title-number(.)"/>
-        <axsl:if test="exists($contents)">
-          <axsl:copy-of select="$contents"/>
-<!--          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>-->
-          <axsl:text>
-            <xsl:text> </xsl:text>
-          </axsl:text>
-        </axsl:if>
+<!--        <axsl:variable name="contents" as="node()*" select="e:get-title-number(.)"/>-->
+<!--        <axsl:if test="exists($contents)">-->
+<!--          <axsl:copy-of select="$contents"/>-->
+<!--&lt;!&ndash;          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>&ndash;&gt;-->
+<!--          <axsl:text>-->
+<!--            <xsl:text> </xsl:text>-->
+<!--          </axsl:text>-->
+<!--        </axsl:if>-->
         <axsl:choose>
           <axsl:when
               test="$topicref/@locktitle = 'yes' and $topicref/*[contains(@class, ' map/topicmeta ')]/*[contains(@class, ' topic/navtitle ')]">
