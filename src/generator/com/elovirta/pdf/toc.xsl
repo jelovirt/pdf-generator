@@ -67,10 +67,11 @@
         <axsl:param name="tocItemContent"/>
         <axsl:param name="currentNode"/>
         <axsl:for-each select="$currentNode">
+          <axsl:variable name="topicref" select="key('map-id', @id)"/>
           <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>
           <axsl:choose>
             <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc-part')">
-              <axsl:when test="$level eq 1">
+              <axsl:when test="$level eq 1 and $topicref/self::*[contains(@class, ' bookmap/part ')]">
                 <fo:block axsl:use-attribute-sets="__toc__part__content">
                   <axsl:copy-of select="$tocItemContent"/>
                 </fo:block>
@@ -84,7 +85,7 @@
               </axsl:when>
             </xsl:if>
             <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc-chapter')">
-              <axsl:when test="$level eq 1 or $level eq 2">
+              <axsl:when test="$level = (1, 2) and $topicref/self::*[contains(@class, ' bookmap/chapter ')]">
                 <fo:block axsl:use-attribute-sets="__toc__chapter__content">
                   <axsl:copy-of select="$tocItemContent"/>
                 </fo:block>
@@ -581,6 +582,11 @@
         <axsl:attribute-set name="e:chapter_toc">
           <xsl:call-template name="generate-attribute-set">
             <xsl:with-param name="prefix" select="'style-chapter-toc'"/>
+          </xsl:call-template>
+        </axsl:attribute-set>
+        <axsl:attribute-set name="e:appendix_toc">
+          <xsl:call-template name="generate-attribute-set">
+            <xsl:with-param name="prefix" select="'style-chapter-appendix'"/>
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:if>

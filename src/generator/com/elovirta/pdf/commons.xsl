@@ -246,6 +246,90 @@
         </fo:block>
       </axsl:template>
 
+      <!-- Appendix -->
+
+      <axsl:template match="*" mode="processTopicAppendixInsideFlow">
+        <fo:block axsl:use-attribute-sets="topic">
+          <!-- TODO: Replace with mode="commonattributes" -->
+          <axsl:call-template name="commonattributes"/>
+          <axsl:variable name="level" as="xs:integer">
+            <axsl:apply-templates select="." mode="get-topic-level"/>
+          </axsl:variable>
+          <axsl:if test="$level eq 1">
+            <fo:marker marker-class-name="current-topic-number">
+              <axsl:variable name="topicref"
+                             select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
+                             as="element()?"/>
+              <axsl:for-each select="$topicref">
+                <axsl:apply-templates select="." mode="topicTitleNumber"/>
+              </axsl:for-each>
+            </fo:marker>
+            <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
+          </axsl:if>
+          <axsl:apply-templates select="." mode="customTopicMarker"/>
+
+          <axsl:apply-templates select="*[contains(@class,' topic/prolog ')]"/>
+
+<!--          <axsl:apply-templates select="." mode="insertChapterFirstpageStaticContent">-->
+<!--            <axsl:with-param name="type" select="'appendix'"/>-->
+<!--          </axsl:apply-templates>-->
+
+          <fo:block axsl:use-attribute-sets="topic.title">
+            <axsl:attribute name="id">
+              <axsl:call-template name="generate-toc-id"/>
+            </axsl:attribute>
+<!--            <axsl:apply-templates select="." mode="customTopicAnchor"/>-->
+            <axsl:call-template name="pullPrologIndexTerms"/>
+            <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]"/>
+
+            <axsl:call-template name="getVariable">
+              <axsl:with-param name="id" select="'Appendix with number'"/>
+              <axsl:with-param name="params" as="element()*">
+                <number>
+                  <axsl:sequence select="e:get-title-number(.)"/>
+                  <!--                  <axsl:apply-templates select="key('map-id', @id)[1]" mode="topicTitleNumber"/>-->
+                </number>
+              </axsl:with-param>
+            </axsl:call-template>
+            <axsl:text><xsl:text> </xsl:text></axsl:text>
+
+            <axsl:apply-templates select="*[contains(@class,' topic/title ')]" mode="getTitle"/>
+          </fo:block>
+
+          <axsl:if test="*[contains(@class,' topic/shortdesc ') or
+                           contains(@class, ' topic/abstract ')]/node()">
+            <fo:block axsl:use-attribute-sets="topic__shortdesc">
+              <axsl:apply-templates select="*[contains(@class,' topic/shortdesc ') or
+                                              contains(@class, ' topic/abstract ')]/node()"/>
+            </fo:block>
+          </axsl:if>
+          <axsl:apply-templates select="*[contains(@class,' topic/body ')]"/>
+          <axsl:apply-templates select="*[contains(@class, ' ditaot-d/ditaval-endprop ')]"/>
+          <axsl:if test="*[contains(@class,' topic/related-links ')]//
+                           *[contains(@class,' topic/link ')]
+                            [not(@role) or @role != 'child']">
+            <axsl:apply-templates select="*[contains(@class,' topic/related-links ')]"/>
+          </axsl:if>
+
+          <axsl:choose>
+            <axsl:when test="$appendixLayout='BASIC'">
+<!--              <axsl:apply-templates select="* except(*[contains(@class, ' topic/title ') or contains(@class,' ditaot-d/ditaval-startprop ') or-->
+<!--                      contains(@class, ' topic/prolog ') or contains(@class, ' topic/topic ')])"/>-->
+              <!--xsl:apply-templates select="." mode="buildRelationships"/-->
+            </axsl:when>
+            <axsl:when test="exists(*[contains(@class, ' topic/topic ')])">
+              <fo:block axsl:use-attribute-sets="e:appendix_toc">
+                <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="part-toc"/>
+              </fo:block>
+<!--              <axsl:apply-templates select="." mode="createMiniToc"/>-->
+            </axsl:when>
+          </axsl:choose>
+
+          <axsl:apply-templates select="*[contains(@class,' topic/topic ')]"/>
+          <axsl:call-template name="pullPrologIndexTerms.end-range"/>
+        </fo:block>
+      </axsl:template>
+
 <!--      <axsl:template match="*" mode="createPartToc">-->
         <!-- Part introduction -->
         <!--
