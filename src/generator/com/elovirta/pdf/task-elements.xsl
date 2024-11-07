@@ -14,6 +14,9 @@
   <xsl:template match=".[. instance of map(*)]">
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
+      <xsl:if test="$root ?style-task-labels">
+        <axsl:param name="GENERATE-TASK-LABELS" select="'YES'"/>
+      </xsl:if>
     </axsl:stylesheet>
   </xsl:template>
 
