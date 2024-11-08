@@ -12,8 +12,7 @@ import org.dita.dost.util.XMLUtils;
 
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.URIResolver;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -29,6 +28,9 @@ public class StylesheetGeneratorTask extends Task {
     private static final QName ATTR = QName.fromClarkName("{}attr");
     private static final QName VERSION = QName.fromClarkName("{}version");
     private static final QName FORMATTER = QName.fromClarkName("{}formatter");
+    /** Magic extends for build-in theme. */
+    private static final String DEFAULT_EXTENDS = "default";
+    private static final URI DEFAULT_EXTENDS_URI = URI.create("classpath:/com/elovirta/pdf/default.json");
 
     private File template;
     private File dstDir;
@@ -198,9 +200,20 @@ public class StylesheetGeneratorTask extends Task {
         try {
             final Xslt30Transformer transformer = executable.load30();
             final XdmItem extendsValue = xpathCompiler.evaluateSingle(". ?extends", base);
-            if (extendsValue != null) {
+            if (extendsValue != null && extendsValue.getStringValue().equals(DEFAULT_EXTENDS)) {
+                final XdmItem extendsRes = xpathCompiler.evaluateSingle("json-doc(.)", new XdmAtomicValue(DEFAULT_EXTENDS_URI));
+
+                final XdmValue flattened = transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
+                        base
+                });
+                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
+                        flattened, XdmEmptySequence.getInstance(), new XdmAtomicValue(DEFAULT_EXTENDS_URI)
+                });
+                return normalized.itemAt(0);
+            } else if (extendsValue != null) {
                 final URI extendsUri = url.resolve(extendsValue.getStringValue());
                 final XdmItem extendsRes = parseYamlTemplate(executable, parseYaml(extendsUri), url);
+
                 final XdmValue flattened = transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
                         base
                 });

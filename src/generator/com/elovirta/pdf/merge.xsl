@@ -21,6 +21,9 @@
 
     <xsl:variable name="current" select="x:normalize(x:flatten($base), (), $url)"/>
     <xsl:choose>
+      <xsl:when test="map:contains($base, 'extends') and $base ?extends eq 'default'">
+        <xsl:sequence select="json-doc(xs:anyURI('classpath:/com/elovirta/pdf/default.json'))"/>
+      </xsl:when>
       <xsl:when test="map:contains($base, 'extends')">
         <xsl:variable name="extends-url" select="resolve-uri($base ?extends, $url)"/>
         <xsl:variable name="extends" select="x:extends(json-doc($extends-url), $extends-url)"/>
