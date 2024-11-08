@@ -37,7 +37,7 @@ dependencies {
 sourceSets {
     main {
         resources {
-            srcDirs = ["src/generator"]
+            srcDirs = ["src/generator", "src/main/resources"]
             include "**/*.xsl"
             include "**/*.json"
         }
