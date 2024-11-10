@@ -1,12 +1,6 @@
 {
   "$schema": "../../../main/resources/schema.json",
 
-  "brand": {
-    "color": {
-      "primary": "pink"
-    }
-  },
-
   "page": {
     "size": "A4",
     "top": "20mm",
@@ -40,10 +34,6 @@
       "background-color": "pink",
       "border-after": "solid 1pt gray"
     },
-    "example": {
-      "title": { "background-color": "pink" }
-    },
-    "note": {},
     "table": {
       "header": { "color": "green" }
     }
