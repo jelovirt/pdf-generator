@@ -12,11 +12,13 @@ import org.dita.dost.util.XMLUtils;
 
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.URIResolver;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
@@ -28,7 +30,9 @@ public class StylesheetGeneratorTask extends Task {
     private static final QName ATTR = QName.fromClarkName("{}attr");
     private static final QName VERSION = QName.fromClarkName("{}version");
     private static final QName FORMATTER = QName.fromClarkName("{}formatter");
-    /** Magic extends for build-in theme. */
+    /**
+     * Magic extends for build-in theme.
+     */
     private static final String DEFAULT_EXTENDS = "default";
     private static final URI DEFAULT_EXTENDS_URI = URI.create("classpath:/com/elovirta/pdf/default.json");
 
@@ -38,6 +42,7 @@ public class StylesheetGeneratorTask extends Task {
     private URIResolver resolver;
     private Processor processor;
     private XsltCompiler compiler;
+    private Xslt30Transformer transformer;
     private XPathCompiler xpathCompiler;
     private ObjectMapper yamlReader;
     private ObjectMapper jsonWriter;
@@ -53,6 +58,12 @@ public class StylesheetGeneratorTask extends Task {
         processor = xmlUtils.getProcessor();
         compiler = processor.newXsltCompiler();
         compiler.setURIResolver(resolver);
+        try {
+            final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/com/elovirta/pdf/merge.xsl", null));
+            transformer = executable.load30();
+        } catch (SaxonApiException | TransformerException e) {
+            throw new BuildException(String.format("Failed to parse template %s", template), e);
+        }
         xpathCompiler = processor.newXPathCompiler();
         yamlReader = new ObjectMapper(new YAMLFactory());
         jsonWriter = new ObjectMapper();
@@ -69,6 +80,7 @@ public class StylesheetGeneratorTask extends Task {
         }
 
         final XdmItem xdmItem = parseTemplate();
+        getProject().log("Template:" + xdmItem, Project.MSG_INFO);
         generate(xdmItem, "front-matter.xsl", "xsl/fo/front-matter.xsl", null);
         generate(xdmItem, "commons.xsl", "xsl/fo/commons.xsl", null);
         generate(xdmItem, "tables.xsl", "xsl/fo/tables.xsl", null);
@@ -150,24 +162,18 @@ public class StylesheetGeneratorTask extends Task {
     XdmItem parseTemplate() {
         getProject().log(this, String.format("Reading %s", template.toURI()), Project.MSG_INFO);
         final String name = template.getName().toLowerCase();
-        try {
-            final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/com/elovirta/pdf/merge.xsl", null));
-            final XdmItem merged;
-            // XXX: Saxon's JSON functions don't use URIResolver, so have to parse manually
-            if (name.endsWith(".yml") || name.endsWith(".yaml")) {
-                merged = parseYamlTemplate(executable, parseYaml(template.toURI()), template.toURI());
-            } else {
-                merged = parseJsonTemplate();
-            }
-            return resolveVariables(executable, merged);
-        } catch (SaxonApiException | TransformerException e) {
-            throw new BuildException(String.format("Failed to parse template %s", template), e);
+        final XdmItem merged;
+        // XXX: Saxon's JSON functions don't use URIResolver, so have to parse manually
+        if (name.endsWith(".yml") || name.endsWith(".yaml")) {
+            merged = parseYamlTemplate(parseYaml(template.toURI()), template.toURI());
+        } else {
+            merged = parseJsonTemplate();
         }
+        return resolveVariables(merged);
     }
 
-    private XdmItem resolveVariables(final XsltExecutable executable, final XdmItem base) {
+    private XdmItem resolveVariables(final XdmItem base) {
         try {
-            final Xslt30Transformer transformer = executable.load30();
             final XdmValue resolved = transformer.callFunction(QName.fromClarkName("{x}resolve"), new XdmValue[]{
                     base
             });
@@ -182,6 +188,7 @@ public class StylesheetGeneratorTask extends Task {
 
     private XdmItem parseJsonTemplate() {
         try {
+            new JsonBuilder(xmlUtils.getProcessor().getUnderlyingConfiguration());
             final XdmItem theme = xpathCompiler.evaluateSingle("json-doc(.)", new XdmAtomicValue(template.toURI()));
             final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/com/elovirta/pdf/merge.xsl", null));
             final Xslt30Transformer transformer = executable.load30();
@@ -196,44 +203,44 @@ public class StylesheetGeneratorTask extends Task {
         }
     }
 
-    private XdmItem parseYamlTemplate(final XsltExecutable executable, final XdmItem base, final URI url) {
+    private XdmItem parseYamlTemplate(final XdmItem base, final URI url) {
         try {
-            final Xslt30Transformer transformer = executable.load30();
             final XdmItem extendsValue = xpathCompiler.evaluateSingle(". ?extends", base);
             if (extendsValue != null && extendsValue.getStringValue().equals(DEFAULT_EXTENDS)) {
-                final XdmItem extendsRes = xpathCompiler.evaluateSingle("json-doc(.)", new XdmAtomicValue(DEFAULT_EXTENDS_URI));
+                final XPathSelector selector = xpathCompiler.compile("json-doc(.)").load();
+                selector.setURIResolver(resolver);
+                selector.setContextItem(new XdmAtomicValue(DEFAULT_EXTENDS_URI));
+                final XdmItem extendsRes = selector.evaluateSingle();
+//                final XdmItem extendsRes = xpathCompiler.evaluateSingle("json-doc(.)", new XdmAtomicValue(DEFAULT_EXTENDS_URI));
 
-                final XdmValue flattened = transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
-                        base
-                });
-                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
-                        flattened, XdmEmptySequence.getInstance(), new XdmAtomicValue(DEFAULT_EXTENDS_URI)
-                });
-                return normalized.itemAt(0);
+                return transformer.callFunction(QName.fromClarkName("{x}merge"), new XdmValue[]{
+                        normalize(extendsRes),
+                        normalize(base)
+                }).itemAt(0);
             } else if (extendsValue != null) {
                 final URI extendsUri = url.resolve(extendsValue.getStringValue());
-                final XdmItem extendsRes = parseYamlTemplate(executable, parseYaml(extendsUri), url);
+                final XdmItem extendsRes = parseYamlTemplate(parseYaml(extendsUri), url);
 
-                final XdmValue flattened = transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
-                        base
-                });
-                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
-                        flattened, XdmEmptySequence.getInstance(), new XdmAtomicValue(extendsUri)
-                });
                 return transformer.callFunction(QName.fromClarkName("{x}merge"), new XdmValue[]{
-                        extendsRes.stream().asXdmValue(), normalized
+                        extendsRes, normalize(base)
                 }).itemAt(0);
             } else {
-                final XdmValue flattened = transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
-                        base
-                });
-                final XdmValue normalized = transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
-                        flattened, XdmEmptySequence.getInstance(), new XdmAtomicValue(url)
-                });
-                return normalized.itemAt(0);
+                return normalize(base).itemAt(0);
             }
         } catch (SaxonApiException e) {
             throw new BuildException(String.format("Failed to parse template %s", template), e);
+        }
+    }
+
+    private XdmItem normalize(XdmItem in) {
+        try {
+            return transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
+                    transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
+                            in
+                    }), XdmEmptySequence.getInstance(), new XdmAtomicValue(DEFAULT_EXTENDS_URI)
+            }).itemAt(0);
+        } catch (SaxonApiException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -243,7 +250,6 @@ public class StylesheetGeneratorTask extends Task {
             final String json = jsonWriter.writeValueAsString(yaml);
             return xpathCompiler.evaluateSingle("parse-json(.)", new XdmAtomicValue(json));
         } catch (SaxonApiException | IOException e) {
-            e.printStackTrace();
             throw new BuildException("Failed to convert YAML to JSON: " + e.getMessage(), e);
         }
     }
