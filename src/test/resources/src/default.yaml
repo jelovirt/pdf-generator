@@ -1,0 +1,4 @@
+extends: default
+style:
+  h1:
+    background-color: pink
