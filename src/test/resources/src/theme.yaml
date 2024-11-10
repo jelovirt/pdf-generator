@@ -1,4 +1,4 @@
-extends: default.json
+extends: base.json
 brand:
   primary-color: red
 page:

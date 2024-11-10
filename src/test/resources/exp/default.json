@@ -1,0 +1,10 @@
+{
+  "style": {
+    "toc-1": {
+      "color": "blue"
+    },
+    "toc-2": {
+      "color": "green"
+    }
+  }
+}
