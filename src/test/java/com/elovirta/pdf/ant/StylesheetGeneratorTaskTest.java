@@ -5,7 +5,6 @@ import org.apache.tools.ant.Project;
 import org.dita.dost.log.DITAOTAntLogger;
 import org.dita.dost.util.XMLUtils;
 import org.json.JSONException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +12,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import java.io.*;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -166,6 +164,20 @@ public class StylesheetGeneratorTaskTest {
             "size.yaml"
     })
     public void getTemplate_normalize_single(final String template) throws URISyntaxException, SaxonApiException, JSONException {
+        task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()).getAbsolutePath());
+
+        final XdmValue act = task.parseTemplate();
+
+        assertEquals(readToString("exp/" + template.substring(0, template.indexOf(".")) + ".json"), toString(act),
+                JSONCompareMode.STRICT);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "default.json",
+            "default.yaml"
+    })
+    public void getTemplate_default(final String template) throws URISyntaxException, SaxonApiException, JSONException {
         task.setTemplate(new File(getClass().getClassLoader().getResource("src/" + template).toURI()).getAbsolutePath());
 
         final XdmValue act = task.parseTemplate();

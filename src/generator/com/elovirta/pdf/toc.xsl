@@ -573,23 +573,23 @@
             <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
           </xsl:call-template>
         </axsl:attribute-set>
-
-        <axsl:attribute-set name="e:part_toc">
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-part-toc'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-        <axsl:attribute-set name="e:chapter_toc">
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-chapter-toc'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
-        <axsl:attribute-set name="e:appendix_toc">
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-chapter-appendix'"/>
-          </xsl:call-template>
-        </axsl:attribute-set>
       </xsl:if>
+
+      <axsl:attribute-set name="e:part_toc">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-part-toc'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="e:chapter_toc">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-chapter-toc'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="e:appendix_toc">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-chapter-appendix'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
     </axsl:stylesheet>
   </xsl:template>
 
