@@ -32,7 +32,6 @@ public class StylesheetGeneratorTaskTest {
     @BeforeEach
     public void setUp() {
         xmlUtils = new XMLUtils();
-        xmlUtils.getProcessor().getUnderlyingConfiguration().setURIResolver(resolver);
         xpathCompiler = xmlUtils.getProcessor().newXPathCompiler();
         final Project project = new Project();
         xmlUtils.setLogger(new DITAOTAntLogger(project));

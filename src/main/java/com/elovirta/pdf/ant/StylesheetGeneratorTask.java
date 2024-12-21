@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.annotations.VisibleForTesting;
 import net.sf.saxon.s9api.*;
+import net.sf.saxon.tree.wrapper.RebasedDocument;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -12,8 +13,7 @@ import org.dita.dost.util.XMLUtils;
 
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.URIResolver;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.nio.file.Files;
 import java.util.HashMap;
@@ -80,7 +80,7 @@ public class StylesheetGeneratorTask extends Task {
         }
 
         final XdmItem xdmItem = parseTemplate();
-        getProject().log("Template:" + xdmItem, Project.MSG_INFO);
+        getProject().log("Template:" + xdmItem, Project.MSG_DEBUG);
         generate(xdmItem, "front-matter.xsl", "xsl/fo/front-matter.xsl", null);
         generate(xdmItem, "commons.xsl", "xsl/fo/commons.xsl", null);
         generate(xdmItem, "tables.xsl", "xsl/fo/tables.xsl", null);
@@ -187,19 +187,21 @@ public class StylesheetGeneratorTask extends Task {
     }
 
     private XdmItem parseJsonTemplate() {
-        try {
-            new JsonBuilder(xmlUtils.getProcessor().getUnderlyingConfiguration());
-            final XdmItem theme = xpathCompiler.evaluateSingle("json-doc(.)", new XdmAtomicValue(template.toURI()));
+        try (var in = new FileReader(template)){
+            final XdmValue theme = xmlUtils.getProcessor().newJsonBuilder().parseJson(in);
+            // TODO: reuse compiled stylesheet
             final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/com/elovirta/pdf/merge.xsl", null));
             final Xslt30Transformer transformer = executable.load30();
             final Map<QName, XdmItem> parameters = singletonMap(
                     QName.fromClarkName("{}base-url"), new XdmAtomicValue(template.toURI())
             );
             transformer.setStylesheetParameters(parameters);
-            transformer.setGlobalContextItem(theme);
+            transformer.setGlobalContextItem(theme.itemAt(0));
             return transformer.applyTemplates(theme).itemAt(0);
         } catch (TransformerException | SaxonApiException e) {
             throw new BuildException(String.format("Failed to parse template %s", template), e);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
 
@@ -211,33 +213,31 @@ public class StylesheetGeneratorTask extends Task {
                 selector.setURIResolver(resolver);
                 selector.setContextItem(new XdmAtomicValue(DEFAULT_EXTENDS_URI));
                 final XdmItem extendsRes = selector.evaluateSingle();
-//                final XdmItem extendsRes = xpathCompiler.evaluateSingle("json-doc(.)", new XdmAtomicValue(DEFAULT_EXTENDS_URI));
-
                 return transformer.callFunction(QName.fromClarkName("{x}merge"), new XdmValue[]{
-                        normalize(extendsRes),
-                        normalize(base)
+                        normalize(extendsRes, DEFAULT_EXTENDS_URI),
+                        normalize(base, url)
                 }).itemAt(0);
             } else if (extendsValue != null) {
                 final URI extendsUri = url.resolve(extendsValue.getStringValue());
                 final XdmItem extendsRes = parseYamlTemplate(parseYaml(extendsUri), url);
 
                 return transformer.callFunction(QName.fromClarkName("{x}merge"), new XdmValue[]{
-                        extendsRes, normalize(base)
+                        extendsRes, normalize(base, url)
                 }).itemAt(0);
             } else {
-                return normalize(base).itemAt(0);
+                return normalize(base, url).itemAt(0);
             }
         } catch (SaxonApiException e) {
             throw new BuildException(String.format("Failed to parse template %s", template), e);
         }
     }
 
-    private XdmItem normalize(XdmItem in) {
+    private XdmItem normalize(XdmItem in, URI base) {
         try {
             return transformer.callFunction(QName.fromClarkName("{x}normalize"), new XdmValue[]{
                     transformer.callFunction(QName.fromClarkName("{x}flatten"), new XdmValue[]{
                             in
-                    }), XdmEmptySequence.getInstance(), new XdmAtomicValue(DEFAULT_EXTENDS_URI)
+                    }), XdmEmptySequence.getInstance(), new XdmAtomicValue(base)
             }).itemAt(0);
         } catch (SaxonApiException e) {
             throw new RuntimeException(e);
@@ -248,7 +248,10 @@ public class StylesheetGeneratorTask extends Task {
         try {
             final Object yaml = yamlReader.readValue(abs.toURL(), Object.class);
             final String json = jsonWriter.writeValueAsString(yaml);
-            return xpathCompiler.evaluateSingle("parse-json(.)", new XdmAtomicValue(json));
+
+            final JsonBuilder builder = xmlUtils.getProcessor().newJsonBuilder();
+            final XdmValue xdmItems = builder.parseJson(json);
+            return xdmItems.itemAt(0);
         } catch (SaxonApiException | IOException e) {
             throw new BuildException("Failed to convert YAML to JSON: " + e.getMessage(), e);
         }

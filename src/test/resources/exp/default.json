@@ -1,10 +1,4 @@
 {
-  "style": {
-    "toc-1": {
-      "color": "blue"
-    },
-    "toc-2": {
-      "color": "green"
-    }
-  }
+  "style-topic-font-weight": "bold",
+  "style-topic-background-color": "pink"
 }
