@@ -14,7 +14,7 @@ sourceCompatibility = 17
 targetCompatibility = 17
 
 dependencies {
-    implementation group: 'org.apache.ant', name: 'ant', version:'1.10.12'
+    implementation group: 'org.apache.ant', name: 'ant', version: '1.10.12'
     implementation(group: 'com.google.guava', name: 'guava', version: '25.1-jre') {
         exclude group: 'org.checkerframework', module: 'checker-qual'
         exclude group: 'org.codehaus.mojo', module: 'animal-sniffer-annotations'
@@ -44,18 +44,19 @@ sourceSets {
     }
 }
 
-task dist(type: Zip, dependsOn: [jar]) {
+tasks.register('dist', Zip) {
+    dependsOn tasks.jar
     into("lib") {
-        from ("build/libs") {
+        from("build/libs") {
             include "*.jar"
         }
     }
     into("") {
-        from ("src/main/resources") {
+        from("src/main/resources") {
             include "build.xml"
             include "schema.json"
         }
-        from ("src/main/resources") {
+        from("src/main/resources") {
             expand(
                     id: project.name,
                     version: project.version

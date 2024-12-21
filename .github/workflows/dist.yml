@@ -19,7 +19,7 @@ jobs:
           java-version: 17
           cache: gradle
       - name: Build with Gradle
-        run: ./gradlew dist
+        run: ./gradlew test dist
       - name: Set variables
         run: |
           echo "CHKSUM=$(shasum -a 256 build/distributions/com.elovirta.pdf-*.zip | cut -d ' ' -f 1)" >> $GITHUB_ENV
