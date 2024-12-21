@@ -42,6 +42,7 @@ public class StylesheetGeneratorTask extends Task {
     private URIResolver resolver;
     private Processor processor;
     private XsltCompiler compiler;
+    private XsltExecutable executable;
     private Xslt30Transformer transformer;
     private XPathCompiler xpathCompiler;
     private ObjectMapper yamlReader;
@@ -59,7 +60,7 @@ public class StylesheetGeneratorTask extends Task {
         compiler = processor.newXsltCompiler();
         compiler.setURIResolver(resolver);
         try {
-            final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/com/elovirta/pdf/merge.xsl", null));
+            executable = compiler.compile(resolver.resolve("classpath:/com/elovirta/pdf/merge.xsl", null));
             transformer = executable.load30();
         } catch (SaxonApiException | TransformerException e) {
             throw new BuildException(String.format("Failed to parse template %s", template), e);
@@ -188,9 +189,7 @@ public class StylesheetGeneratorTask extends Task {
 
     private XdmItem parseJsonTemplate() {
         try (var in = new FileReader(template)){
-            final XdmValue theme = xmlUtils.getProcessor().newJsonBuilder().parseJson(in);
-            // TODO: reuse compiled stylesheet
-            final XsltExecutable executable = compiler.compile(resolver.resolve("classpath:/com/elovirta/pdf/merge.xsl", null));
+            final XdmValue theme = processor.newJsonBuilder().parseJson(in);
             final Xslt30Transformer transformer = executable.load30();
             final Map<QName, XdmItem> parameters = singletonMap(
                     QName.fromClarkName("{}base-url"), new XdmAtomicValue(template.toURI())
@@ -198,7 +197,7 @@ public class StylesheetGeneratorTask extends Task {
             transformer.setStylesheetParameters(parameters);
             transformer.setGlobalContextItem(theme.itemAt(0));
             return transformer.applyTemplates(theme).itemAt(0);
-        } catch (TransformerException | SaxonApiException e) {
+        } catch (SaxonApiException e) {
             throw new BuildException(String.format("Failed to parse template %s", template), e);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
@@ -220,7 +219,6 @@ public class StylesheetGeneratorTask extends Task {
             } else if (extendsValue != null) {
                 final URI extendsUri = url.resolve(extendsValue.getStringValue());
                 final XdmItem extendsRes = parseYamlTemplate(parseYaml(extendsUri), url);
-
                 return transformer.callFunction(QName.fromClarkName("{x}merge"), new XdmValue[]{
                         extendsRes, normalize(base, url)
                 }).itemAt(0);
@@ -248,9 +246,7 @@ public class StylesheetGeneratorTask extends Task {
         try {
             final Object yaml = yamlReader.readValue(abs.toURL(), Object.class);
             final String json = jsonWriter.writeValueAsString(yaml);
-
-            final JsonBuilder builder = xmlUtils.getProcessor().newJsonBuilder();
-            final XdmValue xdmItems = builder.parseJson(json);
+            final XdmValue xdmItems = processor.newJsonBuilder().parseJson(json);
             return xdmItems.itemAt(0);
         } catch (SaxonApiException | IOException e) {
             throw new BuildException("Failed to convert YAML to JSON: " + e.getMessage(), e);
