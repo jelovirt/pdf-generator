@@ -8,11 +8,16 @@
     "maximum-level": 6
   },
   "style": {
+    "body": {
+      "start-indent": "0pt"
+    },
     "h1": {
-      "font-weight": "bold"
+      "title-numbering": true,
+      "border-style": "none"
     },
     "h2": {
-      "title-numbering": true
+      "title-numbering": true,
+      "border-style": "none"
     },
     "h3": {
       "title-numbering": true

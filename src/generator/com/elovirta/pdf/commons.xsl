@@ -201,7 +201,8 @@
             </axsl:call-template>
             <axsl:text><xsl:text> </xsl:text></axsl:text>
 
-            <axsl:apply-templates select="*[contains(@class,' topic/title ')]" mode="getTitle"/>
+<!--            <axsl:apply-templates select="*[contains(@class,' topic/title ')]" mode="getTitle"/>-->
+            <axsl:apply-templates select="*[contains(@class,' topic/title ')]/node()"/>
           </fo:block>
 
 <!--          <axsl:apply-templates select="* except(*[contains(@class, ' topic/title ') or-->
@@ -416,7 +417,8 @@
             </axsl:call-template>
             <axsl:text><xsl:text> </xsl:text></axsl:text>
 
-            <axsl:apply-templates select="*[contains(@class,' topic/title ')]" mode="getTitle"/>
+<!--            <axsl:apply-templates select="*[contains(@class,' topic/title ')]" mode="getTitle"/>-->
+            <axsl:apply-templates select="*[contains(@class,' topic/title ')]/node()"/>
           </fo:block>
 
           <axsl:choose>

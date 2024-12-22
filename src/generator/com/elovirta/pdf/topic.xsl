@@ -34,18 +34,18 @@
         </xsl:attribute>
       </axsl:variable>
 
-<!--      <axsl:template match="*[contains(@class, ' topic/topic ')]/*[contains(@class, ' topic/title ')]" mode="getTitle">-->
-<!--        <axsl:variable name="topic" select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]"/>-->
-<!--        <axsl:variable name="contents" as="node()*" select="e:get-title-number($topic)"/>-->
-<!--        <axsl:if test="exists($contents)">-->
-<!--          <axsl:copy-of select="$contents"/>-->
-<!--&lt;!&ndash;          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>&ndash;&gt;-->
-<!--          <axsl:text>-->
-<!--            <xsl:text> </xsl:text>-->
-<!--          </axsl:text>-->
-<!--        </axsl:if>-->
-<!--        <axsl:apply-templates/>-->
-<!--      </axsl:template>-->
+      <axsl:template match="*[contains(@class, ' topic/topic ')]/*[contains(@class, ' topic/title ')]" mode="getTitle">
+        <axsl:variable name="topic" select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]"/>
+        <axsl:variable name="contents" as="node()*" select="e:get-title-number($topic)"/>
+        <axsl:if test="exists($contents)">
+          <axsl:copy-of select="$contents"/>
+<!--          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>-->
+          <axsl:text>
+            <xsl:text> </xsl:text>
+          </axsl:text>
+        </axsl:if>
+        <axsl:apply-templates/>
+      </axsl:template>
 
       <xsl:choose>
         <xsl:when test="$root ?style-chapter-numbering = 'document'">
