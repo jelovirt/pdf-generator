@@ -11,6 +11,21 @@
     "h1": {
       "font-weight": "bold"
     },
+    "h2": {
+      "title-numbering": true
+    },
+    "h3": {
+      "title-numbering": true
+    },
+    "h4": {
+      "title-numbering": true
+    },
+    "h5": {
+      "title-numbering": true
+    },
+    "h6": {
+      "title-numbering": true
+    },
     "chapter": {
       "numbering": "document",
       "title-numbering": true
@@ -29,22 +44,28 @@
         "start-indent": "0pt"
       },
       "1": {
-        "start-indent": "0pt"
+        "start-indent": "0pt",
+        "title-numbering": true
       },
       "2": {
-        "start-indent": "$brand-toc-indent"
+        "start-indent": "$brand-toc-indent",
+        "title-numbering": true
       },
       "3": {
-        "start-indent": "2 * $brand-toc-indent"
+        "start-indent": "2 * $brand-toc-indent",
+        "title-numbering": true
       },
       "4": {
-        "start-indent": "3 * $brand-toc-indent"
+        "start-indent": "3 * $brand-toc-indent",
+        "title-numbering": true
       },
       "5": {
-        "start-indent": "4 * $brand-toc-indent"
+        "start-indent": "4 * $brand-toc-indent",
+        "title-numbering": true
       },
       "6": {
-        "start-indent": "5 * $brand-toc-indent"
+        "start-indent": "5 * $brand-toc-indent",
+        "title-numbering": true
       }
     }
   }
