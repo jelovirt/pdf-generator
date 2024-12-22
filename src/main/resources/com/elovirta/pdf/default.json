@@ -1,7 +1,51 @@
 {
+  "brand": {
+    "toc": {
+      "indent": "20pt"
+    }
+  },
+  "toc": {
+    "maximum-level": 6
+  },
   "style": {
     "h1": {
       "font-weight": "bold"
+    },
+    "chapter": {
+      "numbering": "document",
+      "title-numbering": true
+    },
+    "topic": {
+      "title-numbering": true
+    },
+    "part": {
+      "title-numbering": true
+    },
+    "toc": {
+      "part": {
+        "start-indent": "0pt"
+      },
+      "chapter": {
+        "start-indent": "0pt"
+      },
+      "1": {
+        "start-indent": "0pt"
+      },
+      "2": {
+        "start-indent": "$brand-toc-indent"
+      },
+      "3": {
+        "start-indent": "2 * $brand-toc-indent"
+      },
+      "4": {
+        "start-indent": "3 * $brand-toc-indent"
+      },
+      "5": {
+        "start-indent": "4 * $brand-toc-indent"
+      },
+      "6": {
+        "start-indent": "5 * $brand-toc-indent"
+      }
     }
   }
 }
