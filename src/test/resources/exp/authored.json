@@ -75,5 +75,7 @@
   "style-topic-border-after-color": "gray",
   "style-topic-border-after-style": "solid",
   "style-topic-border-after-width": "1pt",
-  "style-table-header-color": "green"
+  "style-table-header-color": "green",
+  "style-note-background-size-horizontal": "10pt",
+  "style-note-background-size-vertical": "20pt"
 }
