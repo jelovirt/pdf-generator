@@ -41,12 +41,8 @@
 
   <xsl:function name="x:flatten" as="item()*" visibility="public">
     <xsl:param name="root" as="item()"/>
-    <xsl:variable name="flattened" as="map(*)">
-      <xsl:map>
-        <xsl:sequence select="x:flatten-walker($root, $root, ())"/>
-      </xsl:map>
-    </xsl:variable>
-    <xsl:sequence select="map:merge(($flattened), map{ 'duplicates': 'use-first' })"/>
+    <xsl:sequence select="map:merge(x:flatten-walker($root, $root, ()),
+                                    map{ 'duplicates': 'use-first' })"/>
   </xsl:function>
 
   <xsl:function name="x:flatten-walker" as="item()*">
