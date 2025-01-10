@@ -278,10 +278,8 @@
           <!-- Extensions -->
           <xsl:when test="matches($key, '-background-size$')">
             <xsl:variable name="values" select="tokenize($value, '\s+')"/>
-            <xsl:variable name="width" select="$values[1]"/>
-            <xsl:variable name="height" select="$values[2]"/>
-            <xsl:map-entry key="concat($key, '-horizontal')" select="$width"/>
-            <xsl:map-entry key="concat($key, '-vertical')" select="$height"/>
+            <xsl:map-entry key="concat($key, '-width')" select="$values[1]"/>
+            <xsl:map-entry key="concat($key, '-height')" select="$values[2]"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:map-entry key="$key" select="$value"/>

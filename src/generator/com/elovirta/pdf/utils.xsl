@@ -54,8 +54,8 @@
     'background-position-horizontal',
     'background-position-vertical',
     'background-repeat',
-    'background-size-horizontal',
-    'background-size-vertical',
+    'background-size-width',
+    'background-size-height',
     'baseline-shift',
     x:space('blank-or-not-blank'),
     x:space('block-progression-dimension'),
@@ -301,29 +301,29 @@
       <xsl:variable name="key" select="concat($prefix, '-', $property)" as="item()*"/>
       <xsl:if test="map:contains($root, $key)">
         <xsl:choose>
-          <xsl:when test="$formatter eq 'ah' and $property eq 'background-size-horizontal'">
+          <xsl:when test="$formatter eq 'ah' and $property eq 'background-size-width'">
             <axsl:attribute name="axf:background-size">
               <xsl:value-of select="$root($key)"/>
               <xsl:text> </xsl:text>
-              <xsl:value-of select="$root($prefix || '-background-size-vertical')"/>
+              <xsl:value-of select="$root($prefix || '-background-size-height')"/>
             </axsl:attribute>
           </xsl:when>
-          <xsl:when test="$formatter eq 'fop' and $property eq 'background-size-horizontal'">
+          <xsl:when test="$formatter eq 'fop' and $property eq 'background-size-width'">
             <axsl:attribute name="fox:background-image-width">
               <xsl:value-of select="$root($key)"/>
             </axsl:attribute>
           </xsl:when>
-          <xsl:when test="$formatter eq 'fop' and $property eq 'background-size-vertical'">
+          <xsl:when test="$formatter eq 'fop' and $property eq 'background-size-height'">
             <axsl:attribute name="fox:background-image-height">
               <xsl:value-of select="$root($key)"/>
             </axsl:attribute>
           </xsl:when>
-          <xsl:when test="$formatter eq 'xep' and $property eq 'background-size-horizontal'">
+          <xsl:when test="$formatter eq 'xep' and $property eq 'background-size-width'">
             <axsl:attribute name="rx:background-content-width">
               <xsl:value-of select="$root($key)"/>
             </axsl:attribute>
           </xsl:when>
-          <xsl:when test="$formatter eq 'xep' and $property eq 'background-size-vertical'">
+          <xsl:when test="$formatter eq 'xep' and $property eq 'background-size-height'">
             <axsl:attribute name="rx:background-content-height">
               <xsl:value-of select="$root($key)"/>
             </axsl:attribute>
