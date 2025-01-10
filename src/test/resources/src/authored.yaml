@@ -31,3 +31,5 @@ style:
   table:
     header:
       color: green
+  note:
+    background-size: 10pt 20pt

@@ -54,6 +54,8 @@
     'background-position-horizontal',
     'background-position-vertical',
     'background-repeat',
+    'background-size-width',
+    'background-size-height',
     'baseline-shift',
     x:space('blank-or-not-blank'),
     x:space('block-progression-dimension'),
@@ -298,9 +300,40 @@
       <xsl:variable name="property" select="." as="xs:string"/>
       <xsl:variable name="key" select="concat($prefix, '-', $property)" as="item()*"/>
       <xsl:if test="map:contains($root, $key)">
-        <axsl:attribute name="{$property}">
-          <xsl:value-of select="$root($key)"/>
-        </axsl:attribute>
+        <xsl:choose>
+          <xsl:when test="$formatter eq 'ah' and $property eq 'background-size-width'">
+            <axsl:attribute name="axf:background-size">
+              <xsl:value-of select="$root($key)"/>
+              <xsl:text> </xsl:text>
+              <xsl:value-of select="$root($prefix || '-background-size-height')"/>
+            </axsl:attribute>
+          </xsl:when>
+          <xsl:when test="$formatter eq 'fop' and $property eq 'background-size-width'">
+            <axsl:attribute name="fox:background-image-width">
+              <xsl:value-of select="$root($key)"/>
+            </axsl:attribute>
+          </xsl:when>
+          <xsl:when test="$formatter eq 'fop' and $property eq 'background-size-height'">
+            <axsl:attribute name="fox:background-image-height">
+              <xsl:value-of select="$root($key)"/>
+            </axsl:attribute>
+          </xsl:when>
+          <xsl:when test="$formatter eq 'xep' and $property eq 'background-size-width'">
+            <axsl:attribute name="rx:background-content-width">
+              <xsl:value-of select="$root($key)"/>
+            </axsl:attribute>
+          </xsl:when>
+          <xsl:when test="$formatter eq 'xep' and $property eq 'background-size-height'">
+            <axsl:attribute name="rx:background-content-height">
+              <xsl:value-of select="$root($key)"/>
+            </axsl:attribute>
+          </xsl:when>
+          <xsl:otherwise>
+            <axsl:attribute name="{$property}">
+              <xsl:value-of select="$root($key)"/>
+            </axsl:attribute>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
@@ -338,6 +371,8 @@
         <xsl:attribute name="opentopic:dummy" namespace="http://www.idiominc.com/opentopic"/>
         <xsl:attribute name="opentopic-func:dummy" namespace="http://www.idiominc.com/opentopic/exsl/function"/>
         <xsl:attribute name="fox:dummy" namespace="http://xmlgraphics.apache.org/fop/extensions"/>
+        <xsl:attribute name="rx:dummy" namespace="http://www.renderx.com/XSL/Extensions"/>
+        <xsl:attribute name="axf:dummy" namespace="http://www.antennahouse.com/names/XSL/Extensions"/>
       </dummy>
     </xsl:variable>
     <xsl:variable name="namespaces" select="
@@ -347,7 +382,9 @@
       $dummy/namespace::ditaarch,
       $dummy/namespace::opentopic,
       $dummy/namespace::opentopic-func,
-      $dummy/namespace::fox
+      $dummy/namespace::fox[$formatter eq 'fop'],
+      $dummy/namespace::rx[$formatter eq 'xep'],
+      $dummy/namespace::axf[$formatter eq 'ah']
     "/>
     <xsl:copy-of select="$namespaces"/>
     <xsl:attribute name="exclude-result-prefixes">xs e dita-ot ditaarch opentopic opentopic-func</xsl:attribute>
