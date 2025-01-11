@@ -2,5 +2,6 @@
   "style-body-color": "black",
   "style-body-font-family": "sans-serif",
   "style-pre-color": "gray",
-  "style-pre-font-family": "monospace"
+  "style-pre-font-family": "monospace",
+  "force-page-count": "auto"
 }

@@ -59,9 +59,9 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:variable name="flattened-name" select="string-join(($ancestors, $key), $separator) => x:rewrite-key-name()"/>
-          <xsl:if test="not(map:contains($root, $flattened-name))">
-            <xsl:map-entry key="$flattened-name" select="$value"/>
-          </xsl:if>
+<!--          <xsl:if test="not(map:contains($root, $flattened-name))">-->
+          <xsl:map-entry key="$flattened-name" select="$value"/>
+<!--          </xsl:if>-->
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>

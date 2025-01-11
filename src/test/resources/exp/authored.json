@@ -1,4 +1,5 @@
 {
+  "$schema": "../../../main/resources/schema.json",
   "page-top": "20mm",
   "page-inside": "20mm",
   "page-height": "297mm",

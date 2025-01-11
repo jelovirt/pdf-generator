@@ -1,4 +1,5 @@
 {
+  "extends": "default",
   "style-topic-font-weight": "bold",
   "style-topic-background-color": "pink"
 }
