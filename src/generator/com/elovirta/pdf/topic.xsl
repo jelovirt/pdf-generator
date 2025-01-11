@@ -28,7 +28,9 @@
             boolean($root ?style-topic-title-numbering),
             boolean($root ?style-topic-topic-title-numbering),
             boolean($root ?style-topic-topic-topic-title-numbering),
-            boolean($root ?style-topic-topic-topic-topic-title-numbering)
+            boolean($root ?style-topic-topic-topic-topic-title-numbering),
+            boolean($root ?style-topic-topic-topic-topic-topic-title-numbering),
+            boolean($root ?style-topic-topic-topic-topic-topic-topic-title-numbering)
             ) ! concat(., '()')" separator=", "/>
           <xsl:text>)</xsl:text>
         </xsl:attribute>
@@ -423,6 +425,16 @@
       <axsl:attribute-set name="topic.topic.topic.topic.title">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-topic-topic-topic-topic'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="topic.topic.topic.topic.topic.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-topic-topic-topic-topic-topic'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="topic.topic.topic.topic.topic.topic.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-topic-topic-topic-topic-topic-topic'"/>
         </xsl:call-template>
       </axsl:attribute-set>
       <!-- section -->

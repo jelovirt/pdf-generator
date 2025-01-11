@@ -77,7 +77,9 @@
                        => replace('^style-h1-', 'style-topic-')
                        => replace('^style-h2-', 'style-topic-topic-')
                        => replace('^style-h3-', 'style-topic-topic-topic-')
-                       => replace('^style-h4-', 'style-topic-topic-topic-topic-')"/>
+                       => replace('^style-h4-', 'style-topic-topic-topic-topic-')
+                       => replace('^style-h5-', 'style-topic-topic-topic-topic-topic-')
+                       => replace('^style-h6-', 'style-topic-topic-topic-topic-topic-topic-')"/>
   </xsl:function>
 
   <xsl:function name="x:merge" as="item()*" visibility="public">
