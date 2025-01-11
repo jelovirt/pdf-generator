@@ -5,3 +5,4 @@ style:
   pre:
     color: gray
     font-family: monospace
+force-page-count: auto
