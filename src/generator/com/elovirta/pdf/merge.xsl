@@ -234,9 +234,9 @@
   </xsl:function>
 
   <xsl:function name="x:expandShorthand" as="item()*" visibility="public">
-    <xsl:param name="base" as="item()*"/>
+    <xsl:param name="base" as="map(*)"/>
 
-    <xsl:map>
+    <xsl:variable name="maps" as="map(*)*">
       <xsl:for-each select="map:keys($base)">
         <xsl:variable name="key" select="."/>
         <xsl:variable name="value" select="map:get($base, $key)"/>
@@ -284,7 +284,9 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
-    </xsl:map>
+    </xsl:variable>
+
+    <xsl:sequence select="map:merge($maps, map{ 'duplicates': 'use-first' }) "/>
   </xsl:function>
 
   <xsl:function name="x:exclude">
