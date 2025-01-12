@@ -13,7 +13,6 @@
   "header": {
     "display-align": "before",
     "end-indent": "10mm",
-    "font-family": "$pdf2-font-sans",
     "padding-after": "6pt",
     "padding-before": "12pt",
     "start-indent": "10mm",
@@ -28,7 +27,6 @@
   },
   "footer": {
     "end-indent": "10mm",
-    "font-family": "$pdf2-font-sans",
     "padding-after": "12pt",
     "padding-before": "6pt",
     "start-indent": "10mm",
