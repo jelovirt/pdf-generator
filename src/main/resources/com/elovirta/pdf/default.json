@@ -1,7 +1,179 @@
 {
+  "brand": {
+    "toc": {
+      "indent": "1em"
+    }
+  },
+  "page": {
+    "size": "A4",
+    "mirror-margins": true
+  },
+  "force-page-count": "auto",
+
+  "header": {
+    "display-align": "before",
+    "end-indent": "10mm",
+    "font-family": "$pdf2-font-sans",
+    "padding-after": "6pt",
+    "padding-before": "12pt",
+    "start-indent": "10mm",
+    "odd": {
+      "content": "{chapter}",
+      "text-align": "end"
+    },
+    "even": {
+      "content": "{title}",
+      "text-align": "start"
+    }
+  },
+  "footer": {
+    "end-indent": "10mm",
+    "font-family": "$pdf2-font-sans",
+    "padding-after": "12pt",
+    "padding-before": "6pt",
+    "start-indent": "10mm",
+    "odd": {
+      "content": "{folio}",
+      "font-weight": "bold",
+      "text-align": "end"
+    },
+    "even": {
+      "content": "{folio}",
+      "font-weight": "bold",
+      "text-align": "start"
+    }
+  },
+  "toc": {
+    "maximum-level": 6
+  },
   "style": {
+    "body": {
+      "start-indent": "0pt",
+      "space-before": "0.6em",
+      "space-after": "0.6em"
+    },
     "h1": {
-      "font-weight": "bold"
+      "title-numbering": true,
+      "border-style": "none"
+    },
+    "h2": {
+      "title-numbering": true,
+      "border-style": "none"
+    },
+    "h3": {
+      "title-numbering": true
+    },
+    "h4": {
+      "title-numbering": true
+    },
+    "h5": {
+      "title-numbering": true
+    },
+    "h6": {
+      "title-numbering": true
+    },
+    "chapter": {
+      "numbering": "document",
+      "title-numbering": true,
+      "toc": {
+        "1": {
+          "start-indent": "0pt",
+          "title-numbering": true
+        },
+        "2": {
+          "start-indent": "$brand-toc-indent",
+          "title-numbering": true
+        },
+        "3": {
+          "start-indent": "2 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "4": {
+          "start-indent": "3 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "5": {
+          "start-indent": "4 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "6": {
+          "start-indent": "5 * $brand-toc-indent",
+          "title-numbering": true
+        }
+      }
+    },
+    "topic": {
+      "title-numbering": true
+    },
+    "part": {
+      "title-numbering": true,
+      "toc": {
+        "chapter": {
+          "start-indent": "0pt",
+          "space-before": "0.6em",
+          "font-size": "10pt"
+        },
+        "1": {
+          "start-indent": "0pt",
+          "title-numbering": true
+        },
+        "2": {
+          "start-indent": "$brand-toc-indent",
+          "title-numbering": true
+        },
+        "3": {
+          "start-indent": "2 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "4": {
+          "start-indent": "3 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "5": {
+          "start-indent": "4 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "6": {
+          "start-indent": "5 * $brand-toc-indent",
+          "title-numbering": true
+        }
+      }
+    },
+    "toc": {
+      "part": {
+        "start-indent": "0pt",
+        "space-before": "0.6em",
+        "space-after": "0.6em"
+      },
+      "chapter": {
+        "start-indent": "0pt",
+        "space-before": "0.6em",
+        "font-size": "10pt"
+      },
+      "1": {
+        "start-indent": "0pt",
+        "title-numbering": true
+      },
+      "2": {
+        "start-indent": "$brand-toc-indent",
+        "title-numbering": true
+      },
+      "3": {
+        "start-indent": "2 * $brand-toc-indent",
+        "title-numbering": true
+      },
+      "4": {
+        "start-indent": "3 * $brand-toc-indent",
+        "title-numbering": true
+      },
+      "5": {
+        "start-indent": "4 * $brand-toc-indent",
+        "title-numbering": true
+      },
+      "6": {
+        "start-indent": "5 * $brand-toc-indent",
+        "title-numbering": true
+      }
     }
   }
 }

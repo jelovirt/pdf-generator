@@ -28,24 +28,26 @@
             boolean($root ?style-topic-title-numbering),
             boolean($root ?style-topic-topic-title-numbering),
             boolean($root ?style-topic-topic-topic-title-numbering),
-            boolean($root ?style-topic-topic-topic-topic-title-numbering)
+            boolean($root ?style-topic-topic-topic-topic-title-numbering),
+            boolean($root ?style-topic-topic-topic-topic-topic-title-numbering),
+            boolean($root ?style-topic-topic-topic-topic-topic-topic-title-numbering)
             ) ! concat(., '()')" separator=", "/>
           <xsl:text>)</xsl:text>
         </xsl:attribute>
       </axsl:variable>
 
-<!--      <axsl:template match="*[contains(@class, ' topic/topic ')]/*[contains(@class, ' topic/title ')]" mode="getTitle">-->
-<!--        <axsl:variable name="topic" select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]"/>-->
-<!--        <axsl:variable name="contents" as="node()*" select="e:get-title-number($topic)"/>-->
-<!--        <axsl:if test="exists($contents)">-->
-<!--          <axsl:copy-of select="$contents"/>-->
-<!--&lt;!&ndash;          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>&ndash;&gt;-->
-<!--          <axsl:text>-->
-<!--            <xsl:text> </xsl:text>-->
-<!--          </axsl:text>-->
-<!--        </axsl:if>-->
-<!--        <axsl:apply-templates/>-->
-<!--      </axsl:template>-->
+      <axsl:template match="*[contains(@class, ' topic/topic ')]/*[contains(@class, ' topic/title ')]" mode="getTitle">
+        <axsl:variable name="topic" select="ancestor-or-self::*[contains(@class, ' topic/topic ')][1]"/>
+        <axsl:variable name="contents" as="node()*" select="e:get-title-number($topic)"/>
+        <axsl:if test="exists($contents)">
+          <axsl:copy-of select="$contents"/>
+<!--          <fo:leader leader-pattern="space" leader-length="from-nearest-specified-value(font-size)"/>-->
+          <axsl:text>
+            <xsl:text> </xsl:text>
+          </axsl:text>
+        </axsl:if>
+        <axsl:apply-templates/>
+      </axsl:template>
 
       <xsl:choose>
         <xsl:when test="$root ?style-chapter-numbering = 'document'">
@@ -423,6 +425,16 @@
       <axsl:attribute-set name="topic.topic.topic.topic.title">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-topic-topic-topic-topic'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="topic.topic.topic.topic.topic.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-topic-topic-topic-topic-topic'"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="topic.topic.topic.topic.topic.topic.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-topic-topic-topic-topic-topic-topic'"/>
         </xsl:call-template>
       </axsl:attribute-set>
       <!-- section -->

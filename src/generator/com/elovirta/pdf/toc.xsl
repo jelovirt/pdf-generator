@@ -575,17 +575,17 @@
         </axsl:attribute-set>
       </xsl:if>
 
-      <axsl:attribute-set name="e:part_toc">
+      <axsl:attribute-set name="e:part_toc" use-attribute-sets="common.block">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-part-toc'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="e:chapter_toc">
+      <axsl:attribute-set name="e:chapter_toc" use-attribute-sets="common.block">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-chapter-toc'"/>
         </xsl:call-template>
       </axsl:attribute-set>
-      <axsl:attribute-set name="e:appendix_toc">
+      <axsl:attribute-set name="e:appendix_toc" use-attribute-sets="common.block">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-chapter-appendix'"/>
         </xsl:call-template>
