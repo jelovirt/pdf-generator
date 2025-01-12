@@ -1,7 +1,7 @@
 {
   "brand": {
     "toc": {
-      "indent": "20pt"
+      "indent": "1em"
     }
   },
   "page": {
@@ -74,20 +74,81 @@
     },
     "chapter": {
       "numbering": "document",
-      "title-numbering": true
+      "title-numbering": true,
+      "toc": {
+        "1": {
+          "start-indent": "0pt",
+          "title-numbering": true
+        },
+        "2": {
+          "start-indent": "$brand-toc-indent",
+          "title-numbering": true
+        },
+        "3": {
+          "start-indent": "2 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "4": {
+          "start-indent": "3 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "5": {
+          "start-indent": "4 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "6": {
+          "start-indent": "5 * $brand-toc-indent",
+          "title-numbering": true
+        }
+      }
     },
     "topic": {
       "title-numbering": true
     },
     "part": {
-      "title-numbering": true
+      "title-numbering": true,
+      "toc": {
+        "chapter": {
+          "start-indent": "0pt",
+          "space-before": "0.6em",
+          "font-size": "10pt"
+        },
+        "1": {
+          "start-indent": "0pt",
+          "title-numbering": true
+        },
+        "2": {
+          "start-indent": "$brand-toc-indent",
+          "title-numbering": true
+        },
+        "3": {
+          "start-indent": "2 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "4": {
+          "start-indent": "3 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "5": {
+          "start-indent": "4 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "6": {
+          "start-indent": "5 * $brand-toc-indent",
+          "title-numbering": true
+        }
+      }
     },
     "toc": {
       "part": {
-        "start-indent": "0pt"
+        "start-indent": "0pt",
+        "space-before": "0.6em",
+        "space-after": "0.6em"
       },
       "chapter": {
-        "start-indent": "0pt"
+        "start-indent": "0pt",
+        "space-before": "0.6em",
+        "font-size": "10pt"
       },
       "1": {
         "start-indent": "0pt",
