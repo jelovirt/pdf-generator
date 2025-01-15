@@ -338,6 +338,21 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
+      <variable id="Table of Contents Appendix">
+        <xsl:attribute name="xml:space">preserve</xsl:attribute>
+        <variableref refid="Appendix with number"/>
+        <xsl:text> </xsl:text>
+      </variable>
+      <variable id="Table of Contents Chapter">
+        <xsl:attribute name="xml:space">preserve</xsl:attribute>
+        <variableref refid="Chapter with number"/>
+        <xsl:text> </xsl:text>
+      </variable>
+      <variable id="Table of Contents Part">
+        <xsl:attribute name="xml:space">preserve</xsl:attribute>
+        <variableref refid="Part with number"/>
+        <xsl:text> </xsl:text>
+      </variable>
     </variables>
   </xsl:template>
 
