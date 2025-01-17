@@ -338,6 +338,12 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
+
+      <xsl:call-template name="variables">
+        <xsl:with-param name="prefix" select="'style-menucascade-separator'"/>
+        <xsl:with-param name="var_names" select="'#menucascade-separator'"/>
+      </xsl:call-template>
+
       <variable id="Table of Contents Appendix">
         <xsl:attribute name="xml:space">preserve</xsl:attribute>
         <variableref refid="Appendix with number"/>
