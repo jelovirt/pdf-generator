@@ -587,6 +587,7 @@
       </axsl:attribute-set>
       <axsl:attribute-set name="e:appendix_toc" use-attribute-sets="common.block">
         <xsl:call-template name="generate-attribute-set">
+          <!-- FIXME: Should be style-appendix-toc?-->
           <xsl:with-param name="prefix" select="'style-chapter-appendix'"/>
         </xsl:call-template>
       </axsl:attribute-set>
