@@ -159,6 +159,12 @@
 <!--                  </axsl:with-param>-->
 <!--                </axsl:call-template>-->
               </axsl:when>
+<!--            <xsl:when test="$root ?style-appendix-title-numbering">-->
+<!--              <axsl:when test="self::*[contains(@class, ' bookmap/appendix ')]">-->
+<!--                <axsl:number count="*[contains(@class, ' bookmap/appendix ')]"-->
+<!--                             level="single"-->
+<!--                             format="A"/>-->
+<!--              </axsl:when>-->
             </xsl:when>
             <xsl:otherwise>
               <axsl:when test="self::*[contains(@class, ' bookmap/part ')]"/>

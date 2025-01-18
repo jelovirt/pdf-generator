@@ -208,10 +208,6 @@
       <xsl:if test="$root ?style-fig-caption-number = 'none'">
         <xsl:copy-of select="$vars/variable[@id = 'Figure']"/>
       </xsl:if>
-      <xsl:if test="map:contains($root, 'style-topic-title-numbering') and not($root ?style-topic-title-numbering)">
-        <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Chapter']"/>
-        <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Appendix']"/>
-      </xsl:if>
       <xsl:if test="map:contains($root, 'cover-image-name')">
         <variable id="cover-image-path">
           <xsl:text expand-text="yes">Customization/OpenTopic/common/artwork/{$root ?cover-image-name}</xsl:text>
@@ -354,6 +350,12 @@
         <variableref refid="Chapter with number"/>
         <xsl:text> </xsl:text>
       </variable>
+      <!--
+      <xsl:if test="map:contains($root, 'style-topic-title-numbering') and not($root ?style-topic-title-numbering)">
+        <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Chapter']"/>
+        <xsl:copy-of select="$vars/variable[@id = 'Table of Contents Appendix']"/>
+      </xsl:if>
+      -->
       <variable id="Table of Contents Part">
         <xsl:attribute name="xml:space">preserve</xsl:attribute>
         <variableref refid="Part with number"/>

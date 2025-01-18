@@ -294,7 +294,8 @@
             </axsl:call-template>
             <axsl:text><xsl:text> </xsl:text></axsl:text>
 
-            <axsl:apply-templates select="*[contains(@class,' topic/title ')]" mode="getTitle"/>
+<!--            <axsl:apply-templates select="*[contains(@class,' topic/title ')]" mode="getTitle"/>-->
+            <axsl:apply-templates select="*[contains(@class,' topic/title ')]/node()"/>
           </fo:block>
 
           <axsl:if test="*[contains(@class,' topic/shortdesc ') or
@@ -313,14 +314,14 @@
           </axsl:if>
 
           <axsl:choose>
-            <axsl:when test="$appendixLayout='BASIC'">
+            <axsl:when test="$appendixLayout = 'BASIC'">
 <!--              <axsl:apply-templates select="* except(*[contains(@class, ' topic/title ') or contains(@class,' ditaot-d/ditaval-startprop ') or-->
 <!--                      contains(@class, ' topic/prolog ') or contains(@class, ' topic/topic ')])"/>-->
               <!--xsl:apply-templates select="." mode="buildRelationships"/-->
             </axsl:when>
             <axsl:when test="exists(*[contains(@class, ' topic/topic ')])">
               <fo:block axsl:use-attribute-sets="e:appendix_toc">
-                <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="part-toc"/>
+                <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="appendix-toc"/>
               </fo:block>
 <!--              <axsl:apply-templates select="." mode="createMiniToc"/>-->
             </axsl:when>
@@ -422,7 +423,7 @@
           </fo:block>
 
           <axsl:choose>
-            <axsl:when test="$chapterLayout='BASIC'">
+            <axsl:when test="$chapterLayout = 'BASIC'">
               <!--xsl:apply-templates select="." mode="buildRelationships"/-->
             </axsl:when>
             <axsl:when test="exists(*[contains(@class, ' topic/topic ')])">
