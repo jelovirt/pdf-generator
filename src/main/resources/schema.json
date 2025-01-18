@@ -37,7 +37,7 @@
       "default": "COLLAPSED",
       "description": "Expand state of PDF bookmarks."
     },
-    "toc-maximum-level": {
+    "style-toc-maximum-level": {
       "type": "integer",
       "description": "Maximum TOC depth.",
       "default": 4

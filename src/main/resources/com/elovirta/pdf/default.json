@@ -41,9 +41,6 @@
       "text-align": "start"
     }
   },
-  "toc": {
-    "maximum-level": 6
-  },
   "style": {
     "body": {
       "start-indent": "0pt",
@@ -141,6 +138,7 @@
       "title-numbering": true
     },
     "toc": {
+      "maximum-level": 6,
       "part": {
         "start-indent": "0pt",
         "space-before": "0.6em",

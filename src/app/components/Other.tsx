@@ -13,11 +13,11 @@ export default function Other() {
         <h3>Table of Contents</h3>
         <fieldset>
           <p>
-            <label htmlFor="toc_maximum_level">Show level</label>
+            <label htmlFor="style_toc_maximum_level">Show level</label>
             <Field
               component="select"
-              name="toc_maximum_level"
-              id="toc_maximum_level"
+              name="style_toc_maximum_level"
+              id="style_toc_maximum_level"
             >
               <option value="2">1</option>
               <option value="3">2</option>

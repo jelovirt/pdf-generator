@@ -5,7 +5,7 @@
   "bookmark-style": "COLLAPSED",
   "table-continued": false,
   "column-gap": "12pt",
-  "toc-maximum-level": 4,
+  "style-toc-maximum-level": 4,
   "include-related-links": "none",
   "force-page-count": "even",
   "index-column-count": 2,

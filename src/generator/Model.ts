@@ -75,7 +75,7 @@ export type Model = {
   cover_image_metadata: string;
   cover_image_topic: string;
   bookmark_style: 'COLLAPSED' | 'EXPANDED';
-  toc_maximum_level: number;
+  style_toc_maximum_level: number;
   task_label: boolean;
   include_related_links: 'none' | 'all' | 'nofamily';
   table_continued: boolean;
@@ -170,7 +170,7 @@ export function getInitStore(): PluginModel {
     cover_image_metadata: 'cover-image',
     cover_image_topic: '',
     bookmark_style: 'COLLAPSED',
-    toc_maximum_level: 4,
+    style_toc_maximum_level: 4,
     task_label: false,
     include_related_links: 'none',
     table_continued: false,
