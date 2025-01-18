@@ -275,7 +275,7 @@
 <!--            <axsl:with-param name="type" select="'appendix'"/>-->
 <!--          </axsl:apply-templates>-->
 
-          <fo:block axsl:use-attribute-sets="topic.title">
+          <fo:block axsl:use-attribute-sets="appendix.title">
             <axsl:attribute name="id">
               <axsl:call-template name="generate-toc-id"/>
             </axsl:attribute>
@@ -399,7 +399,7 @@
 <!--            <axsl:with-param name="type" select="'chapter'"/>-->
 <!--          </axsl:apply-templates>-->
 
-          <fo:block axsl:use-attribute-sets="topic.title">
+          <fo:block axsl:use-attribute-sets="chapter.title">
             <axsl:attribute name="id">
               <axsl:call-template name="generate-toc-id"/>
             </axsl:attribute>
@@ -520,6 +520,18 @@
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-body'"/>
           <xsl:with-param name="properties" select="('space-before', 'space-after')"/>
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="appendix.title" use-attribute-sets="topic.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-appendix'"/>
+<!--          <xsl:with-param name="properties" select="('font-family')"/>-->
+        </xsl:call-template>
+      </axsl:attribute-set>
+      <axsl:attribute-set name="chapter.title" use-attribute-sets="topic.title">
+        <xsl:call-template name="generate-attribute-set">
+          <xsl:with-param name="prefix" select="'style-chapter'"/>
+<!--          <xsl:with-param name="properties" select="('font-family')"/>-->
         </xsl:call-template>
       </axsl:attribute-set>
     </axsl:stylesheet>
