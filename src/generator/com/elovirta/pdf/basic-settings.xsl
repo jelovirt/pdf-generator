@@ -71,6 +71,9 @@
       <axsl:variable name="partLayout">
         <xsl:value-of select="if (map:contains($root, 'part-layout')) then $root ?part-layout else 'BASIC'"/>
       </axsl:variable>
+      <axsl:variable name="appendixLayout">
+        <xsl:value-of select="if (map:contains($root, 'appendix-layout')) then $root ?appendix-layout else 'BASIC'"/>
+      </axsl:variable>
     </axsl:stylesheet>
   </xsl:template>
 

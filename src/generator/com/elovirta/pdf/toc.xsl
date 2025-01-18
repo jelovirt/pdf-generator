@@ -345,6 +345,87 @@
           </axsl:choose>
         </axsl:if>
       </axsl:template>
+
+      <!-- Appendix TOC -->
+
+      <axsl:variable name="e:appendixTocMaximumLevel" select="{($root ?style-appendix-toc-maximum-level, 6)[1] + 2}"/>
+
+      <axsl:template match="node()" mode="appendix-toc">
+        <axsl:param name="include"/>
+        <axsl:apply-templates mode="#current">
+          <axsl:with-param name="include" select="$include"/>
+        </axsl:apply-templates>
+      </axsl:template>
+
+      <axsl:template match="*[contains(@class, ' topic/topic ')]" mode="appendix-toc">
+        <axsl:param name="include"/>
+        <axsl:variable name="topicLevel" as="xs:integer">
+          <axsl:apply-templates select="." mode="get-topic-level"/>
+        </axsl:variable>
+        <axsl:if test="$topicLevel &lt; $e:appendixTocMaximumLevel">
+          <axsl:variable name="mapTopicref" select="key('map-id', @id)[1]" as="element()?"/>
+          <axsl:choose>
+            <axsl:when test="$mapTopicref[@toc = 'yes' or not(@toc)] or
+                                (not($mapTopicref) and $include = 'true')">
+              <fo:block axsl:use-attribute-sets="__toc__indent__appendix">
+                <axsl:variable name="tocItemContent">
+                  <fo:basic-link axsl:use-attribute-sets="__toc__link">
+                    <axsl:attribute name="internal-destination">
+                      <axsl:call-template name="generate-toc-id"/>
+                    </axsl:attribute>
+                    <axsl:attribute name="fox:alt-text">
+                      <axsl:call-template name="getNavTitle"/>
+                    </axsl:attribute>
+                    <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/revprop[@changebar]" mode="changebar">
+                      <axsl:with-param name="changebar-id" select="concat(dita-ot:generate-changebar-id(.),'-toc')"/>
+                    </axsl:apply-templates>
+                    <axsl:apply-templates select="$mapTopicref" mode="tocPrefix"/>
+                    <fo:inline axsl:use-attribute-sets="__toc__title">
+                      <axsl:variable name="pulledNavigationTitle" as="item()*">
+                        <axsl:call-template name="getNavTitle" />
+                      </axsl:variable>
+                      <axsl:apply-templates select="$pulledNavigationTitle" mode="dropCopiedIds"/>
+                    </fo:inline>
+                    <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]/revprop[@changebar]" mode="changebar">
+                      <axsl:with-param name="changebar-id" select="concat(dita-ot:generate-changebar-id(.),'-toc')"/>
+                    </axsl:apply-templates>
+                    <fo:inline axsl:use-attribute-sets="__toc__page-number">
+                      <fo:leader axsl:use-attribute-sets="__toc__leader"/>
+                      <fo:page-number-citation>
+                        <axsl:attribute name="ref-id">
+                          <axsl:call-template name="generate-toc-id"/>
+                        </axsl:attribute>
+                      </fo:page-number-citation>
+                    </fo:inline>
+                  </fo:basic-link>
+                </axsl:variable>
+                <axsl:choose>
+                  <axsl:when test="not($mapTopicref)">
+                    <axsl:apply-templates select="." mode="tocText">
+                      <axsl:with-param name="tocItemContent" select="$tocItemContent"/>
+                      <axsl:with-param name="currentNode" select="."/>
+                    </axsl:apply-templates>
+                  </axsl:when>
+                  <axsl:otherwise>
+                    <axsl:apply-templates select="$mapTopicref" mode="tocText">
+                      <axsl:with-param name="tocItemContent" select="$tocItemContent"/>
+                      <axsl:with-param name="currentNode" select="."/>
+                    </axsl:apply-templates>
+                  </axsl:otherwise>
+                </axsl:choose>
+              </fo:block>
+              <axsl:apply-templates mode="#current">
+                <axsl:with-param name="include" select="'true'"/>
+              </axsl:apply-templates>
+            </axsl:when>
+            <axsl:otherwise>
+              <axsl:apply-templates mode="#current">
+                <axsl:with-param name="include" select="'true'"/>
+              </axsl:apply-templates>
+            </axsl:otherwise>
+          </axsl:choose>
+        </axsl:if>
+      </axsl:template>
     </axsl:stylesheet>
   </xsl:template>
 
@@ -432,6 +513,16 @@
                 <axsl:value-of select="concat(e:force-unit('{$root ?style-part-toc-4-start-indent}'), ' + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
+            <xsl:if test="map:contains($root, 'style-part-toc-5-start-indent')">
+              <axsl:when test="$level eq 5">
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-part-toc-5-start-indent}'), ' + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="map:contains($root, 'style-part-toc-6-start-indent')">
+              <axsl:when test="$level eq 6">
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-part-toc-6-start-indent}'), ' + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
             <!-- Workaround for xsl:choose must contain at least one xsl:when -->
             <axsl:when test="true()">
               <axsl:value-of
@@ -465,6 +556,59 @@
             <xsl:if test="map:contains($root, 'style-chapter-toc-4-start-indent')">
               <axsl:when test="$level eq 4">
                 <axsl:value-of select="concat(e:force-unit('{$root ?style-chapter-toc-4-start-indent}'), ' + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="map:contains($root, 'style-chapter-toc-5-start-indent')">
+              <axsl:when test="$level eq 5">
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-chapter-toc-5-start-indent}'), ' + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="map:contains($root, 'style-chapter-toc-6-start-indent')">
+              <axsl:when test="$level eq 6">
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-chapter-toc-6-start-indent}'), ' + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <!-- Workaround for xsl:choose must contain at least one xsl:when -->
+            <axsl:when test="true()">
+              <axsl:value-of
+                  select="concat($side-col-width, ' + (', string($level - 1), ' * ', $toc.toc-indent, ') + ', $toc.text-indent)"/>
+            </axsl:when>
+          </axsl:choose>
+        </axsl:attribute>
+      </axsl:attribute-set>
+
+      <axsl:attribute-set name="__toc__indent__appendix">
+        <axsl:attribute name="start-indent">
+          <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')]) - 1"/>
+          <axsl:choose>
+            <xsl:if test="map:contains($root, 'style-appendix-toc-1-start-indent')">
+              <axsl:when test="$level eq 1">
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-appendix-toc-1-start-indent}'), ' + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="map:contains($root, 'style-appendix-toc-2-start-indent')">
+              <axsl:when test="$level eq 2">
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-appendix-toc-2-start-indent}'), ' + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="map:contains($root, 'style-appendix-toc-3-start-indent')">
+              <axsl:when test="$level eq 3">
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-appendix-toc-3-start-indent}'), ' + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="map:contains($root, 'style-appendix-toc-4-start-indent')">
+              <axsl:when test="$level eq 4">
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-appendix-toc-4-start-indent}'), ' + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="map:contains($root, 'style-appendix-toc-5-start-indent')">
+              <axsl:when test="$level eq 5">
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-appendix-toc-5-start-indent}'), ' + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
+            <xsl:if test="map:contains($root, 'style-appendix-toc-6-start-indent')">
+              <axsl:when test="$level eq 6">
+                <axsl:value-of select="concat(e:force-unit('{$root ?style-appendix-toc-6-start-indent}'), ' + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
             <!-- Workaround for xsl:choose must contain at least one xsl:when -->
