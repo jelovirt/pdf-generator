@@ -76,7 +76,7 @@ export default class Generator {
   body_column_count;
   index_column_count;
   bookmark_style;
-  toc_maximum_level;
+  style_toc_maximum_level;
   task_label;
   include_related_links;
   column_gap;
@@ -119,7 +119,7 @@ export default class Generator {
     this.force_page_count = conf.force_page_count;
     this.chapter_layout = conf.chapter_layout;
     this.bookmark_style = conf.bookmark_style;
-    this.toc_maximum_level = conf.toc_maximum_level;
+    this.style_toc_maximum_level = conf.style_toc_maximum_level;
     this.task_label = conf.task_label;
     this.include_related_links = conf.include_related_links;
     if (conf.body_column_count) {

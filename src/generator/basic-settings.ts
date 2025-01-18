@@ -11,8 +11,8 @@ export function generate_custom_attr(root: Element, conf: Generator) {
     select: `'${conf.formatter}'`,
   });
   SubElement(root, 'xsl:param', {
-    name: 'tocMaximumLevel',
-    select: conf.toc_maximum_level.toString(),
+    name: 'styleTocMaximumLevel',
+    select: conf.style_toc_maximum_level.toString(),
   });
   // page size
   SubElement(root, xsl('variable'), { name: 'page-width' }).text =
