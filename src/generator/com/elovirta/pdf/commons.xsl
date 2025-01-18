@@ -294,7 +294,8 @@
             </axsl:call-template>
             <axsl:text><xsl:text> </xsl:text></axsl:text>
 
-            <axsl:apply-templates select="*[contains(@class,' topic/title ')]" mode="getTitle"/>
+<!--            <axsl:apply-templates select="*[contains(@class,' topic/title ')]" mode="getTitle"/>-->
+            <axsl:apply-templates select="*[contains(@class,' topic/title ')]/node()"/>
           </fo:block>
 
           <axsl:if test="*[contains(@class,' topic/shortdesc ') or

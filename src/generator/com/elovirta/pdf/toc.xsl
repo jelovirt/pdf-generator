@@ -169,6 +169,21 @@
         </axsl:template>
       </xsl:if>
 
+      <xsl:if test="$root ?style-appendix-title-numbering">
+        <axsl:template match="*[contains(@class, ' bookmap/appendix ')]"
+                       mode="tocPrefix" priority="10">
+          <axsl:call-template name="getVariable">
+            <axsl:with-param name="id" select="'Table of Contents Appendix'"/>
+            <axsl:with-param name="params">
+              <number>
+                <axsl:sequence select="e:get-title-number(key('topic-id', @id))"/>
+                <!--                <axsl:apply-templates select="." mode="topicTitleNumber"/>-->
+              </number>
+            </axsl:with-param>
+          </axsl:call-template>
+        </axsl:template>
+      </xsl:if>
+
       <!-- Part TOC -->
 
       <axsl:variable name="e:partTocMaximumLevel" select="{($root ?style-part-toc-maximum-level, 6)[1] + 1}"/>

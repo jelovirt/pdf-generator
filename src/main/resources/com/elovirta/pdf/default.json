@@ -137,6 +137,9 @@
         }
       }
     },
+    "appendix": {
+      "title-numbering": true
+    },
     "toc": {
       "part": {
         "start-indent": "0pt",
@@ -147,6 +150,11 @@
         "start-indent": "0pt",
         "space-before": "0.6em",
         "font-size": "10pt"
+      },
+      "appendix": {
+        "start-indent": "$style-toc-chapter-start-indent",
+        "space-before": "$style-toc-chapter-space-before",
+        "font-size": "$style-toc-chapter-font-size"
       },
       "1": {
         "start-indent": "0pt",
