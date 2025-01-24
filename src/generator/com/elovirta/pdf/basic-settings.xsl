@@ -66,13 +66,25 @@
         </axsl:variable>
       </xsl:if>
       <axsl:variable name="antArgsChapterLayout">
-        <xsl:value-of select="if (map:contains($root, 'chapter-layout')) then $root ?chapter-layout else 'BASIC'"/>
+        <xsl:value-of select="if (map:contains($root, 'style-chapter-toc') and not($root ?style-chapter-toc))
+                              then 'BASIC'
+                              else if (map:contains($root, 'chapter-layout'))
+                              then $root ?chapter-layout
+                              else 'BASIC'"/>
       </axsl:variable>
       <axsl:variable name="partLayout">
-        <xsl:value-of select="if (map:contains($root, 'part-layout')) then $root ?part-layout else 'BASIC'"/>
+        <xsl:value-of select="if (map:contains($root, 'style-part-toc') and not($root ?style-part-toc))
+                              then 'BASIC'
+                              else if (map:contains($root, 'part-layout'))
+                              then $root ?part-layout
+                              else 'BASIC'"/>
       </axsl:variable>
       <axsl:variable name="appendixLayout">
-        <xsl:value-of select="if (map:contains($root, 'appendix-layout')) then $root ?appendix-layout else 'BASIC'"/>
+        <xsl:value-of select="if (map:contains($root, 'style-appendix-toc') and not($root ?style-appendix-toc))
+                              then 'BASIC'
+                              else if (map:contains($root, 'appendix-layout'))
+                              then $root ?appendix-layout
+                              else 'BASIC'"/>
       </axsl:variable>
     </axsl:stylesheet>
   </xsl:template>
