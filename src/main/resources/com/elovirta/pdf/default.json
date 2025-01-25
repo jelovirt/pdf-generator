@@ -9,7 +9,6 @@
     "mirror-margins": true
   },
   "force-page-count": "auto",
-
   "header": {
     "display-align": "before",
     "end-indent": "10mm",
@@ -178,6 +177,201 @@
         "start-indent": "5 * $brand-toc-indent",
         "title-numbering": true
       }
+    },
+    "b": {
+      "font-weight": "bold"
+    },
+    "i": {
+      "font-style": "italic"
+    },
+    "u": {
+      "text-decoration": "underline"
+    },
+    "tt": {
+      "font-family": "monospace"
+    },
+    "sup": {
+      "baseline-shift": "super",
+      "font-size": "75%"
+    },
+    "sub": {
+      "baseline-shift": "sub",
+      "font-size": "75%"
+    },
+    "line-through": {
+      "text-decoration": "line-through"
+    },
+    "overline": {
+      "text-decoration": "overline"
+    },
+    "msgph": {
+      "font-family": "monospace"
+    },
+    "msgblock": {
+      "extends": "pre"
+    },
+    "msgnum": {
+    },
+    "cmdname": {
+      "font-family": "monospace"
+    },
+    "varname": {
+      "font-style": "italic"
+    },
+    "filepath": {
+      "font-family": "monospace"
+    },
+    "userinput": {
+      "font-family": "monospace"
+    },
+    "systemoutput": {
+      "font-family": "monospace"
+    },
+    "markupname": {
+      "font-family": "monospace"
+    },
+    "xmlelement": {
+      "font-family": "monospace"
+    },
+    "xmlatt": {
+      "font-family": "monospace"
+    },
+    "textentity": {
+      "font-family": "monospace"
+    },
+    "parameterentity": {
+      "font-family": "monospace"
+    },
+    "numcharref": {
+      "font-family": "monospace"
+    },
+    "xmlnsname": {
+      "font-family": "monospace"
+    },
+    "xmlpi": {
+      "font-family": "monospace"
+    },
+    "uicontrol": {
+      "font-weight": "bold",
+      "line-height": "100%"
+    },
+    "wintitle": {
+      "font-weight": "bold"
+    },
+    "menucascade": {
+      "line-height": "100%"
+    },
+    "shortcut": {
+      "text-decoration": "underline"
+    },
+    "screen": {
+      "extends": "base-font",
+      "space-before": "1.2em",
+      "space-after": "0.8em",
+      "white-space-treatment": "preserve",
+      "white-space-collapse": "false",
+      "linefeed-treatment": "preserve",
+      "wrap-option": "wrap",
+      "background-color": "#f0f0f0",
+      "font-family": "monospace",
+      "line-height": "106%"
+    },
+    "codeph": {
+      "font-family": "monospace"
+    },
+    "codeblock": {
+      "extends": "pre",
+      "keep-with-previous.within-page": "always",
+      "start-indent": "6pt + from-parent(start-indent)",
+      "end-indent": "6pt + from-parent(end-indent)",
+      "padding": "6pt",
+      "background-color": "#f0f0f0",
+      "wrap-option": "wrap",
+      "hyphenation-character": "\u25BA"
+    },
+    "codeblock__top": {
+      "leader-pattern": "rule",
+      "leader-length": "100%"
+    },
+    "codeblock__bottom": {
+      "leader-pattern": "rule",
+      "leader-length": "100%"
+    },
+    "codeblock.line-number": {
+      "font-size": "75%",
+      "font-weight": "normal",
+      "font-style": "normal",
+      "color": "gray",
+      "padding-end": "1em"
+    },
+    "codeblock.whitespace": {
+      "color": "#C0C0C0"
+    },
+    "option": {
+    },
+    "var": {
+      "font-style": "italic"
+    },
+    "parmname": {
+    },
+    "synph": {
+    },
+    "oper": {
+      "font-family": "monospace"
+    },
+    "delim": {
+      "font-family": "monospace"
+    },
+    "sep": {
+      "font-family": "monospace"
+    },
+    "apiname": {
+      "font-family": "monospace"
+    },
+    "parml": {
+    },
+    "plentry": {
+    },
+    "pt": {
+      "font-weight": "bold",
+      "text-indent": "0em",
+      "end-indent": "24pt"
+    },
+    "pt__content": {
+      "font-weight": "bold"
+    },
+    "pd": {
+      "space-before": "0.3em",
+      "space-after": "0.5em",
+      "start-indent": "72pt",
+      "end-indent": "24pt"
+    },
+    "synblk": {
+    },
+    "synnoteref": {
+      "baseline-shift": "super",
+      "font-size": "75%"
+    },
+    "synnote": {
+      "baseline-shift": "super",
+      "font-size": "75%"
+    },
+    "syntaxdiagram": {
+    },
+    "fragment": {
+    },
+    "kwd": {
+      "font-family": "monospace"
+    },
+    "fragref": {
+      "font-family": "monospace"
+    },
+    "fragment.title": {
+      "font-weight": "bold"
+    },
+    "fragment.group": {
+    },
+    "syntaxdiagram.group": {
     }
   }
 }
