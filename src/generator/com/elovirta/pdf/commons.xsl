@@ -160,14 +160,22 @@
           <!-- TODO: Replace with mode="commonattributes" -->
           <axsl:call-template name="commonattributes"/>
           <axsl:if test="empty(ancestor::*[contains(@class, ' topic/topic ')])">
+            <axsl:variable name="topicref"
+                           select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
+                           as="element()?"
+            />
             <fo:marker marker-class-name="current-topic-number">
-              <axsl:variable name="topicref"
-                            select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
-                            as="element()?"
-              />
               <axsl:for-each select="$topicref">
                 <axsl:apply-templates select="." mode="topicTitleNumber"/>
               </axsl:for-each>
+            </fo:marker>
+            <fo:marker marker-class-name="current-part-number">
+              <axsl:for-each select="$topicref">
+                <axsl:apply-templates select="." mode="topicTitleNumber"/>
+              </axsl:for-each>
+            </fo:marker>
+            <fo:marker marker-class-name="current-part-title">
+              <axsl:apply-templates select="*[contains(@class, ' topic/title ')]/node()"/>
             </fo:marker>
             <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
           </axsl:if>
@@ -257,13 +265,21 @@
             <axsl:apply-templates select="." mode="get-topic-level"/>
           </axsl:variable>
           <axsl:if test="$level eq 1">
+            <axsl:variable name="topicref"
+                           select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
+                           as="element()?"/>
             <fo:marker marker-class-name="current-topic-number">
-              <axsl:variable name="topicref"
-                             select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
-                             as="element()?"/>
               <axsl:for-each select="$topicref">
                 <axsl:apply-templates select="." mode="topicTitleNumber"/>
               </axsl:for-each>
+            </fo:marker>
+            <fo:marker marker-class-name="current-appendix-number">
+              <axsl:for-each select="$topicref">
+                <axsl:apply-templates select="." mode="topicTitleNumber"/>
+              </axsl:for-each>
+            </fo:marker>
+            <fo:marker marker-class-name="current-appendix-title">
+              <axsl:apply-templates select="*[contains(@class, ' topic/title ')]/node()"/>
             </fo:marker>
             <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
           </axsl:if>
@@ -381,13 +397,21 @@
             <axsl:apply-templates select="." mode="get-topic-level"/>
           </axsl:variable>
           <axsl:if test="$level eq 1">
+            <axsl:variable name="topicref"
+                           select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
+                           as="element()?"/>
             <fo:marker marker-class-name="current-topic-number">
-              <axsl:variable name="topicref"
-                             select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
-                             as="element()?"/>
               <axsl:for-each select="$topicref">
                 <axsl:apply-templates select="." mode="topicTitleNumber"/>
               </axsl:for-each>
+            </fo:marker>
+            <fo:marker marker-class-name="current-chapter-number">
+              <axsl:for-each select="$topicref">
+                <axsl:apply-templates select="." mode="topicTitleNumber"/>
+              </axsl:for-each>
+            </fo:marker>
+            <fo:marker marker-class-name="current-chapter-title">
+              <axsl:apply-templates select="*[contains(@class, ' topic/title ')]/node()"/>
             </fo:marker>
             <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
           </axsl:if>

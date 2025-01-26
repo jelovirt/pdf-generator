@@ -141,7 +141,7 @@
               <!-- Parse content DSL into AST -->
               <xsl:when test="matches($key, '-content$') and not($value instance of array(*))">
                 <xsl:variable name="tokens" as="item()*">
-                  <xsl:analyze-string select="$value" regex="\{{(.+?)\}}">
+                  <xsl:analyze-string select="$value" regex="\{{\s*(.+?)\s*\}}">
                     <xsl:matching-substring>
                       <xsl:choose>
                         <xsl:when test="starts-with(regex-group(1), '#')">

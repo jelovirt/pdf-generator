@@ -403,9 +403,24 @@
         <chapter>
           <fo:retrieve-marker retrieve-class-name="current-header"/>
         </chapter>
+        <chapter-title>
+          <fo:retrieve-marker retrieve-class-name="current-chapter-title"/>
+        </chapter-title>
         <chapter-number>
           <fo:retrieve-marker retrieve-class-name="current-topic-number"/>
         </chapter-number>
+        <part-number>
+          <fo:retrieve-marker retrieve-class-name="current-part-number"/>
+        </part-number>
+        <part-title>
+          <fo:retrieve-marker retrieve-class-name="current-part-title"/>
+        </part-title>
+        <appendix-number>
+          <fo:retrieve-marker retrieve-class-name="current-appendix-number"/>
+        </appendix-number>
+        <appendix-title>
+          <fo:retrieve-marker retrieve-class-name="current-appendix-title"/>
+        </appendix-title>
         <page-number>
           <fo:page-number/>
         </page-number>
