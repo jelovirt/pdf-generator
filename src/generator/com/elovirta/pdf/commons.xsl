@@ -177,6 +177,9 @@
             <fo:marker marker-class-name="current-part-title">
               <axsl:apply-templates select="*[contains(@class, ' topic/title ')]/node()"/>
             </fo:marker>
+            <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
+              <axsl:with-param name="marker-class-name" select="'current-part'"/>
+            </axsl:apply-templates>
             <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
           </axsl:if>
           <axsl:apply-templates select="." mode="customTopicMarker"/>
@@ -281,6 +284,9 @@
             <fo:marker marker-class-name="current-appendix-title">
               <axsl:apply-templates select="*[contains(@class, ' topic/title ')]/node()"/>
             </fo:marker>
+            <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
+              <axsl:with-param name="marker-class-name" select="'current-appendix'"/>
+            </axsl:apply-templates>
             <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
           </axsl:if>
           <axsl:apply-templates select="." mode="customTopicMarker"/>
@@ -413,6 +419,9 @@
             <fo:marker marker-class-name="current-chapter-title">
               <axsl:apply-templates select="*[contains(@class, ' topic/title ')]/node()"/>
             </fo:marker>
+            <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
+              <axsl:with-param name="marker-class-name" select="'current-chapter'"/>
+            </axsl:apply-templates>
             <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
           </axsl:if>
           <axsl:apply-templates select="." mode="customTopicMarker"/>

@@ -409,12 +409,18 @@
         <chapter-number>
           <fo:retrieve-marker retrieve-class-name="current-topic-number"/>
         </chapter-number>
+        <part>
+          <fo:retrieve-marker retrieve-class-name="current-part"/>
+        </part>
         <part-number>
           <fo:retrieve-marker retrieve-class-name="current-part-number"/>
         </part-number>
         <part-title>
           <fo:retrieve-marker retrieve-class-name="current-part-title"/>
         </part-title>
+        <appendix>
+          <fo:retrieve-marker retrieve-class-name="current-appendix"/>
+        </appendix>
         <appendix-number>
           <fo:retrieve-marker retrieve-class-name="current-appendix-number"/>
         </appendix-number>
