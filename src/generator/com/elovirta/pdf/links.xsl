@@ -140,7 +140,35 @@
       <axsl:template match="*[contains(@class, ' topic/topic ')]" mode="retrieveReferenceTitle">
         <axsl:variable name="contents" as="node()*" select="e:get-title-number(.)"/>
         <axsl:if test="exists($contents)">
-          <axsl:copy-of select="$contents"/>
+          <axsl:variable name="topicref" select="key('map-id', @id)" as="element()?"/>
+          <axsl:variable name="variable-id" as="xs:string?">
+            <axsl:choose>
+              <axsl:when test="$topicref/self::*[contains(@class, ' bookmap/chapter ')]">
+                <xsl:sequence select="'Chapter with number'"/>
+              </axsl:when>
+              <axsl:when test="$topicref/self::*[contains(@class, ' bookmap/part ')]">
+                <xsl:sequence select="'Part with number'"/>
+              </axsl:when>
+              <axsl:when test="$topicref/self::*[contains(@class, ' bookmap/appendix ')]">
+                <xsl:sequence select="'Appendix with number'"/>
+              </axsl:when>
+            </axsl:choose>
+          </axsl:variable>
+          <axsl:choose>
+            <axsl:when test="exists($variable-id)">
+              <axsl:call-template name="getVariable">
+                <axsl:with-param name="id" select="$variable-id"/>
+                <axsl:with-param name="params">
+                  <number>
+                    <axsl:copy-of select="$contents"/>
+                  </number>
+                </axsl:with-param>
+              </axsl:call-template>
+            </axsl:when>
+            <axsl:otherwise>
+              <axsl:copy-of select="$contents"/>
+            </axsl:otherwise>
+          </axsl:choose>
           <axsl:text>
             <xsl:text> </xsl:text>
           </axsl:text>
