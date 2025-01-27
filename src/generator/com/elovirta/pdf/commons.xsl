@@ -176,7 +176,9 @@
             <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
               <axsl:with-param name="marker-class-name" select="'current-part'"/>
             </axsl:apply-templates>
-            <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
+            <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
+              <axsl:with-param name="marker-class-name" select="'current-header'"/>
+            </axsl:apply-templates>
           </axsl:if>
           <axsl:apply-templates select="." mode="customTopicMarker"/>
 
@@ -279,7 +281,9 @@
             <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
               <axsl:with-param name="marker-class-name" select="'current-appendix'"/>
             </axsl:apply-templates>
-            <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
+            <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
+              <axsl:with-param name="marker-class-name" select="'current-header'"/>
+            </axsl:apply-templates>
           </axsl:if>
           <axsl:apply-templates select="." mode="customTopicMarker"/>
 
@@ -410,7 +414,9 @@
             <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
               <axsl:with-param name="marker-class-name" select="'current-chapter'"/>
             </axsl:apply-templates>
-            <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
+            <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
+              <axsl:with-param name="marker-class-name" select="'current-header'"/>
+            </axsl:apply-templates>
 
             <axsl:variable name="part" select="$topicref/ancestor-or-self::*[contains(@class, ' bookmap/part ')]" as="element()?" />
             <axsl:if test="exists($part)">

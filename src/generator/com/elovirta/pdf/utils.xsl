@@ -400,8 +400,11 @@
         <title>
           <axsl:apply-templates select="$root" mode="dita-ot:title-metadata"/>
         </title>
-        <chapter>
+        <chapter-or-part-or-appendix>
           <fo:retrieve-marker retrieve-class-name="current-header"/>
+        </chapter-or-part-or-appendix>
+        <chapter>
+          <fo:retrieve-marker retrieve-class-name="current-chapter"/>
         </chapter>
         <chapter-title>
           <fo:retrieve-marker retrieve-class-name="current-chapter-title"/>
