@@ -165,14 +165,10 @@
                            as="element()?"
             />
             <fo:marker marker-class-name="current-topic-number">
-              <axsl:for-each select="$topicref">
-                <axsl:apply-templates select="." mode="topicTitleNumber"/>
-              </axsl:for-each>
+              <axsl:apply-templates select="$topicref" mode="topicTitleNumber"/>
             </fo:marker>
             <fo:marker marker-class-name="current-part-number">
-              <axsl:for-each select="$topicref">
-                <axsl:apply-templates select="." mode="topicTitleNumber"/>
-              </axsl:for-each>
+              <axsl:apply-templates select="$topicref" mode="topicTitleNumber"/>
             </fo:marker>
             <fo:marker marker-class-name="current-part-title">
               <axsl:apply-templates select="*[contains(@class, ' topic/title ')]/node()"/>
@@ -272,14 +268,10 @@
                            select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
                            as="element()?"/>
             <fo:marker marker-class-name="current-topic-number">
-              <axsl:for-each select="$topicref">
-                <axsl:apply-templates select="." mode="topicTitleNumber"/>
-              </axsl:for-each>
+              <axsl:apply-templates select="$topicref" mode="topicTitleNumber"/>
             </fo:marker>
             <fo:marker marker-class-name="current-appendix-number">
-              <axsl:for-each select="$topicref">
-                <axsl:apply-templates select="." mode="topicTitleNumber"/>
-              </axsl:for-each>
+              <axsl:apply-templates select="$topicref" mode="topicTitleNumber"/>
             </fo:marker>
             <fo:marker marker-class-name="current-appendix-title">
               <axsl:apply-templates select="*[contains(@class, ' topic/title ')]/node()"/>
@@ -407,14 +399,10 @@
                            select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
                            as="element()?"/>
             <fo:marker marker-class-name="current-topic-number">
-              <axsl:for-each select="$topicref">
-                <axsl:apply-templates select="." mode="topicTitleNumber"/>
-              </axsl:for-each>
+              <axsl:apply-templates select="$topicref" mode="topicTitleNumber"/>
             </fo:marker>
             <fo:marker marker-class-name="current-chapter-number">
-              <axsl:for-each select="$topicref">
-                <axsl:apply-templates select="." mode="topicTitleNumber"/>
-              </axsl:for-each>
+              <axsl:apply-templates select="$topicref" mode="topicTitleNumber"/>
             </fo:marker>
             <fo:marker marker-class-name="current-chapter-title">
               <axsl:apply-templates select="*[contains(@class, ' topic/title ')]/node()"/>
@@ -423,6 +411,20 @@
               <axsl:with-param name="marker-class-name" select="'current-chapter'"/>
             </axsl:apply-templates>
             <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
+
+            <axsl:variable name="part" select="$topicref/ancestor-or-self::*[contains(@class, ' bookmap/part ')]" as="element()?" />
+            <axsl:if test="exists($part)">
+              <axsl:variable name="part-topic" select="key('topic-id', $part/@id)" as="element()?" />
+              <fo:marker marker-class-name="current-part-number">
+                <axsl:apply-templates select="$part" mode="topicTitleNumber"/>
+              </fo:marker>
+              <fo:marker marker-class-name="current-part-title">
+                <axsl:apply-templates select="$part-topic/*[contains(@class, ' topic/title ')]/node()"/>
+              </fo:marker>
+              <axsl:apply-templates select="$part-topic" mode="insertTopicHeaderMarker">
+                <axsl:with-param name="marker-class-name" select="'current-part'"/>
+              </axsl:apply-templates>
+            </axsl:if>
           </axsl:if>
           <axsl:apply-templates select="." mode="customTopicMarker"/>
 
