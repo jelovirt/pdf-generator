@@ -200,7 +200,9 @@
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/markup-domain-attr.xsl"/>
       <axsl:import href="{$plugin_name}cfg/fo/attrs/markup-domain-attr.xsl"/>
 
-      <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/xml-domain-attr.xsl"/>
+      <xsl:if test="not($extendsDefault)">
+        <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/xml-domain-attr.xsl"/>
+      </xsl:if>
       <axsl:import href="{$plugin_name}cfg/fo/attrs/xml-domain-attr.xsl"/>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/markup-domain.xsl"/>
 
