@@ -176,9 +176,10 @@
             <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
               <axsl:with-param name="marker-class-name" select="'current-part'"/>
             </axsl:apply-templates>
-            <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
-              <axsl:with-param name="marker-class-name" select="'current-header'"/>
-            </axsl:apply-templates>
+<!--            <axsl:apply-templates select="." mode="insertTopicHeaderMarker">-->
+<!--              <axsl:with-param name="marker-class-name" select="'current-header'"/>-->
+<!--            </axsl:apply-templates>-->
+            <fo:marker marker-class-name="current-header"/>
           </axsl:if>
           <axsl:apply-templates select="." mode="customTopicMarker"/>
 
@@ -281,9 +282,10 @@
             <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
               <axsl:with-param name="marker-class-name" select="'current-appendix'"/>
             </axsl:apply-templates>
-            <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
-              <axsl:with-param name="marker-class-name" select="'current-header'"/>
-            </axsl:apply-templates>
+<!--            <axsl:apply-templates select="." mode="insertTopicHeaderMarker">-->
+<!--              <axsl:with-param name="marker-class-name" select="'current-header'"/>-->
+<!--            </axsl:apply-templates>-->
+            <fo:marker marker-class-name="current-header"/>
           </axsl:if>
           <axsl:apply-templates select="." mode="customTopicMarker"/>
 
@@ -491,6 +493,44 @@
           </axsl:if>
           <axsl:apply-templates select="*[contains(@class,' topic/topic ')]"/>
           <axsl:call-template name="pullPrologIndexTerms.end-range"/>
+        </fo:block>
+      </axsl:template>
+
+      <!-- Topic -->
+
+      <axsl:template match="*" mode="commonTopicProcessing">
+<!--        <axsl:if test="empty(ancestor::*[contains(@class, ' topic/topic ')])">-->
+<!--          <fo:marker marker-class-name="current-topic-number">-->
+<!--            <axsl:variable name="topicref"-->
+<!--                           select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')]/@id)[1]"-->
+<!--                           as="element()?"/>-->
+<!--            <axsl:for-each select="$topicref">-->
+<!--              <axsl:apply-templates select="." mode="topicTitleNumber"/>-->
+<!--            </axsl:for-each>-->
+<!--          </fo:marker>-->
+<!--        </axsl:if>-->
+        <axsl:variable name="topicref"
+                       select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')]/@id)[1]"
+                       as="element()?"/>
+        <fo:marker marker-class-name="current-topic-number">
+          <axsl:apply-templates select="$topicref" mode="topicTitleNumber"/>
+        </fo:marker>
+        <fo:marker marker-class-name="current-topic-title">
+          <axsl:apply-templates select="*[contains(@class, ' topic/title ')]/node()"/>
+        </fo:marker>
+        <axsl:apply-templates select="." mode="insertTopicHeaderMarker">
+          <axsl:with-param name="marker-class-name" select="'current-header'"/>
+        </axsl:apply-templates>
+        <fo:block>
+          <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]" mode="flag-attributes"/>
+          <axsl:apply-templates select="." mode="customTopicMarker"/>
+          <axsl:apply-templates select="*[contains(@class, ' topic/title ')]"/>
+          <axsl:apply-templates select="*[contains(@class, ' topic/prolog ')]"/>
+          <axsl:apply-templates select="* except(*[contains(@class, ' topic/title ') or contains(@class,' ditaot-d/ditaval-startprop ') or
+              contains(@class, ' topic/prolog ') or contains(@class, ' topic/topic ')])"/>
+          <!--xsl:apply-templates select="." mode="buildRelationships"/-->
+          <axsl:apply-templates select="*[contains(@class,' topic/topic ')]"/>
+          <axsl:apply-templates select="." mode="topicEpilog"/>
         </fo:block>
       </axsl:template>
 
