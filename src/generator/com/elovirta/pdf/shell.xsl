@@ -1,10 +1,11 @@
 <xsl:stylesheet version="3.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:axsl="http://www.w3.org/1999/XSL/Transform/alias"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:map="http://www.w3.org/2005/xpath-functions/map"
                 xmlns:array="http://www.w3.org/2005/xpath-functions/array"
-                exclude-result-prefixes="axsl map array">
+                exclude-result-prefixes="xs axsl map array">
 
   <xsl:import href="utils.xsl"/>
 
@@ -26,6 +27,8 @@
         <xsl:otherwise>../../</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <xsl:variable name="extendsDefault" as="xs:boolean"
+                  select="map:contains($root, 'extends-default') and $root ?extends-default"/>
     <axsl:stylesheet version="2.0">
       <xsl:call-template name="generate-namespace-node"/>
       <axsl:import href="plugin:org.dita.base:xsl/common/dita-utilities.xsl"/>
@@ -179,8 +182,9 @@
       <axsl:import href="{$plugin_name}cfg/fo/attrs/pr-domain-attr.xsl"/>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/pr-domain.xsl"/>
       <axsl:import href="{$plugin_name}xsl/fo/pr-domain.xsl"/>
-
-      <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/hi-domain-attr.xsl"/>
+      <xsl:if test="not($extendsDefault)">
+        <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/hi-domain-attr.xsl"/>
+      </xsl:if>
       <axsl:import href="{$plugin_name}cfg/fo/attrs/hi-domain-attr.xsl"/>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/hi-domain.xsl"/>
       <axsl:import href="{$plugin_name}xsl/fo/hi-domain.xsl"/>
