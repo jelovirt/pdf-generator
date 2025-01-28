@@ -66,6 +66,7 @@ public class StylesheetGeneratorTask extends Task {
             throw new BuildException(String.format("Failed to parse template %s", template), e);
         }
         xpathCompiler = processor.newXPathCompiler();
+        xpathCompiler.declareNamespace("map", "http://www.w3.org/2005/xpath-functions/map");
         yamlReader = new ObjectMapper(new YAMLFactory());
         jsonWriter = new ObjectMapper();
     }
@@ -212,16 +213,20 @@ public class StylesheetGeneratorTask extends Task {
                 selector.setURIResolver(resolver);
                 selector.setContextItem(new XdmAtomicValue(DEFAULT_EXTENDS_URI));
                 final XdmItem extendsRes = selector.evaluateSingle();
-                return transformer.callFunction(QName.fromClarkName("{x}merge"), new XdmValue[]{
+                final XdmValue merged = transformer.callFunction(QName.fromClarkName("{x}merge"), new XdmValue[]{
                         normalize(extendsRes, DEFAULT_EXTENDS_URI),
                         normalize(base, url)
-                }).itemAt(0);
+                });
+                final XdmValue added = xpathCompiler.evaluateSingle("map:remove(map:put(., 'extends-default', true()), 'extends')", merged.itemAt(0));
+                return added.itemAt(0);
             } else if (extendsValue != null) {
                 final URI extendsUri = url.resolve(extendsValue.getStringValue());
                 final XdmItem extendsRes = parseYamlTemplate(parseYaml(extendsUri), url);
-                return transformer.callFunction(QName.fromClarkName("{x}merge"), new XdmValue[]{
+                final XdmValue merged = transformer.callFunction(QName.fromClarkName("{x}merge"), new XdmValue[]{
                         extendsRes, normalize(base, url)
-                }).itemAt(0);
+                });
+                final XdmValue added = xpathCompiler.evaluateSingle("map:remove(., 'extends')", merged.itemAt(0));
+                return added.itemAt(0);
             } else {
                 return normalize(base, url).itemAt(0);
             }

@@ -210,8 +210,7 @@
     "msgblock": {
       "extends": "pre"
     },
-    "msgnum": {
-    },
+    "msgnum": {},
     "cmdname": {
       "font-family": "monospace"
     },
@@ -307,15 +306,12 @@
     "codeblock.whitespace": {
       "color": "#C0C0C0"
     },
-    "option": {
-    },
+    "option": {},
     "var": {
       "font-style": "italic"
     },
-    "parmname": {
-    },
-    "synph": {
-    },
+    "parmname": {},
+    "synph": {},
     "oper": {
       "font-family": "monospace"
     },
@@ -328,10 +324,8 @@
     "apiname": {
       "font-family": "monospace"
     },
-    "parml": {
-    },
-    "plentry": {
-    },
+    "parml": {},
+    "plentry": {},
     "pt": {
       "font-weight": "bold",
       "text-indent": "0em",
@@ -346,8 +340,7 @@
       "start-indent": "72pt",
       "end-indent": "24pt"
     },
-    "synblk": {
-    },
+    "synblk": {},
     "synnoteref": {
       "baseline-shift": "super",
       "font-size": "75%"
@@ -356,10 +349,8 @@
       "baseline-shift": "super",
       "font-size": "75%"
     },
-    "syntaxdiagram": {
-    },
-    "fragment": {
-    },
+    "syntaxdiagram": {},
+    "fragment": {},
     "kwd": {
       "font-family": "monospace"
     },
@@ -369,9 +360,7 @@
     "fragment.title": {
       "font-weight": "bold"
     },
-    "fragment.group": {
-    },
-    "syntaxdiagram.group": {
-    }
+    "fragment.group": {},
+    "syntaxdiagram.group": {}
   }
 }

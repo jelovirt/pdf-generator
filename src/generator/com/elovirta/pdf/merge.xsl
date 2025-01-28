@@ -24,14 +24,15 @@
       <xsl:when test="map:contains($base, 'extends') and $base ?extends eq 'default'">
         <xsl:variable name="extends-url" select="xs:anyURI('classpath:/com/elovirta/pdf/default.json')"/>
         <xsl:variable name="extends" select="x:normalize(x:flatten(json-doc($extends-url)), (), $url)"/>
-        <xsl:sequence select="map:merge(($current, $extends),
-                                        map{ 'duplicates': 'use-first' })"/>
+        <xsl:sequence select="map:merge(($current, $extends), map{ 'duplicates': 'use-first' })
+                            ! map:put(., 'extends-default', true())
+                            ! map:remove(., 'extends') "/>
       </xsl:when>
       <xsl:when test="map:contains($base, 'extends')">
         <xsl:variable name="extends-url" select="resolve-uri($base ?extends, $url)"/>
         <xsl:variable name="extends" select="x:extends(json-doc($extends-url), $extends-url)"/>
-        <xsl:sequence select="map:merge(($current, $extends),
-                                        map{ 'duplicates': 'use-first' })"/>
+        <xsl:sequence select="map:merge(($current, $extends), map{ 'duplicates': 'use-first' })
+                            ! map:remove(., 'extends')"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:sequence select="$current"/>
