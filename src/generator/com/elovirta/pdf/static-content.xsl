@@ -85,27 +85,27 @@
         </axsl:template>
 
         <axsl:template name="insertPrefaceStaticContents">
-          <axsl:call-template name="insertPrefaceFootnoteSeparator"/>
-          <axsl:call-template name="insertPrefaceOddFooter"/>
+          <axsl:call-template name="insertBodyFootnoteSeparator"/>
+          <axsl:call-template name="insertBodyOddFooter"/>
           <axsl:if test="$mirror-page-margins">
-            <axsl:call-template name="insertPrefaceEvenFooter"/>
+            <axsl:call-template name="insertBodyEvenFooter"/>
           </axsl:if>
-          <axsl:call-template name="insertPrefaceOddHeader"/>
+          <axsl:call-template name="insertBodyOddHeader"/>
           <axsl:call-template name="generateBlank">
             <axsl:with-param name="base" as="element()?">
-              <axsl:call-template name="insertPrefaceOddHeader"/>
+              <axsl:call-template name="insertBodyOddHeader"/>
             </axsl:with-param>
           </axsl:call-template>
           <axsl:if test="$mirror-page-margins">
-            <axsl:call-template name="insertPrefaceEvenHeader"/>
+            <axsl:call-template name="insertBodyEvenHeader"/>
             <axsl:call-template name="generateBlank">
               <axsl:with-param name="base" as="element()?">
-                <axsl:call-template name="insertPrefaceEvenHeader"/>
+                <axsl:call-template name="insertBodyEvenHeader"/>
               </axsl:with-param>
             </axsl:call-template>
           </axsl:if>
-          <axsl:call-template name="insertPrefaceFirstHeader"/>
-          <axsl:call-template name="insertPrefaceFirstFooter"/>
+          <axsl:call-template name="insertBodyFirstHeader"/>
+          <axsl:call-template name="insertBodyFirstFooter"/>
         </axsl:template>
 
         <axsl:template name="insertFrontMatterStaticContents">
@@ -353,25 +353,25 @@
 
         <axsl:template name="insertPrefaceOddHeader">
           <axsl:call-template name="insertBodyOddHeader">
-            <axsl:with-param name="flow-name" select="'odd-preface-header'"/>
+            <axsl:with-param name="flow-name" select="'odd-body-header'"/>
           </axsl:call-template>
         </axsl:template>
 
         <axsl:template name="insertPrefaceEvenHeader">
           <axsl:call-template name="insertBodyOddHeader">
-            <axsl:with-param name="flow-name" select="'even-preface-header'"/>
+            <axsl:with-param name="flow-name" select="'even-body-header'"/>
           </axsl:call-template>
         </axsl:template>
 
         <axsl:template name="insertPrefaceOddFooter">
           <axsl:call-template name="insertBodyOddFooter">
-            <axsl:with-param name="flow-name" select="'odd-preface-footer'"/>
+            <axsl:with-param name="flow-name" select="'odd-body-footer'"/>
           </axsl:call-template>
         </axsl:template>
 
         <axsl:template name="insertPrefaceEvenFooter">
           <axsl:call-template name="insertBodyOddFooter">
-            <axsl:with-param name="flow-name" select="'even-preface-footer'"/>
+            <axsl:with-param name="flow-name" select="'even-body-footer'"/>
           </axsl:call-template>
         </axsl:template>
 
@@ -503,6 +503,39 @@
         </xsl:call-template>
       </xsl:if>
 
+      <!-- Preface -->
+      <xsl:call-template name="generate-insert-static-contents">
+        <xsl:with-param name="sequence" select="'preface'"/>
+      </xsl:call-template>
+<!--      <xsl:call-template name="generateInsert">-->
+<!--        <xsl:with-param name="header" select="$root ?header-odd-content"/>-->
+<!--        <xsl:with-param name="sequence" select="'preface'"/>-->
+<!--        <xsl:with-param name="flow" select="'header'"/>-->
+<!--        <xsl:with-param name="type" select="'odd'"/>-->
+<!--      </xsl:call-template>-->
+<!--      <xsl:if test="$root ?page-mirror-margins">-->
+<!--        <xsl:call-template name="generateInsert">-->
+<!--          <xsl:with-param name="header" select="$root ?header-even-content"/>-->
+<!--          <xsl:with-param name="sequence" select="'preface'"/>-->
+<!--          <xsl:with-param name="flow" select="'header'"/>-->
+<!--          <xsl:with-param name="type" select="'even'"/>-->
+<!--        </xsl:call-template>-->
+<!--      </xsl:if>-->
+<!--      <xsl:call-template name="generateInsert">-->
+<!--        <xsl:with-param name="header" select="$root ?footer-odd-content"/>-->
+<!--        <xsl:with-param name="sequence" select="'preface'"/>-->
+<!--        <xsl:with-param name="flow" select="'footer'"/>-->
+<!--        <xsl:with-param name="type" select="'odd'"/>-->
+<!--      </xsl:call-template>-->
+<!--      <xsl:if test="$root ?page-mirror-margins">-->
+<!--        <xsl:call-template name="generateInsert">-->
+<!--          <xsl:with-param name="header" select="$root ?footer-even-content"/>-->
+<!--          <xsl:with-param name="sequence" select="'preface'"/>-->
+<!--          <xsl:with-param name="flow" select="'footer'"/>-->
+<!--          <xsl:with-param name="type" select="'even'"/>-->
+<!--        </xsl:call-template>-->
+<!--      </xsl:if>-->
+
       <!-- Body -->
       <xsl:call-template name="generate-insert-static-contents">
         <xsl:with-param name="sequence" select="'body'"/>
@@ -535,6 +568,72 @@
           <xsl:with-param name="type" select="'even'"/>
         </xsl:call-template>
       </xsl:if>
+
+<!--      &lt;!&ndash; Glossary &ndash;&gt;-->
+<!--      <xsl:call-template name="generate-insert-static-contents">-->
+<!--        <xsl:with-param name="sequence" select="'glossary'"/>-->
+<!--      </xsl:call-template>-->
+<!--      <xsl:call-template name="generateInsert">-->
+<!--        <xsl:with-param name="header" select="$root ?header-odd-content"/>-->
+<!--        <xsl:with-param name="sequence" select="'glossary'"/>-->
+<!--        <xsl:with-param name="flow" select="'header'"/>-->
+<!--        <xsl:with-param name="type" select="'odd'"/>-->
+<!--      </xsl:call-template>-->
+<!--      <xsl:if test="$root ?page-mirror-margins">-->
+<!--        <xsl:call-template name="generateInsert">-->
+<!--          <xsl:with-param name="header" select="$root ?header-even-content"/>-->
+<!--          <xsl:with-param name="sequence" select="'glossary'"/>-->
+<!--          <xsl:with-param name="flow" select="'header'"/>-->
+<!--          <xsl:with-param name="type" select="'even'"/>-->
+<!--        </xsl:call-template>-->
+<!--      </xsl:if>-->
+<!--      <xsl:call-template name="generateInsert">-->
+<!--        <xsl:with-param name="header" select="$root ?footer-odd-content"/>-->
+<!--        <xsl:with-param name="sequence" select="'glossary'"/>-->
+<!--        <xsl:with-param name="flow" select="'footer'"/>-->
+<!--        <xsl:with-param name="type" select="'odd'"/>-->
+<!--      </xsl:call-template>-->
+<!--      <xsl:if test="$root ?page-mirror-margins">-->
+<!--        <xsl:call-template name="generateInsert">-->
+<!--          <xsl:with-param name="header" select="$root ?footer-even-content"/>-->
+<!--          <xsl:with-param name="sequence" select="'glossary'"/>-->
+<!--          <xsl:with-param name="flow" select="'footer'"/>-->
+<!--          <xsl:with-param name="type" select="'even'"/>-->
+<!--        </xsl:call-template>-->
+<!--      </xsl:if>-->
+
+<!--      &lt;!&ndash; Glossary &ndash;&gt;-->
+<!--      <xsl:call-template name="generate-insert-static-contents">-->
+<!--        <xsl:with-param name="sequence" select="'frontmatter'"/>-->
+<!--      </xsl:call-template>-->
+<!--      <xsl:call-template name="generateInsert">-->
+<!--        <xsl:with-param name="header" select="$root ?header-odd-content"/>-->
+<!--        <xsl:with-param name="sequence" select="'frontmatter'"/>-->
+<!--        <xsl:with-param name="flow" select="'header'"/>-->
+<!--        <xsl:with-param name="type" select="'odd'"/>-->
+<!--      </xsl:call-template>-->
+<!--      <xsl:if test="$root ?page-mirror-margins">-->
+<!--        <xsl:call-template name="generateInsert">-->
+<!--          <xsl:with-param name="header" select="$root ?header-even-content"/>-->
+<!--          <xsl:with-param name="sequence" select="'frontmatter'"/>-->
+<!--          <xsl:with-param name="flow" select="'header'"/>-->
+<!--          <xsl:with-param name="type" select="'even'"/>-->
+<!--        </xsl:call-template>-->
+<!--      </xsl:if>-->
+<!--      <xsl:call-template name="generateInsert">-->
+<!--        <xsl:with-param name="header" select="$root ?footer-odd-content"/>-->
+<!--        <xsl:with-param name="sequence" select="'frontmatter'"/>-->
+<!--        <xsl:with-param name="flow" select="'footer'"/>-->
+<!--        <xsl:with-param name="type" select="'odd'"/>-->
+<!--      </xsl:call-template>-->
+<!--      <xsl:if test="$root ?page-mirror-margins">-->
+<!--        <xsl:call-template name="generateInsert">-->
+<!--          <xsl:with-param name="header" select="$root ?footer-even-content"/>-->
+<!--          <xsl:with-param name="sequence" select="'frontmatter'"/>-->
+<!--          <xsl:with-param name="flow" select="'footer'"/>-->
+<!--          <xsl:with-param name="type" select="'even'"/>-->
+<!--        </xsl:call-template>-->
+<!--      </xsl:if>-->
 
       <!-- Cover -->
       <axsl:template name="insertFrontMatterOddHeader">
@@ -665,6 +764,16 @@
           <axsl:attribute name="text-align">center</axsl:attribute>
         </axsl:attribute-set>
       </xsl:if>
+
+      <axsl:attribute-set name="__preface__odd__header" use-attribute-sets="odd__header"/>
+      <axsl:attribute-set name="__preface__even__header" use-attribute-sets="even__header"/>
+      <axsl:attribute-set name="__preface__odd__footer" use-attribute-sets="odd__footer"/>
+      <axsl:attribute-set name="__preface__even__footer" use-attribute-sets="odd__footer"/>
+
+      <axsl:attribute-set name="__frontmatter__odd__header" use-attribute-sets="odd__header"/>
+      <axsl:attribute-set name="__frontmatter__even__header" use-attribute-sets="even__header"/>
+      <axsl:attribute-set name="__frontmatter__odd__footer" use-attribute-sets="odd__footer"/>
+      <axsl:attribute-set name="__frontmatter__even__footer" use-attribute-sets="odd__footer"/>
     </axsl:stylesheet>
   </xsl:template>
 
