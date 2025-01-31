@@ -181,9 +181,9 @@
                                 select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
                                 as="element()?"
                   />
-                  <axsl:for-each select="$topicref">
-                    <axsl:apply-templates select="." mode="topicTitleNumber"/>
-                  </axsl:for-each>
+<!--                  <axsl:for-each select="$topicref">-->
+                  <axsl:apply-templates select="$topicref" mode="topicTitleNumber"/>
+<!--                  </axsl:for-each>-->
                 </fo:marker>
                 <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
               </axsl:if>
