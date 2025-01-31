@@ -1,5 +1,4 @@
 {
-  "extends": "base.json",
   "cover-image-topic": "",
   "body-column-count": 1,
   "bookmark-style": "COLLAPSED",
