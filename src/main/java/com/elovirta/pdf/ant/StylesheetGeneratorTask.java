@@ -85,11 +85,13 @@ public class StylesheetGeneratorTask extends Task {
         getProject().log("Template:" + xdmItem, Project.MSG_DEBUG);
         generate(xdmItem, "front-matter.xsl", "xsl/fo/front-matter.xsl", null);
         generate(xdmItem, "commons.xsl", "xsl/fo/commons.xsl", null);
+//        generate(xdmItem, "glossary.xsl", "xsl/fo/glossary.xsl", null);
         generate(xdmItem, "tables.xsl", "xsl/fo/tables.xsl", null);
         generate(xdmItem, "toc.xsl", "xsl/fo/toc.xsl", null);
         generate(xdmItem, "links.xsl", "xsl/fo/links.xsl", null);
         generate(xdmItem, "lists.xsl", "xsl/fo/lists.xsl", null);
         generate(xdmItem, "hi-domain.xsl", "xsl/fo/hi-domain.xsl", null);
+//        generate(xdmItem, "index.xsl", "xsl/fo/index.xsl", null);
         generate(xdmItem, "preface.xsl", "xsl/fo/preface.xsl", null);
         generate(xdmItem, "pr-domain.xsl", "xsl/fo/pr-domain.xsl", null);
         generate(xdmItem, "hazard-d.xsl", "xsl/fo/hazard-d.xsl", null);
@@ -101,6 +103,7 @@ public class StylesheetGeneratorTask extends Task {
         generate(xdmItem, "layout-masters.xsl", "cfg/fo/layout-masters.xsl", null);
         generate(xdmItem, "front-matter.xsl", "cfg/fo/attrs/front-matter-attr.xsl", ATTR);
         generate(xdmItem, "commons.xsl", "cfg/fo/attrs/commons-attr.xsl", ATTR);
+        generate(xdmItem, "glossary.xsl", "cfg/fo/attrs/glossary-attr.xsl", ATTR);
         generate(xdmItem, "layout-masters.xsl", "cfg/fo/attrs/layout-masters-attr.xsl", ATTR);
         generate(xdmItem, "static-content.xsl", "cfg/fo/attrs/static-content-attr.xsl", ATTR);
         generate(xdmItem, "tables.xsl", "cfg/fo/attrs/tables-attr.xsl", ATTR);
@@ -110,6 +113,7 @@ public class StylesheetGeneratorTask extends Task {
         generate(xdmItem, "links.xsl", "cfg/fo/attrs/links-attr.xsl", ATTR);
         generate(xdmItem, "lists.xsl", "cfg/fo/attrs/lists-attr.xsl", ATTR);
         generate(xdmItem, "hi-domain.xsl", "cfg/fo/attrs/hi-domain-attr.xsl", ATTR);
+        generate(xdmItem, "index.xsl", "cfg/fo/attrs/index-attr.xsl", ATTR);
         generate(xdmItem, "pr-domain.xsl", "cfg/fo/attrs/pr-domain-attr.xsl", ATTR);
 //        generate(xdmItem, "preface.xsl", "cfg/fo/attrs/preface-attr.xsl", ATTR);
         generate(xdmItem, "sw-domain.xsl", "cfg/fo/attrs/sw-domain-attr.xsl", ATTR);

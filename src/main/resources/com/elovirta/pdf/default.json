@@ -178,6 +178,16 @@
         "title-numbering": true
       }
     },
+    "index": {
+      "space-before": "$style-body-body-space-before",
+      "space-after": "$style-body-body-space-after",
+      "font-size": "18pt"
+    },
+    "glossary": {
+      "space-before": "$style-body-body-space-before",
+      "space-after": "$style-body-body-space-after",
+      "font-size": "18pt"
+    },
     "b": {
       "font-weight": "bold"
     },

@@ -143,6 +143,7 @@
           <axsl:import href="plugin:org.dita.pdf2.xep:cfg/fo/attrs/index-attr_xep.xsl"/>
         </xsl:when>
       </xsl:choose>
+      <axsl:import href="{$plugin_name}cfg/fo/attrs/index-attr.xsl"/>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/index.xsl"/>
       <xsl:choose>
         <xsl:when test="$formatter = 'ah'">
@@ -225,6 +226,7 @@
       <axsl:import href="{$plugin_name}xsl/fo/static-content.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/glossary-attr.xsl"/>
+      <axsl:import href="{$plugin_name}cfg/fo/attrs/glossary-attr.xsl"/>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/glossary.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/lot-lof-attr.xsl"/>
