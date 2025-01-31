@@ -153,6 +153,77 @@
         <axsl:template match="*[contains(@class, ' topic/topic ')][@outputclass = '{$root ?cover-image-topic}']" priority="1000"/>
       </xsl:if>
 
+      <!-- Notice -->
+
+      <axsl:template name="processTopicNotices">
+        <axsl:variable name="atts" as="element()">
+          <axsl:choose>
+            <axsl:when test="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)/ancestor::*[contains(@class,' bookmap/backmatter ')]">
+              <dummy axsl:use-attribute-sets="page-sequence.backmatter.notice"/>
+            </axsl:when>
+            <axsl:otherwise>
+              <dummy axsl:use-attribute-sets="page-sequence.notice"/>
+            </axsl:otherwise>
+          </axsl:choose>
+        </axsl:variable>
+        <fo:page-sequence master-reference="body-sequence">
+          <axsl:copy-of select="$atts/@*"/>
+          <axsl:call-template name="startPageNumbering"/>
+          <axsl:call-template name="insertPrefaceStaticContents"/>
+          <fo:flow flow-name="xsl-region-body">
+            <fo:block axsl:use-attribute-sets="topic">
+              <!-- TODO: Replace with mode="commonattributes" -->
+              <axsl:call-template name="commonattributes"/>
+
+              <axsl:if test="empty(ancestor::*[contains(@class, ' topic/topic ')])">
+                <fo:marker marker-class-name="current-topic-number">
+                  <axsl:variable name="topicref"
+                                select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
+                                as="element()?"
+                  />
+                  <axsl:for-each select="$topicref">
+                    <axsl:apply-templates select="." mode="topicTitleNumber"/>
+                  </axsl:for-each>
+                </fo:marker>
+                <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>
+              </axsl:if>
+              <axsl:apply-templates select="." mode="customTopicMarker"/>
+
+              <axsl:apply-templates select="*[contains(@class,' topic/prolog ')]"/>
+
+<!--              <axsl:apply-templates select="." mode="insertChapterFirstpageStaticContent">-->
+<!--                <axsl:with-param name="type" select="'notices'"/>-->
+<!--              </axsl:apply-templates>-->
+
+              <fo:block axsl:use-attribute-sets="topic.title">
+                <axsl:apply-templates select="." mode="customTopicAnchor"/>
+                <axsl:call-template name="pullPrologIndexTerms"/>
+                <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]"/>
+                <axsl:for-each select="*[contains(@class,' topic/title ')]">
+                  <axsl:apply-templates select="." mode="getTitle"/>
+                </axsl:for-each>
+              </fo:block>
+
+<!--              <xsl:choose>-->
+<!--                <xsl:when test="$noticesLayout = 'BASIC'">-->
+                  <axsl:apply-templates select="* except(*[contains(@class, ' topic/title ') or
+                                                           contains(@class,' ditaot-d/ditaval-startprop ') or
+                                                           contains(@class, ' topic/prolog ') or
+                                                           contains(@class, ' topic/topic ')])"/>
+                  <!--xsl:apply-templates select="." mode="buildRelationships"/-->
+<!--                </xsl:when>-->
+<!--                <xsl:otherwise>-->
+<!--                  <xsl:apply-templates select="." mode="createMiniToc"/>-->
+<!--                </xsl:otherwise>-->
+<!--              </xsl:choose>-->
+
+              <axsl:apply-templates select="*[contains(@class,' topic/topic ')]"/>
+              <axsl:call-template name="pullPrologIndexTerms.end-range"/>
+            </fo:block>
+          </fo:flow>
+        </fo:page-sequence>
+      </axsl:template>
+
       <!-- Part -->
 
       <axsl:template match="*" mode="processTopicPartInsideFlow">

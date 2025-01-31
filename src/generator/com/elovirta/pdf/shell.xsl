@@ -161,7 +161,9 @@
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/front-matter.xsl"/>
       <axsl:import href="{$plugin_name}xsl/fo/front-matter.xsl"/>
 
+<!--      <axsl:import href="{$plugin_name}cfg/fo/attrs/preface.xsl"/>-->
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/preface.xsl"/>
+      <axsl:import href="{$plugin_name}xsl/fo/preface.xsl"/>
 
       <axsl:import href="plugin:org.dita.pdf2:cfg/fo/attrs/map-elements-attr.xsl"/>
       <axsl:import href="plugin:org.dita.pdf2:xsl/fo/map-elements.xsl"/>

@@ -90,6 +90,7 @@ public class StylesheetGeneratorTask extends Task {
         generate(xdmItem, "links.xsl", "xsl/fo/links.xsl", null);
         generate(xdmItem, "lists.xsl", "xsl/fo/lists.xsl", null);
         generate(xdmItem, "hi-domain.xsl", "xsl/fo/hi-domain.xsl", null);
+        generate(xdmItem, "preface.xsl", "xsl/fo/preface.xsl", null);
         generate(xdmItem, "pr-domain.xsl", "xsl/fo/pr-domain.xsl", null);
         generate(xdmItem, "hazard-d.xsl", "xsl/fo/hazard-d.xsl", null);
 //        generate(xdmItem, "sw-domain.xsl", "xsl/fo/sw-domain.xsl", null);
@@ -110,6 +111,7 @@ public class StylesheetGeneratorTask extends Task {
         generate(xdmItem, "lists.xsl", "cfg/fo/attrs/lists-attr.xsl", ATTR);
         generate(xdmItem, "hi-domain.xsl", "cfg/fo/attrs/hi-domain-attr.xsl", ATTR);
         generate(xdmItem, "pr-domain.xsl", "cfg/fo/attrs/pr-domain-attr.xsl", ATTR);
+//        generate(xdmItem, "preface.xsl", "cfg/fo/attrs/preface-attr.xsl", ATTR);
         generate(xdmItem, "sw-domain.xsl", "cfg/fo/attrs/sw-domain-attr.xsl", ATTR);
         generate(xdmItem, "markup-domain.xsl", "cfg/fo/attrs/markup-domain-attr.xsl", ATTR);
         generate(xdmItem, "ui-domain.xsl", "cfg/fo/attrs/ui-domain-attr.xsl", ATTR);
