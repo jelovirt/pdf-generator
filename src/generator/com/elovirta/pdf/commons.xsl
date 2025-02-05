@@ -304,6 +304,7 @@
                             [not(@role) or @role != 'child']">
             <axsl:apply-templates select="*[contains(@class,' topic/related-links ')]"/>
           </axsl:if>
+
           <axsl:choose>
             <axsl:when test="$partLayout = 'BASIC'">
               <!--axsl:apply-templates select="." mode="buildRelationships"/-->
@@ -536,18 +537,6 @@
             <axsl:apply-templates select="*[contains(@class,' topic/title ')]/node()"/>
           </fo:block>
 
-          <axsl:choose>
-            <axsl:when test="$chapterLayout = 'BASIC'">
-              <!--xsl:apply-templates select="." mode="buildRelationships"/-->
-            </axsl:when>
-            <axsl:when test="exists(*[contains(@class, ' topic/topic ')])">
-              <fo:block axsl:use-attribute-sets="e:chapter_toc">
-                <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="chapter-toc"/>
-              </fo:block>
-              <!--              <axsl:apply-templates select="." mode="createMiniToc"/>-->
-            </axsl:when>
-          </axsl:choose>
-
           <axsl:if test="*[contains(@class,' topic/shortdesc ') or
                            contains(@class, ' topic/abstract ')]/node()">
             <fo:block axsl:use-attribute-sets="topic__shortdesc">
@@ -562,6 +551,19 @@
                             [not(@role) or @role != 'child']">
             <axsl:apply-templates select="*[contains(@class,' topic/related-links ')]"/>
           </axsl:if>
+
+          <axsl:choose>
+            <axsl:when test="$chapterLayout = 'BASIC'">
+              <!--xsl:apply-templates select="." mode="buildRelationships"/-->
+            </axsl:when>
+            <axsl:when test="exists(*[contains(@class, ' topic/topic ')])">
+              <fo:block axsl:use-attribute-sets="e:chapter_toc">
+                <axsl:apply-templates select="*[contains(@class, ' topic/topic ')]" mode="chapter-toc"/>
+              </fo:block>
+              <!--              <axsl:apply-templates select="." mode="createMiniToc"/>-->
+            </axsl:when>
+          </axsl:choose>
+
           <axsl:apply-templates select="*[contains(@class,' topic/topic ')]"/>
           <axsl:call-template name="pullPrologIndexTerms.end-range"/>
         </fo:block>
