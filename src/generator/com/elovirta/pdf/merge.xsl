@@ -377,7 +377,9 @@
           <xsl:for-each select="map:keys($base)">
             <xsl:variable name="key" select="."/>
             <xsl:variable name="value" select="map:get($base, $key)"/>
-            <xsl:map-entry key="." select="x:resolveVariables($value, $keys)"/>
+            <xsl:map-entry key="." select="if (exists($value))
+                                           then x:resolveVariables($value, $keys)
+                                           else ()"/>
           </xsl:for-each>
         </xsl:map>
       </xsl:when>
@@ -386,7 +388,9 @@
           <xsl:for-each select="1 to array:size($base)">
             <xsl:variable name="index" select="."/>
             <xsl:variable name="value" select="array:get($base, $index)"/>
-            <xsl:sequence select="x:resolveVariables($value, $keys)"/>
+            <xsl:sequence select="if (exists($value))
+                                  then x:resolveVariables($value, $keys)
+                                  else ()"/>
           </xsl:for-each>
         </xsl:variable>
         <xsl:sequence select="array{ $array }"/>
