@@ -179,13 +179,13 @@
       }
     },
     "index": {
-      "space-before": "$style-body-body-space-before",
-      "space-after": "$style-body-body-space-after",
+      "space-before": "$style-body-space-before",
+      "space-after": "$style-body-space-after",
       "font-size": "18pt"
     },
     "glossary": {
-      "space-before": "$style-body-body-space-before",
-      "space-after": "$style-body-body-space-after",
+      "space-before": "$style-body-space-before",
+      "space-after": "$style-body-space-after",
       "font-size": "18pt"
     },
     "b": {
