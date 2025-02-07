@@ -75,21 +75,26 @@
               <xsl:variable name="prefix" select="."/>
               <xsl:variable name="attribute-set-prefix" select="if (. eq '') then '' else ('__' || .)"/>
               <xsl:variable name="key-prefix" select="if (. eq '') then '' else ('-' || .)"/>
-              <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-part')">
-                <axsl:when test="$prefix eq '{$prefix}' and $level eq 1 and $topicref/self::*[contains(@class, ' bookmap/part ')]">
+              <xsl:if
+                  test="some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-part')">
+                <axsl:when
+                    test="$prefix eq '{$prefix}' and $level eq 1 and $topicref/self::*[contains(@class, ' bookmap/part ')]">
                   <fo:block axsl:use-attribute-sets="{$attribute-set-prefix}__toc__part__content">
                     <axsl:copy-of select="$tocItemContent"/>
                   </fo:block>
                 </axsl:when>
               </xsl:if>
-              <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-chapter')">
-                <axsl:when test="$prefix eq '{$prefix}' and $level = (1, 2) and $topicref/self::*[contains(@class, ' bookmap/chapter ')]">
+              <xsl:if
+                  test="some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-chapter')">
+                <axsl:when
+                    test="$prefix eq '{$prefix}' and $level = (1, 2) and $topicref/self::*[contains(@class, ' bookmap/chapter ')]">
                   <fo:block axsl:use-attribute-sets="{$attribute-set-prefix}__toc__chapter__content">
                     <axsl:copy-of select="$tocItemContent"/>
                   </fo:block>
                 </axsl:when>
               </xsl:if>
-              <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-1')">
+              <xsl:if
+                  test="some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-1')">
                 <axsl:when test="$prefix eq '{$prefix}' and $level eq 1">
                   <fo:block axsl:use-attribute-sets="{$attribute-set-prefix}__toc__topic__content">
                     <axsl:copy-of select="$tocItemContent"/>
@@ -98,7 +103,8 @@
               </xsl:if>
               <xsl:for-each select="2 to 6">
                 <xsl:variable name="level" select="."/>
-                <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-' || $level)">
+                <xsl:if
+                    test="some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-' || $level)">
                   <axsl:when test="$prefix eq '{$prefix}' and $level eq {$level}">
                     <fo:block axsl:use-attribute-sets="{$attribute-set-prefix}__toc__topic__content_{$level}">
                       <axsl:copy-of select="$tocItemContent"/>
@@ -209,17 +215,20 @@
                     <axsl:attribute name="fox:alt-text">
                       <axsl:call-template name="getNavTitle"/>
                     </axsl:attribute>
-                    <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/revprop[@changebar]" mode="changebar">
+                    <axsl:apply-templates
+                        select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/revprop[@changebar]"
+                        mode="changebar">
                       <axsl:with-param name="changebar-id" select="concat(dita-ot:generate-changebar-id(.),'-toc')"/>
                     </axsl:apply-templates>
                     <axsl:apply-templates select="$mapTopicref" mode="tocPrefix"/>
                     <fo:inline axsl:use-attribute-sets="__toc__title">
                       <axsl:variable name="pulledNavigationTitle" as="item()*">
-                        <axsl:call-template name="getNavTitle" />
+                        <axsl:call-template name="getNavTitle"/>
                       </axsl:variable>
                       <axsl:apply-templates select="$pulledNavigationTitle" mode="dropCopiedIds"/>
                     </fo:inline>
-                    <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]/revprop[@changebar]" mode="changebar">
+                    <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]/revprop[@changebar]"
+                                          mode="changebar">
                       <axsl:with-param name="changebar-id" select="concat(dita-ot:generate-changebar-id(.),'-toc')"/>
                     </axsl:apply-templates>
                     <fo:inline axsl:use-attribute-sets="__toc__page-number">
@@ -292,17 +301,20 @@
                     <axsl:attribute name="fox:alt-text">
                       <axsl:call-template name="getNavTitle"/>
                     </axsl:attribute>
-                    <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/revprop[@changebar]" mode="changebar">
+                    <axsl:apply-templates
+                        select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/revprop[@changebar]"
+                        mode="changebar">
                       <axsl:with-param name="changebar-id" select="concat(dita-ot:generate-changebar-id(.),'-toc')"/>
                     </axsl:apply-templates>
                     <axsl:apply-templates select="$mapTopicref" mode="tocPrefix"/>
                     <fo:inline axsl:use-attribute-sets="__toc__title">
                       <axsl:variable name="pulledNavigationTitle" as="item()*">
-                        <axsl:call-template name="getNavTitle" />
+                        <axsl:call-template name="getNavTitle"/>
                       </axsl:variable>
                       <axsl:apply-templates select="$pulledNavigationTitle" mode="dropCopiedIds"/>
                     </fo:inline>
-                    <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]/revprop[@changebar]" mode="changebar">
+                    <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]/revprop[@changebar]"
+                                          mode="changebar">
                       <axsl:with-param name="changebar-id" select="concat(dita-ot:generate-changebar-id(.),'-toc')"/>
                     </axsl:apply-templates>
                     <fo:inline axsl:use-attribute-sets="__toc__page-number">
@@ -375,17 +387,20 @@
                     <axsl:attribute name="fox:alt-text">
                       <axsl:call-template name="getNavTitle"/>
                     </axsl:attribute>
-                    <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/revprop[@changebar]" mode="changebar">
+                    <axsl:apply-templates
+                        select="*[contains(@class,' ditaot-d/ditaval-startprop ')]/revprop[@changebar]"
+                        mode="changebar">
                       <axsl:with-param name="changebar-id" select="concat(dita-ot:generate-changebar-id(.),'-toc')"/>
                     </axsl:apply-templates>
                     <axsl:apply-templates select="$mapTopicref" mode="tocPrefix"/>
                     <fo:inline axsl:use-attribute-sets="__toc__title">
                       <axsl:variable name="pulledNavigationTitle" as="item()*">
-                        <axsl:call-template name="getNavTitle" />
+                        <axsl:call-template name="getNavTitle"/>
                       </axsl:variable>
                       <axsl:apply-templates select="$pulledNavigationTitle" mode="dropCopiedIds"/>
                     </fo:inline>
-                    <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]/revprop[@changebar]" mode="changebar">
+                    <axsl:apply-templates select="*[contains(@class,' ditaot-d/ditaval-endprop ')]/revprop[@changebar]"
+                                          mode="changebar">
                       <axsl:with-param name="changebar-id" select="concat(dita-ot:generate-changebar-id(.),'-toc')"/>
                     </axsl:apply-templates>
                     <fo:inline axsl:use-attribute-sets="__toc__page-number">
@@ -438,7 +453,7 @@
         <axsl:param name="value"/>
         <axsl:sequence select="if (normalize-space($value) = '0') then '0pt' else $value"/>
       </axsl:function>
-      
+
       <axsl:attribute-set name="__toc__header">
         <xsl:call-template name="generate-attribute-set">
           <xsl:with-param name="prefix" select="'style-topic'"/>
@@ -453,19 +468,22 @@
           <axsl:choose>
             <xsl:if test="map:contains($root, 'style-toc-part-start-indent')">
               <axsl:when test="$level eq 0 and key('map-id', @id)/self::*[contains(@class, ' bookmap/part ')]">
-                <axsl:value-of select="concat(e:force-unit('{$root ?style-toc-part-start-indent}'), ' + ', $toc.text-indent)"/>
+                <axsl:value-of
+                    select="concat(e:force-unit('{$root ?style-toc-part-start-indent}'), ' + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
             <xsl:if test="map:contains($root, 'style-toc-chapter-start-indent')">
               <axsl:when test="$level eq 1">
-                <axsl:value-of select="concat(e:force-unit('{$root ?style-toc-chapter-start-indent}'), ' + ', $toc.text-indent)"/>
+                <axsl:value-of
+                    select="concat(e:force-unit('{$root ?style-toc-chapter-start-indent}'), ' + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
             <xsl:for-each select="1 to 6">
               <xsl:variable name="level" select="."/>
               <xsl:if test="map:contains($root, 'style-toc-' || $level || '-start-indent')">
                 <axsl:when test="$level eq {$level}">
-                  <axsl:value-of select="concat(e:force-unit('{map:get($root, 'style-toc-' || $level || '-start-indent')}'), ' + ', $toc.text-indent)"/>
+                  <axsl:value-of
+                      select="concat(e:force-unit('{map:get($root, 'style-toc-' || $level || '-start-indent')}'), ' + ', $toc.text-indent)"/>
                 </axsl:when>
               </xsl:if>
             </xsl:for-each>
@@ -506,7 +524,8 @@
               <xsl:variable name="level" select="."/>
               <xsl:if test="map:contains($root, 'style-part-toc-' || $level || '-start-indent')">
                 <axsl:when test="$level eq {$level}">
-                  <axsl:value-of select="concat(e:force-unit('{map:get($root, 'style-part-toc-' || $level || '-start-indent')}'), ' + ', $toc.text-indent)"/>
+                  <axsl:value-of
+                      select="concat(e:force-unit('{map:get($root, 'style-part-toc-' || $level || '-start-indent')}'), ' + ', $toc.text-indent)"/>
                 </axsl:when>
               </xsl:if>
             </xsl:for-each>
@@ -551,7 +570,8 @@
 
       <axsl:attribute-set name="__toc__indent__chapter">
         <axsl:attribute name="start-indent">
-          <axsl:variable name="inside-part" as="xs:boolean" select="exists(key('map-id', @id)/ancestor-or-self::*[contains(@class, ' bookmap/part ')])"/>
+          <axsl:variable name="inside-part" as="xs:boolean"
+                         select="exists(key('map-id', @id)/ancestor-or-self::*[contains(@class, ' bookmap/part ')])"/>
           <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])
                                               - (if ($inside-part) then 2 else 1)"/>
           <axsl:choose>
@@ -559,7 +579,8 @@
               <xsl:variable name="level" select="."/>
               <xsl:if test="map:contains($root, 'style-chapter-toc-' || $level || '-start-indent')">
                 <axsl:when test="$level eq {$level}">
-                  <axsl:value-of select="concat(e:force-unit('{map:get($root, 'style-chapter-toc-' || $level || '-start-indent')}'), ' + ', $toc.text-indent)"/>
+                  <axsl:value-of
+                      select="concat(e:force-unit('{map:get($root, 'style-chapter-toc-' || $level || '-start-indent')}'), ' + ', $toc.text-indent)"/>
                 </axsl:when>
               </xsl:if>
             </xsl:for-each>
@@ -610,7 +631,8 @@
               <xsl:variable name="level" select="."/>
               <xsl:if test="map:contains($root, 'style-appendix-toc-' || $level || '-start-indent')">
                 <axsl:when test="$level eq {$level}">
-                  <axsl:value-of select="concat(e:force-unit('{map:get($root, 'style-appendix-toc-' || $level || '-start-indent')}'), ' + ', $toc.text-indent)"/>
+                  <axsl:value-of
+                      select="concat(e:force-unit('{map:get($root, 'style-appendix-toc-' || $level || '-start-indent')}'), ' + ', $toc.text-indent)"/>
                 </axsl:when>
               </xsl:if>
             </xsl:for-each>
@@ -659,7 +681,7 @@
         </axsl:attribute>
       </axsl:attribute-set>
 
-      <axsl:attribute-set name="__toc__part__content">
+      <axsl:attribute-set name="__toc__part__content" use-attribute-sets="__toc__topic__content">
         <xsl:choose>
           <xsl:when test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc-part')">
             <xsl:call-template name="generate-attribute-set">
@@ -678,7 +700,7 @@
         <axsl:attribute name="padding-top">inherit</axsl:attribute>
       </axsl:attribute-set>
 
-      <axsl:attribute-set name="__toc__chapter__content">
+      <axsl:attribute-set name="__toc__chapter__content" use-attribute-sets="__toc__topic__content">
         <xsl:choose>
           <xsl:when test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc-chapter')">
             <xsl:call-template name="generate-attribute-set">
@@ -697,7 +719,7 @@
         <axsl:attribute name="padding-top">inherit</axsl:attribute>
       </axsl:attribute-set>
 
-      <axsl:attribute-set name="__part__toc__chapter__content">
+      <axsl:attribute-set name="__part__toc__chapter__content" use-attribute-sets="__toc__topic__content">
         <xsl:choose>
           <xsl:when test="some $key in map:keys($root) satisfies starts-with($key, 'style-part-toc-chapter')">
             <xsl:call-template name="generate-attribute-set">
@@ -716,7 +738,7 @@
         <axsl:attribute name="padding-top">inherit</axsl:attribute>
       </axsl:attribute-set>
 
-      <axsl:attribute-set name="__toc__appendix__content">
+      <axsl:attribute-set name="__toc__appendix__content" use-attribute-sets="__toc__topic__content">
         <xsl:choose>
           <xsl:when test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc-appendix')">
             <xsl:call-template name="generate-attribute-set">
@@ -754,7 +776,7 @@
 
       <xsl:for-each select="('part', 'chapter', 'appendix')">
         <xsl:variable name="prefix" select="."/>
-        <axsl:attribute-set name="__{$prefix}__toc__topic__content">
+        <axsl:attribute-set name="__{$prefix}__toc__topic__content" use-attribute-sets="__toc__topic__content">
           <xsl:call-template name="generate-attribute-set">
             <xsl:with-param name="prefix" select="'style-' || $prefix || '-toc-1'"/>
             <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
@@ -762,8 +784,9 @@
         </axsl:attribute-set>
 
         <xsl:for-each select="2 to 6">
-          <xsl:variable name="level"  select="."/>
-          <axsl:attribute-set name="__{$prefix}__toc__topic__content_{.}" use-attribute-sets="__{$prefix}__toc__topic__content">
+          <xsl:variable name="level" select="."/>
+          <axsl:attribute-set name="__{$prefix}__toc__topic__content_{.}"
+                              use-attribute-sets="__{$prefix}__toc__topic__content">
             <xsl:call-template name="generate-attribute-set">
               <xsl:with-param name="prefix" select="'style-' || $prefix || '-toc-' || $level"/>
               <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
@@ -773,14 +796,14 @@
       </xsl:for-each>
 
       <xsl:if test="some $key in map:keys($root) satisfies starts-with($key, 'style-toc-1')">
-        <axsl:attribute-set name="__toc__preface__content">
+        <axsl:attribute-set name="__toc__preface__content" use-attribute-sets="__toc__topic__content">
           <xsl:call-template name="generate-attribute-set">
             <xsl:with-param name="prefix" select="'style-toc-1'"/>
             <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
           </xsl:call-template>
         </axsl:attribute-set>
 
-        <axsl:attribute-set name="__toc__notices__content">
+        <axsl:attribute-set name="__toc__notices__content" use-attribute-sets="__toc__topic__content">
           <xsl:call-template name="generate-attribute-set">
             <xsl:with-param name="prefix" select="'style-toc-1'"/>
             <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
