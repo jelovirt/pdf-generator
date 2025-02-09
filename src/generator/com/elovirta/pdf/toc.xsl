@@ -85,7 +85,7 @@
                 </axsl:when>
               </xsl:if>
               <xsl:if
-                  test="some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-chapter')">
+                  test="$prefix = ('', 'part') and (some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-chapter'))">
                 <axsl:when
                     test="$prefix eq '{$prefix}' and $level = (1, 2) and $topicref/self::*[contains(@class, ' bookmap/chapter ')]">
                   <fo:block axsl:use-attribute-sets="{$attribute-set-prefix}__toc__chapter__content">
@@ -93,15 +93,16 @@
                   </fo:block>
                 </axsl:when>
               </xsl:if>
-              <xsl:if
-                  test="some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-1')">
-                <axsl:when test="$prefix eq '{$prefix}' and $level eq 1">
-                  <fo:block axsl:use-attribute-sets="{$attribute-set-prefix}__toc__topic__content">
-                    <axsl:copy-of select="$tocItemContent"/>
-                  </fo:block>
-                </axsl:when>
-              </xsl:if>
-              <xsl:for-each select="2 to 6">
+<!--              <xsl:if-->
+<!--                  test="some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-1')">-->
+<!--                <axsl:when test="$prefix eq '{$prefix}' and $level eq 1">-->
+<!--                  <fo:block axsl:use-attribute-sets="{$attribute-set-prefix}__toc__topic__content">-->
+<!--                    <axsl:copy-of select="$tocItemContent"/>-->
+<!--                  </fo:block>-->
+<!--                </axsl:when>-->
+<!--              </xsl:if>-->
+
+              <xsl:for-each select="1 to 6">
                 <xsl:variable name="level" select="."/>
                 <xsl:if
                     test="some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-' || $level)">
@@ -757,18 +758,18 @@
         <axsl:attribute name="padding-top">inherit</axsl:attribute>
       </axsl:attribute-set>
 
-      <axsl:attribute-set name="__toc__topic__content">
-        <xsl:call-template name="generate-attribute-set">
-          <xsl:with-param name="prefix" select="'style-toc-1'"/>
-          <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
-        </xsl:call-template>
-      </axsl:attribute-set>
+<!--      <axsl:attribute-set name="__toc__topic__content">-->
+<!--        <xsl:call-template name="generate-attribute-set">-->
+<!--          <xsl:with-param name="prefix" select="'style-toc-1'"/>-->
+<!--          <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>-->
+<!--        </xsl:call-template>-->
+<!--      </axsl:attribute-set>-->
 
-      <xsl:for-each select="2 to 6">
+      <xsl:for-each select="1 to 6">
         <xsl:variable name="level" select="."/>
         <axsl:attribute-set name="__toc__topic__content_{$level}" use-attribute-sets="__toc__topic__content">
           <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-toc-{$level}'"/>
+            <xsl:with-param name="prefix" select="'style-toc-' || $level"/>
             <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
           </xsl:call-template>
         </axsl:attribute-set>
@@ -777,13 +778,13 @@
       <xsl:for-each select="('part', 'chapter', 'appendix')">
         <xsl:variable name="prefix" select="."/>
         <axsl:attribute-set name="__{$prefix}__toc__topic__content" use-attribute-sets="__toc__topic__content">
-          <xsl:call-template name="generate-attribute-set">
-            <xsl:with-param name="prefix" select="'style-' || $prefix || '-toc-1'"/>
-            <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>
-          </xsl:call-template>
+<!--          <xsl:call-template name="generate-attribute-set">-->
+<!--            <xsl:with-param name="prefix" select="'style-' || $prefix || '-toc-1'"/>-->
+<!--            <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>-->
+<!--          </xsl:call-template>-->
         </axsl:attribute-set>
 
-        <xsl:for-each select="2 to 6">
+        <xsl:for-each select="1 to 6">
           <xsl:variable name="level" select="."/>
           <axsl:attribute-set name="__{$prefix}__toc__topic__content_{.}"
                               use-attribute-sets="__{$prefix}__toc__topic__content">
