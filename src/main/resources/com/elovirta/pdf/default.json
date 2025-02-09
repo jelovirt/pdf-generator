@@ -108,27 +108,27 @@
           "font-size": "10pt"
         },
         "1": {
-          "start-indent": "0pt",
-          "title-numbering": true
-        },
-        "2": {
           "start-indent": "$brand-toc-indent",
           "title-numbering": true
         },
-        "3": {
-          "start-indent": "2 * $brand-toc-indent",
+        "2": {
+          "start-indent": "2* $brand-toc-indent",
           "title-numbering": true
         },
-        "4": {
+        "3": {
           "start-indent": "3 * $brand-toc-indent",
           "title-numbering": true
         },
-        "5": {
+        "4": {
           "start-indent": "4 * $brand-toc-indent",
           "title-numbering": true
         },
-        "6": {
+        "5": {
           "start-indent": "5 * $brand-toc-indent",
+          "title-numbering": true
+        },
+        "6": {
+          "start-indent": "6 * $brand-toc-indent",
           "title-numbering": true
         }
       }
@@ -154,27 +154,27 @@
         "font-size": "$style-toc-chapter-font-size"
       },
       "1": {
-        "start-indent": "0pt",
-        "title-numbering": true
-      },
-      "2": {
         "start-indent": "$brand-toc-indent",
         "title-numbering": true
       },
-      "3": {
+      "2": {
         "start-indent": "2 * $brand-toc-indent",
         "title-numbering": true
       },
-      "4": {
+      "3": {
         "start-indent": "3 * $brand-toc-indent",
         "title-numbering": true
       },
-      "5": {
+      "4": {
         "start-indent": "4 * $brand-toc-indent",
         "title-numbering": true
       },
-      "6": {
+      "5": {
         "start-indent": "5 * $brand-toc-indent",
+        "title-numbering": true
+      },
+      "6": {
+        "start-indent": "6 * $brand-toc-indent",
         "title-numbering": true
       }
     },

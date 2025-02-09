@@ -69,7 +69,10 @@
         <axsl:param name="prefix" select="''" as="xs:string?"/>
         <axsl:for-each select="$currentNode">
           <axsl:variable name="topicref" select="key('map-id', @id)"/>
-          <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>
+<!--          <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])"/>-->
+          <axsl:variable name="level" as="xs:integer">
+            <axsl:apply-templates select="." mode="get-topic-level"/>
+          </axsl:variable>
           <axsl:choose>
             <xsl:for-each select="'', 'part', 'chapter', 'appendix'">
               <xsl:variable name="prefix" select="."/>
@@ -87,7 +90,7 @@
               <xsl:if
                   test="$prefix = ('', 'part') and (some $key in map:keys($root) satisfies starts-with($key, 'style' || $key-prefix || '-toc-chapter'))">
                 <axsl:when
-                    test="$prefix eq '{$prefix}' and $level = (1, 2) and $topicref/self::*[contains(@class, ' bookmap/chapter ')]">
+                    test="$prefix eq '{$prefix}' (:and $level = (1, 2) :) and $topicref/self::*[contains(@class, ' bookmap/chapter ')]">
                   <fo:block axsl:use-attribute-sets="{$attribute-set-prefix}__toc__chapter__content">
                     <axsl:copy-of select="$tocItemContent"/>
                   </fo:block>
@@ -468,13 +471,13 @@
           </axsl:variable>
           <axsl:choose>
             <xsl:if test="map:contains($root, 'style-toc-part-start-indent')">
-              <axsl:when test="$level eq 0 and key('map-id', @id)/self::*[contains(@class, ' bookmap/part ')]">
+              <axsl:when test="(:$level eq 0 and:) key('map-id', @id)/self::*[contains(@class, ' bookmap/part ')]">
                 <axsl:value-of
                     select="concat(e:force-unit('{$root ?style-toc-part-start-indent}'), ' + ', $toc.text-indent)"/>
               </axsl:when>
             </xsl:if>
             <xsl:if test="map:contains($root, 'style-toc-chapter-start-indent')">
-              <axsl:when test="$level eq 1">
+              <axsl:when test="(:$level eq 0 and:) key('map-id', @id)/self::*[contains(@class, ' bookmap/chapter ')]">
                 <axsl:value-of
                     select="concat(e:force-unit('{$root ?style-toc-chapter-start-indent}'), ' + ', $toc.text-indent)"/>
               </axsl:when>
@@ -519,8 +522,17 @@
 
       <axsl:attribute-set name="__toc__indent__part">
         <axsl:attribute name="start-indent">
-          <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')]) - 1"/>
+<!--          <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')]) - 1"/>-->
+          <axsl:variable name="level" as="xs:integer">
+            <axsl:apply-templates select="." mode="get-topic-level"/>
+          </axsl:variable>
           <axsl:choose>
+            <xsl:if test="map:contains($root, 'style-part-toc-chapter-start-indent')">
+              <axsl:when test="(:$level eq 0 and:) key('map-id', @id)/self::*[contains(@class, ' bookmap/chapter ')]">
+                <axsl:value-of
+                    select="concat(e:force-unit('{$root ?style-part-toc-chapter-start-indent}'), ' + ', $toc.text-indent)"/>
+              </axsl:when>
+            </xsl:if>
             <xsl:for-each select="1 to 6">
               <xsl:variable name="level" select="."/>
               <xsl:if test="map:contains($root, 'style-part-toc-' || $level || '-start-indent')">
@@ -571,10 +583,13 @@
 
       <axsl:attribute-set name="__toc__indent__chapter">
         <axsl:attribute name="start-indent">
-          <axsl:variable name="inside-part" as="xs:boolean"
-                         select="exists(key('map-id', @id)/ancestor-or-self::*[contains(@class, ' bookmap/part ')])"/>
-          <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])
-                                              - (if ($inside-part) then 2 else 1)"/>
+<!--          <axsl:variable name="inside-part" as="xs:boolean"-->
+<!--                         select="exists(key('map-id', @id)/ancestor-or-self::*[contains(@class, ' bookmap/part ')])"/>-->
+<!--          <axsl:variable name="level" select="count(ancestor-or-self::*[contains(@class, ' topic/topic ')])-->
+<!--                                              - (if ($inside-part) then 1 else 0)"/>-->
+          <axsl:variable name="level" as="xs:integer">
+            <axsl:apply-templates select="." mode="get-topic-level"/>
+          </axsl:variable>
           <axsl:choose>
             <xsl:for-each select="1 to 6">
               <xsl:variable name="level" select="."/>
@@ -774,6 +789,13 @@
           </xsl:call-template>
         </axsl:attribute-set>
       </xsl:for-each>
+
+<!--      <axsl:attribute-set name="__part__toc__topic__content" use-attribute-sets="__toc__topic__content">-->
+        <!--          <xsl:call-template name="generate-attribute-set">-->
+        <!--            <xsl:with-param name="prefix" select="'style-' || $prefix || '-toc-1'"/>-->
+        <!--            <xsl:with-param name="properties" select="$allProperties[. ne 'start-indent']"/>-->
+        <!--          </xsl:call-template>-->
+<!--      </axsl:attribute-set>-->
 
       <xsl:for-each select="('part', 'chapter', 'appendix')">
         <xsl:variable name="prefix" select="."/>
