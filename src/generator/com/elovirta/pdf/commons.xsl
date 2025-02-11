@@ -335,10 +335,10 @@
         <fo:block axsl:use-attribute-sets="topic">
           <!-- TODO: Replace with mode="commonattributes" -->
           <axsl:call-template name="commonattributes"/>
-          <axsl:variable name="level" as="xs:integer">
-            <axsl:apply-templates select="." mode="get-topic-level"/>
-          </axsl:variable>
-          <axsl:if test="$level eq 1">
+<!--          <axsl:variable name="level" as="xs:integer">-->
+<!--            <axsl:apply-templates select="." mode="get-topic-level"/>-->
+<!--          </axsl:variable>-->
+<!--          <axsl:if test="$level eq 1">-->
             <axsl:variable name="topicref"
                            select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
                            as="element()?"/>
@@ -358,7 +358,7 @@
 <!--              <axsl:with-param name="marker-class-name" select="'current-header'"/>-->
 <!--            </axsl:apply-templates>-->
             <fo:marker marker-class-name="current-header"/>
-          </axsl:if>
+<!--          </axsl:if>-->
           <axsl:apply-templates select="." mode="customTopicMarker"/>
 
           <axsl:apply-templates select="*[contains(@class,' topic/prolog ')]"/>
@@ -469,10 +469,10 @@
         <fo:block axsl:use-attribute-sets="topic">
           <!-- TODO: Replace with mode="commonattributes" -->
           <axsl:call-template name="commonattributes"/>
-          <axsl:variable name="level" as="xs:integer">
-            <axsl:apply-templates select="." mode="get-topic-level"/>
-          </axsl:variable>
-          <axsl:if test="$level eq 1">
+<!--          <axsl:variable name="level" as="xs:integer">-->
+<!--            <axsl:apply-templates select="." mode="get-topic-level"/>-->
+<!--          </axsl:variable>-->
+<!--          <axsl:if test="$level eq 1">-->
             <axsl:variable name="topicref"
                            select="key('map-id', ancestor-or-self::*[contains(@class, ' topic/topic ')][1]/@id)[1]"
                            as="element()?"/>
@@ -505,7 +505,7 @@
                 <axsl:with-param name="marker-class-name" select="'current-part'"/>
               </axsl:apply-templates>
             </axsl:if>
-          </axsl:if>
+<!--          </axsl:if>-->
           <axsl:apply-templates select="." mode="customTopicMarker"/>
 
           <axsl:apply-templates select="*[contains(@class,' topic/prolog ')]"/>

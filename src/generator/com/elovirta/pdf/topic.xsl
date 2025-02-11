@@ -232,6 +232,121 @@
         </axsl:choose>
       </axsl:template>
 
+      <axsl:template match="*" mode="get-topic-level" as="xs:integer">
+        <axsl:variable name="topicref"
+                       select="key('map-id', ancestor-or-self::*[contains(@class,' topic/topic ')][1]/@id)[1]"
+                       as="element()?"
+        />
+        <axsl:sequence select="count(ancestor-or-self::*[contains(@class,' topic/topic ')]) -
+                          count($topicref/ancestor-or-self::*[(contains(@class, ' bookmap/part ') and
+                                                               ((exists(@navtitle) or *[contains(@class,' map/topicmeta ')]/*[contains(@class,' topic/navtitle ')]) or
+                                                                (exists(@href) and
+                                                                 (empty(@format) or @format eq 'dita') and
+                                                                 (empty(@scope) or @scope eq 'local')))) or
+
+                                                              (contains(@class, ' bookmap/chapter ') and
+                                                               ((exists(@navtitle) or *[contains(@class,' map/topicmeta ')]/*[contains(@class,' topic/navtitle ')]) or
+                                                                (exists(@href) and
+                                                                 (empty(@format) or @format eq 'dita') and
+                                                                 (empty(@scope) or @scope eq 'local')))) or
+
+                                                              (contains(@class,' bookmap/appendices ') and
+                                                               exists(@href) and
+                                                               (empty(@format) or @format eq 'dita') and
+                                                               (empty(@scope) or @scope eq 'local'))])"/>
+      </axsl:template>
+
+<!--      <axsl:template match="*" mode="processTopicTitle">-->
+<!--        <axsl:variable name="level" as="xs:integer">-->
+<!--          <axsl:apply-templates select="." mode="get-topic-level"/>-->
+<!--        </axsl:variable>-->
+<!--        <axsl:variable name="attrSet1">-->
+<!--          <axsl:apply-templates select="." mode="createTopicAttrsName">-->
+<!--            <axsl:with-param name="theCounter" select="$level"/>-->
+<!--          </axsl:apply-templates>-->
+<!--        </axsl:variable>-->
+<!--        <fo:block>-->
+<!--          <axsl:call-template name="commonattributes"/>-->
+<!--          <axsl:call-template name="get-attributes">-->
+<!--            <axsl:with-param name="element" as="element()">-->
+<!--              <axsl:choose>-->
+<!--                <axsl:when test="$attrSet1 = 'topic.title'">-->
+<!--                  <placeholder axsl:use-attribute-sets="topic.title"/>-->
+<!--                </axsl:when>-->
+<!--                <axsl:when test="$attrSet1 = 'topic.topic.title'">-->
+<!--                  <placeholder axsl:use-attribute-sets="topic.topic.title"/>-->
+<!--                </axsl:when>-->
+<!--                <axsl:when test="$attrSet1 = 'topic.topic.topic.title'">-->
+<!--                  <placeholder axsl:use-attribute-sets="topic.topic.topic.title"/>-->
+<!--                </axsl:when>-->
+<!--                <axsl:when test="$attrSet1 = 'topic.topic.topic.topic.title'">-->
+<!--                  <placeholder axsl:use-attribute-sets="topic.topic.topic.topic.title"/>-->
+<!--                </axsl:when>-->
+<!--                <axsl:when test="$attrSet1 = 'topic.topic.topic.topic.topic.title'">-->
+<!--                  <placeholder axsl:use-attribute-sets="topic.topic.topic.topic.topic.title"/>-->
+<!--                </axsl:when>-->
+<!--                <axsl:when test="$attrSet1 = 'topic.topic.topic.topic.topic.topic.title'">-->
+<!--                  <placeholder axsl:use-attribute-sets="topic.topic.topic.topic.topic.topic.title"/>-->
+<!--                </axsl:when>-->
+<!--                <axsl:otherwise>-->
+<!--                  <placeholder/>-->
+<!--                </axsl:otherwise>-->
+<!--              </axsl:choose>-->
+<!--            </axsl:with-param>-->
+<!--          </axsl:call-template>-->
+<!--          level=<axsl:value-of select="$level"/> attrSet1=<axsl:value-of select="$attrSet1"/>-->
+<!--          <fo:block>-->
+<!--            <axsl:call-template name="get-attributes">-->
+<!--              <axsl:with-param name="element" as="element()">-->
+<!--                <axsl:choose>-->
+<!--                  <axsl:when test="$attrSet1 = 'topic.title'">-->
+<!--                    <placeholder axsl:use-attribute-sets="topic.title__content"/>-->
+<!--                  </axsl:when>-->
+<!--                  <axsl:when test="$attrSet1 = 'topic.topic.title'">-->
+<!--                    <placeholder axsl:use-attribute-sets="topic.topic.title__content"/>-->
+<!--                  </axsl:when>-->
+<!--                  <axsl:when test="$attrSet1 = 'topic.topic.topic.title'">-->
+<!--                    <placeholder axsl:use-attribute-sets="topic.topic.topic.title__content"/>-->
+<!--                  </axsl:when>-->
+<!--                  <axsl:when test="$attrSet1 = 'topic.topic.topic.topic.title'">-->
+<!--                    <placeholder axsl:use-attribute-sets="topic.topic.topic.topic.title__content"/>-->
+<!--                  </axsl:when>-->
+<!--                  <axsl:when test="$attrSet1 = 'topic.topic.topic.topic.topic.title'">-->
+<!--                    <placeholder axsl:use-attribute-sets="topic.topic.topic.topic.topic.title__content"/>-->
+<!--                  </axsl:when>-->
+<!--                  <axsl:when test="$attrSet1 = 'topic.topic.topic.topic.topic.topic.title'">-->
+<!--                    <placeholder axsl:use-attribute-sets="topic.topic.topic.topic.topic.topic.title__content"/>-->
+<!--                  </axsl:when>-->
+<!--                  <axsl:otherwise>-->
+<!--                    <placeholder/>-->
+<!--                  </axsl:otherwise>-->
+<!--                </axsl:choose>-->
+<!--              </axsl:with-param>-->
+<!--            </axsl:call-template>-->
+<!--            <axsl:if test="$level = 1">-->
+<!--              <axsl:apply-templates select="." mode="insertTopicHeaderMarker"/>-->
+<!--            </axsl:if>-->
+<!--            <axsl:if test="$level = 2">-->
+<!--              <axsl:apply-templates select="." mode="insertTopicHeaderMarker">-->
+<!--                <axsl:with-param name="marker-class-name" as="xs:string">current-h2</axsl:with-param>-->
+<!--              </axsl:apply-templates>-->
+<!--            </axsl:if>-->
+<!--            <fo:wrapper id="{{parent::node()/@id}}"/>-->
+<!--            <fo:wrapper>-->
+<!--              <axsl:attribute name="id">-->
+<!--                <axsl:call-template name="generate-toc-id">-->
+<!--                  <axsl:with-param name="element" select=".."/>-->
+<!--                </axsl:call-template>-->
+<!--              </axsl:attribute>-->
+<!--            </fo:wrapper>-->
+<!--            <axsl:apply-templates select="." mode="customTopicAnchor"/>-->
+<!--            <axsl:call-template name="pullPrologIndexTerms"/>-->
+<!--            <axsl:apply-templates select="preceding-sibling::*[contains(@class,' ditaot-d/ditaval-startprop ')]"/>-->
+<!--            <axsl:apply-templates select="." mode="getTitle"/>-->
+<!--          </fo:block>-->
+<!--        </fo:block>-->
+<!--      </axsl:template>-->
+
       <!-- note -->
       <axsl:template match="*[contains(@class,' topic/note ')]">
         <axsl:variable name="noteImagePath">
