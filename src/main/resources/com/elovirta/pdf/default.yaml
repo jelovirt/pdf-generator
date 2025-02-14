@@ -1,10 +1,13 @@
 brand:
   toc:
     indent: 1em
+
 page:
   size: A4
   mirror-margins: true
+
 force-page-count: auto
+
 header:
   display-align: before
   end-indent: 10mm
@@ -30,6 +33,7 @@ footer:
     content: "{folio}"
     font-weight: bold
     text-align: start
+
 style:
   body:
     start-indent: 0pt
@@ -53,22 +57,22 @@ style:
     numbering: document
     title-numbering: true
     toc:
-      '1':
+      1:
         start-indent: 0pt
         title-numbering: true
-      '2':
-        start-indent: "$brand-toc-indent"
+      2:
+        start-indent: $brand-toc-indent
         title-numbering: true
-      '3':
+      3:
         start-indent: 2 * $brand-toc-indent
         title-numbering: true
-      '4':
+      4:
         start-indent: 3 * $brand-toc-indent
         title-numbering: true
-      '5':
+      5:
         start-indent: 4 * $brand-toc-indent
         title-numbering: true
-      '6':
+      6:
         start-indent: 5 * $brand-toc-indent
         title-numbering: true
   topic:
@@ -76,22 +80,22 @@ style:
   part:
     title-numbering: true
     toc:
-      '1':
-        start-indent: "$brand-toc-indent"
+      1:
+        start-indent: $brand-toc-indent
         title-numbering: true
-      '2':
-        start-indent: 2* $brand-toc-indent
+      2:
+        start-indent: 2 * $brand-toc-indent
         title-numbering: true
-      '3':
+      3:
         start-indent: 3 * $brand-toc-indent
         title-numbering: true
-      '4':
+      4:
         start-indent: 4 * $brand-toc-indent
         title-numbering: true
-      '5':
+      5:
         start-indent: 5 * $brand-toc-indent
         title-numbering: true
-      '6':
+      6:
         start-indent: 6 * $brand-toc-indent
         title-numbering: true
       chapter:
@@ -101,22 +105,22 @@ style:
   appendix:
     title-numbering: true
   toc:
-    '1':
-      start-indent: "$brand-toc-indent"
+    1:
+      start-indent: $brand-toc-indent
       title-numbering: true
-    '2':
+    2:
       start-indent: 2 * $brand-toc-indent
       title-numbering: true
-    '3':
+    3:
       start-indent: 3 * $brand-toc-indent
       title-numbering: true
-    '4':
+    4:
       start-indent: 4 * $brand-toc-indent
       title-numbering: true
-    '5':
+    5:
       start-indent: 5 * $brand-toc-indent
       title-numbering: true
-    '6':
+    6:
       start-indent: 6 * $brand-toc-indent
       title-numbering: true
     maximum-level: 6
@@ -129,17 +133,19 @@ style:
       space-before: 0.6em
       font-size: 10pt
     appendix:
-      start-indent: "$style-toc-chapter-start-indent"
-      space-before: "$style-toc-chapter-space-before"
-      font-size: "$style-toc-chapter-font-size"
+      start-indent: $style-toc-chapter-start-indent
+      space-before: $style-toc-chapter-space-before
+      font-size: $style-toc-chapter-font-size
   index:
-    space-before: "$style-body-space-before"
-    space-after: "$style-body-space-after"
+    space-before: $style-body-space-before
+    space-after: $style-body-space-after
     font-size: 18pt
   glossary:
-    space-before: "$style-body-space-before"
-    space-after: "$style-body-space-after"
+    space-before: $style-body-space-before
+    space-after: $style-body-space-after
     font-size: 18pt
+
+  ## Highlighting domain
   b:
     font-weight: bold
   i:
@@ -158,6 +164,8 @@ style:
     text-decoration: line-through
   overline:
     text-decoration: overline
+
+  ## Software domain
   msgph:
     font-family: monospace
   msgblock:
@@ -173,8 +181,12 @@ style:
     font-family: monospace
   systemoutput:
     font-family: monospace
+
+  ## Markup domain
   markupname:
     font-family: monospace
+
+  ## XML mention domain
   xmlelement:
     font-family: monospace
   xmlatt:
@@ -189,6 +201,8 @@ style:
     font-family: monospace
   xmlpi:
     font-family: monospace
+
+  ## UI domain
   uicontrol:
     font-weight: bold
     line-height: 100%
@@ -209,6 +223,8 @@ style:
     background-color: "#f0f0f0"
     font-family: monospace
     line-height: 106%
+
+  ## Programming domain
   codeph:
     font-family: monospace
   codeblock:
