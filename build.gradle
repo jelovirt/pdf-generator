@@ -1,6 +1,20 @@
-apply plugin: 'java'
+buildscript {
+    dependencies {
+        classpath 'org.codehaus.groovy:groovy:3.0.8'
+        classpath 'org.codehaus.groovy:groovy-yaml:3.0.8'
+    }
+}
 
-version = '0.8.0'
+
+import groovy.json.JsonOutput
+import groovy.yaml.YamlSlurper
+
+plugins {
+    id 'java'
+    id 'groovy'
+}
+
+version = '0.9.0-SNAPSHOT'
 
 test {
     useJUnitPlatform()
@@ -43,6 +57,24 @@ sourceSets {
         }
     }
 }
+
+tasks.register('convertYamlToJson') {
+    doLast {
+        def yamlFile = file("src/main/resources/com/elovirta/pdf/default.yaml")
+        def jsonFile = file("${sourceSets.main.output.resourcesDir}/com/elovirta/pdf/default.json")
+
+        if (!jsonFile.parentFile.exists()) {
+            jsonFile.parentFile.mkdirs()
+        }
+
+        def yamlSlurper = new YamlSlurper()
+        def data = yamlSlurper.parse(yamlFile)
+
+        jsonFile.text = JsonOutput.prettyPrint(JsonOutput.toJson(data))
+    }
+}
+
+processResources.dependsOn convertYamlToJson
 
 tasks.register('dist', Zip) {
     dependsOn tasks.jar
